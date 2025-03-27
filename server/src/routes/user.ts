@@ -13,7 +13,7 @@ router.get("/logout", logout);
 router.post("/", upload.fields([
     { name: 'image', maxCount: 1 },
     { name: 'audio', maxCount: 1 },
-]), createUser);
+]), verifyAccessToken, createUser);
 
 
 

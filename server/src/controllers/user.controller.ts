@@ -86,23 +86,34 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
         mes: 'Logout is done'
     })
 }
+interface FileUploadResult {
+    url: string;
+    id: string;
+}
+export const createUser = async (req: UserRequestDTO, res: Response): Promise<void> => {
+    const userId = req?.user?._id
+    if (!userId) {
+        res.status(400).json({ message: 'User ID is missing' });
+        return
+    }
 
-export const createUser = async (req: Request, res: Response): Promise<void> => {
     if (!req.files) {
         res.status(400).json({ message: 'No files uploaded' })
         return
     }
-    console.log(req?.files);
     const files = req?.files as { [fieldname: string]: Express.Multer.File[] }
     const imageFile = files['image'][0]
-    const audioFile = files['audio'][0]
+    // const audioFile = files['audio'][0]
     try {
-        const imageResult = await new Promise(
+        const imageResult: FileUploadResult = await new Promise(
             (resolve, reject) => {
                 const stream = cloudinary.uploader.upload_stream(
                     { resource_type: 'image' },
                     (error, result) => {
                         if (error) reject(error)
+                        if (!result || !result.secure_url || !result.public_id) {
+                            return reject(new Error('Cloudinary upload failed'));
+                        }
                         resolve({
                             url: result?.secure_url,
                             id: result?.public_id,
@@ -112,24 +123,29 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
                 stream.end(imageFile.buffer)
             }
         )
-        // upload audio
-        const audioResult = await new Promise(
-            (resolve, reject) => {
-                const stream = cloudinary.uploader.upload_stream(
-                    { resource_type: 'video' },
-                    (error, result) => {
-                        if (error) reject(error)
-                        resolve({
-                            url: result?.secure_url,
-                            id: result?.public_id,
-                        })
-                    }
-                )
-                stream.end(audioFile.buffer)
-            }
-        )
+        // const audioResult = await new Promise(
+        //     (resolve, reject) => {
+        //         const stream = cloudinary.uploader.upload_stream(
+        //             { resource_type: 'video' },
+        //             (error, result) => {
+        //                 if (error) reject(error)
+        //                 resolve({
+        //                     url: result?.secure_url,
+        //                     id: result?.public_id,
+        //                 })
+        //             }
+        //         )
+        //         stream.end(audioFile.buffer)
+        //     }
+        // )
 
-        res.status(200).json({ imageResult, audioResult })
+        const updatedUser = await User.findByIdAndUpdate(userId, { avatar: imageResult?.url }, { new: true })
+        res.status(200).json({
+            success: true,
+            message: 'Uploaded avatar successfully',
+            imageUrl: updatedUser,
+
+        })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: 'Error uploading files' })
