@@ -70,6 +70,21 @@ export const getCurrent = async (req: UserRequestDTO, res: Response): Promise<vo
         rs: user ? user : 'User not found'
     })
 }
+export const getUsers = async (req: Request, res: Response): Promise<void> => {
+    const users = await User.find()
+    res.status(200).json({
+        success: users ? true : false,
+        rs: users ? users : 'Users not found'
+    })
+}
+export const getUser = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params
+    const user = await User.findById(id)
+    res.status(200).json({
+        success: user ? true : false,
+        rs: user ? user : 'User not found'
+    })
+}
 export const logout = async (req: Request, res: Response): Promise<void> => {
     const cookie = req.cookies
     console.log(cookie);

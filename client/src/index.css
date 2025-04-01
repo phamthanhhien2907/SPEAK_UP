@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  @apply bg-neutral-950 font-poppins;
+}
+.tabs-list::-webkit-scrollbar {
+  width: 6px; /* Kích thước thanh cuộn dọc */
+  height: 6px; /* Kích thước thanh cuộn ngang */
+}
+
+/* Tùy chỉnh phần đường viền của thanh cuộn */
+.tabs-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Màu sắc của thanh cuộn */
+  border-radius: 10px; /* Bo tròn góc của thanh cuộn */
+  transition: background-color 0.3s ease; /* Thêm hiệu ứng khi hover */
+}
+
+/* Tạo hiệu ứng hover cho thanh cuộn */
+.tabs-list::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.6); /* Màu sắc khi hover */
+}
+
+/* Tùy chỉnh phần nền thanh cuộn */
+.tabs-list::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Màu nền của track */
+  border-radius: 10px; /* Bo tròn nền track */
+}
+
+/* Thêm hiệu ứng mượt mà cho việc cuộn */
+.tabs-list {
+  scroll-behavior: smooth; /* Thêm hiệu ứng cuộn mượt mà */
+}
