@@ -9,11 +9,6 @@ function App() {
         {routes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
-
-        <Route
-          path="*"
-          element={<div className="bg-red-500">404 Not Found</div>}
-        />
       </Routes>
     </Suspense>
   );

@@ -1,9 +1,10 @@
 import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 import { useState, useEffect, JSX } from "react";
 import NavigationLink from "./navigation-link";
-
 import ProjectLink from "./project-link";
 import ProjectNavigation from "./project-navigation";
+import { UserButton, useSession } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const containerVariants = {
   close: {
@@ -45,6 +46,8 @@ const NavigationBar = ({
   items: ItemType[];
   onSelect: (page: string) => void;
 }) => {
+  const navigate = useNavigate();
+  const { isLoaded, session } = useSession();
   const [isOpen, setIsOpen] = useState(true);
   const [selectedLink, setSelectedLink] = useState<string | null>("Dashboard");
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
@@ -59,14 +62,18 @@ const NavigationBar = ({
       svgControls.start("close");
     }
   }, [isOpen, containerControls, svgControls]);
-
+  useEffect(() => {
+    if (isLoaded && !session) {
+      navigate("/sign-in");
+    }
+  }, [isLoaded, session, navigate]);
   const handleOpenClose = () => {
     setIsOpen(!isOpen);
     setSelectedProject(null);
   };
   const handleSelect = (name: string) => {
     setSelectedLink(name);
-    onSelect(name); // Gọi hàm để cập nhật trang
+    onSelect(name);
   };
   return (
     <>
@@ -120,7 +127,7 @@ const NavigationBar = ({
           ))}
         </div>
 
-        <div className="flex flex-col gap-3">
+        {/* <div className="flex flex-col gap-3">
           <ProjectLink
             isOpen={isOpen}
             name="Virtual Reality"
@@ -149,6 +156,21 @@ const NavigationBar = ({
           >
             <div className="min-w-4 mx-2 border-yellow-600 border rounded-full aspect-square bg-yellow-700" />
           </ProjectLink>
+        </div> */}
+        <div className="flex h-screen items-end gap-3 p-2 rounded cursor-pointer transition-colors duration-100">
+          <div className="scale-125">
+            <UserButton afterSignOutUrl="/" />
+          </div>
+          {isOpen && session && (
+            <div className="flex flex-col items-start">
+              <span className="text-sm font-semibold font-poppins truncate">
+                {session.user.fullName}
+              </span>
+              <span className="text-sm font-poppins truncate">
+                {session.user.emailAddresses[0]?.emailAddress}
+              </span>
+            </div>
+          )}
         </div>
       </motion.nav>
       <AnimatePresence>
