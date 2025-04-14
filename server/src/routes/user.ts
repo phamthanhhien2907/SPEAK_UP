@@ -5,11 +5,11 @@ import { verifyAccessToken } from "../middlewares/verifyToken";
 const router = Router();
 const storage = multer.memoryStorage()
 const upload = multer({ storage })
+router.get("/current", verifyAccessToken, getCurrent);
 router.get("/", getUsers);
 router.get("/:id", getUser);
 router.post("/register", register);
 router.post("/login", login);
-router.get("/current", verifyAccessToken, getCurrent);
 router.get("/logout", logout);
 router.post("/", upload.fields([
     { name: 'image', maxCount: 1 },

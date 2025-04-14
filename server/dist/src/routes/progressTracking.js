@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const progressTracking_controller_1 = require("../controllers/progressTracking.controller");
+const verifyToken_1 = require("../middlewares/verifyToken");
+const router = (0, express_1.Router)();
+router.get("/", progressTracking_controller_1.getProgressTrackings);
+router.get("/:id", progressTracking_controller_1.getProgressTrackingById);
+router.post("/", verifyToken_1.verifyAccessToken, progressTracking_controller_1.createProgressTracking);
+router.put("/:id", verifyToken_1.verifyAccessToken, progressTracking_controller_1.updateProgressTracking);
+router.delete("/:id", verifyToken_1.verifyAccessToken, progressTracking_controller_1.deleteProgressTracking);
+exports.default = router;
