@@ -1,9 +1,18 @@
+import { Dispatch } from "redux";
 import { apiGetCurrent } from "../../services/userService";
 import actionType from "./actionType";
-
-export const getCurrent = () => async (dispatch) => {
+interface ApiResponse {
+  success: boolean;
+  response: unknown;
+}
+interface GetCurrentAction {
+  type: typeof actionType.GET_CURRENT;
+  currentData: unknown;
+  msg?: unknown;
+}
+export const getCurrent = () => async (dispatch: Dispatch<GetCurrentAction>) => {
   try {
-    let response = await apiGetCurrent();
+    const response = (await apiGetCurrent()) as unknown as ApiResponse;
     if (response?.success) {
       dispatch({
         type: actionType.GET_CURRENT,

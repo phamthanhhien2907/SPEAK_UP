@@ -4,6 +4,11 @@ import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import reduxStore from "./store.ts";
+
+const { store, persistor } = reduxStore();
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 if (!PUBLISHABLE_KEY) {
   throw new Error("Add your Clerk Publishable Key to the .env file");
@@ -11,15 +16,19 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <ClerkProvider
-        publishableKey={PUBLISHABLE_KEY}
-        afterSignOutUrl="/sign-in"
-        signUpFallbackRedirectUrl="/"
-        signInFallbackRedirectUrl="/"
-      >
-        <App />
-      </ClerkProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <ClerkProvider
+            publishableKey={PUBLISHABLE_KEY}
+            afterSignOutUrl="/sign-in"
+            signUpFallbackRedirectUrl="/"
+            signInFallbackRedirectUrl="/"
+          >
+            <App />
+          </ClerkProvider>
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
   </StrictMode>
 );

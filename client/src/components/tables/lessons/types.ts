@@ -1,4 +1,4 @@
-export default interface User {
+export type User = {
     _id: string;
     username: string;
     email: string;
@@ -11,4 +11,4 @@ export default interface User {
     createdAt: Date;
     updatedAt: Date;
     total_score: number;
-}
+};

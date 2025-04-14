@@ -1,4 +1,4 @@
-import authReducer from "./authReducer";
+import authReducer, { AuthState } from "./authReducer";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
@@ -15,7 +15,7 @@ const authConfig = {
   whitelist: ["isLoggedIn", "token"],
 };
 const rootReducer = combineReducers({
-  auth: persistReducer(authConfig, authReducer),
-  user: userReducer,
+  auth: persistReducer<AuthState>(authConfig, authReducer),
+  // user: userReducer,
 });
 export default rootReducer;

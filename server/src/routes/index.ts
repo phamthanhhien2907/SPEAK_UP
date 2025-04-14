@@ -10,8 +10,10 @@ import lessonRoute from './lesson'
 import lessonProgressRoute from './lessonProgress'
 import progressTrackingRoute from './progressTracking'
 import vocabularyRoute from './vocabulary'
+import authRoute from './auth'
 
 export const initRoutes = (app: Application) => {
+    app.use("/api/auth", authRoute);
     app.use("/api/users", userRoute);
     app.use("/api/courses", courseRoute);
     app.use("/api/vocabulary", vocabularyRoute);

@@ -19,7 +19,7 @@ import {
 } from "../../ui/form";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
-import { useModal } from "../../../hooks/useModelStore";
+import { useModal } from "../../../hooks/use-model-store";
 
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -31,7 +31,7 @@ const formSchema = z.object({
     message: "Password is required",
   }),
 });
-export const CreateChannelModal = () => {
+export const CreateUserModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useNavigate();
   const params = useParams();
@@ -103,6 +103,12 @@ export const CreateChannelModal = () => {
               />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
+              <Button
+                onClick={() => onClose()}
+                className="text-black rounded-[4px]"
+              >
+                No, cancel
+              </Button>
               <Button disabled={isLoading} variant="ghost">
                 Create
               </Button>
