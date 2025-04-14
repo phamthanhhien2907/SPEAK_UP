@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createLessonProgress, deleteLessonProgress, getLessonProgressById, getLessonProgresses, updateLessonProgress } from "../controllers/LessonProgress.controller";
+import { createLessonProgress, deleteLessonProgress, getLessonProgressById, getLessonProgresses, updateLessonProgress } from "../controllers/lessonProgress.controller";
 import { verifyAccessToken } from "../middlewares/verifyToken";
 const router = Router();
 

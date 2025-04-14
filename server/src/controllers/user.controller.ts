@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import cloudinary from '../configs/cloudinary';
 import User from "../models/User";
-import { UserRequestDTO } from "../dtos/user.dto"
 import { generateAccessToken, generateRefreshToken } from "../middlewares/jwt";
+import { v4 as uuidv4 } from 'uuid';
 
+// Nếu bạn đã định nghĩa kiểu UserRequestDTO thì import vào nhé
+// import { UserRequestDTO } from "../types"; // <-- Thay đường dẫn nếu khác
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -39,19 +41,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         return
     }
 
-
-    // plain object
     const response = await User.findOne({ email })
     if (response && await response.isCorrectPassword(password)) {
-        // Tách password và role ra khỏi response
         const { password, role, refreshToken, ...userData } = response.toObject()
-        // Tạo access token
         const accessToken = generateAccessToken(response._id, role)
-        // Tạo refresh token
         const newRefreshToken = generateRefreshToken(response._id)
-        // Lưu refresh token vào database
         await User.findByIdAndUpdate(response._id, { refreshToken: newRefreshToken }, { new: true })
-        // Lưu refresh token vào cookie
         res.cookie('refreshToken', newRefreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 })
         res.status(200).json({
             success: true,
@@ -62,6 +57,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         throw new Error('Invalid credentials!')
     }
 }
+
 export const getCurrent = async (req: UserRequestDTO, res: Response): Promise<void> => {
     const userId = req?.user?._id
     console.log(userId);
@@ -71,6 +67,7 @@ export const getCurrent = async (req: UserRequestDTO, res: Response): Promise<vo
         rs: user ? user : 'User not found'
     })
 }
+
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
     const users = await User.find()
     res.status(200).json({
@@ -78,6 +75,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
         rs: users ? users : 'Users not found'
     })
 }
+
 export const getUser = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params
     const user = await User.findById(id)
@@ -86,6 +84,7 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
         rs: user ? user : 'User not found'
     })
 }
+
 export const logout = async (req: Request, res: Response): Promise<void> => {
     const cookie = req.cookies
     console.log(cookie);
@@ -102,10 +101,12 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
         mes: 'Logout is done'
     })
 }
+
 interface FileUploadResult {
     url: string;
     id: string;
 }
+
 export const createUser = async (req: UserRequestDTO, res: Response): Promise<void> => {
     const userId = req?.user?._id
     if (!userId) {
@@ -117,9 +118,10 @@ export const createUser = async (req: UserRequestDTO, res: Response): Promise<vo
         res.status(400).json({ message: 'No files uploaded' })
         return
     }
+
     const files = req?.files as { [fieldname: string]: Express.Multer.File[] }
     const imageFile = files['image'][0]
-    // const audioFile = files['audio'][0]
+
     try {
         const imageResult: FileUploadResult = await new Promise(
             (resolve, reject) => {
@@ -131,40 +133,23 @@ export const createUser = async (req: UserRequestDTO, res: Response): Promise<vo
                             return reject(new Error('Cloudinary upload failed'));
                         }
                         resolve({
-                            url: result?.secure_url,
-                            id: result?.public_id,
+                            url: result.secure_url,
+                            id: result.public_id,
                         })
                     }
                 )
                 stream.end(imageFile.buffer)
             }
         )
-        // const audioResult = await new Promise(
-        //     (resolve, reject) => {
-        //         const stream = cloudinary.uploader.upload_stream(
-        //             { resource_type: 'video' },
-        //             (error, result) => {
-        //                 if (error) reject(error)
-        //                 resolve({
-        //                     url: result?.secure_url,
-        //                     id: result?.public_id,
-        //                 })
-        //             }
-        //         )
-        //         stream.end(audioFile.buffer)
-        //     }
-        // )
 
-        const updatedUser = await User.findByIdAndUpdate(userId, { avatar: imageResult?.url }, { new: true })
+        const updatedUser = await User.findByIdAndUpdate(userId, { avatar: imageResult.url }, { new: true })
         res.status(200).json({
             success: true,
             message: 'Uploaded avatar successfully',
             imageUrl: updatedUser,
-
         })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: 'Error uploading files' })
     }
 }
-

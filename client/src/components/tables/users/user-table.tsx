@@ -12,14 +12,14 @@ import {
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
 
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Input } from "../ui/input";
+} from "../../ui/dropdown-menu";
+import { Input } from "../../ui/input";
 import {
   Table,
   TableBody,
@@ -27,73 +27,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
-import { Payment } from "./types";
-import { columns } from "./columns";
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@example.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@example.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@example.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@example.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@example.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "hehe@example.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "haha@example.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@example.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@example.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@example.com",
-  },
-];
+} from "../../ui/table";
+import { User } from "./types";
+import { getColumns } from "./columns";
+import { apiGetAllUser } from "../../../services/userService";
+import { useModal } from "../../../hooks/use-model-store";
 
 export function UserTable() {
+  const { onOpen } = useModal();
+  const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
+  const [userData, setUserData] = React.useState<User[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -102,7 +45,7 @@ export function UserTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data,
+    data: userData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -118,20 +61,27 @@ export function UserTable() {
       columnVisibility,
       rowSelection,
     },
-    globalFilterFn: (row, columnId, filterValue) => {
-      return Object.values(row.original).some((value) =>
-        String(value).toLowerCase().includes(filterValue.toLowerCase())
-      );
-    },
+
     initialState: {
       pagination: {
         pageSize: 5,
       },
     },
   });
+  const getAllUsers = async () => {
+    const users = await apiGetAllUser();
+    if (users.data.success) {
+      setUserData(users.data.rs);
+    } else {
+      console.log("Failed to fetch users");
+    }
+  };
+  React.useEffect(() => {
+    getAllUsers();
+  }, []);
   return (
-    <div className="w-full shadow-lg drop-shadow-lg">
-      <div className="flex items-center py-4">
+    <div className="w-full shadow-lg drop-shadow-lg ">
+      <div className="flex items-center py-4 justify-between">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -140,47 +90,40 @@ export function UserTable() {
           }
           className="max-w-sm"
         />
-        <Input
-          placeholder="Search all columns..."
-          value={
-            (columnFilters.find((f) => f.id === "global")?.value as string) ??
-            ""
-          }
-          onChange={(event) => {
-            const value = event.target.value;
-            setColumnFilters((prev) => [
-              ...prev.filter((f) => f.id !== "global"), // Xóa bộ lọc cũ
-              { id: "global", value }, // Thêm bộ lọc mới
-            ]);
-          }}
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div
+          onClick={() => onOpen("createUser")}
+          className="flex items-center space-x-2"
+        >
+          <Button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[4px]">
+            Add new user
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>

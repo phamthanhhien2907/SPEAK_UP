@@ -5,6 +5,7 @@ const homeRoutes: RouteObject[] = [
   {
     path: "/",
     element: <HomePage />,
+    index: true,
   },
 ];
 export default homeRoutes;

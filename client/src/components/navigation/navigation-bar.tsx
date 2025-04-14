@@ -1,9 +1,13 @@
 import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 import { useState, useEffect, JSX } from "react";
 import NavigationLink from "./navigation-link";
-
-import ProjectLink from "./project-link";
+// import ProjectLink from "./project-link";
 import ProjectNavigation from "./project-navigation";
+import { useSelectedPageContext } from "../../hooks/use-context";
+import { LogOut } from "lucide-react";
+import { useAppDispatch } from "../../hooks/use-dispatch";
+import { logout } from "../../stores/actions/authAction";
+import { useNavigate } from "react-router-dom";
 
 const containerVariants = {
   close: {
@@ -45,11 +49,14 @@ const NavigationBar = ({
   items: ItemType[];
   onSelect: (page: string) => void;
 }) => {
+  const { selectedPage, setSelectedPage } = useSelectedPageContext();
   const [isOpen, setIsOpen] = useState(true);
-  const [selectedLink, setSelectedLink] = useState<string | null>("Dashboard");
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const containerControls = useAnimationControls();
   const svgControls = useAnimationControls();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (isOpen) {
       containerControls.start("open");
@@ -65,8 +72,8 @@ const NavigationBar = ({
     setSelectedProject(null);
   };
   const handleSelect = (name: string) => {
-    setSelectedLink(name);
-    onSelect(name); // Gọi hàm để cập nhật trang
+    setSelectedPage(name);
+    onSelect(name);
   };
   return (
     <>
@@ -111,8 +118,7 @@ const NavigationBar = ({
               <NavigationLink
                 key={item.id}
                 name={item.name}
-                setSelectedItem={setSelectedLink}
-                selectedItem={selectedLink}
+                selectedItem={selectedPage}
               >
                 {item.icon}
               </NavigationLink>
@@ -120,7 +126,7 @@ const NavigationBar = ({
           ))}
         </div>
 
-        <div className="flex flex-col gap-3">
+        {/* <div className="flex flex-col gap-3">
           <ProjectLink
             isOpen={isOpen}
             name="Virtual Reality"
@@ -149,6 +155,25 @@ const NavigationBar = ({
           >
             <div className="min-w-4 mx-2 border-yellow-600 border rounded-full aspect-square bg-yellow-700" />
           </ProjectLink>
+        </div> */}
+        <button
+          onClick={() => {
+            dispatch(logout());
+            navigate("/auth");
+          }}
+          className="flex items-center justify-center"
+        >
+          <LogOut size={30} />
+          Đăng xuất
+        </button>
+        <div className="flex h-screen items-end gap-3 p-2 rounded cursor-pointer transition-colors duration-100">
+          <div className="scale-125"></div>
+          {isOpen && (
+            <div className="flex flex-col items-start">
+              <span className="text-[13px] font-semibold font-poppins truncate"></span>
+              <span className="text-[13px] font-poppins truncate"></span>
+            </div>
+          )}
         </div>
       </motion.nav>
       <AnimatePresence>

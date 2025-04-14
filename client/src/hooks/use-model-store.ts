@@ -6,7 +6,7 @@ export type ModalType =
   | "editUser"
   | "deleteUser"
 
-interface ModalData {
+export interface ModalData {
   user?: User;
 }
 interface ModalStore {
