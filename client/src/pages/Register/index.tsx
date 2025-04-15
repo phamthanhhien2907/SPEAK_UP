@@ -55,7 +55,7 @@ const Register = ({
       if (response.data.err == 0) {
         toast.error(response.data.msg);
       }
-      if (response.data.sucess) {
+      if (response.data.success) {
         toast.success("Register successful!");
         onLogin?.();
         setInput({ email: "", password: "" });

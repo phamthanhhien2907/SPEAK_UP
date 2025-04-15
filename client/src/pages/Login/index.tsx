@@ -48,7 +48,7 @@ const Login = ({
       if (response.data.err === 0) {
         toast.error(response.data.msg);
       }
-      if (response?.data?.sucess) {
+      if (response?.data?.success) {
         dispatch(loginAction(input))
           .then(() => {
             toast.success("Login successful!");
