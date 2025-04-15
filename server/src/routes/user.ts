@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { Router } from "express";
 import multer from 'multer'
 import { createUser, getCurrent, getUser, getUsers, logout } from "../controllers/user.controller";
 
@@ -10,7 +10,6 @@ const upload = multer({ storage })
 router.get("/current", verifyAccessToken, getCurrent);
 router.get("/", getUsers);
 router.get("/:id", getUser);
-
 router.get("/logout", logout);
 router.post("/", upload.fields([
     { name: 'image', maxCount: 1 },
