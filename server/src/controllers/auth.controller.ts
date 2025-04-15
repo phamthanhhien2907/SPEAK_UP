@@ -7,8 +7,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password, firstname, lastname } = req.body
-        if (!email || !password || !lastname || !firstname) {
+        const { email, password } = req.body
+        if (!email || !password) {
             res.status(400).json({
                 sucess: false,
                 mes: 'Missing inputs'
@@ -16,7 +16,13 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             return
         }
         const existingUser = await User.findOne({ email })
-        if (existingUser) throw new Error('User has existed')
+        if (existingUser) {
+            res.status(409).json({
+                err: 0,
+                msg: "User has existed"
+            })
+            return
+        }
         const newUser = await User.create(req.body)
         await newUser.save()
         res.status(200).json({
@@ -38,8 +44,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         })
         return
     }
-
-
     // plain object
     const response = await User.findOne({ email })
     if (response && await response.isCorrectPassword(password)) {
@@ -52,14 +56,17 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         // Lưu refresh token vào database
         await User.findByIdAndUpdate(response._id, { refreshToken: newRefreshToken }, { new: true })
         // Lưu refresh token vào cookie
-        res.cookie('refreshToken', newRefreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 })
+        res.cookie('refreshToken', newRefreshToken, { maxAge: 7 * 24 * 60 * 60 * 1000, secure: true, sameSite: 'strict', httpOnly: true, })
         res.status(200).json({
             sucess: true,
             accessToken,
             userData
         })
     } else {
-        throw new Error('Invalid credentials!')
+        res.status(400).json({
+            err: 0,
+            msg: "Incorrect email or password"
+        })
     }
 }
 export const loginSuccess = async (req: Request, res: Response): Promise<void> => {

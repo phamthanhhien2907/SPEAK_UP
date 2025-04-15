@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import cloudinary from '../configs/cloudinary';
 import User from "../models/User";
-import { generateAccessToken, generateRefreshToken } from "../middlewares/jwt";
-import { v4 as uuidv4 } from 'uuid';
+
 
 export const getCurrent = async (req: Request, res: Response): Promise<void> => {
     const userId = req?.user?._id

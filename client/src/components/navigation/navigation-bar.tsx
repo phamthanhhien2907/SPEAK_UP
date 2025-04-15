@@ -161,9 +161,9 @@ const NavigationBar = ({
             dispatch(logout());
             navigate("/auth");
           }}
-          className="flex items-center justify-center"
+          className="flex items-center justify-start px-2 gap-2 font-medium"
         >
-          <LogOut size={30} />
+          <LogOut color="gray" size={30} />
           Đăng xuất
         </button>
         <div className="flex h-screen items-end gap-3 p-2 rounded cursor-pointer transition-colors duration-100">

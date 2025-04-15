@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import registerImg from "../../assets/register.svg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { GoDotFill } from "react-icons/go";
 import { FaCheck } from "react-icons/fa";
 import facebook from "../../assets/facebook.png";
 import google from "../../assets/google.png";
+import toast from "react-hot-toast";
+import { apiRegister } from "../../services/authService";
+import { authActionProps } from "../../stores/actions/authAction";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/use-dispatch";
 type registerProps = {
   onLogin?: () => void;
   onShowPassword?: boolean;
@@ -18,7 +23,6 @@ const Register = ({
   onClickTypeLogin,
 }: registerProps) => {
   const [showIndicator, setShowIndicator] = useState(false);
-  const [pass, setPass] = useState("");
 
   const [passLetter, setPassLetter] = useState(false);
   const [passNumber, setPassNumber] = useState(false);
@@ -26,25 +30,54 @@ const Register = ({
   const [passLength, setPassLength] = useState(false);
 
   const [passComplete, setPassComplete] = useState(false);
-
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [input, setInput] = useState<authActionProps>({
+    email: "",
+    password: "",
+  });
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if (!input.email || !input.password) {
+        toast.error("Please fill in all fields");
+        return;
+      }
+      setLoading(true);
+      const response = await apiRegister(input);
+      if (response.data.err == 0) {
+        toast.error(response.data.msg);
+      }
+      if (response.data.sucess) {
+        toast.success("Register successful!");
+        onLogin?.();
+        setInput({ email: "", password: "" });
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
   const handleShowIndicator = () => {
     setShowIndicator(true);
   };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPass(e.target.value);
-  };
-
   useEffect(() => {
     // check Lower and Uppercase
-    if (pass.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
+    if (input.password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
       setPassLetter(true);
     } else {
       setPassLetter(false);
     }
 
     // Check For Numbers
-    if (pass.match(/([0-9])/)) {
+    if (input.password.match(/([0-9])/)) {
       setPassNumber(true);
     } else {
       setPassNumber(false);
@@ -52,13 +85,13 @@ const Register = ({
 
     // Check For Special char
 
-    if (pass.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+    if (input.password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
       setPassChar(true);
     } else {
       setPassChar(false);
     }
 
-    if (pass.length > 7) {
+    if (input.password.length > 7) {
       setPassLength(true);
     } else {
       setPassLength(false);
@@ -69,24 +102,31 @@ const Register = ({
     } else {
       setPassComplete(false);
     }
-  }, [pass, passLetter, passNumber, passChar, passLength]);
+  }, [input.password, passLetter, passNumber, passChar, passLength]);
 
   return (
     <div className="main-container --flex-center">
       <div className="form-container">
-        <form className="--form-control">
+        <form onSubmit={handleSubmit} className="--form-control">
           <h2 className="--color-danger --text-center">Register</h2>
-          <input type="text" className="--width-100" placeholder="Username" />
-          <input type="email" className="--width-100" placeholder="Email" />
+          {/* <input type="text" className="--width-100" placeholder="Username" /> */}
+          <input
+            onChange={handleInput}
+            name="email"
+            type="email"
+            className="--width-100"
+            placeholder="Email"
+          />
           {/* PASSWORD FIELD */}
           <div className="password">
             <input
               type={onShowPassword ? "text" : "password"}
               className="--width-100"
+              name="password"
               placeholder="Password"
               onFocus={handleShowIndicator}
-              value={pass}
-              onChange={handlePasswordChange}
+              value={input.password}
+              onChange={handleInput}
             />
             <span className="icon" onClick={onTogglePassword}>
               {onShowPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
@@ -94,7 +134,6 @@ const Register = ({
           </div>
           {/* PASSWORD FIELD */}
           <button
-            onClick={() => alert(pass)}
             disabled={!passComplete}
             className={
               passComplete
@@ -106,7 +145,7 @@ const Register = ({
           </button>
 
           <span className="--text-sm --block">
-            Have an account?{" "}
+            Have an account?
             <a href="#" className="--text-sm" onClick={onLogin}>
               Login
             </a>
