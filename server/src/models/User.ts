@@ -16,6 +16,9 @@ export interface IUser extends Document {
     level: number;
     total_score: number;
     isCorrectPassword(password: string): Promise<boolean>;
+    createPasswordChangedToken(): string;
+    passwordResetToken?: string;
+    passwordResetExpires?: number;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -32,6 +35,8 @@ const UserSchema = new Schema<IUser>({
     role: { type: String, enum: ["student", "teacher", "admin"], default: "student" },
     level: { type: Number, default: 0 },
     total_score: { type: Number, default: 0 },
+    passwordResetToken: { type: String },
+    passwordResetExpires: { type: Number },
 },
     {
         timestamps: true
@@ -42,15 +47,28 @@ UserSchema.pre<IUser>('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt)
     next()
 })
-UserSchema.methods = {
-    isCorrectPassword: async function (password: string): Promise<boolean> {
-        return await bcrypt.compare(password, this.password)
-    },
-    createPasswordChangedToken: function () {
-        const resetToken = crypto.randomBytes(32).toString('hex')
-        this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex')
-        this.passwordResetExpires = Date.now() + 15 * 60 * 1000
-        return resetToken
+UserSchema.methods.isCorrectPassword = async function (
+    password: string
+): Promise<boolean> {
+    if (!password || !this.password) {
+        console.error("Missing password or hash for comparison");
+        return false;
     }
-}
+
+    try {
+        return await bcrypt.compare(password, this.password);
+    } catch (err) {
+        console.error("Error comparing passwords", err);
+        return false;
+    }
+};
+UserSchema.methods.createPasswordChangedToken = function (): string {
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    this.passwordResetToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
+    this.passwordResetExpires = Date.now() + 15 * 60 * 1000; // 15 phút
+    return resetToken;
+};
 export default mongoose.model<IUser>("User", UserSchema);

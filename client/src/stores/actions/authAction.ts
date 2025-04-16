@@ -4,12 +4,10 @@ import actionType from "./actionType";
 
 interface ApiResponse {
   success: boolean;
-  response: {
-    accessToken?: string;
-    role?: string
-  };
   err: number
   data: {
+    success?: boolean;
+    accessToken?: string;
     token?: string;
     role?: string;
     msg?: string;
@@ -17,7 +15,7 @@ interface ApiResponse {
 }
 
 export interface authActionProps {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -41,10 +39,10 @@ export const loginAction = (data: authActionProps) => async (dispatch: Dispatch<
   try {
     const response = (await apiLogin(data)) as unknown as ApiResponse;
 
-    if (response.response?.accessToken) {
+    if (response?.data) {
       dispatch({
         type: actionType.LOGIN,
-        token: response.response.accessToken,
+        token: response.data.accessToken,
       });
     } else {
       dispatch({
@@ -63,7 +61,6 @@ export const loginAction = (data: authActionProps) => async (dispatch: Dispatch<
 export const loginSuccessAction = (id: unknown, tokenLogin: unknown) => async (dispatch: Dispatch<AuthAction>) => {
   try {
     const response = await apiLoginSuccess(id, tokenLogin) as unknown as ApiResponse;
-    console.log(response?.data?.token);
     if (response?.data) {
       dispatch({
         type: actionType.LOGIN_SUCCESS,

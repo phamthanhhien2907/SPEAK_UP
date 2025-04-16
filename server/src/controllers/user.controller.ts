@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import cloudinary from '../configs/cloudinary';
 import User from "../models/User";
-import { generateAccessToken, generateRefreshToken } from "../middlewares/jwt";
-import { v4 as uuidv4 } from 'uuid';
+
 
 // Nếu bạn đã định nghĩa kiểu UserRequestDTO thì import vào nhé
 // import { UserRequestDTO } from "../types"; // <-- Thay đường dẫn nếu khác

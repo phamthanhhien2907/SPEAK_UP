@@ -19,8 +19,8 @@ export const apiLogin = async (data: authActionProps) => {
       method: "POST",
       url: "/auth/login",
       data,
+      withCredentials: true
     })
-
     return response;
   } catch (error) {
     console.error("Error during login:", error);
