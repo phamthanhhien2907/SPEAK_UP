@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const pronunciationScore_controller_1 = require("../controllers/pronunciationScore.controller");
+const verifyToken_1 = require("../middlewares/verifyToken");
+const router = (0, express_1.Router)();
+router.get("/", pronunciationScore_controller_1.getPronunciationScores);
+router.get("/:id", pronunciationScore_controller_1.getPronunciationScoreById);
+router.post("/", verifyToken_1.verifyAccessToken, pronunciationScore_controller_1.createPronunciationScore);
+router.put("/:id", verifyToken_1.verifyAccessToken, pronunciationScore_controller_1.updatePronunciationScore);
+router.delete("/:id", verifyToken_1.verifyAccessToken, pronunciationScore_controller_1.deletePronunciationScore);
+exports.default = router;

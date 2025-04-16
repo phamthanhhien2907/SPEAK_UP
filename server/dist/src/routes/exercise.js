@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const exercise_controller_1 = require("../controllers/exercise.controller");
+const verifyToken_1 = require("../middlewares/verifyToken");
+const router = (0, express_1.Router)();
+router.get("/", exercise_controller_1.getExercises);
+router.get("/:id", exercise_controller_1.getExerciseById);
+router.post("/", verifyToken_1.verifyAccessToken, exercise_controller_1.createExercise);
+router.put("/:id", verifyToken_1.verifyAccessToken, exercise_controller_1.updateExercise);
+router.delete("/:id", verifyToken_1.verifyAccessToken, exercise_controller_1.deleteExercise);
+exports.default = router;
