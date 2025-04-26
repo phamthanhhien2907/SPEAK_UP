@@ -43,6 +43,7 @@ const authReducer: Reducer<AuthState, AuthAction> = (state = initState, action: 
 
       };
     }
+
     case actionType.LOGIN: {
       const loginAction = action as LoginAction;
       return {

@@ -1,11 +1,11 @@
-import loginImg from "../../assets/login.svg";
+import loginImg from "@/assets/login.svg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import facebook from "../../assets/facebook.png";
-import google from "../../assets/google.png";
-import { apiLogin } from "../../services/authService";
+import facebook from "@/assets/facebook.png";
+import google from "@/assets/google.png";
+import { apiLogin } from "@/services/auth.services";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { authActionProps, loginAction } from "../../stores/actions/authAction";
-import { useAppDispatch } from "../../hooks/use-dispatch";
+import { authActionProps, loginAction } from "@/stores/actions/authAction";
+import { useAppDispatch } from "@/hooks/use-dispatch";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 type loginProps = {

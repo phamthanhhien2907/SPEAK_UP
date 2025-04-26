@@ -10,7 +10,7 @@ const upload = multer({ storage })
 router.get("/current", verifyAccessToken, getCurrent);
 router.get("/", getUsers);
 router.get("/:id", getUser);
-router.get("/logout", logout);
+router.post("/logout", logout);
 router.post("/", upload.fields([
     { name: 'image', maxCount: 1 },
 ]), verifyAccessToken, createUser);

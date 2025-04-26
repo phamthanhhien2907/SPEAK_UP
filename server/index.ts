@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { connectDB } from './src/configs/connectDB';
 import { initRoutes } from './src/routes/index';
 import "./src/passport/index"
@@ -13,6 +14,7 @@ app.use(cors(
         credentials: true
     }
 ));
+app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 connectDB();

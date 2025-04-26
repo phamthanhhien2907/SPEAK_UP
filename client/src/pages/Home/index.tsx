@@ -11,6 +11,7 @@ import {
 import { SelectedPageContext } from "../../hooks/use-context";
 import { LessonTable } from "../../components/tables/lessons/lesson-table";
 import ModalProvider from "../../components/provider/modal-provider";
+import { CourseTable } from "@/components/tables/course/course-table";
 
 const items = [
   {
@@ -61,6 +62,7 @@ const Home = () => {
           <ModalProvider />
           {selectedPage === "Users" && <UserTable />}
           {selectedPage === "Lessons" && <LessonTable />}
+          {selectedPage === "Courses" && <CourseTable />}
         </section>
       </main>
     </SelectedPageContext.Provider>

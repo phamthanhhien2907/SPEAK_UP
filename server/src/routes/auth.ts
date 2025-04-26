@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import passport from "passport";
-import { login, loginSuccess, register } from "../controllers/auth.controller";
+import { login, loginSuccess, refreshAccessToken, register } from "../controllers/auth.controller";
 const router = Router();
 router.post("/register", register);
 router.post("/login", login);
@@ -64,5 +64,7 @@ router.get(
     }
 );
 router.post("/login-success", loginSuccess);
+router.post("/refreshToken", refreshAccessToken);
+
 
 export default router;

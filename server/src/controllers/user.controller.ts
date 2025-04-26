@@ -5,6 +5,7 @@ import User from "../models/User";
 
 export const getCurrent = async (req: Request, res: Response): Promise<void> => {
     const userId = req?.user?._id
+    console.log(userId);
     const user = await User.findById(userId).select('-refreshToken -password -role')
     res.status(200).json({
         success: user ? true : false,
@@ -29,17 +30,21 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
 export const logout = async (req: Request, res: Response): Promise<void> => {
     const cookie = req.cookies
     console.log(cookie);
-    if (!cookie || !cookie.refreshToken) throw new Error('No refresh token in cookies')
-
+    if (!cookie || !cookie.refreshToken) {
+        res.status(400).json({ success: false, msg: 'No refresh token in cookies' });
+        return
+    }
     await User.findOneAndUpdate({ refreshToken: cookie.refreshToken }, { refreshToken: '' }, { new: true })
 
     res.clearCookie('refreshToken', {
         httpOnly: true,
-        secure: true
+        secure: process.env.NODE_ENV === 'production', // chỉ secure trên production
+        sameSite: 'strict',
+        path: '/',   // phải khớp với path khi set cookie
     })
     res.status(200).json({
         success: true,
-        mes: 'Logout is done'
+        mes: 'Logout successful'
     })
 }
 interface FileUploadResult {
