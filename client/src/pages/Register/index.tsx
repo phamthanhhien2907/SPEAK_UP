@@ -1,15 +1,14 @@
-import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
-import registerImg from "../../assets/register.svg";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import registerImg from "@/assets/register.svg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { GoDotFill } from "react-icons/go";
 import { FaCheck } from "react-icons/fa";
-import facebook from "../../assets/facebook.png";
-import google from "../../assets/google.png";
+import facebook from "@/assets/facebook.png";
+import google from "@/assets/google.png";
 import toast from "react-hot-toast";
-import { apiRegister } from "../../services/authService";
-import { authActionProps } from "../../stores/actions/authAction";
+import { apiRegister } from "@/services/auth.services";
+import { authActionProps } from "@/stores/actions/authAction";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/use-dispatch";
 type registerProps = {
   onLogin?: () => void;
   onShowPassword?: boolean;

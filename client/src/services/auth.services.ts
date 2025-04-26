@@ -13,6 +13,19 @@ export const apiRegister = async (data: authActionProps) => {
     throw error;
   }
 };
+export const apiRefreshToken = async () => {
+  try {
+    const response = await axiosConfig({
+      method: "POST",
+      url: "/auth/refreshToken",
+      withCredentials: true
+    });
+    return response;
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw error;
+  }
+};
 export const apiLogin = async (data: authActionProps) => {
   try {
     const response = await axiosConfig({

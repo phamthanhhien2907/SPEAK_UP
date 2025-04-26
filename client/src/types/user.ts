@@ -12,3 +12,4 @@ export type User = {
     updatedAt: Date;
     total_score: number;
 };
+

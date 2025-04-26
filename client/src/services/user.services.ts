@@ -39,7 +39,20 @@ export const apiGetCurrent = async () => {
   try {
     const response = await axiosConfig({
       method: "GET",
-      url: "/users/get-current",
+      url: "/users/current",
+    });
+    return response;
+  } catch (error) {
+    console.log("Error fetching current user:", error);
+    throw error;
+  }
+}
+export const apiLogout = async () => {
+  try {
+    const response = await axiosConfig({
+      method: "POST",
+      url: "/users/logout",
+      withCredentials: true
     });
     return response;
   } catch (error) {

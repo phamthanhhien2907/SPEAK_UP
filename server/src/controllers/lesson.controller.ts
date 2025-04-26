@@ -3,7 +3,10 @@ import { Request, Response } from "express"
 import Lesson from "../models/Lesson";
 
 export const getLessons = async (req: Request, res: Response): Promise<void> => {
-    const lessons = await Lesson.find()
+    const lessons = await Lesson.find().populate({
+        path: "courseId",
+        select: "title description level thumbnail",
+    });
     res.status(200).json({
         success: lessons ? true : false,
         rs: lessons ? lessons : 'Lessons not found'

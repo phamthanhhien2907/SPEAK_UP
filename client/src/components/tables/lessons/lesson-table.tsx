@@ -12,14 +12,14 @@ import {
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
 
-import { Button } from "../../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import { Input } from "../../ui/input";
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -27,15 +27,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../ui/table";
-import { User } from "./types";
-import { columns } from "./columns";
-import { apiGetAllUser } from "../../../services/userService";
-import { useModal } from "../../../hooks/use-model-store";
+} from "@/components/ui/table";
+
+import { getColumns } from "./columns";
+
+import { useModal } from "@/hooks/use-model-store";
+import { Lesson } from "@/types/lesson";
+import { apiGetAllLesson } from "@/services/lesson.services";
 
 export function LessonTable() {
   const { onOpen } = useModal();
-  const [userData, setUserData] = React.useState<User[]>([]);
+  const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
+  const [lessonData, setLessonData] = React.useState<Lesson[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -44,7 +47,7 @@ export function LessonTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data: userData,
+    data: lessonData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -67,34 +70,34 @@ export function LessonTable() {
       },
     },
   });
-  const getAllUsers = async () => {
-    const users = await apiGetAllUser();
-    if (users.data.success) {
-      setUserData(users.data.rs);
+  const getAllLesson = async () => {
+    const lessons = await apiGetAllLesson();
+    if (lessons.data.success) {
+      setLessonData(lessons.data.rs);
     } else {
       console.log("Failed to fetch users");
     }
   };
   React.useEffect(() => {
-    getAllUsers();
+    getAllLesson();
   }, []);
   return (
     <div className="w-full shadow-lg drop-shadow-lg ">
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter Title..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
         <div
-          onClick={() => onOpen("createUser")}
+          onClick={() => onOpen("createLesson")}
           className="flex items-center space-x-2"
         >
           <Button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[4px]">
-            Add new user
+            Add new lesson
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

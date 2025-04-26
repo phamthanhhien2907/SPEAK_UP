@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { loginSuccessAction } from "../../stores/actions/authAction";
-import { useAppDispatch } from "../../hooks/use-dispatch";
+import { loginSuccessAction } from "@/stores/actions/authAction";
+import { useAppDispatch } from "@/hooks/use-dispatch";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@/store";
 
 const LoginSuccess = () => {
   const { userId, tokenLogin } = useParams();

@@ -3,10 +3,10 @@ import { useState, useEffect, JSX } from "react";
 import NavigationLink from "./navigation-link";
 // import ProjectLink from "./project-link";
 import ProjectNavigation from "./project-navigation";
-import { useSelectedPageContext } from "../../hooks/use-context";
+import { useSelectedPageContext } from "@/hooks/use-context";
 import { LogOut } from "lucide-react";
-import { useAppDispatch } from "../../hooks/use-dispatch";
-import { logout } from "../../stores/actions/authAction";
+import { useAppDispatch } from "@/hooks/use-dispatch";
+import { logout } from "@/stores/actions/authAction";
 import { useNavigate } from "react-router-dom";
 
 const containerVariants = {

@@ -1,10 +1,16 @@
 
 import { create } from "zustand";
-import User from "../types/user";
+import { User } from "../types/user";
 export type ModalType =
   | "createUser"
   | "editUser"
   | "deleteUser"
+  | "createLesson"
+  | "editLesson"
+  | "deleteLesson"
+  | "createCourse"
+  | "editCourse"
+  | "deleteCourse"
 
 export interface ModalData {
   user?: User;
