@@ -10,27 +10,29 @@ import { setNavigate } from "./lib/navigate";
 
 function App() {
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { status, userData } = useSelector((state: RootState) => state.user);
-  console.log(userData);
-
+  // const { status, userData } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    if (isLoggedIn) dispatch(getCurrent());
-    else navigate("/auth");
-    return () => {};
+    const setTimeoutId = setTimeout(() => {
+      if (isLoggedIn) dispatch(getCurrent());
+      else navigate("/auth");
+    }, 500);
+    return () => {
+      clearTimeout(setTimeoutId);
+    };
   }, [dispatch, isLoggedIn, navigate]);
   useEffect(() => {
     setNavigate(navigate);
   }, [navigate]);
 
-  if (status === "loading") {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-blue-500"></div>
-      </div>
-    );
-  }
+  // if (status === "loading") {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-blue-500"></div>
+  //     </div>
+  //   );
+  // }
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>

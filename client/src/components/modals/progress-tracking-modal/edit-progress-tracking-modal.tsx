@@ -29,11 +29,11 @@ const formSchema = z.object({
     message: "Password is required",
   }),
 });
-export const EditUserModal = () => {
+export const EditProgressTrackingModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useNavigate();
   const params = useParams();
-  const isModalOpen = isOpen && type === "editUser";
+  const isModalOpen = isOpen && type === "editProgressTracking";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +52,7 @@ export const EditUserModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Update User
+            Update Progress Tracking
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

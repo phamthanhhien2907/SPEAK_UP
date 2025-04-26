@@ -33,7 +33,7 @@ import { apiGetAllUser } from "@/services/user.services";
 import { useModal } from "@/hooks/use-model-store";
 import { User } from "@/types/user";
 
-export function UserTable() {
+export function EnrollmentTable() {
   const { onOpen } = useModal();
   const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
   const [userData, setUserData] = React.useState<User[]>([]);
@@ -91,11 +91,11 @@ export function UserTable() {
           className="max-w-sm"
         />
         <div
-          onClick={() => onOpen("createUser")}
+          onClick={() => onOpen("createEnrollment")}
           className="flex items-center space-x-2"
         >
           <Button className="bg-blue-500 hover:bg-blue-700 text-white rounded-[4px]">
-            Add new user
+            Add new enrollment
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

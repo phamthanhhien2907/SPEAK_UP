@@ -33,7 +33,7 @@ export const EditFeedBackModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useNavigate();
   const params = useParams();
-  const isModalOpen = isOpen && type === "editUser";
+  const isModalOpen = isOpen && type === "editFeedBack";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +52,7 @@ export const EditFeedBackModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Update User
+            Update FeedBack
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

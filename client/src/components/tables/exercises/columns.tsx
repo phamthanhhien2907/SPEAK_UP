@@ -79,13 +79,13 @@ export const getColumns = (
       return (
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => onOpen("editUser")}
+            onClick={() => onOpen("editExercise")}
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]"
           >
             <Edit />
           </Button>
           <Button
-            onClick={() => onOpen("deleteUser")}
+            onClick={() => onOpen("deleteExercise")}
             className="bg-red-500 hover:bg-red-700 text-white rounded-[4px]"
           >
             <Trash />

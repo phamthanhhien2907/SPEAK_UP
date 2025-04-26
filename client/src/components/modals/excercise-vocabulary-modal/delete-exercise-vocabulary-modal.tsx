@@ -28,7 +28,7 @@ export const DeleteExerciseVocabularyModall = () => {
   const { isOpen, onClose, type } = useModal();
   const router = useNavigate();
   const params = useParams();
-  const isModalOpen = isOpen && type === "deleteUser";
+  const isModalOpen = isOpen && type === "deleteExerciseVocabulary";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,7 +47,7 @@ export const DeleteExerciseVocabularyModall = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Delete User
+            Delete Exercise Vocabulary
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

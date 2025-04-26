@@ -35,7 +35,7 @@ export const CreateExerciseModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useNavigate();
   const params = useParams();
-  const isModalOpen = isOpen && type === "createUser";
+  const isModalOpen = isOpen && type === "createExercise";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,7 +62,7 @@ export const CreateExerciseModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create Channel
+            Create Exercise
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

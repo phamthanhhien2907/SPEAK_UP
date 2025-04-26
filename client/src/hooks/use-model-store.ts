@@ -10,7 +10,17 @@ export type ModalType =
   | "deleteLesson"
   | "createCourse"
   | "editCourse"
-  | "deleteCourse"
+  | "deleteCourse" | "createEnrollment"
+  | "deleteEnrollment"
+  | "editEnrollment" | "createExercise"
+  | "editExercise" | "deleteExercise"
+  | "createVocabulary" | "deleteVocabulary" |
+  "editVocabulary" | "createHistory" |
+  "deleteHistory" | "editHistory" | "createFeedBack" |
+  "deleteFeedBack" | "editFeedBack" |
+  "createtLessonProgress" | "deleteLessonProgress" |
+  "editLessonProgress" | "createProgressTracking" | "deleteProgressTracking" |
+  "editProgressTracking" | "createPronunciationScore" | "deletePronunciationScore" | "editPronunciationScore" | "createExerciseVocabulary" | "editExerciseVocabulary" | "deleteExerciseVocabulary"
 
 export interface ModalData {
   user?: User;

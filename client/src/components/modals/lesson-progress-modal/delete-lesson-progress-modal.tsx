@@ -24,11 +24,11 @@ const formSchema = z.object({
     message: "Password is required",
   }),
 });
-export const DeleteUserModal = () => {
+export const DeleteLessonProgressModal = () => {
   const { isOpen, onClose, type } = useModal();
   const router = useNavigate();
   const params = useParams();
-  const isModalOpen = isOpen && type === "deleteUser";
+  const isModalOpen = isOpen && type === "deleteLessonProgress";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,7 +47,7 @@ export const DeleteUserModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Delete User
+            Delete Lesson Progress
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

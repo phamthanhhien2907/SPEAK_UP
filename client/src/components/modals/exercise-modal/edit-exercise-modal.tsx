@@ -33,7 +33,7 @@ export const EditExerciseModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useNavigate();
   const params = useParams();
-  const isModalOpen = isOpen && type === "editUser";
+  const isModalOpen = isOpen && type === "editExercise";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +52,7 @@ export const EditExerciseModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Update User
+            Update Exercise
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>

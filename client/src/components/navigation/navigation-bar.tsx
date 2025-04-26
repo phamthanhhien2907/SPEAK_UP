@@ -81,9 +81,9 @@ const NavigationBar = ({
         variants={containerVariants}
         animate={containerControls}
         initial="close"
-        className="dark:bg-gray-800 flex flex-col z-10 gap-20 p-5 absolute top-0 left-0 h-full shadow shadow-neutral-600"
+        className="dark:bg-gray-800 flex flex-col z-10 gap-12 p-5  h-full "
       >
-        <div className="flex flex-row w-full justify-between place-items-center ">
+        <div className="flex flex-row w-full justify-between place-items-center">
           <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-full" />
           <button
             className="p-1 rounded-full flex"
@@ -125,7 +125,18 @@ const NavigationBar = ({
             </button>
           ))}
         </div>
-
+        <button
+          onClick={() => {
+            dispatch(logout());
+            navigate("/auth");
+          }}
+          className="flex items-center justify-start px-2 py-2 gap-2 font-normal cursor-pointer stroke-[0.75] place-items-center hover:bg-gray-300/50"
+        >
+          <LogOut color="gray" size={30} />
+          <p className="text-[16px] font-poppins overflow-clip truncate whitespace-nowrap tracking-wide font-medium hover:text-red-500">
+            Đăng xuất
+          </p>
+        </button>
         {/* <div className="flex flex-col gap-3">
           <ProjectLink
             isOpen={isOpen}
@@ -156,16 +167,7 @@ const NavigationBar = ({
             <div className="min-w-4 mx-2 border-yellow-600 border rounded-full aspect-square bg-yellow-700" />
           </ProjectLink>
         </div> */}
-        <button
-          onClick={() => {
-            dispatch(logout());
-            navigate("/auth");
-          }}
-          className="flex items-center justify-start px-2 gap-2 font-medium"
-        >
-          <LogOut color="gray" size={30} />
-          Đăng xuất
-        </button>
+
         <div className="flex h-screen items-end gap-3 p-2 rounded cursor-pointer transition-colors duration-100">
           <div className="scale-125"></div>
           {isOpen && (

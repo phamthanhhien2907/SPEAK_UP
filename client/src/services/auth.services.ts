@@ -6,6 +6,7 @@ export const apiRegister = async (data: authActionProps) => {
       method: "POST",
       url: "/auth/register",
       data,
+      withCredentials: true
     });
     return response;
   } catch (error) {
@@ -46,8 +47,8 @@ export const apiLoginSuccess = async (id: unknown, tokenLogin: unknown) => {
       method: "POST",
       url: "/auth/login-success",
       data: { id, tokenLogin },
+      withCredentials: true
     });
-    console.log(response);
     return response;
   } catch (error) {
     console.error("Error during login:", error);
