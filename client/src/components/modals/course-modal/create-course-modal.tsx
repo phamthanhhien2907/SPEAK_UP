@@ -145,7 +145,7 @@ export const CreateCourseModal = () => {
                           <SelectValue placeholder="Select a channel type" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg border border-gray-300">
                         {Object?.values(CourseLevel)?.map((type) => (
                           <SelectItem
                             key={type}

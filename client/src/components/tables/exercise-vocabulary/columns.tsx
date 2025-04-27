@@ -3,10 +3,10 @@ import { ArrowUpDown, Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { ExerciseVocabulary } from "@/types/excercise-vocabulary";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
-): ColumnDef<User>[] => [
+): ColumnDef<ExerciseVocabulary>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -47,17 +47,17 @@ export const getColumns = (
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
-  {
-    accessorKey: "fullname",
-    header: () => <div className="">Fullname</div>,
-    cell: ({ row }) => {
-      const user = row.original as User;
+  // {
+  //   accessorKey: "fullname",
+  //   header: () => <div className="">Fullname</div>,
+  //   cell: ({ row }) => {
+  //     const user = row.original as ExerciseVocabulary;
 
-      return (
-        <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
-      );
-    },
-  },
+  //     return (
+  //       <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "role",
     header: "Role",

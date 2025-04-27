@@ -29,14 +29,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getColumns } from "./columns";
-import { apiGetAllUser } from "@/services/user.services";
 import { useModal } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { ExerciseVocabulary } from "@/types/excercise-vocabulary";
+import { apiGetAllExcerciseVocabulary } from "@/services/excercise-vocabulary.services";
 
 export function ExcerciseVocabularyTable() {
   const { onOpen } = useModal();
   const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
-  const [userData, setUserData] = React.useState<User[]>([]);
+  const [excerciseVocabulary, setExcerciseVocabulary] = React.useState<
+    ExerciseVocabulary[]
+  >([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -45,7 +47,7 @@ export function ExcerciseVocabularyTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data: userData,
+    data: excerciseVocabulary,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -68,25 +70,25 @@ export function ExcerciseVocabularyTable() {
       },
     },
   });
-  const getAllUsers = async () => {
-    const users = await apiGetAllUser();
-    if (users.data.success) {
-      setUserData(users.data.rs);
+  const getAllExcerciseVocabulary = async () => {
+    const excerciseVocabulary = await apiGetAllExcerciseVocabulary();
+    if (excerciseVocabulary.data.success) {
+      setExcerciseVocabulary(excerciseVocabulary.data.rs);
     } else {
-      console.log("Failed to fetch users");
+      console.log("Failed to fetch excercise vocabulary");
     }
   };
   React.useEffect(() => {
-    getAllUsers();
+    getAllExcerciseVocabulary();
   }, []);
   return (
     <div className="w-full shadow-lg drop-shadow-lg ">
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by word..."
+          value={(table.getColumn("word")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("word")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

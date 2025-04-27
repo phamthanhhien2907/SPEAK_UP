@@ -3,10 +3,10 @@ import { ArrowUpDown, Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { ProgressTracking } from "@/types/progress-tracking";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
-): ColumnDef<User>[] => [
+): ColumnDef<ProgressTracking>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -32,45 +32,29 @@ export const getColumns = (
     enableSorting: false,
     enableHiding: false,
   },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "fullname",
-    header: () => <div className="">Fullname</div>,
-    cell: ({ row }) => {
-      const user = row.original as User;
 
-      return (
-        <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
-      );
-    },
-  },
   {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
-  },
-  {
-    accessorKey: "level",
-    header: "Level",
+    accessorKey: "userId.email",
+    id: "userId.email",
+    header: "User Email",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("level")}</div>
+      <div className="capitalize">{row.getValue("userId.email")}</div>
     ),
   },
-
+  {
+    accessorKey: "completedLessons",
+    header: "Completed Lesson",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("completedLessons")}</div>
+    ),
+  },
+  {
+    accessorKey: "totalScore",
+    header: "Total Score",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("totalScore")}</div>
+    ),
+  },
   {
     id: "actions",
     header: "Actions",

@@ -115,7 +115,7 @@ export const CreateLessonModal = () => {
                           <SelectValue placeholder="Select a channel type" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg border border-gray-300">
                         {Object?.values(courseData)?.map((type) => (
                           <SelectItem
                             key={type?._id}
@@ -179,7 +179,7 @@ export const CreateLessonModal = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Channel type
+                      Type
                     </FormLabel>
                     <Select
                       disabled={isLoading}
@@ -188,10 +188,10 @@ export const CreateLessonModal = () => {
                     >
                       <FormControl>
                         <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
-                          <SelectValue placeholder="Select a channel type" />
+                          <SelectValue placeholder="Select a lesson" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="bg-white shadow-lg border border-gray-300">
                         {Object?.values(LessonType)?.map((type) => (
                           <SelectItem
                             key={type}

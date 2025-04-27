@@ -29,14 +29,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getColumns } from "./columns";
-import { apiGetAllUser } from "@/services/user.services";
 import { useModal } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { Feedback } from "@/types/feedback";
+import { apiGetAllFeedBack } from "@/services/feedback.services";
 
 export function FeedBackTable() {
   const { onOpen } = useModal();
   const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
-  const [userData, setUserData] = React.useState<User[]>([]);
+  const [feedbackData, setFeedbackData] = React.useState<Feedback[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -45,7 +45,7 @@ export function FeedBackTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data: userData,
+    data: feedbackData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -68,16 +68,17 @@ export function FeedBackTable() {
       },
     },
   });
-  const getAllUsers = async () => {
-    const users = await apiGetAllUser();
-    if (users.data.success) {
-      setUserData(users.data.rs);
+  const getAllFeedBack = async () => {
+    const feedback = await apiGetAllFeedBack();
+    console.log(feedback);
+    if (feedback.data.success) {
+      setFeedbackData(feedback.data.rs);
     } else {
-      console.log("Failed to fetch users");
+      console.log("Failed to fetch feedback");
     }
   };
   React.useEffect(() => {
-    getAllUsers();
+    getAllFeedBack();
   }, []);
   return (
     <div className="w-full shadow-lg drop-shadow-lg ">

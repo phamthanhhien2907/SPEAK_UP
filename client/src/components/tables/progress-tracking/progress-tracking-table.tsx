@@ -29,14 +29,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getColumns } from "./columns";
-import { apiGetAllUser } from "@/services/user.services";
 import { useModal } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { ProgressTracking } from "@/types/progress-tracking";
+import { apiGetAllProgressTracking } from "@/services/progress-tracking.services";
 
 export function ProgressTrackingTable() {
   const { onOpen } = useModal();
   const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
-  const [userData, setUserData] = React.useState<User[]>([]);
+  const [progressTrackingData, setProgressTrackingData] = React.useState<
+    ProgressTracking[]
+  >([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -45,7 +47,7 @@ export function ProgressTrackingTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data: userData,
+    data: progressTrackingData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -68,16 +70,16 @@ export function ProgressTrackingTable() {
       },
     },
   });
-  const getAllUsers = async () => {
-    const users = await apiGetAllUser();
-    if (users.data.success) {
-      setUserData(users.data.rs);
+  const getProgressTracking = async () => {
+    const progressTracking = await apiGetAllProgressTracking();
+    if (progressTracking.data.success) {
+      setProgressTrackingData(progressTracking.data.rs);
     } else {
-      console.log("Failed to fetch users");
+      console.log("Failed to fetch progressTracking");
     }
   };
   React.useEffect(() => {
-    getAllUsers();
+    getProgressTracking();
   }, []);
   return (
     <div className="w-full shadow-lg drop-shadow-lg ">

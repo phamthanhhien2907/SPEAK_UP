@@ -29,14 +29,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getColumns } from "./columns";
-import { apiGetAllUser } from "@/services/user.services";
 import { useModal } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { Vocabulary } from "@/types/vocabulary";
+import { apiGetAllVocabulary } from "@/services/vocabulary.services";
 
 export function VocabularyTable() {
   const { onOpen } = useModal();
   const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
-  const [userData, setUserData] = React.useState<User[]>([]);
+  const [vocabularyData, setVocabularyData] = React.useState<Vocabulary[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -45,7 +45,7 @@ export function VocabularyTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data: userData,
+    data: vocabularyData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -68,25 +68,25 @@ export function VocabularyTable() {
       },
     },
   });
-  const getAllUsers = async () => {
-    const users = await apiGetAllUser();
-    if (users.data.success) {
-      setUserData(users.data.rs);
+  const getAllVocabulary = async () => {
+    const vocabulary = await apiGetAllVocabulary();
+    if (vocabulary.data.success) {
+      setVocabularyData(vocabulary.data.rs);
     } else {
-      console.log("Failed to fetch users");
+      console.log("Failed to fetch vocabulary");
     }
   };
   React.useEffect(() => {
-    getAllUsers();
+    getAllVocabulary();
   }, []);
   return (
     <div className="w-full shadow-lg drop-shadow-lg ">
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by word..."
+          value={(table.getColumn("word")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("word")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

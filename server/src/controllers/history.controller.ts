@@ -3,7 +3,18 @@ import { Request, Response } from "express"
 import History from "../models/History"
 
 export const getHistories = async (req: Request, res: Response): Promise<void> => {
-    const histories = await History.find()
+    const histories = await History.find().populate({
+        path: "lessonId",
+        select: "courseId title content type",
+    })
+        .populate({
+            path: "exerciseId",
+            select: "lessonId type prompt difficultyLevel correctPronunciation",
+        })
+        .populate({
+            path: "userId",
+            select: "firstname lastname email",
+        });
     res.status(200).json({
         success: histories ? true : false,
         rs: histories ? histories : 'Histories not found'

@@ -3,7 +3,14 @@ import { Request, Response } from "express"
 import ExerciseVocabulary from "../models/ExerciseVocabulary"
 
 export const getExerciseVocabularies = async (req: Request, res: Response): Promise<void> => {
-    const exerciseVocabulary = await ExerciseVocabulary.find()
+    const exerciseVocabulary = await ExerciseVocabulary.find().populate({
+        path: "vocabularyId",
+        select: "word phonetic meaning exampleSentence audioUrl",
+    })
+        .populate({
+            path: "exerciseId",
+            select: "lessonId type prompt difficultyLevel correctPronunciation",
+        })
     res.status(200).json({
         success: exerciseVocabulary ? true : false,
         rs: exerciseVocabulary ? exerciseVocabulary : 'ExerciseVocabulary not found'

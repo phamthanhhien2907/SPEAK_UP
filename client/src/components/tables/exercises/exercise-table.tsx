@@ -29,14 +29,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getColumns } from "./columns";
-import { apiGetAllUser } from "@/services/user.services";
 import { useModal } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { Excercise } from "@/types/excercise";
+import { apiGetAllExercise } from "@/services/exercise.services";
 
 export function ExcerciseTable() {
   const { onOpen } = useModal();
   const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
-  const [userData, setUserData] = React.useState<User[]>([]);
+  const [excerciseData, setExcerciseData] = React.useState<Excercise[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -45,7 +45,7 @@ export function ExcerciseTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data: userData,
+    data: excerciseData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -68,25 +68,30 @@ export function ExcerciseTable() {
       },
     },
   });
-  const getAllUsers = async () => {
-    const users = await apiGetAllUser();
-    if (users.data.success) {
-      setUserData(users.data.rs);
+  const getAllExcercise = async () => {
+    const excercise = await apiGetAllExercise();
+    if (excercise.data.success) {
+      setExcerciseData(excercise.data.rs);
     } else {
-      console.log("Failed to fetch users");
+      console.log("Failed to fetch excercise");
     }
   };
   React.useEffect(() => {
-    getAllUsers();
+    getAllExcercise();
   }, []);
   return (
     <div className="w-full shadow-lg drop-shadow-lg ">
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by lesson..."
+          value={
+            (table.getColumn("lessonId.title")?.getFilterValue() as string) ??
+            ""
+          }
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table
+              .getColumn("lessonId.title")
+              ?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

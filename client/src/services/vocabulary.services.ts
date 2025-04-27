@@ -1,64 +1,64 @@
-import { Course } from "@/types/course";
+import { Vocabulary } from "@/types/vocabulary";
 import axiosConfig from "../axios";
-export const apiGetAllCourse = async () => {
+export const apiGetAllVocabulary = async () => {
     try {
         const response = await axiosConfig({
             method: "GET",
-            url: "/courses/",
+            url: "/vocabulary/",
         });
         return response;
     } catch (error) {
-        console.error("Error fetching all courses:", error);
+        console.error("Error fetching all vocabulary:", error);
         throw error;
     }
 }
-export const apiGetCourseById = async (id: string) => {
+export const apiGetVocabularyById = async (id: string) => {
     try {
         const response = await axiosConfig({
             method: "GET",
-            url: "/courses/" + id,
+            url: "/vocabulary/" + id,
         });
         return response;
     } catch (error) {
-        console.error("Error fetching course by ID:", error);
+        console.error("Error fetching vocabulary by ID:", error);
         throw error;
     }
 }
-export const apiDeleteCourseById = async (id: string) => {
+export const apiDeleteVocabularyById = async (id: string) => {
     try {
         const response = await axiosConfig({
             method: "DELETE",
-            url: "/courses/" + id,
+            url: "/vocabulary/" + id,
         });
         return response;
     } catch (error) {
-        console.error("Error deleting course by ID:", error);
+        console.error("Error deleting vocabulary by ID:", error);
         throw error;
     }
 }
-export const apiCreateCourse = async (data: Course) => {
+export const apiCreateVocabulary = async (data: Vocabulary) => {
     try {
         const response = await axiosConfig({
             method: "POST",
-            url: "/courses/",
+            url: "/vocabulary/",
             data
         });
         return response;
     } catch (error) {
-        console.log("Error fetching current course:", error);
+        console.log("Error fetching current vocabulary:", error);
         throw error;
     }
 }
-export const apiUpdateCourse = async (id: string, data: Course) => {
+export const apiUpdateVocabulary = async (id: string, data: Vocabulary) => {
     try {
         const response = await axiosConfig({
             method: "PUT",
-            url: "/courses/" + id,
+            url: "/vocabulary/" + id,
             data
         });
         return response;
     } catch (error) {
-        console.log("Error fetching current course:", error);
+        console.log("Error fetching current vocabulary:", error);
         throw error;
     }
 }

@@ -1,12 +1,12 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { Vocabulary } from "@/types/vocabulary";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
-): ColumnDef<User>[] => [
+): ColumnDef<Vocabulary>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -33,41 +33,36 @@ export const getColumns = (
     enableHiding: false,
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    accessorKey: "word",
+    header: "Word",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("word")}</div>,
   },
   {
-    accessorKey: "fullname",
-    header: () => <div className="">Fullname</div>,
-    cell: ({ row }) => {
-      const user = row.original as User;
-
-      return (
-        <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
-      );
-    },
-  },
-  {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
-  },
-  {
-    accessorKey: "level",
-    header: "Level",
+    accessorKey: "phonetic",
+    header: "Phonetic",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("level")}</div>
+      <div className="capitalize">{row.getValue("phonetic")}</div>
+    ),
+  },
+  {
+    accessorKey: "meaning",
+    header: "Meaning",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("meaning")}</div>
+    ),
+  },
+  {
+    accessorKey: "exampleSentence",
+    header: "Example Sentence",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("exampleSentence")}</div>
+    ),
+  },
+  {
+    accessorKey: "audioUrl",
+    header: "Audio Url",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("audioUrl")}</div>
     ),
   },
 

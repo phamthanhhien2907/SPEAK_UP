@@ -3,7 +3,10 @@ import { Request, Response } from "express"
 import Exercise from "../models/Exercise"
 
 export const getExercises = async (req: Request, res: Response): Promise<void> => {
-    const exercises = await Exercise.find()
+    const exercises = await Exercise.find().populate({
+        path: "lessonId",
+        select: "title content type courseId",
+    });
     res.status(200).json({
         success: exercises ? true : false,
         rs: exercises ? exercises : 'Exercises not found'

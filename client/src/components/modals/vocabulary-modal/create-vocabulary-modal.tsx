@@ -23,12 +23,22 @@ import { useModal } from "@/hooks/use-model-store";
 
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { apiCreateVocabulary } from "@/services/vocabulary.services";
 const formSchema = z.object({
-  email: z.string().min(1, {
-    message: "Email is required",
+  word: z.string().min(1, {
+    message: "Word is required",
   }),
-  password: z.string().min(6, {
-    message: "Password is required",
+  phonetic: z.string().min(1, {
+    message: "Phonetic is required",
+  }),
+  meaning: z.string().min(1, {
+    message: "Meaning is required",
+  }),
+  exampleSentence: z.string().min(1, {
+    message: "ExampleSentence is required",
+  }),
+  audioUrl: z.string().min(1, {
+    message: "AudioUrl is required",
   }),
 });
 export const CreateVocabularyModal = () => {
@@ -39,19 +49,21 @@ export const CreateVocabularyModal = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      word: "",
+      phonetic: "",
+      meaning: "",
+      exampleSentence: "",
+      audioUrl: "",
     },
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    // const res = await createUser(values);
-    // if (res) {
-    //   onClose();
-    //   router(`/users/${params.id}`);
-    // }
-    // form.reset();
+    const res = await apiCreateVocabulary(values);
+    if (res) {
+      onClose();
+    }
+    form.reset();
   };
   const handleClose = () => {
     form.reset();
@@ -70,17 +82,17 @@ export const CreateVocabularyModal = () => {
             <div className="space-y-8 px-6">
               <FormField
                 control={form.control}
-                name="email"
+                name="word"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Channel name
+                      Word
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name"
+                        placeholder="Enter word"
                         {...field}
                       />
                     </FormControl>
@@ -90,19 +102,82 @@ export const CreateVocabularyModal = () => {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name="phonetic"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Password
+                      Phonetic
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name"
+                        placeholder="Enter phonetic"
                         {...field}
-                        type="password"
+                        type="text"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="meaning"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      Meaning
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="Enter meaning"
+                        {...field}
+                        type="text"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="exampleSentence"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      Example Sentence
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="Enter example sentence"
+                        {...field}
+                        type="text"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="audioUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      Audio URL
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="Enter audio URL"
+                        {...field}
+                        type="text"
                       />
                     </FormControl>
                     <FormMessage />

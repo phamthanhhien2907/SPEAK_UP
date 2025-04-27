@@ -1,12 +1,14 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
+import { Enrollment } from "@/types/enrollment";
+import { Course } from "@/types/course";
 import { User } from "@/types/user";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
-): ColumnDef<User>[] => [
+): ColumnDef<Enrollment>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -33,41 +35,34 @@ export const getColumns = (
     enableHiding: false,
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "fullname",
-    header: () => <div className="">Fullname</div>,
+    accessorKey: "courseId", // Add this accessorKey for courseId.title
+    header: "Course Id Title",
     cell: ({ row }) => {
-      const user = row.original as User;
-
-      return (
-        <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
-      );
+      const course = row.original.courseId as Course;
+      return <div className="capitalize">{course?.title || "N/A"}</div>;
     },
   },
   {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
+    accessorKey: "userId.email",
+    id: "userId.email",
+    header: "User Email",
+    cell: ({ row }) => {
+      const usser = row.original.userId as User;
+      return <div className="capitalize">{usser?.email || "N/A"}</div>;
+    },
   },
   {
-    accessorKey: "level",
-    header: "Level",
+    accessorKey: "progress",
+    header: "Progress",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("level")}</div>
+      <div className="capitalize">{row.getValue("progress")}</div>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
 

@@ -29,14 +29,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getColumns } from "./columns";
-import { apiGetAllUser } from "@/services/user.services";
 import { useModal } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { LessonProgress } from "@/types/lesson-progress";
+import { apiGetAllLessonProgress } from "@/services/lesson-progress.services";
 
 export function LessonProgressTable() {
   const { onOpen } = useModal();
   const columns = React.useMemo(() => getColumns(onOpen), [onOpen]);
-  const [userData, setUserData] = React.useState<User[]>([]);
+  const [lessonProgressData, setLessonProgressData] = React.useState<
+    LessonProgress[]
+  >([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -45,7 +47,7 @@ export function LessonProgressTable() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const table = useReactTable({
-    data: userData,
+    data: lessonProgressData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -68,25 +70,27 @@ export function LessonProgressTable() {
       },
     },
   });
-  const getAllUsers = async () => {
-    const users = await apiGetAllUser();
-    if (users.data.success) {
-      setUserData(users.data.rs);
+  const getAllLessonProgress = async () => {
+    const lessonProgress = await apiGetAllLessonProgress();
+    if (lessonProgress.data.success) {
+      setLessonProgressData(lessonProgress.data.rs);
     } else {
-      console.log("Failed to fetch users");
+      console.log("Failed to fetch lessonProgress");
     }
   };
   React.useEffect(() => {
-    getAllUsers();
+    getAllLessonProgress();
   }, []);
   return (
     <div className="w-full shadow-lg drop-shadow-lg ">
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by email..."
+          value={
+            (table.getColumn("userId.email")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("userId.email")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

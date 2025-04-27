@@ -3,10 +3,11 @@ import { ArrowUpDown, Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
-import { User } from "@/types/user";
+import { Excercise } from "@/types/excercise";
+import { Lesson } from "@/types/lesson";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
-): ColumnDef<User>[] => [
+): ColumnDef<Excercise>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -33,41 +34,42 @@ export const getColumns = (
     enableHiding: false,
   },
   {
-    accessorKey: "email",
+    accessorKey: "lessonId.title", // Add this accessorKey for courseId.title
+    id: "lessonId.title",
+    header: "Lesson Title",
+    cell: ({ row }) => {
+      const lesson = row.original.lessonId as Lesson;
+      return <div className="capitalize">{lesson?.title || "N/A"}</div>;
+    },
+  },
+  {
+    accessorKey: "type",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Type
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("type")}</div>,
   },
-  {
-    accessorKey: "fullname",
-    header: () => <div className="">Fullname</div>,
-    cell: ({ row }) => {
-      const user = row.original as User;
 
-      return (
-        <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
-      );
-    },
-  },
   {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
-  },
-  {
-    accessorKey: "level",
-    header: "Level",
+    accessorKey: "prompt",
+    header: "Prompt",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("level")}</div>
+      <div className="capitalize">{row.getValue("prompt")}</div>
+    ),
+  },
+  {
+    accessorKey: "difficultyLevel",
+    header: "Difficulty Level",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("difficultyLevel")}</div>
     ),
   },
 
