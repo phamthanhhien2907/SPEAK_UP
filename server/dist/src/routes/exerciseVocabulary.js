@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const exerciseVocabulary_controller_1 = require("../controllers/exerciseVocabulary.controller");
+const verifyToken_1 = require("../middlewares/verifyToken");
+const router = (0, express_1.Router)();
+router.get("/", exerciseVocabulary_controller_1.getExerciseVocabularies);
+router.get("/:id", exerciseVocabulary_controller_1.getExerciseVocabularyById);
+router.post("/", verifyToken_1.verifyAccessToken, exerciseVocabulary_controller_1.createExerciseVocabulary);
+router.put("/:id", verifyToken_1.verifyAccessToken, exerciseVocabulary_controller_1.updateExerciseVocabulary);
+router.delete("/:id", verifyToken_1.verifyAccessToken, exerciseVocabulary_controller_1.deleteExerciseVocabulary);
+exports.default = router;
