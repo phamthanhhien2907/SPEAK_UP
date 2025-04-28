@@ -1,10 +1,10 @@
 import axiosConfig from "@/axios";
 import { ExerciseVocabulary } from "@/types/excercise-vocabulary";
-export const apiGetAllExcerciseVocabulary = async () => {
+export const apiGetAllExerciseVocabulary = async () => {
     try {
         const response = await axiosConfig({
             method: "GET",
-            url: "/excerciseVocabulary/",
+            url: "/exerciseVocabulary/",
         });
         return response;
     } catch (error) {
@@ -12,11 +12,11 @@ export const apiGetAllExcerciseVocabulary = async () => {
         throw error;
     }
 }
-export const apiGetExcerciseVocabularyById = async (id: string) => {
+export const apiGetExerciseVocabularyById = async (id: string) => {
     try {
         const response = await axiosConfig({
             method: "GET",
-            url: "/excerciseVocabulary/" + id,
+            url: "/exerciseVocabulary/" + id,
         });
         return response;
     } catch (error) {
@@ -24,11 +24,11 @@ export const apiGetExcerciseVocabularyById = async (id: string) => {
         throw error;
     }
 }
-export const apiDeleteExcerciseVocabularyById = async (id: string) => {
+export const apiDeleteExerciseVocabularyById = async (id: string) => {
     try {
         const response = await axiosConfig({
             method: "DELETE",
-            url: "/excerciseVocabulary/" + id,
+            url: "/exerciseVocabulary/" + id,
         });
         return response;
     } catch (error) {
@@ -36,11 +36,11 @@ export const apiDeleteExcerciseVocabularyById = async (id: string) => {
         throw error;
     }
 }
-export const apiCreateExcerciseVocabulary = async (data: ExerciseVocabulary) => {
+export const apiCreateExerciseVocabulary = async (data: ExerciseVocabulary) => {
     try {
         const response = await axiosConfig({
             method: "POST",
-            url: "/excerciseVocabulary/",
+            url: "/exerciseVocabulary/",
             data
         });
         return response;
@@ -49,11 +49,11 @@ export const apiCreateExcerciseVocabulary = async (data: ExerciseVocabulary) => 
         throw error;
     }
 }
-export const apiUpdateExcerciseVocabulary = async (id: string, data: ExerciseVocabulary) => {
+export const apiUpdateExerciseVocabulary = async (id: string, data: ExerciseVocabulary) => {
     try {
         const response = await axiosConfig({
             method: "PUT",
-            url: "/excerciseVocabulary/" + id,
+            url: "/exerciseVocabulary/" + id,
             data
         });
         return response;

@@ -3,7 +3,7 @@ export type Course = {
     _id?: string;
     title?: string;
     description?: string;
-    level?: string;
+    level?: "beginner" | "intermediate" | "advanced";
     thumbnail?: string;
 };
 export enum CourseLevel {

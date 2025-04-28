@@ -77,17 +77,19 @@ export const getColumns = (
     id: "actions",
     header: "Actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const exercise = row.original;
+
       return (
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => onOpen("editExercise")}
+            onClick={() => onOpen("editExercise", { exercise })}
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]"
           >
             <Edit />
           </Button>
           <Button
-            onClick={() => onOpen("deleteExercise")}
+            onClick={() => onOpen("deleteExercise", { exercise })}
             className="bg-red-500 hover:bg-red-700 text-white rounded-[4px]"
           >
             <Trash />

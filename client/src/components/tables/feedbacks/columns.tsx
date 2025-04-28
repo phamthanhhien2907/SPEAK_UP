@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
@@ -71,17 +71,19 @@ export const getColumns = (
     id: "actions",
     header: "Actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const feedback = row.original;
+
       return (
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => onOpen("editFeedBack")}
+            onClick={() => onOpen("editFeedBack", { feedback })}
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]"
           >
             <Edit />
           </Button>
           <Button
-            onClick={() => onOpen("deleteFeedBack")}
+            onClick={() => onOpen("deleteFeedBack", { feedback })}
             className="bg-red-500 hover:bg-red-700 text-white rounded-[4px]"
           >
             <Trash />

@@ -78,17 +78,23 @@ export const getColumns = (
     id: "actions",
     header: "Actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const pronunciationScore = row.original;
+
       return (
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => onOpen("editPronunciationScore")}
+            onClick={() =>
+              onOpen("editPronunciationScore", { pronunciationScore })
+            }
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]"
           >
             <Edit />
           </Button>
           <Button
-            onClick={() => onOpen("deletePronunciationScore")}
+            onClick={() =>
+              onOpen("deletePronunciationScore", { pronunciationScore })
+            }
             className="bg-red-500 hover:bg-red-700 text-white rounded-[4px]"
           >
             <Trash />

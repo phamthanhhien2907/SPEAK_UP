@@ -1,8 +1,10 @@
+import { Course } from "./course";
+import { User } from "./user";
 
 export type Enrollment = {
     _id?: string;
-    courseId?: string;
-    userId?: string;
+    courseId?: Course;
+    userId?: User;
     progress?: number;
     status?: "in_progress" | "completed" | "dropped";
 };

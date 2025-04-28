@@ -20,39 +20,72 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
-import { useNavigate, useParams } from "react-router-dom";
+
+import { useEffect } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CourseLevel } from "@/types/course";
+import { apiUpdateCourse } from "@/services/course.services";
 const formSchema = z.object({
-  email: z.string().min(1, {
-    message: "Email is required",
+  title: z.string().min(1, {
+    message: "Title is required",
   }),
-  password: z.string().min(6, {
-    message: "Password is required",
+  description: z.string().min(1, {
+    message: "Description is required",
+  }),
+  level: z.enum(["beginner", "intermediate", "advanced"], {
+    message: "Level is required",
+  }),
+  thumbnail: z.string().min(1, {
+    message: "Thumbnail is required",
   }),
 });
 export const EditCourseModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+  const { course } = data;
   const isModalOpen = isOpen && type === "editCourse";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      title: "",
+      description: "",
+      level: "beginner",
+      thumbnail: "",
     },
   });
   const isLoading = form.formState.isSubmitting;
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+    const res = await apiUpdateCourse(course?._id, values);
+    console.log(res);
+    if (res) {
+      onClose();
+    }
+    form.reset();
+  };
   const handleClose = () => {
     form.reset();
     onClose();
   };
+  useEffect(() => {
+    if (course) {
+      form.setValue("title", course.title);
+      form.setValue("description", course.description);
+      form.setValue("level", course.level);
+      form.setValue("thumbnail", course.thumbnail);
+    }
+  }, [form, course]);
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Update Course
+            Edit Course
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -60,18 +93,19 @@ export const EditCourseModal = () => {
             <div className="space-y-8 px-6">
               <FormField
                 control={form.control}
-                name="email"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Channel name
+                      Title
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name"
+                        placeholder="Enter title"
                         {...field}
+                        type="text"
                       />
                     </FormControl>
                     <FormMessage />
@@ -80,19 +114,74 @@ export const EditCourseModal = () => {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Password
+                      Description
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name"
+                        placeholder="Enter content"
                         {...field}
-                        type="password"
+                        type="text"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="level"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      Level
+                    </FormLabel>
+                    <Select
+                      disabled={isLoading}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
+                          <SelectValue placeholder="Select a channel type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-white shadow-lg border border-gray-300">
+                        {Object?.values(CourseLevel)?.map((type) => (
+                          <SelectItem
+                            key={type}
+                            value={type}
+                            className="capitalize"
+                          >
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="thumbnail"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      Thumbnail
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isLoading}
+                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        placeholder="Enter content"
+                        {...field}
+                        type="text"
                       />
                     </FormControl>
                     <FormMessage />
@@ -108,7 +197,7 @@ export const EditCourseModal = () => {
                 No, cancel
               </Button>
               <Button disabled={isLoading} variant="ghost">
-                Edit
+                Create
               </Button>
             </DialogFooter>
           </form>

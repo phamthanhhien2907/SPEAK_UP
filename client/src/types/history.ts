@@ -1,8 +1,12 @@
+import { Excercise } from "./excercise";
+import { Lesson } from "./lesson";
+import { User } from "./user";
 
 export type History = {
-    userId?: string;
-    lessonId?: string;
-    exerciseId?: string;
+    _id?: string;
+    userId?: User;
+    lessonId?: Lesson;
+    exerciseId?: Excercise;
     attempts?: number;
     lastAttemptAt?: Date;
 };

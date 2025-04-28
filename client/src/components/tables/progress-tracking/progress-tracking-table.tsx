@@ -85,10 +85,12 @@ export function ProgressTrackingTable() {
     <div className="w-full shadow-lg drop-shadow-lg ">
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter by email..."
+          value={
+            (table.getColumn("userId.email")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("userId.email")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

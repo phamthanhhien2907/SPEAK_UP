@@ -1,6 +1,9 @@
+import { Lesson } from "./lesson";
+import { User } from "./user";
+
 export type Feedback = {
-    userId?: string;
-    lessonId?: string;
+    userId?: User;
+    lessonId?: Lesson;
     comment?: string;
     rating?: number;
 };

@@ -22,7 +22,6 @@ import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
 
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiCreateLesson } from "@/services/lesson.services";
 import {
   Select,
@@ -50,8 +49,6 @@ const formSchema = z.object({
 export const CreateLessonModal = () => {
   const [courseData, setCourseData] = useState([]);
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
   const isModalOpen = isOpen && type === "createLesson";
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -64,8 +61,10 @@ export const CreateLessonModal = () => {
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const res = await apiCreateLesson(values);
-    console.log(res);
+    const res = await apiCreateLesson({
+      ...values,
+      courseId: { _id: values.courseId },
+    });
     if (res) {
       onClose();
     }

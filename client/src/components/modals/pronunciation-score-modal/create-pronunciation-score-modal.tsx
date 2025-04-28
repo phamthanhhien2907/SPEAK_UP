@@ -69,7 +69,11 @@ export const CreatePronunciationScoreModal = () => {
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const res = await apiCreatePronunciationScore(values);
+    const res = await apiCreatePronunciationScore({
+      ...values,
+      userId: { _id: values.userId },
+      exerciseId: { _id: values.exerciseId },
+    });
     if (res) {
       onClose();
     }

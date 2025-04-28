@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiGetAllLesson } from "@/services/lesson.services";
 import { DifficultyLevelType, ExcerciseType } from "@/types/excercise";
 import { apiCreateExercise } from "@/services/exercise.services";
@@ -55,8 +54,6 @@ const formSchema = z.object({
 export const CreateExerciseModal = () => {
   const [lessonData, setLessonData] = useState([]);
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
   const isModalOpen = isOpen && type === "createExercise";
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -69,7 +66,10 @@ export const CreateExerciseModal = () => {
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const res = await apiCreateExercise(values);
+    const res = await apiCreateExercise({
+      ...values,
+      lessonId: { _id: values.lessonId },
+    });
     if (res) {
       onClose();
     }

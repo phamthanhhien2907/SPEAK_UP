@@ -1,6 +1,8 @@
+import { User } from "./user";
+
 export type ProgressTracking = {
     _id?: string;
-    userId?: string;
+    userId?: User;
     completedLessons?: number;
     totalScore?: number;
 };

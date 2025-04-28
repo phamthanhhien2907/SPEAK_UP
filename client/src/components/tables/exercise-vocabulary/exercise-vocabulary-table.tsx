@@ -31,7 +31,7 @@ import {
 import { getColumns } from "./columns";
 import { useModal } from "@/hooks/use-model-store";
 import { ExerciseVocabulary } from "@/types/excercise-vocabulary";
-import { apiGetAllExcerciseVocabulary } from "@/services/excercise-vocabulary.services";
+import { apiGetAllExerciseVocabulary } from "@/services/excercise-vocabulary.services";
 
 export function ExcerciseVocabularyTable() {
   const { onOpen } = useModal();
@@ -71,7 +71,7 @@ export function ExcerciseVocabularyTable() {
     },
   });
   const getAllExcerciseVocabulary = async () => {
-    const excerciseVocabulary = await apiGetAllExcerciseVocabulary();
+    const excerciseVocabulary = await apiGetAllExerciseVocabulary();
     if (excerciseVocabulary.data.success) {
       setExcerciseVocabulary(excerciseVocabulary.data.rs);
     } else {
@@ -86,9 +86,15 @@ export function ExcerciseVocabularyTable() {
       <div className="flex items-center py-4 justify-between">
         <Input
           placeholder="Filter by word..."
-          value={(table.getColumn("word")?.getFilterValue() as string) ?? ""}
+          value={
+            (table
+              .getColumn("vocabularyId.word")
+              ?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("word")?.setFilterValue(event.target.value)
+            table
+              .getColumn("vocabularyId.word")
+              ?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

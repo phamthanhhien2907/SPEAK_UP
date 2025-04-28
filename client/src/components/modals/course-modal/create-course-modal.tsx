@@ -20,9 +20,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
-
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -47,9 +44,7 @@ const formSchema = z.object({
   }),
 });
 export const CreateCourseModal = () => {
-  const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createCourse";
   const form = useForm({
     resolver: zodResolver(formSchema),

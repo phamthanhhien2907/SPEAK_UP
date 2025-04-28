@@ -13,7 +13,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
 
-import { useNavigate, useParams } from "react-router-dom";
 import { CircleAlert } from "lucide-react";
 import { Form } from "@/components/ui/form";
 const formSchema = z.object({
@@ -26,8 +25,7 @@ const formSchema = z.object({
 });
 export const DeleteEnrollmentModal = () => {
   const { isOpen, onClose, type } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+
   const isModalOpen = isOpen && type === "deleteEnrollment";
   const form = useForm({
     resolver: zodResolver(formSchema),

@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiGetAllLesson } from "@/services/lesson.services";
 import { apiGetAllUser } from "@/services/user.services";
 import { FeedbackRating } from "@/types/feedback";
@@ -52,8 +51,6 @@ export const CreateFeedBackModal = () => {
 
   const [userData, setUserData] = useState([]);
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
   const isModalOpen = isOpen && type === "createFeedBack";
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -67,7 +64,11 @@ export const CreateFeedBackModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    const res = await apiCreateFeedBack(values);
+    const res = await apiCreateFeedBack({
+      ...values,
+      userId: { _id: values.userId },
+      lessonId: { _id: values.lessonId },
+    });
     if (res) {
       onClose();
     }

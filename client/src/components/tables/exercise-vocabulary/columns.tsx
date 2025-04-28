@@ -1,9 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
 import { ExerciseVocabulary } from "@/types/excercise-vocabulary";
+import { Excercise } from "@/types/excercise";
+import { Vocabulary } from "@/types/vocabulary";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
 ): ColumnDef<ExerciseVocabulary>[] => [
@@ -33,59 +35,45 @@ export const getColumns = (
     enableHiding: false,
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      );
+    accessorKey: "exerciseId.prompt",
+    id: "exerciseId.prompt",
+    header: "Exercise Prompt",
+    cell: ({ row }) => {
+      const exercise = row.original.exerciseId as Excercise;
+      return <div className="capitalize">{exercise?.prompt || "N/A"}</div>;
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  // {
-  //   accessorKey: "fullname",
-  //   header: () => <div className="">Fullname</div>,
-  //   cell: ({ row }) => {
-  //     const user = row.original as ExerciseVocabulary;
-
-  //     return (
-  //       <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
-  //     );
-  //   },
-  // },
-  {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
   },
   {
-    accessorKey: "level",
-    header: "Level",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("level")}</div>
-    ),
+    accessorKey: "vocabularyId.word",
+    id: "vocabularyId.word",
+    header: "Vocabulary Word",
+    cell: ({ row }) => {
+      const vocabulary = row.original.vocabularyId as Vocabulary;
+      return <div className="capitalize">{vocabulary?.word || "N/A"}</div>;
+    },
   },
 
   {
     id: "actions",
     header: "Actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const exerciseVocabulary = row.original;
+
       return (
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => onOpen("editExerciseVocabulary")}
+            onClick={() =>
+              onOpen("editExerciseVocabulary", { exerciseVocabulary })
+            }
             className="bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]"
           >
             <Edit />
           </Button>
           <Button
-            onClick={() => onOpen("deleteExerciseVocabulary")}
+            onClick={() =>
+              onOpen("deleteExerciseVocabulary", { exerciseVocabulary })
+            }
             className="bg-red-500 hover:bg-red-700 text-white rounded-[4px]"
           >
             <Trash />

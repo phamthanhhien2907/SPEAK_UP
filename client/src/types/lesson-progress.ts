@@ -1,8 +1,10 @@
+import { Lesson } from "./lesson";
+import { User } from "./user";
 
 export type LessonProgress = {
     _id?: string;
-    lessonId?: string;
-    userId?: string;
+    lessonId?: Lesson;
+    userId?: User;
     score?: number;
 };
 

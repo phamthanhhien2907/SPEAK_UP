@@ -14,7 +14,6 @@ import {
   SpeakerWaveIcon,
   ClipboardDocumentListIcon,
   PencilIcon,
-  ArrowLeftEndOnRectangleIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { SelectedPageContext } from "../../hooks/use-context";
@@ -29,6 +28,7 @@ import { HistoryTable } from "@/components/tables/histories/history-table";
 import { FeedBackTable } from "@/components/tables/feedbacks/feedback-table";
 import { LessonProgressTable } from "@/components/tables/lesson-progress/lesson-progress-table";
 import { PronunciationScoreTable } from "@/components/tables/pronunciation-score/pronunciation-score-table";
+import { ExcerciseVocabularyTable } from "@/components/tables/exercise-vocabulary/exercise-vocabulary-table";
 
 const items = [
   {
@@ -133,7 +133,9 @@ const Home = () => {
           {selectedPage === "Vocabularies" && <VocabularyTable />}
           {selectedPage === "Enrollments" && <EnrollmentTable />}
           {selectedPage === "Progress Tracking" && <ProgressTrackingTable />}
-          {selectedPage === "Exercise Vocabulary" && <VocabularyTable />}
+          {selectedPage === "Exercise Vocabulary" && (
+            <ExcerciseVocabularyTable />
+          )}
           {selectedPage === "Exercise" && <ExcerciseTable />}
           {selectedPage === "History" && <HistoryTable />}
           {selectedPage === "FeedBack" && <FeedBackTable />}

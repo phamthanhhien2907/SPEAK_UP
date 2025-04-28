@@ -1,6 +1,8 @@
+import { Lesson } from "./lesson";
 
 export type Excercise = {
-    lessonId?: string;
+    _id?: string;
+    lessonId?: Lesson;
     type?: "repeat_sentence" | "fill_in_blank" | "pronunciation" | "listening"
     prompt?: string;
     correctPronunciation?: string;

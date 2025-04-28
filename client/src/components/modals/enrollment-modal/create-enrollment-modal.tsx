@@ -24,13 +24,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
-
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
 import { apiGetAllUser } from "@/services/user.services";
 import { apiGetAllCourse } from "@/services/course.services";
 import { EnrollmentProgress, EnrollmentStatus } from "@/types/enrollment";
@@ -52,9 +48,7 @@ const formSchema = z.object({
 export const CreateEnrollmentModal = () => {
   const [courseData, setCourseData] = useState([]);
   const [userData, setUserData] = useState([]);
-  const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createEnrollment";
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -67,7 +61,11 @@ export const CreateEnrollmentModal = () => {
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const res = await apiCreateEnrollment(values);
+    const res = await apiCreateEnrollment({
+      ...values,
+      userId: { _id: values.userId },
+      courseId: { _id: values.courseId },
+    });
     if (res) {
       onClose();
     }

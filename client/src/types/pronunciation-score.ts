@@ -1,8 +1,10 @@
+import { Excercise } from "./excercise";
+import { User } from "./user";
 
 export type PronunciationScore = {
     _id?: string;
-    userId?: string;
-    exerciseId?: string;
+    userId?: User;
+    exerciseId?: Excercise;
     phonetic?: string
     userAudioUrl?: string;
     score?: number;

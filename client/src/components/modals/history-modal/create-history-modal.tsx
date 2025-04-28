@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiGetAllExercise } from "@/services/exercise.services";
 import { apiGetAllLesson } from "@/services/lesson.services";
 import { apiGetAllUser } from "@/services/user.services";
@@ -58,8 +57,6 @@ export const CreateHistoryModal = () => {
 
   const [userData, setUserData] = useState([]);
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
   const isModalOpen = isOpen && type === "createHistory";
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -74,7 +71,12 @@ export const CreateHistoryModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    const res = await apiCreateHistory(values);
+    const res = await apiCreateHistory({
+      ...values,
+      userId: { _id: values.userId },
+      lessonId: { _id: values.lessonId },
+      exerciseId: { _id: values.exerciseId },
+    });
     if (res) {
       onClose();
     }

@@ -62,7 +62,10 @@ export const CreateProgressTrackingModal = () => {
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const res = await apiCreateProgressTracking(values);
+    const res = await apiCreateProgressTracking({
+      ...values,
+      userId: { _id: values.userId },
+    });
     if (res) {
       onClose();
     }

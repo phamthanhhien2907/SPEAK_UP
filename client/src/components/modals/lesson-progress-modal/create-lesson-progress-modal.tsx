@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiGetAllLesson } from "@/services/lesson.services";
 import { apiGetAllUser } from "@/services/user.services";
 import { LessonProgressScore } from "@/types/lesson-progress";
@@ -48,8 +47,6 @@ export const CreateLessonProgressModal = () => {
   const [lessonData, setLessonData] = useState([]);
   const [userData, setUserData] = useState([]);
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
   const isModalOpen = isOpen && type === "createtLessonProgress";
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -62,7 +59,11 @@ export const CreateLessonProgressModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    const res = await apiCreateLessonProgress(values);
+    const res = await apiCreateLessonProgress({
+      ...values,
+      lessonId: { _id: values.lessonId },
+      userId: { _id: values.userId },
+    });
     if (res) {
       onClose();
     }

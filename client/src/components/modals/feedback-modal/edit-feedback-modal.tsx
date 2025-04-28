@@ -20,7 +20,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
-import { useNavigate, useParams } from "react-router-dom";
 const formSchema = z.object({
   email: z.string().min(1, {
     message: "Email is required",
@@ -31,8 +30,6 @@ const formSchema = z.object({
 });
 export const EditFeedBackModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
   const isModalOpen = isOpen && type === "editFeedBack";
   const form = useForm({
     resolver: zodResolver(formSchema),

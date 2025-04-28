@@ -1,6 +1,15 @@
 
 import { create } from "zustand";
 import { User } from "../types/user";
+import { Lesson } from "@/types/lesson";
+import { Course } from "@/types/course";
+import { LessonProgress } from "@/types/lesson-progress";
+import { Vocabulary } from "@/types/vocabulary";
+import { Excercise } from "@/types/excercise";
+import { ExerciseVocabulary } from "@/types/excercise-vocabulary";
+import { Feedback } from "@/types/feedback";
+import { Enrollment } from "@/types/enrollment";
+import { History } from "@/types/history";
 export type ModalType =
   | "createUser"
   | "editUser"
@@ -10,10 +19,13 @@ export type ModalType =
   | "deleteLesson"
   | "createCourse"
   | "editCourse"
-  | "deleteCourse" | "createEnrollment"
+  | "deleteCourse"
+  | "createEnrollment"
   | "deleteEnrollment"
-  | "editEnrollment" | "createExercise"
-  | "editExercise" | "deleteExercise"
+  | "editEnrollment"
+  | "createExercise"
+  | "editExercise"
+  | "deleteExercise"
   | "createVocabulary" | "deleteVocabulary" |
   "editVocabulary" | "createHistory" |
   "deleteHistory" | "editHistory" | "createFeedBack" |
@@ -24,6 +36,17 @@ export type ModalType =
 
 export interface ModalData {
   user?: User;
+  lesson?: Lesson;
+  course?: Course;
+  vocabulary?: Vocabulary;
+  lessonProgress?: LessonProgress;
+  progressTracking?: LessonProgress;
+  exercise?: Excercise;
+  exerciseVocabulary?: ExerciseVocabulary;
+  history?: History;
+  feedback?: Feedback;
+  pronunciationScore?: LessonProgress;
+  enrollment?: Enrollment;
 }
 interface ModalStore {
   type: ModalType | null;
