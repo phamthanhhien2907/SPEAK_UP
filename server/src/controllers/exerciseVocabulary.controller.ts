@@ -3,7 +3,14 @@ import { Request, Response } from "express"
 import ExerciseVocabulary from "../models/ExerciseVocabulary"
 
 export const getExerciseVocabularies = async (req: Request, res: Response): Promise<void> => {
-    const exerciseVocabulary = await ExerciseVocabulary.find()
+    const exerciseVocabulary = await ExerciseVocabulary.find().populate({
+        path: "vocabularyId",
+        select: "word phonetic meaning exampleSentence audioUrl",
+    })
+        .populate({
+            path: "exerciseId",
+            select: "lessonId type prompt difficultyLevel correctPronunciation",
+        })
     res.status(200).json({
         success: exerciseVocabulary ? true : false,
         rs: exerciseVocabulary ? exerciseVocabulary : 'ExerciseVocabulary not found'
@@ -20,9 +27,9 @@ export const getExerciseVocabularyById = async (req: Request, res: Response): Pr
 }
 
 export const createExerciseVocabulary = async (req: Request, res: Response): Promise<void> => {
-    const { lessonId, type, prompt, correctPronunciation, difficultyLevel } = req.body
+    const { exerciseId, vocabularyId } = req.body
 
-    if (!lessonId || !type || !prompt || !correctPronunciation || !difficultyLevel) {
+    if (!exerciseId || !vocabularyId) {
         res.status(400).json({
             success: false,
             rs: 'Missing inputs'
@@ -39,9 +46,9 @@ export const createExerciseVocabulary = async (req: Request, res: Response): Pro
 }
 export const updateExerciseVocabulary = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params
-    const { lessonId, type, prompt, correctPronunciation, difficultyLevel } = req.body
+    const { exerciseId, vocabularyId } = req.body
     if (!id) throw new Error('Missing exerciseVocabulary id')
-    if (!lessonId || !type || !prompt || !correctPronunciation || !difficultyLevel) {
+    if (!exerciseId || !vocabularyId) {
         res.status(400).json({
             success: false,
             rs: 'Missing inputs'

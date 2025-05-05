@@ -1,10 +1,16 @@
 
 import { Request, Response } from "express"
-import Lesson from "../models/Lesson";
 import PronunciationScore from "../models/PronunciationScore";
 
 export const getPronunciationScores = async (req: Request, res: Response): Promise<void> => {
-    const pronunciationScores = await Lesson.find()
+    const pronunciationScores = await PronunciationScore.find().populate({
+        path: "exerciseId",
+        select: "lessonId type prompt correctPronunciation difficultyLevel",
+    })
+        .populate({
+            path: "userId",
+            select: "firstname lastname email",
+        });
     res.status(200).json({
         success: pronunciationScores ? true : false,
         rs: pronunciationScores ? pronunciationScores : 'PronunciationScores not found'

@@ -1,4 +1,4 @@
-import resetImg from "../../assets/forgot.svg";
+import resetImg from "@/assets/admin/forgot.svg";
 import { AiOutlineClose } from "react-icons/ai";
 type ResetProps = {
   onLogin?: () => void;

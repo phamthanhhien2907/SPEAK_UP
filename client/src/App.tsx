@@ -1,18 +1,74 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, RouteObject, Routes, useNavigate } from "react-router-dom";
 import routes from "./pages/routes";
-import { Suspense } from "react";
-import { useSelector } from "react-redux";
+import { Suspense, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import { Toaster } from "react-hot-toast";
+import { getCurrent } from "./stores/actions/userAction";
+import { AppDispatch } from "./main";
+import { setNavigate } from "./lib/navigate";
 function App() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
-  console.log(document.cookie);
+  const { isLoggedIn, current } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    const setTimeoutId = setTimeout(() => {
+      if (isLoggedIn) dispatch(getCurrent());
+      else {
+        const pathname = location.pathname;
+        const isAdminPath = pathname.startsWith("/admin");
+        navigate(isAdminPath ? "/admin/auth" : "/auth");
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(setTimeoutId);
+    };
+  }, [dispatch, isLoggedIn, navigate]);
+  useEffect(() => {
+    setNavigate(navigate);
+  }, [navigate]);
+  type AppRouteObject = RouteObject & {
+    role?: string[];
+  };
+  const filteredRoutes = (routes as AppRouteObject[]).filter((route) => {
+    if (!route.role) return true;
+    return route.role.includes(current as string);
+  });
+  // if (status === "loading") {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-blue-500"></div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
+        {filteredRoutes.map((route) => {
+          const isAdminRoute = route.role?.includes("admin");
+          if (isAdminRoute) {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<div className="admin-wrapper">{route.element}</div>}
+              />
+            );
+          }
+
+          return (
+            <Route key={route.path} path={route.path} element={route.element}>
+              {route.children?.map((childRoute) => (
+                <Route
+                  key={childRoute.path}
+                  path={childRoute.path}
+                  element={childRoute.element}
+                />
+              ))}
+            </Route>
+          );
+        })}
       </Routes>
       <Toaster
         position="top-center"

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import passport from "passport";
-import { login, loginSuccess, register } from "../controllers/auth.controller";
+import { login, loginSuccess, refreshAccessToken, register } from "../controllers/auth.controller";
+import User from "../models/User";
 const router = Router();
 router.post("/register", register);
 router.post("/login", login);
@@ -28,8 +29,20 @@ router.get(
             }
         )(req, res, next);
     },
-    (req: Request, res: Response) => {
-        const { id, tokenLogin } = req.user || {};
+    async (req: Request, res: Response) => {
+        const { id, tokenLogin, _id } = req.user || {};
+        const userDB = await User.findOne({ id: _id });
+        if (!userDB) {
+            return res.redirect(`${process.env.CLIENT_URL}/login-failure`);
+        }
+
+        res.cookie('refreshToken', userDB.refreshToken, {
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            httpOnly: true,
+            path: '/',
+        });
         res.redirect(`${process.env.CLIENT_URL}/login-success/${id}/${tokenLogin}`);
     }
 );
@@ -58,11 +71,25 @@ router.get(
             }
         )(req, res, next);
     },
-    (req: Request, res: Response) => {
-        const { id, tokenLogin } = req.user || {};
+    async (req: Request, res: Response) => {
+        const { id, tokenLogin, _id } = req.user || {};
+        const userDB = await User.findOne({ id: _id });
+        if (!userDB) {
+            return res.redirect(`${process.env.CLIENT_URL}/login-failure`);
+        }
+
+        res.cookie('refreshToken', userDB.refreshToken, {
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            httpOnly: true,
+            path: '/',
+        });
         res.redirect(`${process.env.CLIENT_URL}/login-success/${id}/${tokenLogin}`);
     }
 );
 router.post("/login-success", loginSuccess);
+router.post("/refreshToken", refreshAccessToken);
+
 
 export default router;

@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 interface Props {
   children: React.ReactNode;
   name: string;
@@ -5,9 +7,10 @@ interface Props {
 }
 
 const NavigationLink = ({ children, name, selectedItem }: Props) => {
+  const navigate = useNavigate();
   return (
     <a
-      href="#"
+      onClick={() => navigate("/")}
       className={`${
         selectedItem === name
           ? "flex p-1 rounded cursor-pointer stroke-[0.75] stroke-neutral-400  place-items-center gap-3 bg-slate-300/60 transition-colors duration-100"
@@ -15,7 +18,7 @@ const NavigationLink = ({ children, name, selectedItem }: Props) => {
       }`}
     >
       {children}
-      <p className="text-[16px] font-poppins overflow-clip truncate whitespace-nowrap tracking-wide font-medium">
+      <p className="text-[15px] font-poppins overflow-clip truncate whitespace-nowrap tracking-wide font-medium">
         {name}
       </p>
     </a>

@@ -1,24 +1,23 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "../../ui/button";
-import { Checkbox } from "../../ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import { User } from "./types";
-export const columns: ColumnDef<User>[] = [
+import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+
+import { ModalData, ModalType } from "@/hooks/use-model-store";
+import { Lesson } from "@/types/lesson";
+export const getColumns = (
+  onOpen: (type: ModalType, data?: ModalData) => void
+): ColumnDef<Lesson>[] => [
   {
     id: "select",
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
+          table.getIsAllPageRowsSelected()
+            ? true
+            : table.getIsSomePageRowsSelected()
+            ? "indeterminate"
+            : false
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -35,42 +34,52 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "email",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Title
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase  px-4">{row.getValue("title")}</div>
+    ),
+  },
+  // {
+  //   accessorKey: "fullname",
+  //   header: () => <div className="">Fullname</div>,
+  //   cell: ({ row }) => {
+  //     const lesson = row.original as Lesson;
+
+  //     return (
+  //       <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
+  //     );
+  //   },
+  // },
+  {
+    accessorKey: "content",
+    header: "Content",
+    cell: ({ row }) => (
+      <div className="capitalize ">{row.getValue("content")}</div>
+    ),
   },
   {
-    accessorKey: "fullname",
-    header: () => <div className="">Fullname</div>,
+    accessorKey: "courseId", // Add this accessorKey for courseId.title
+    header: "Course Title",
     cell: ({ row }) => {
-      const user = row.original as User;
-
-      return (
-        <div className="font-medium">{`${user.lastname} ${user.firstname}`}</div>
-      );
+      const course = row.original.courseId as Lesson; // Access courseId from the row's original data
+      return <div className="capitalize">{course?.title || "N/A"}</div>;
     },
   },
   {
-    accessorKey: "role",
-    header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
-  },
-  {
-    accessorKey: "level",
-    header: "Level",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("level")}</div>
-    ),
+    accessorKey: "type",
+    header: "Type",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("type")}</div>,
   },
 
   {
@@ -78,28 +87,22 @@ export const columns: ColumnDef<User>[] = [
     header: "Actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
-
+      const lesson = row.original;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment._id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => onOpen("editLesson", { lesson })}
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]"
+          >
+            <Edit />
+          </Button>
+          <Button
+            onClick={() => onOpen("deleteLesson", { lesson })}
+            className="bg-red-500 hover:bg-red-700 text-white rounded-[4px]"
+          >
+            <Trash />
+          </Button>
+        </div>
       );
     },
   },

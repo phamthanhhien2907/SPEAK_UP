@@ -26,20 +26,50 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
         rs: user ? user : 'User not found'
     })
 }
+export const updateUser = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params
+    const { email, role, firstname, lastname, level, password } = req.body
+    console.log(email, role, firstname, lastname, level);
+    if (!id) throw new Error('Missing exercise id')
+    if (!email || !role || !firstname || !lastname || !level || !password) {
+        res.status(400).json({
+            success: false,
+            rs: 'Missing inputs'
+        })
+        return
+    }
+    const user = await User.findByIdAndUpdate(id, req.body, { new: true })
+    res.status(200).json({
+        success: user ? true : false,
+        rs: user ? user : 'User not found'
+    })
+}
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params
+    if (!id) throw new Error('Missing exercise id')
+    const user = await User.findByIdAndDelete(id)
+    res.status(200).json({
+        success: user ? true : false,
+        rs: user ? user : 'Exercise not found'
+    })
+}
 export const logout = async (req: Request, res: Response): Promise<void> => {
     const cookie = req.cookies
-    console.log(cookie);
-    if (!cookie || !cookie.refreshToken) throw new Error('No refresh token in cookies')
-
+    if (!cookie || !cookie.refreshToken) {
+        res.status(400).json({ success: false, msg: 'No refresh token in cookies' });
+        return
+    }
     await User.findOneAndUpdate({ refreshToken: cookie.refreshToken }, { refreshToken: '' }, { new: true })
 
     res.clearCookie('refreshToken', {
         httpOnly: true,
-        secure: true
+        secure: process.env.NODE_ENV === 'production', // chỉ secure trên production
+        sameSite: 'strict',
+        path: '/',   // phải khớp với path khi set cookie
     })
     res.status(200).json({
         success: true,
-        mes: 'Logout is done'
+        mes: 'Logout successful'
     })
 }
 interface FileUploadResult {

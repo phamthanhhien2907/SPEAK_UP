@@ -3,7 +3,14 @@ import { Request, Response } from "express"
 import Feedback from "../models/Feedback"
 
 export const getFeedbacks = async (req: Request, res: Response): Promise<void> => {
-    const feedbacks = await Feedback.find()
+    const feedbacks = await Feedback.find().populate({
+        path: "lessonId",
+        select: "courseId title content type",
+    })
+        .populate({
+            path: "userId",
+            select: "firstname lastname email",
+        });
     res.status(200).json({
         success: feedbacks ? true : false,
         rs: feedbacks ? feedbacks : 'Feedbacks not found'

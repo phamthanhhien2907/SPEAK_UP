@@ -12,14 +12,14 @@ import {
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
 
-import { Button } from "../../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import { Input } from "../../ui/input";
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -27,11 +27,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../ui/table";
-import { User } from "./types";
+} from "@/components/ui/table";
 import { getColumns } from "./columns";
-import { apiGetAllUser } from "../../../services/userService";
-import { useModal } from "../../../hooks/use-model-store";
+import { apiGetAllUser } from "@/services/user.services";
+import { useModal } from "@/hooks/use-model-store";
+import { User } from "@/types/user";
 
 export function UserTable() {
   const { onOpen } = useModal();

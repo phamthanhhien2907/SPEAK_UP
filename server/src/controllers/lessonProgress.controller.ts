@@ -3,7 +3,14 @@ import { Request, Response } from "express"
 import LessonProgress from "../models/LessonProgress";
 
 export const getLessonProgresses = async (req: Request, res: Response): Promise<void> => {
-    const lessonProgress = await LessonProgress.find()
+    const lessonProgress = await LessonProgress.find().populate({
+        path: "lessonId",
+        select: "courseId title content type", // Fields to include from the Course model
+    })
+        .populate({
+            path: "userId",
+            select: "firstname lastname email", // Fields to include from the User model
+        });
     res.status(200).json({
         success: lessonProgress ? true : false,
         rs: lessonProgress ? lessonProgress : 'LessonProgress not found'

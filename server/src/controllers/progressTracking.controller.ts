@@ -4,7 +4,11 @@ import ProgressTracking from "../models/ProgressTracking"
 
 
 export const getProgressTrackings = async (req: Request, res: Response): Promise<void> => {
-    const progressTrackings = await ProgressTracking.find()
+    const progressTrackings = await ProgressTracking.find().populate({
+        path: "userId",
+        select: "firstname lastname email",
+    });
+
     res.status(200).json({
         success: progressTrackings ? true : false,
         rs: progressTrackings ? progressTrackings : 'ProgressTrackings not found'

@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
-import { apiLogin, apiLoginSuccess } from "../../services/authService";
+import { apiLogin, apiLoginSuccess, apiRefreshToken } from "@/services/auth.services";
 import actionType from "./actionType";
+import { apiLogout } from "@/services/user.services";
 
 interface ApiResponse {
   success: boolean;
@@ -8,6 +9,7 @@ interface ApiResponse {
   data: {
     success?: boolean;
     accessToken?: string;
+    newAccessToken?: string;
     token?: string;
     role?: string;
     msg?: string;
@@ -19,10 +21,15 @@ export interface authActionProps {
   password: string;
 }
 
-interface GetCurrentAction {
-  type: typeof actionType.GET_CURRENT;
+interface GetCurrentFulfilledAction {
+  type: typeof actionType.GET_CURRENT_FULFILLED;
   currentData: unknown;
-  msg?: unknown;
+}
+
+interface GetCurrentRejectedAction {
+  type: typeof actionType.GET_CURRENT_REJECTED;
+  currentData: null;
+  msg: string | unknown;
 }
 
 interface LoginSuccessAction {
@@ -33,27 +40,54 @@ interface LoginSuccessAction {
   msg?: unknown;
 }
 
-type AuthAction = GetCurrentAction | LoginSuccessAction;
+type AuthAction = GetCurrentFulfilledAction | GetCurrentRejectedAction | LoginSuccessAction;
 
 export const loginAction = (data: authActionProps) => async (dispatch: Dispatch<AuthAction>) => {
   try {
     const response = (await apiLogin(data)) as unknown as ApiResponse;
-
     if (response?.data) {
       dispatch({
         type: actionType.LOGIN,
         token: response.data.accessToken,
+        role: response?.data?.role
       });
     } else {
       dispatch({
         type: actionType.LOGIN,
         token: null,
+        role: null
       });
     }
   } catch (error) {
     dispatch({
       type: actionType.LOGIN,
       token: null,
+      role: null,
+      msg: error,
+    });
+  }
+};
+export const handleTokenExpiry = () => async (dispatch: Dispatch) => {
+  try {
+    // Try refreshing the token
+    const refreshResponse = await apiRefreshToken();
+    console.log(refreshResponse);
+    if (refreshResponse?.data?.newAccessToken) {
+
+      dispatch({
+        type: actionType.LOGIN_SUCCESS,
+        token: refreshResponse.data.newAccessToken,
+      });
+
+
+    } else {
+      dispatch({
+        type: actionType.LOGOUT, // Handle logout if refresh fails
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: actionType.LOGOUT, // Log out the user if token refresh fails
       msg: error,
     });
   }
@@ -61,6 +95,7 @@ export const loginAction = (data: authActionProps) => async (dispatch: Dispatch<
 export const loginSuccessAction = (id: unknown, tokenLogin: unknown) => async (dispatch: Dispatch<AuthAction>) => {
   try {
     const response = await apiLoginSuccess(id, tokenLogin) as unknown as ApiResponse;
+
     if (response?.data) {
       dispatch({
         type: actionType.LOGIN_SUCCESS,
@@ -71,6 +106,7 @@ export const loginSuccessAction = (id: unknown, tokenLogin: unknown) => async (d
       dispatch({
         type: actionType.LOGIN_SUCCESS,
         token: null,
+        role: null
       });
     }
   } catch (error) {
@@ -81,6 +117,15 @@ export const loginSuccessAction = (id: unknown, tokenLogin: unknown) => async (d
     });
   }
 };
-export const logout = (): { type: typeof actionType.LOGOUT } => ({
-  type: actionType.LOGOUT,
-});
+export const logout = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      // 1. Gọi API logout để server clear cookie
+      await apiLogout();
+    } catch (err) {
+      console.warn('Logout API failed, but we’ll clear state anyway', err);
+    }
+    // 2. Dispatch action xóa state user khỏi Redux
+    dispatch({ type: actionType.LOGOUT });
+  };
+};

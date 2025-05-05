@@ -2,7 +2,15 @@ import { Request, Response } from "express"
 import Enrollment from "../models/Enrollment"
 
 export const getEnrollments = async (req: Request, res: Response): Promise<void> => {
-    const enrollment = await Enrollment.find()
+    const enrollment = await Enrollment.find().populate({
+        path: "courseId",
+        select: "title description level thumbnail", // Fields to include from the Course model
+    })
+        .populate({
+            path: "userId",
+            select: "firstname lastname email", // Fields to include from the User model
+        });
+
     res.status(200).json({
         success: enrollment ? true : false,
         rs: enrollment ? enrollment : 'Enrollments not found'
@@ -53,6 +61,7 @@ export const updateEnrollment = async (req: Request, res: Response): Promise<voi
 }
 export const deleteEnrollment = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params
+    console.log(id);
     if (!id) throw new Error('Missing enrollment id')
     const enrollment = await Enrollment.findByIdAndDelete(id)
     res.status(200).json({

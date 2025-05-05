@@ -43,12 +43,16 @@ const authReducer: Reducer<AuthState, AuthAction> = (state = initState, action: 
 
       };
     }
+
     case actionType.LOGIN: {
       const loginAction = action as LoginAction;
+
       return {
         ...state,
         isLoggedIn: !!loginAction.token,
         token: loginAction.token,
+        current: loginAction.role,
+
       };
     }
     case actionType.LOGOUT:

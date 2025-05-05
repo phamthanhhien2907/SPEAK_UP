@@ -5,6 +5,7 @@ import { Strategy as GoogleStrategy, Profile as GoogleProfile } from 'passport-g
 import { Strategy as FacebookStrategy, Profile as FacebookProfile } from 'passport-facebook';
 import { VerifyCallback } from 'passport-oauth2';
 import dotenv from 'dotenv';
+import { generateRefreshToken } from '../middlewares/jwt';
 
 dotenv.config();
 export interface GoogleUserProfile extends GoogleProfile {
@@ -46,6 +47,7 @@ passport.use(
             cb: VerifyCallback
         ) => {
             const tokenLogin = uuidv4();
+            const newRefreshToken = generateRefreshToken(profile.id);
             try {
                 if (profile.id) {
                     const user = await User.findOne({ id: profile.id });
@@ -60,9 +62,10 @@ passport.use(
                             lastname: profile.name?.familyName,
                             tokenLogin,
                             role: 'student',  // Set role or handle it as necessary
+                            refreshToken: newRefreshToken,
                         });
                     } else {
-                        await User.updateOne({ id: profile.id }, { $set: { tokenLogin } });
+                        await User.updateOne({ id: profile.id }, { $set: { tokenLogin, refreshToken: newRefreshToken } });
                     }
                 }
 
@@ -106,7 +109,7 @@ passport.use(
             cb: VerifyCallback
         ) => {
             const tokenLogin = uuidv4();
-
+            const newRefreshToken = generateRefreshToken(profile.id);
             try {
                 if (profile.id) {
                     const user = await User.findOne({ id: profile.id });
@@ -122,9 +125,10 @@ passport.use(
                             lastname: profile.name?.familyName,
                             tokenLogin,
                             role: 'student',  // Set role or handle it as necessary
+                            refreshToken: newRefreshToken,
                         });
                     } else {
-                        await User.updateOne({ id: profile.id }, { $set: { tokenLogin } });
+                        await User.updateOne({ id: profile.id }, { $set: { tokenLogin, refreshToken: newRefreshToken } });
                     }
                 }
 

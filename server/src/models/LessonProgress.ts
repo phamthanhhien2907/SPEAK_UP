@@ -4,7 +4,6 @@ export interface ILessonProgress extends Document {
     lessonId: mongoose.Schema.Types.ObjectId;
     userId: mongoose.Schema.Types.ObjectId;
     score: number;
-
 }
 
 const LessonProgressSchema = new Schema<ILessonProgress>({

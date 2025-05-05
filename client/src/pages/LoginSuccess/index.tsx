@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { loginSuccessAction } from "../../stores/actions/authAction";
-import { useAppDispatch } from "../../hooks/use-dispatch";
+import { loginSuccessAction } from "@/stores/actions/authAction";
+import { useAppDispatch } from "@/hooks/use-dispatch";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@/store";
 
 const LoginSuccess = () => {
   const { userId, tokenLogin } = useParams();
@@ -38,7 +38,7 @@ const LoginSuccess = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center">
+    <div className="flex flex-col items-center justify-center h-screen text-center bg-white">
       <h1 className="text-3xl font-medium mb-4">Yêu cầu bạn hãy đăng nhập</h1>
       <Link
         to="/auth"

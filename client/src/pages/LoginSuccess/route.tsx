@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { RouteObject } from "react-router-dom";
 const LoginSuccessPage = lazy(() => import("./index"));
-const loginSuccessRoutes: RouteObject[] = [
+const loginSuccessRoutes: (RouteObject & { role?: string[] })[] = [
   {
     path: "/login-success/:userId/:tokenLogin",
     element: (
@@ -10,6 +10,7 @@ const loginSuccessRoutes: RouteObject[] = [
       </Suspense>
     ),
     index: true,
+    role: ["student", "teacher", "admin"],
   },
 ];
 export default loginSuccessRoutes;
