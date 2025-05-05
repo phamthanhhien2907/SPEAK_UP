@@ -1,6 +1,4 @@
-import { useState } from "react";
-import NavigationBar from "../../components/navigation/navigation-bar";
-import { UserTable } from "../../components/tables/users/user-table";
+import NavigationBarAdmin from "@/components/navigation/navigation-bar-admin";
 import {
   Square2StackIcon,
   DocumentCheckIcon,
@@ -16,19 +14,9 @@ import {
   PencilIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { SelectedPageContext } from "../../hooks/use-context";
-import { LessonTable } from "../../components/tables/lessons/lesson-table";
-import ModalProvider from "../../components/provider/modal-provider";
-import { CourseTable } from "@/components/tables/course/course-table";
-import { VocabularyTable } from "@/components/tables/vocabularies/vocabulary-table";
-import { EnrollmentTable } from "@/components/tables/enrollments/enrollment-table";
-import { ProgressTrackingTable } from "@/components/tables/progress-tracking/progress-tracking-table";
-import { ExcerciseTable } from "@/components/tables/exercises/exercise-table";
-import { HistoryTable } from "@/components/tables/histories/history-table";
-import { FeedBackTable } from "@/components/tables/feedbacks/feedback-table";
-import { LessonProgressTable } from "@/components/tables/lesson-progress/lesson-progress-table";
-import { PronunciationScoreTable } from "@/components/tables/pronunciation-score/pronunciation-score-table";
-import { ExcerciseVocabularyTable } from "@/components/tables/exercise-vocabulary/exercise-vocabulary-table";
+import ModalProvider from "@/components/provider/modal-provider";
+import TableProvider from "@/components/provider/table-provider";
+import { SelectedPageProvider } from "@/components/navigation/navigation-provider";
 
 const items = [
   {
@@ -117,36 +105,18 @@ const items = [
 ];
 
 const Home = () => {
-  const [selectedPage, setSelectedPage] = useState<string>("Users");
   return (
-    <SelectedPageContext.Provider value={{ selectedPage, setSelectedPage }}>
+    <SelectedPageProvider initialPage="Users">
       <main className="w-full h-screen flex flex-row relative bg-white overflow-hidden">
         <div className="flex flex-col bg-gray-100 h-screen overflow-y-auto min-w-[200px]">
-          <NavigationBar items={items} onSelect={setSelectedPage} />
+          <NavigationBarAdmin items={items} />
         </div>
-
         <section className="flex flex-col flex-1 p-8 overflow-y-auto items-center justify-center gap-5 ">
           <ModalProvider />
-          {selectedPage === "Users" && <UserTable />}
-          {selectedPage === "Lessons" && <LessonTable />}
-          {selectedPage === "Courses" && <CourseTable />}
-          {selectedPage === "Vocabularies" && <VocabularyTable />}
-          {selectedPage === "Enrollments" && <EnrollmentTable />}
-          {selectedPage === "Progress Tracking" && <ProgressTrackingTable />}
-          {selectedPage === "Exercise Vocabulary" && (
-            <ExcerciseVocabularyTable />
-          )}
-          {selectedPage === "Exercise" && <ExcerciseTable />}
-          {selectedPage === "History" && <HistoryTable />}
-          {selectedPage === "FeedBack" && <FeedBackTable />}
-          {selectedPage === "Lesson Progress" && <LessonProgressTable />}
-          {selectedPage === "Pronunciation Score" && (
-            <PronunciationScoreTable />
-          )}
-          {selectedPage === "Settings" && <VocabularyTable />}
+          <TableProvider />
         </section>
       </main>
-    </SelectedPageContext.Provider>
+    </SelectedPageProvider>
   );
 };
 

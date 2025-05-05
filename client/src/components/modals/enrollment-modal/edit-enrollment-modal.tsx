@@ -111,7 +111,7 @@ export const EditEnrollmentModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create Enrollment
+            Edit Enrollment
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -264,7 +264,7 @@ export const EditEnrollmentModal = () => {
                 No, cancel
               </Button>
               <Button disabled={isLoading} variant="ghost">
-                Create
+                Edit
               </Button>
             </DialogFooter>
           </form>

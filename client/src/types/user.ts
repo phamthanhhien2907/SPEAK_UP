@@ -2,7 +2,7 @@ export type User = {
     _id?: string;
     username?: string;
     email?: string;
-    role?: string;
+    role?: "student" | "teacher" | "admin";
     level?: number;
     firstname?: string;
     lastname?: string;
@@ -12,4 +12,9 @@ export type User = {
     updatedAt?: Date;
     total_score?: number;
 };
+export enum UserType {
+    STUDENT = "student",
+    TEACHER = "teacher",
+    ADMIN = "admin",
+}
 

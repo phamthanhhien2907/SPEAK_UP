@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
 import {
@@ -46,7 +45,7 @@ const formSchema = z.object({
 export const CreateLessonProgressModal = () => {
   const [lessonData, setLessonData] = useState([]);
   const [userData, setUserData] = useState([]);
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createtLessonProgress";
   const form = useForm({
     resolver: zodResolver(formSchema),

@@ -48,7 +48,7 @@ const formSchema = z.object({
 });
 export const CreateLessonModal = () => {
   const [courseData, setCourseData] = useState([]);
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createLesson";
   const form = useForm({
     resolver: zodResolver(formSchema),

@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, RouteObject, Routes, useNavigate } from "react-router-dom";
 import routes from "./pages/routes";
 import { Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,17 +7,19 @@ import { Toaster } from "react-hot-toast";
 import { getCurrent } from "./stores/actions/userAction";
 import { AppDispatch } from "./main";
 import { setNavigate } from "./lib/navigate";
-
 function App() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
-  // const { status, userData } = useSelector((state: RootState) => state.user);
+  const { isLoggedIn, current } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     const setTimeoutId = setTimeout(() => {
       if (isLoggedIn) dispatch(getCurrent());
-      else navigate("/auth");
-    }, 500);
+      else {
+        const pathname = location.pathname;
+        const isAdminPath = pathname.startsWith("/admin");
+        navigate(isAdminPath ? "/admin/auth" : "/auth");
+      }
+    }, 1000);
     return () => {
       clearTimeout(setTimeoutId);
     };
@@ -25,7 +27,13 @@ function App() {
   useEffect(() => {
     setNavigate(navigate);
   }, [navigate]);
-
+  type AppRouteObject = RouteObject & {
+    role?: string[];
+  };
+  const filteredRoutes = (routes as AppRouteObject[]).filter((route) => {
+    if (!route.role) return true;
+    return route.role.includes(current as string);
+  });
   // if (status === "loading") {
   //   return (
   //     <div className="flex justify-center items-center h-screen">
@@ -33,12 +41,34 @@ function App() {
   //     </div>
   //   );
   // }
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        {routes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
+        {filteredRoutes.map((route) => {
+          const isAdminRoute = route.role?.includes("admin");
+          if (isAdminRoute) {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<div className="admin-wrapper">{route.element}</div>}
+              />
+            );
+          }
+
+          return (
+            <Route key={route.path} path={route.path} element={route.element}>
+              {route.children?.map((childRoute) => (
+                <Route
+                  key={childRoute.path}
+                  path={childRoute.path}
+                  element={childRoute.element}
+                />
+              ))}
+            </Route>
+          );
+        })}
       </Routes>
       <Toaster
         position="top-center"

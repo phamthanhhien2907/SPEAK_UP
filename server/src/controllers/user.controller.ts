@@ -26,6 +26,33 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
         rs: user ? user : 'User not found'
     })
 }
+export const updateUser = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params
+    const { email, role, firstname, lastname, level, password } = req.body
+    console.log(email, role, firstname, lastname, level);
+    if (!id) throw new Error('Missing exercise id')
+    if (!email || !role || !firstname || !lastname || !level || !password) {
+        res.status(400).json({
+            success: false,
+            rs: 'Missing inputs'
+        })
+        return
+    }
+    const user = await User.findByIdAndUpdate(id, req.body, { new: true })
+    res.status(200).json({
+        success: user ? true : false,
+        rs: user ? user : 'User not found'
+    })
+}
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params
+    if (!id) throw new Error('Missing exercise id')
+    const user = await User.findByIdAndDelete(id)
+    res.status(200).json({
+        success: user ? true : false,
+        rs: user ? user : 'Exercise not found'
+    })
+}
 export const logout = async (req: Request, res: Response): Promise<void> => {
     const cookie = req.cookies
     if (!cookie || !cookie.refreshToken) {

@@ -5,6 +5,8 @@ import Register from "../Register";
 import Reset from "../Reset";
 
 const Auth = () => {
+  const isAdminPath = location.pathname.startsWith("/admin");
+  const isUserPath = location.pathname.startsWith("/auth");
   const [auth, setAuth] = useState({
     login: true,
     register: false,
@@ -36,6 +38,8 @@ const Auth = () => {
       <div className="container box">
         {auth.login && (
           <Login
+            isAdmin={isAdminPath}
+            isUser={isUserPath}
             onRegister={handleRegister}
             onReset={handleReset}
             onShowPassword={showPassword}
@@ -45,6 +49,8 @@ const Auth = () => {
         )}
         {auth.register && (
           <Register
+            isAdmin={isAdminPath}
+            isUser={isUserPath}
             onLogin={handleLogin}
             onShowPassword={showPassword}
             onTogglePassword={handleTogglePassword}

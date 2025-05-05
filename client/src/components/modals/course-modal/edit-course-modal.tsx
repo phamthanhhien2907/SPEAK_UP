@@ -197,7 +197,7 @@ export const EditCourseModal = () => {
                 No, cancel
               </Button>
               <Button disabled={isLoading} variant="ghost">
-                Create
+                Edit
               </Button>
             </DialogFooter>
           </form>

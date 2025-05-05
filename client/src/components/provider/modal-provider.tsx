@@ -5,7 +5,7 @@ import { CreateEnrollmentModal } from "../modals/enrollment-modal/create-enrollm
 import { DeleteEnrollmentModal } from "../modals/enrollment-modal/delete-enrollment-modal";
 import { EditEnrollmentModal } from "../modals/enrollment-modal/edit-enrollment-modal";
 import { CreateExerciseVocabularyModal } from "../modals/excercise-vocabulary-modal/create-exercise-vocabulary-modal";
-import { DeleteExerciseVocabularyModall } from "../modals/excercise-vocabulary-modal/delete-exercise-vocabulary-modal";
+import { DeleteExerciseVocabularyModal } from "../modals/excercise-vocabulary-modal/delete-exercise-vocabulary-modal";
 import { EditExerciseVocabularyModal } from "../modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal";
 import { CreateExerciseModal } from "../modals/exercise-modal/create-exercise-modal";
 import { DeleteExerciseModal } from "../modals/exercise-modal/delete-exercise-modal";
@@ -55,7 +55,7 @@ const ModalProvider = () => {
       <DeleteExerciseModal />
       <CreateExerciseVocabularyModal />
       <EditExerciseVocabularyModal />
-      <DeleteExerciseVocabularyModall />
+      <DeleteExerciseVocabularyModal />
       <CreateFeedBackModal />
       <EditFeedBackModal />
       <DeleteFeedBackModal />

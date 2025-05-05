@@ -17,6 +17,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useModal } from "@/hooks/use-model-store";
+
+import { useEffect, useState } from "react";
+import { apiUpdateLesson } from "@/services/lesson.services";
 import {
   Select,
   SelectContent,
@@ -24,14 +30,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useModal } from "@/hooks/use-model-store";
 import { LessonType } from "@/types/lesson";
-import { useEffect, useState } from "react";
 import { apiGetAllCourse } from "@/services/course.services";
-import { apiUpdateLesson } from "@/services/lesson.services";
-import { Course } from "@/types/course";
 const formSchema = z.object({
   courseId: z.string().min(1, {
     message: "CourseId is required",
@@ -47,7 +47,7 @@ const formSchema = z.object({
   }),
 });
 export const EditLessonModal = () => {
-  const [courseData, setCourseData] = useState<Course[]>([]);
+  const [courseData, setCourseData] = useState([]);
   const { isOpen, onClose, type, data } = useModal();
   const { lesson } = data;
   const isModalOpen = isOpen && type === "editLesson";
@@ -62,7 +62,6 @@ export const EditLessonModal = () => {
   });
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     const res = await apiUpdateLesson(lesson?._id, {
       ...values,
       courseId: { _id: values.courseId },
@@ -76,7 +75,6 @@ export const EditLessonModal = () => {
     form.reset();
     onClose();
   };
-
   const getAllCourse = async () => {
     const courses = await apiGetAllCourse();
     if (courses.data.success) {
@@ -86,23 +84,22 @@ export const EditLessonModal = () => {
     }
   };
   useEffect(() => {
-    getAllCourse();
-  }, []);
-  useEffect(() => {
-    if (lesson && courseData?.length > 0) {
-      form.setValue("courseId", lesson.courseId._id);
-      form.setValue("title", lesson.title);
+    if (lesson) {
+      form.setValue("courseId", lesson.courseId?._id);
       form.setValue("content", lesson.content);
+      form.setValue("title", lesson.title);
       form.setValue("type", lesson.type);
     }
-  }, [form, lesson, courseData]);
-
+  }, [form, lesson]);
+  useEffect(() => {
+    getAllCourse();
+  }, []);
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Update Lesson
+            Editt Lesson
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -123,7 +120,7 @@ export const EditLessonModal = () => {
                     >
                       <FormControl>
                         <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
-                          <SelectValue placeholder="Select a course type" />
+                          <SelectValue placeholder="Select a channel type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-white shadow-lg border border-gray-300">
@@ -133,7 +130,7 @@ export const EditLessonModal = () => {
                             value={type?._id}
                             className="capitalize"
                           >
-                            {type?.title.toLowerCase()}
+                            {type?.title?.toLocaleLowerCase()}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -227,7 +224,7 @@ export const EditLessonModal = () => {
                 No, cancel
               </Button>
               <Button disabled={isLoading} variant="ghost">
-                Create
+                Edit
               </Button>
             </DialogFooter>
           </form>

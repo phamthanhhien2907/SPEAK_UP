@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
@@ -74,16 +74,17 @@ export const getColumns = (
     header: "Last Attempt At",
     cell: ({ row }) => {
       const date = row.getValue("lastAttemptAt") as string;
-      const formattedDate = date
-        ? new Date(date).toLocaleString("vi-VN", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })
-        : "N/A";
+      // const formattedDate = date
+      //   ? new Date(date).toLocaleString("vi-VN", {
+      //       day: "2-digit",
+      //       month: "2-digit",
+      //       year: "numeric",
+      //       hour: "2-digit",
+      //       minute: "2-digit",
+      //       second: "2-digit",
+      //     })
+      //   : "N/A";
+      const formattedDate = new Date(date).toISOString().split("T")[0];
       return <div className="capitalize">{formattedDate}</div>;
     },
   },

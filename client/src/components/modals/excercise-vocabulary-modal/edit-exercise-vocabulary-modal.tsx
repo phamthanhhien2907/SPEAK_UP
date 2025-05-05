@@ -29,7 +29,7 @@ import {
 import { useEffect, useState } from "react";
 import { apiGetAllExercise } from "@/services/exercise.services";
 import { apiGetAllVocabulary } from "@/services/vocabulary.services";
-import { apiCreateExerciseVocabulary } from "@/services/excercise-vocabulary.services";
+import { apiUpdateExerciseVocabulary } from "@/services/excercise-vocabulary.services";
 const formSchema = z.object({
   exerciseId: z.string().min(1, {
     message: "Exercise Id is required",
@@ -54,7 +54,7 @@ export const EditExerciseVocabularyModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    const res = await apiCreateExerciseVocabulary({
+    const res = await apiUpdateExerciseVocabulary(exerciseVocabulary?._id, {
       ...values,
       exerciseId: { _id: values.exerciseId },
       vocabularyId: { _id: values.vocabularyId },
@@ -102,7 +102,7 @@ export const EditExerciseVocabularyModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create Exercise Vocabulary
+            Edit Exercise Vocabulary
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -185,7 +185,7 @@ export const EditExerciseVocabularyModal = () => {
                 No, cancel
               </Button>
               <Button disabled={isLoading} variant="ghost">
-                Create
+                Edit
               </Button>
             </DialogFooter>
           </form>

@@ -61,6 +61,7 @@ export const updateEnrollment = async (req: Request, res: Response): Promise<voi
 }
 export const deleteEnrollment = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params
+    console.log(id);
     if (!id) throw new Error('Missing enrollment id')
     const enrollment = await Enrollment.findByIdAndDelete(id)
     res.status(200).json({

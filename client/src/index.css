@@ -1,9 +1,37 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swiper-button-next,
+.swiper-button-prev {
+  width: 40px !important;
+  height: 40px !important; /* Đảm bảo là hình vuông */
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%; /* Hình tròn */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* Swiper injects arrow icons via ::after */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 16px !important;
+  color: white !important;
+}
 body {
-  @apply bg-neutral-950 font-poppins;
+  /* @apply bg-neutral-950 font-poppins; */
+  @apply font-poppins;
 }
 .tabs-list::-webkit-scrollbar {
   width: 6px; /* Kích thước thanh cuộn dọc */
@@ -219,7 +247,9 @@ p {
 .--color-white {
   color: #fff;
 }
-
+.--color-dark {
+  color: #000000;
+}
 /* Center Text */
 .--text-center {
   text-align: center;
@@ -337,7 +367,10 @@ p {
   color: #fff;
   background: orangered;
 }
-
+.--btn-dark {
+  color: #fff;
+  background: black;
+}
 .--btn-success {
   color: #fff;
   background: #28a745;

@@ -85,7 +85,9 @@ instance.interceptors.response.use(
 
                 // 3. Redirect về trang login
                 // window.location.href = "/auth";
-                navigate("/auth")
+                const pathname = location.pathname;
+                const isAdminPath = pathname.startsWith("/admin");
+                navigate(isAdminPath ? "/admin/auth" : "/auth");
 
                 // 4. Hiện toast
                 toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");

@@ -50,7 +50,7 @@ export const CreateFeedBackModal = () => {
   const [lessonData, setLessonData] = useState([]);
 
   const [userData, setUserData] = useState([]);
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createFeedBack";
   const form = useForm({
     resolver: zodResolver(formSchema),

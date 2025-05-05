@@ -45,22 +45,24 @@ type AuthAction = GetCurrentFulfilledAction | GetCurrentRejectedAction | LoginSu
 export const loginAction = (data: authActionProps) => async (dispatch: Dispatch<AuthAction>) => {
   try {
     const response = (await apiLogin(data)) as unknown as ApiResponse;
-
     if (response?.data) {
       dispatch({
         type: actionType.LOGIN,
         token: response.data.accessToken,
+        role: response?.data?.role
       });
     } else {
       dispatch({
         type: actionType.LOGIN,
         token: null,
+        role: null
       });
     }
   } catch (error) {
     dispatch({
       type: actionType.LOGIN,
       token: null,
+      role: null,
       msg: error,
     });
   }
@@ -93,6 +95,7 @@ export const handleTokenExpiry = () => async (dispatch: Dispatch) => {
 export const loginSuccessAction = (id: unknown, tokenLogin: unknown) => async (dispatch: Dispatch<AuthAction>) => {
   try {
     const response = await apiLoginSuccess(id, tokenLogin) as unknown as ApiResponse;
+
     if (response?.data) {
       dispatch({
         type: actionType.LOGIN_SUCCESS,
@@ -103,6 +106,7 @@ export const loginSuccessAction = (id: unknown, tokenLogin: unknown) => async (d
       dispatch({
         type: actionType.LOGIN_SUCCESS,
         token: null,
+        role: null
       });
     }
   } catch (error) {

@@ -10,6 +10,8 @@ import { ExerciseVocabulary } from "@/types/excercise-vocabulary";
 import { Feedback } from "@/types/feedback";
 import { Enrollment } from "@/types/enrollment";
 import { History } from "@/types/history";
+import { ProgressTracking } from "@/types/progress-tracking";
+import { PronunciationScore } from "@/types/pronunciation-score";
 export type ModalType =
   | "createUser"
   | "editUser"
@@ -40,12 +42,12 @@ export interface ModalData {
   course?: Course;
   vocabulary?: Vocabulary;
   lessonProgress?: LessonProgress;
-  progressTracking?: LessonProgress;
+  progressTracking?: ProgressTracking;
   exercise?: Excercise;
   exerciseVocabulary?: ExerciseVocabulary;
   history?: History;
   feedback?: Feedback;
-  pronunciationScore?: LessonProgress;
+  pronunciationScore?: PronunciationScore;
   enrollment?: Enrollment;
 }
 interface ModalStore {

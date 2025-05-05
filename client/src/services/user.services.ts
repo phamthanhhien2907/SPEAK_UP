@@ -1,3 +1,4 @@
+import { User } from "@/types/user";
 import axiosConfig from "../axios";
 export const apiGetAllUser = async () => {
   try {
@@ -27,11 +28,25 @@ export const apiDeleteUserById = async (id: string) => {
   try {
     const response = await axiosConfig({
       method: "DELETE",
-      url: "/users/delete/" + id,
+      url: "/users/" + id,
     });
     return response;
   } catch (error) {
     console.error("Error deleting user by ID:", error);
+    throw error;
+  }
+}
+export const apiUpdateUser = async (id: string, data: User) => {
+  try {
+    const response = await axiosConfig({
+      method: "PUT",
+      url: "/users/" + id,
+      data
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log("Error fetching current user:", error);
     throw error;
   }
 }

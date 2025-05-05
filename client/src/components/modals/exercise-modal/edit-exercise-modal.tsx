@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../../ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -20,85 +20,243 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useEffect, useState } from "react";
+import { apiGetAllLesson } from "@/services/lesson.services";
+import { DifficultyLevelType, ExcerciseType } from "@/types/excercise";
+import { apiUpdateExercise } from "@/services/exercise.services";
 const formSchema = z.object({
-  email: z.string().min(1, {
-    message: "Email is required",
+  lessonId: z.string().min(1, {
+    message: "Lesson ID is required",
   }),
-  password: z.string().min(6, {
-    message: "Password is required",
+  type: z.enum(
+    ["repeat_sentence", "fill_in_blank", "pronunciation", "listening"],
+    {
+      message: "Type is required",
+    }
+  ),
+  prompt: z.string().min(1, {
+    message: "Prompt is required",
+  }),
+  correctPronunciation: z.string().min(1, {
+    message: "CorrectPronunciation is required",
+  }),
+  difficultyLevel: z.string().min(1, {
+    message: "DifficultyLevel is required",
   }),
 });
 export const EditExerciseModal = () => {
+  const [lessonData, setLessonData] = useState([]);
   const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+  const { exercise } = data;
   const isModalOpen = isOpen && type === "editExercise";
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      lessonId: "",
+      type: "repeat_sentence",
+      correctPronunciation: "",
+      difficultyLevel: "",
     },
   });
   const isLoading = form.formState.isSubmitting;
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const res = await apiUpdateExercise(exercise?._id, {
+      ...values,
+      lessonId: { _id: values.lessonId },
+    });
+    if (res) {
+      onClose();
+    }
+    form.reset();
+  };
   const handleClose = () => {
     form.reset();
     onClose();
   };
+  const getAllCourse = async () => {
+    const lesson = await apiGetAllLesson();
+    if (lesson.data.success) {
+      setLessonData(lesson.data.rs);
+    } else {
+      console.log("Failed to fetch users");
+    }
+  };
+  useEffect(() => {
+    if (exercise) {
+      form.setValue("lessonId", exercise.lessonId?._id);
+      form.setValue("type", exercise.type);
+      form.setValue("difficultyLevel", exercise.difficultyLevel);
+      form.setValue("prompt", exercise.prompt);
+      form.setValue("correctPronunciation", exercise.correctPronunciation);
+    }
+  }, [form, exercise]);
+  useEffect(() => {
+    getAllCourse();
+  }, []);
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Update Exercise
+            Edit Exercise
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-8 px-6">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Channel name
-                    </FormLabel>
-                    <FormControl>
-                      <Input
+              <div className="space-y-8 px-6">
+                <FormField
+                  control={form.control}
+                  name="lessonId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                        Lesson Id
+                      </FormLabel>
+                      <Select
                         disabled={isLoading}
-                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Password
-                    </FormLabel>
-                    <FormControl>
-                      <Input
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
+                            <SelectValue placeholder="Select a channel type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-white shadow-lg border border-gray-300">
+                          {Object?.values(lessonData)?.map((type) => (
+                            <SelectItem
+                              key={type?._id}
+                              value={type?._id}
+                              className="capitalize"
+                            >
+                              {type?.title?.toLocaleLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                        Type
+                      </FormLabel>
+                      <Select
                         disabled={isLoading}
-                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name"
-                        {...field}
-                        type="password"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
+                            <SelectValue placeholder="Select a excercise type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-white shadow-lg border border-gray-300">
+                          {Object?.values(ExcerciseType)?.map((type) => (
+                            <SelectItem
+                              key={type}
+                              value={type}
+                              className="capitalize"
+                            >
+                              {type?.toLocaleLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="prompt"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                        Prompt
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                          placeholder="Enter prompt"
+                          {...field}
+                          type="text"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="correctPronunciation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                        Correct Pronunciation
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isLoading}
+                          className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                          placeholder="Enter correct pronunciation"
+                          {...field}
+                          type="text"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="difficultyLevel"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                        Difficulty Level
+                      </FormLabel>
+                      <Select
+                        disabled={isLoading}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
+                            <SelectValue placeholder="Select a difficulty level" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-white shadow-lg border border-gray-300">
+                          {Object?.values(DifficultyLevelType)?.map((type) => (
+                            <SelectItem
+                              key={type}
+                              value={type}
+                              className="capitalize"
+                            >
+                              {type?.toLocaleLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button

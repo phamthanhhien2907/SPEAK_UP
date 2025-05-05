@@ -53,7 +53,7 @@ const formSchema = z.object({
 });
 export const CreateExerciseModal = () => {
   const [lessonData, setLessonData] = useState([]);
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createExercise";
   const form = useForm({
     resolver: zodResolver(formSchema),

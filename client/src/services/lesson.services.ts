@@ -28,7 +28,7 @@ export const apiDeleteLessonById = async (id: string) => {
     try {
         const response = await axiosConfig({
             method: "DELETE",
-            url: "/lesson/delete/" + id,
+            url: "/lesson/" + id,
         });
         return response;
     } catch (error) {

@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
 import {
@@ -28,7 +27,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiGetAllUser } from "@/services/user.services";
 import {
   CompletedLessonsType,
@@ -48,9 +46,7 @@ const formSchema = z.object({
 });
 export const CreateProgressTrackingModal = () => {
   const [userData, setUserData] = useState([]);
-  const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createProgressTracking";
   const form = useForm({
     resolver: zodResolver(formSchema),

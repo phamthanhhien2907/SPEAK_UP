@@ -5,6 +5,7 @@ export interface ILesson extends Document {
     title: string;
     content?: string;
     type: "listening" | "speaking" | "vocabulary";
+    thumbnail?: string;
 }
 
 const LessonSchema = new Schema<ILesson>({
@@ -12,6 +13,7 @@ const LessonSchema = new Schema<ILesson>({
     title: { type: String, required: true },
     content: String,
     type: { type: String, enum: ['listening', 'speaking', 'vocabulary'], required: true },
+    thumbnail: { type: String },
 }, {
     timestamps: true
 });

@@ -21,8 +21,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-model-store";
 
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiCreateVocabulary } from "@/services/vocabulary.services";
 const formSchema = z.object({
   word: z.string().min(1, {
@@ -42,9 +40,8 @@ const formSchema = z.object({
   }),
 });
 export const CreateVocabularyModal = () => {
-  const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+  const { isOpen, onClose, type } = useModal();
+
   const isModalOpen = isOpen && type === "createVocabulary";
   const form = useForm({
     resolver: zodResolver(formSchema),

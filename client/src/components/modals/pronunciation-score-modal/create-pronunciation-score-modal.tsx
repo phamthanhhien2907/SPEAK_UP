@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { apiGetAllExercise } from "@/services/exercise.services";
 import { apiGetAllUser } from "@/services/user.services";
 import { PronunciationScoreType } from "@/types/pronunciation-score";
@@ -53,9 +52,7 @@ const formSchema = z.object({
 export const CreatePronunciationScoreModal = () => {
   const [exerciseData, setExerciseData] = useState([]);
   const [userData, setUserData] = useState([]);
-  const { isOpen, onClose, type, data } = useModal();
-  const router = useNavigate();
-  const params = useParams();
+  const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "createPronunciationScore";
   const form = useForm({
     resolver: zodResolver(formSchema),

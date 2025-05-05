@@ -2,6 +2,7 @@ import { Lesson } from "./lesson";
 import { User } from "./user";
 
 export type Feedback = {
+    _id?: string;
     userId?: User;
     lessonId?: Lesson;
     comment?: string;
