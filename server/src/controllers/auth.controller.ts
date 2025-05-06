@@ -7,11 +7,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password } = req.body
+        const { email, password, typeLogin, firstname, lastname } = req.body
         if (!email || !password) {
             res.status(400).json({
                 success: false,
                 mes: 'Missing inputs'
+            })
+            return
+        }
+        if (typeLogin === "email" && !password) {
+            res.status(400).json({
+                success: false,
+                mes: 'Password is required for email login'
             })
             return
         }

@@ -5,10 +5,12 @@ export type Lesson = {
     courseId?: Course;
     title?: string;
     content?: string;
-    type?: "listening" | "speaking" | "vocabulary";
+    type?: "listening" | "speaking" | "vocabulary" | 'pronunciation';
+    level?: string
 };
 export enum LessonType {
     LISTENING = "listening",
     SPEAKING = "speaking",
     VOCABULARY = "vocabulary",
+    PRONUNCIATION = "pronunciation"
 }

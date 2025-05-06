@@ -12,6 +12,30 @@ export const apiGetAllLesson = async () => {
         throw error;
     }
 }
+export const apiGetParentLesson = async () => {
+    try {
+        const response = await axiosConfig({
+            method: "GET",
+            url: "/lesson/getParentLesson",
+        });
+        return response;
+    } catch (error) {
+        console.error("Error fetching parent lesson:", error);
+        throw error;
+    }
+}
+export const apiGetLessonByParent = async (parentLessonId: string) => {
+    try {
+        const response = await axiosConfig({
+            method: "GET",
+            url: "/lesson/getLessonByParent/" + parentLessonId,
+        });
+        return response;
+    } catch (error) {
+        console.error("Error fetching parent lesson by ID:", error);
+        throw error;
+    }
+}
 export const apiGetLessonById = async (id: string) => {
     try {
         const response = await axiosConfig({
