@@ -7,6 +7,7 @@ import { initRoutes } from './src/routes/index';
 import "./src/passport/index"
 import Course from './src/models/Course';
 import Lesson from './src/models/Lesson';
+import path from 'path';
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -17,6 +18,7 @@ app.use(cors(
     }
 ));
 app.use(cookieParser())
+app.use('/static', express.static(path.join(__dirname, './assets/images')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 connectDB();
@@ -36,36 +38,36 @@ initRoutes(app)
 //     await Lesson.insertMany([
 //         {
 //             courseId: course._id,
-//             title: "Listening: Daily Greetings",
-//             type: "listening",
+//             title: "Speaking: Daily Greetings",
+//             type: "speaking",
 //             content: "Listen to short dialogues where people greet each other in daily life.",
 //             thumbnail: "https://files.talkpal.ai/roleplays-mode/cover/making_friends_with_new_employee_.jpg"
 //         },
 //         {
 //             courseId: course._id,
-//             title: "Listening: At the Market",
-//             type: "listening",
+//             title: "Speaking: At the Market",
+//             type: "speaking",
 //             content: "Understand conversations between buyers and sellers in a local market.",
 //             thumbnail: "https://files.talkpal.ai/roleplays-mode/cover/at_a_supermarket.jpg"
 //         },
 //         {
 //             courseId: course._id,
-//             title: "Listening: Making a Phone Call",
-//             type: "listening",
+//             title: "Speaking: Making a Phone Call",
+//             type: "speaking",
 //             content: "Learn common phrases used in phone conversations.",
 //             thumbnail: "https://files.talkpal.ai/roleplays-mode/cover/customer_support_chat.jpg"
 //         },
 //         {
 //             courseId: course._id,
-//             title: "Listening: Ordering at a Restaurant",
-//             type: "listening",
+//             title: "Speaking: Ordering at a Restaurant",
+//             type: "speaking",
 //             content: "Listen to people order food and drinks at a restaurant.",
 //             thumbnail: "https://files.talkpal.ai/roleplays-mode/cover/ordering_food_in_a_restaurant.jpg"
 //         },
 //         {
 //             courseId: course._id,
-//             title: "Listening: Visiting the Doctor",
-//             type: "listening",
+//             title: "Speaking: Visiting the Doctor",
+//             type: "speaking",
 //             content: "Conversations about health issues and appointments with a doctor.",
 //             thumbnail: "https://files.talkpal.ai/roleplays-mode/cover/at_a_doctor.jpg"
 //         }
