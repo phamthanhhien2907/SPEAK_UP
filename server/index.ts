@@ -8,6 +8,7 @@ import "./src/passport/index"
 import Course from './src/models/Course';
 import Lesson from './src/models/Lesson';
 import path from 'path';
+import axios from 'axios';
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 connectDB();
 initRoutes(app)
+
 // async function seedData() {
 
 

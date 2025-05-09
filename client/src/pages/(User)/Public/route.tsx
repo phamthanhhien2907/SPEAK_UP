@@ -4,6 +4,8 @@ import PublicPageWrapper from "./wrapper";
 const HomePage = lazy(() => import("../Home/index"));
 const LessonPage = lazy(() => import("../Lesson/index"));
 const SpeechPage = lazy(() => import("../Speech/index"));
+const PronunciationPage = lazy(() => import("../Pronunciation/index"));
+const VocabularyPage = lazy(() => import("../Vocabulary/index"));
 
 const publicRoutes: (RouteObject & { role?: string[] })[] = [
   {
@@ -16,7 +18,7 @@ const publicRoutes: (RouteObject & { role?: string[] })[] = [
         index: true,
       },
       {
-        path: "lesson",
+        path: "/lesson/:parentLessonId",
         element: <LessonPage />,
         index: true,
       },
@@ -25,6 +27,24 @@ const publicRoutes: (RouteObject & { role?: string[] })[] = [
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <SpeechPage />
+          </Suspense>
+        ),
+        index: true,
+      },
+      {
+        path: "/vocabulary/:lessonId",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <VocabularyPage />
+          </Suspense>
+        ),
+        index: true,
+      },
+      {
+        path: "/pronunciation/:lessonId",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <PronunciationPage />
           </Suspense>
         ),
         index: true,

@@ -60,3 +60,17 @@ export const deleteVocabulary = async (req: Request, res: Response): Promise<voi
         rs: vocabulary ? vocabulary : 'Vocabulary not found'
     })
 }
+export const getVocabularyByLessonId = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const lessonId = req.params.lessonId;
+        const vocabularies = await Vocabulary.find({ lessonId: lessonId }).exec();
+        if (!vocabularies || vocabularies.length === 0) {
+            res.status(404).json({ message: 'No vocabulary found for this lesson' });
+            return
+        }
+        res.json(vocabularies);
+    } catch (error) {
+        console.error('Error fetching vocabulary:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+}

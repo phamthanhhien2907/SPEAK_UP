@@ -62,3 +62,16 @@ export const apiUpdateLessonProgress = async (id: string, data: LessonProgress) 
         throw error;
     }
 }
+export const apiUpdateLessonProgressByLessonId = async (id: string, data: LessonProgress) => {
+    try {
+        const response = await axiosConfig({
+            method: "PUT",
+            url: "/lessonProgress/lesson-progress/" + id,
+            data
+        });
+        return response;
+    } catch (error) {
+        console.log("Error fetching current lesson progress:", error);
+        throw error;
+    }
+}

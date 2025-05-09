@@ -24,6 +24,19 @@ export const apiGetVocabularyById = async (id: string) => {
         throw error;
     }
 }
+export const apiGetVocabularyByLessonId = async (lessonId: string) => {
+    try {
+        const response = await axiosConfig({
+            method: "GET",
+            url: "/vocabulary/getByLessonId/" + lessonId,
+        });
+        return response;
+    } catch (error) {
+        console.error("Error fetching vocabulary by ID:", error);
+        throw error;
+    }
+}
+
 export const apiDeleteVocabularyById = async (id: string) => {
     try {
         const response = await axiosConfig({

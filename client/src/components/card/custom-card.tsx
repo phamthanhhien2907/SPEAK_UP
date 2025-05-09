@@ -3,21 +3,15 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
 interface Props {
   title?: string;
   description?: string;
   thumbnail?: string;
-  id?: string;
   data: string;
 }
-const CustomCard = ({ title, description, thumbnail, id, data }: Props) => {
-  const navigation = useNavigate();
-
+const CustomCard = ({ title, description, thumbnail, data }: Props) => {
   return (
     <Card
-      onClick={() => navigation(`/speech/${id}`)}
-      key={id}
       sx={{
         display: "flex",
         maxWidth: "700px",
@@ -69,12 +63,12 @@ const CustomCard = ({ title, description, thumbnail, id, data }: Props) => {
         sx={{
           width: data === "lesson" ? 160 : 100,
           height: data === "lesson" ? "auto" : 100,
-          borderRadius: data === "lesson" ? 0 : "50%", // Làm hình tròn
-          objectFit: "cover", // Cắt ảnh vừa khung, không méo
+          borderRadius: data === "lesson" ? 0 : "50%",
+          objectFit: "cover",
           marginRight: data === "lesson" ? 0 : 2,
         }}
         image={thumbnail}
-        alt="Live from space album cover"
+        alt="thumbnail"
       />
     </Card>
   );
