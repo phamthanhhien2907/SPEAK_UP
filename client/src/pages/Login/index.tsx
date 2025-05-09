@@ -95,14 +95,14 @@ const Login = ({
                   onChange={handleInput}
                   name="email"
                   type="text"
-                  className="--width-100"
+                  className="--width-100 !rounded-xl"
                   placeholder="Email"
                 />
                 <div className="password">
                   <input
                     type={onShowPassword ? "text" : "password"}
                     name="password"
-                    className="--width-100"
+                    className="--width-100 !rounded-xl"
                     placeholder="Password"
                     onChange={handleInput}
                   />

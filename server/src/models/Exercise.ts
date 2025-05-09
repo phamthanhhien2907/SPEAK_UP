@@ -6,6 +6,8 @@ export interface IExercise extends Document {
     prompt: string;
     correctPronunciation: string;
     difficultyLevel: string
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const ExerciseSchema = new Schema<IExercise>({

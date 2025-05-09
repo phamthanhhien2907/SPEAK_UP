@@ -6,6 +6,7 @@ export type LessonProgress = {
     lessonId?: Lesson;
     userId?: User;
     score?: number;
+    isCompleted?: boolean;
 };
 
 export enum LessonProgressScore {

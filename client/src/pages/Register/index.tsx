@@ -123,14 +123,14 @@ const Register = ({
                 onChange={handleInput}
                 name="email"
                 type="email"
-                className="--width-100"
+                className="--width-100 !rounded-xl"
                 placeholder="Email"
               />
               {/* PASSWORD FIELD */}
               <div className="password">
                 <input
                   type={onShowPassword ? "text" : "password"}
-                  className="--width-100"
+                  className="--width-100 !rounded-xl"
                   name="password"
                   placeholder="Password"
                   onFocus={handleShowIndicator}

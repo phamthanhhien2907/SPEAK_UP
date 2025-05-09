@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "seed": "ts-node seed.ts",
+    "seed": "ts-node seed5.ts",
     "build": "tsc",
     "dev": "nodemon --exec ts-node index.ts"
   },
@@ -31,6 +31,7 @@
     "@google-cloud/text-to-speech": "^6.0.1",
     "@google/generative-ai": "^0.24.0",
     "@types/cookie-parser": "^1.4.8",
+    "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.0",
     "cookie-parser": "^1.4.7",

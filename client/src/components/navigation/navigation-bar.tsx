@@ -98,7 +98,7 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
                 stroke="currentColor"
                 className="w-8 h-8 stroke-gray-800/70"
               >
-                <motion.path
+                {/* <motion.path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   variants={svgVariants}
@@ -108,7 +108,7 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
                     duration: 0.5,
                     ease: "easeInOut",
                   }}
-                />
+                /> */}
               </svg>
             </button>
           </div>

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import axios from "axios";
 import Course from "./src/models/Course";
 import Lesson, { ILesson, ILessonInput } from "./src/models/Lesson";
 import LessonProgress from "./src/models/LessonProgress";
@@ -8,16 +9,20 @@ import Exercise from "./src/models/Exercise";
 import History from "./src/models/History";
 import ExerciseVocabulary from "./src/models/ExerciseVocabulary";
 
-// Define interface for vocabulary items
+interface EndingSoundWords {
+    [key: string]: { correct: string; wrong: string }[];
+}
+
 interface VocabularyItem {
     word: string;
     phonetic?: string;
     meaning: string;
     exampleSentence: string;
     sound: string;
+    audioUrl?: string;
+    isCorrect: boolean;
 }
 
-// Define interfaces for the returned documents
 interface IVocabularyDoc {
     _id: mongoose.Types.ObjectId;
     lessonId: mongoose.Types.ObjectId;
@@ -36,7 +41,6 @@ const seed = async () => {
     });
     console.log("Connected to MongoDB");
 
-    // Clear existing data to avoid duplicates
     await Course.deleteMany({});
     await Lesson.deleteMany({});
     await LessonProgress.deleteMany({});
@@ -45,7 +49,6 @@ const seed = async () => {
     await History.deleteMany({});
     await ExerciseVocabulary.deleteMany({});
 
-    // Create course
     const course = await Course.create({
         _id: new mongoose.Types.ObjectId("6819c20302afe322ee61b1d2"),
         title: "English Pronunciation with IPA",
@@ -56,7 +59,6 @@ const seed = async () => {
         updatedAt: new Date("2025-05-06T08:02:11.316Z"),
     });
 
-    // Create parent lessons based on IPA
     const parentLessonsData: ILessonInput[] = [
         {
             courseId: course._id as mongoose.Types.ObjectId,
@@ -133,14 +135,12 @@ const seed = async () => {
     const parentLessons: ILesson[] = await Lesson.insertMany(
         parentLessonsData.map(lesson => ({
             ...lesson,
-            thumbnail: course?.thumbnail,
+            thumbnail: lesson?.thumbnail,
         }))
     ) as unknown as ILesson[];
 
-    // Create sub-lessons with IPA-focused content
     const subLessonsData: ILessonInput[] = [];
 
-    // "Ending Sounds" - 38 sub-lessons (final consonants)
     const endingSounds = ["/p/", "/b/", "/t/", "/d/", "/k/", "/g/", "/f/", "/v/", "/θ/", "/ð/", "/s/", "/z/", "/ʃ/", "/ʒ/", "/h/", "/tʃ/", "/dʒ/", "/m/", "/n/", "/ŋ/"];
     for (let i = 0; i < 38; i++) {
         const sound = endingSounds[i % endingSounds.length];
@@ -148,7 +148,7 @@ const seed = async () => {
             courseId: course._id as mongoose.Types.ObjectId,
             parentLessonId: parentLessons[0]._id as mongoose.Types.ObjectId,
             title: `Lesson ${i + 1} - Ending Sound ${sound}`,
-            content: `Practice words ending with ${sound}: e.g., "stop" (/stɒp/) for /p/, "rub" (/rʌb/) for /b/.`,
+            content: `Practice words ending with ${sound}.`,
             type: "pronunciation",
             level: 1,
             thumbnail: "",
@@ -157,14 +157,13 @@ const seed = async () => {
         });
     }
 
-    // "/iː/ vs /ɪ/" - 14 sub-lessons
     const iSounds = [
         "Listen and distinguish /iː/ vs /ɪ/",
-        "Words with /iː/: sheep, see, feel",
-        "Words with /ɪ/: ship, sit, fill",
+        "Words with /iː/",
+        "Words with /ɪ/",
         "Minimal pairs: seat/sit, beat/bit",
-        "Sentences with /iː/: She reads books.",
-        "Sentences with /ɪ/: I sit here.",
+        "Sentences with /iː/",
+        "Sentences with /ɪ/",
         "Practice /iː/ in isolation",
         "Practice /ɪ/ in isolation",
         "Combine /iː/ and /ɪ/ in words",
@@ -179,7 +178,7 @@ const seed = async () => {
             courseId: course._id as mongoose.Types.ObjectId,
             parentLessonId: parentLessons[1]._id as mongoose.Types.ObjectId,
             title: `Lesson ${i + 1} - ${iSounds[i]}`,
-            content: `Focus on ${iSounds[i].toLowerCase()}. Example: /iː/ in "see" (/siː/), /ɪ/ in "sit" (/sɪt/).`,
+            content: `Focus on ${iSounds[i].toLowerCase()}.`,
             type: "pronunciation",
             level: 1,
             thumbnail: "",
@@ -188,12 +187,11 @@ const seed = async () => {
         });
     }
 
-    // "/æ/, /ʌ/, /ɑː/" - 7 sub-lessons
     const aSounds = [
         "Introduction to /æ/, /ʌ/, /ɑː/",
-        "Words with /æ/: cat, hat, bat",
-        "Words with /ʌ/: cup, but, cut",
-        "Words with /ɑː/: car, father, far",
+        "Words with /æ/",
+        "Words with /ʌ/",
+        "Words with /ɑː/",
         "Minimal pairs: cat/cut, car/cup",
         "Sentences practice",
         "Review and record",
@@ -203,7 +201,7 @@ const seed = async () => {
             courseId: course._id as mongoose.Types.ObjectId,
             parentLessonId: parentLessons[2]._id as mongoose.Types.ObjectId,
             title: `Lesson ${i + 1} - ${aSounds[i]}`,
-            content: `Practice ${aSounds[i].toLowerCase()}. Example: /æ/ in "cat" (/kæt/), /ʌ/ in "cup" (/kʌp/), /ɑː/ in "car" (/kɑːr/).`,
+            content: `Practice ${aSounds[i].toLowerCase()}.`,
             type: "pronunciation",
             level: 1,
             thumbnail: "",
@@ -212,11 +210,10 @@ const seed = async () => {
         });
     }
 
-    // "/ð/ vs /θ/" - 7 sub-lessons
     const thSounds = [
         "Introduction to /ð/ vs /θ/",
-        "Words with /θ/: think, bath, teeth",
-        "Words with /ð/: this, mother, breathe",
+        "Words with /θ/",
+        "Words with /ð/",
         "Minimal pairs: think/this",
         "Sentences with /θ/",
         "Sentences with /ð/",
@@ -227,7 +224,7 @@ const seed = async () => {
             courseId: course._id as mongoose.Types.ObjectId,
             parentLessonId: parentLessons[3]._id as mongoose.Types.ObjectId,
             title: `Lesson ${i + 1} - ${thSounds[i]}`,
-            content: `Practice ${thSounds[i].toLowerCase()}. Example: /θ/ in "think" (/θɪŋk/), /ð/ in "this" (/ðɪs/).`,
+            content: `Practice ${thSounds[i].toLowerCase()}.`,
             type: "pronunciation",
             level: 1,
             thumbnail: "",
@@ -236,12 +233,11 @@ const seed = async () => {
         });
     }
 
-    // "/r/, /z/, /ʃ/" - 7 sub-lessons
     const rzsSounds = [
         "Introduction to /r/, /z/, /ʃ/",
-        "Words with /r/: red, car, run",
-        "Words with /z/: zoo, buzz, nose",
-        "Words with /ʃ/: shoe, wash, sure",
+        "Words with /r/",
+        "Words with /z/",
+        "Words with /ʃ/",
         "Minimal pairs: rose/rows",
         "Sentences practice",
         "Review and record",
@@ -251,7 +247,7 @@ const seed = async () => {
             courseId: course._id as mongoose.Types.ObjectId,
             parentLessonId: parentLessons[4]._id as mongoose.Types.ObjectId,
             title: `Lesson ${i + 1} - ${rzsSounds[i]}`,
-            content: `Practice ${rzsSounds[i].toLowerCase()}. Example: /r/ in "red" (/rɛd/), /z/ in "zoo" (/zuː/), /ʃ/ in "shoe" (/ʃuː/).`,
+            content: `Practice ${rzsSounds[i].toLowerCase()}.`,
             type: "pronunciation",
             level: 1,
             thumbnail: "",
@@ -260,7 +256,6 @@ const seed = async () => {
         });
     }
 
-    // "Intonation" - 5 sub-lessons
     const intonationLessons = [
         "Introduction to English intonation",
         "Rising intonation: Yes/No questions",
@@ -273,7 +268,7 @@ const seed = async () => {
             courseId: course._id as mongoose.Types.ObjectId,
             parentLessonId: parentLessons[5]._id as mongoose.Types.ObjectId,
             title: `Lesson ${i + 1} - ${intonationLessons[i]}`,
-            content: `Practice ${intonationLessons[i].toLowerCase()}. Example: Rising in "Are you okay?" (/ɑːr jə ʊˈkeɪ/), Falling in "I’m fine." (/aɪm faɪn/).`,
+            content: `Practice ${intonationLessons[i].toLowerCase()}.`,
             type: "pronunciation",
             level: 1,
             thumbnail: "",
@@ -282,7 +277,6 @@ const seed = async () => {
         });
     }
 
-    // "Longer Words" - 2 sub-lessons
     const longerWords = [
         "Practice basic longer words",
         "Practice phrases with longer words",
@@ -292,7 +286,7 @@ const seed = async () => {
             courseId: course._id as mongoose.Types.ObjectId,
             parentLessonId: parentLessons[6]._id as mongoose.Types.ObjectId,
             title: `Lesson ${i + 1} - ${longerWords[i]}`,
-            content: `Practice ${longerWords[i].toLowerCase()}. Example: "international" (/ˌɪntərˈnæʃənl/), "The weather is nice." (/ðə ˈwɛðər ɪz naɪs/).`,
+            content: `Practice ${longerWords[i].toLowerCase()}.`,
             type: "pronunciation",
             level: 2,
             thumbnail: "",
@@ -303,7 +297,6 @@ const seed = async () => {
 
     const subLessons: ILesson[] = await Lesson.insertMany(subLessonsData) as unknown as ILesson[];
 
-    // Initialize arrays for vocabulary, exercises, exercise-vocabulary links, and history
     const vocabularyData: Array<{
         lessonId: mongoose.Types.ObjectId;
         word: string;
@@ -340,140 +333,397 @@ const seed = async () => {
     }> = [];
     const userId = new mongoose.Types.ObjectId("6814e1d4f941dc16637b6235");
 
-    // Sample vocabulary data for each sub-lesson group
-    const endingSoundWords: VocabularyItem[] = [
-        { word: "stop", phonetic: "/stɒp/", meaning: "to cease moving", exampleSentence: "I will stop the car.", sound: "/p/" },
-        { word: "rub", phonetic: "/rʌb/", meaning: "to apply pressure and move", exampleSentence: "Rub the table with a cloth.", sound: "/b/" },
-        { word: "cat", phonetic: "/kæt/", meaning: "a small domesticated animal", exampleSentence: "The cat is sleeping.", sound: "/t/" },
-        { word: "bad", phonetic: "/bæd/", meaning: "not good", exampleSentence: "This is a bad idea.", sound: "/d/" },
-        { word: "back", phonetic: "/bæk/", meaning: "the rear surface", exampleSentence: "Stand with your back straight.", sound: "/k/" },
-        { word: "dog", phonetic: "/dɒɡ/", meaning: "a common pet", exampleSentence: "The dog barks loudly.", sound: "/g/" },
-        { word: "leaf", phonetic: "/liːf/", meaning: "part of a plant", exampleSentence: "A leaf fell from the tree.", sound: "/f/" },
-        { word: "love", phonetic: "/lʌv/", meaning: "deep affection", exampleSentence: "I love my family.", sound: "/v/" },
-        { word: "bath", phonetic: "/bæθ/", meaning: "a washing container", exampleSentence: "Take a bath tonight.", sound: "/θ/" },
-        { word: "this", phonetic: "/ðɪs/", meaning: "indicating something close", exampleSentence: "This is my book.", sound: "/ð/" },
-        { word: "bus", phonetic: "/bʌs/", meaning: "a large vehicle", exampleSentence: "The bus is late.", sound: "/s/" },
-        { word: "buzz", phonetic: "/bʌz/", meaning: "a humming sound", exampleSentence: "I hear a buzz from the bee.", sound: "/z/" },
-        { word: "wash", phonetic: "/wɒʃ/", meaning: "to clean with water", exampleSentence: "Wash your hands.", sound: "/ʃ/" },
-        { word: "beige", phonetic: "/beɪʒ/", meaning: "a light brown color", exampleSentence: "The wall is beige.", sound: "/ʒ/" },
-        { word: "path", phonetic: "/pæθ/", meaning: "a way or track", exampleSentence: "Walk down the path.", sound: "/θ/" },
-        { word: "church", phonetic: "/tʃɜːrtʃ/", meaning: "a place of worship", exampleSentence: "We go to church on Sunday.", sound: "/tʃ/" },
-        { word: "judge", phonetic: "/dʒʌdʒ/", meaning: "to form an opinion", exampleSentence: "The judge made a decision.", sound: "/dʒ/" },
-        { word: "room", phonetic: "/ruːm/", meaning: "a space", exampleSentence: "This room is big.", sound: "/m/" },
-        { word: "sun", phonetic: "/sʌn/", meaning: "the star", exampleSentence: "The sun is shining.", sound: "/n/" },
-        { word: "sing", phonetic: "/sɪŋ/", meaning: "to produce musical sounds", exampleSentence: "She can sing well.", sound: "/ŋ/" },
+    // Sử dụng Map để theo dõi các từ theo lessonId
+    const wordsByLesson = new Map<string, Set<string>>();
+
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const fetchVocabulary = async (wordPairs: { correct: string; wrong: string }[], sound: string, lessonId: string) => {
+        const vocabItems: VocabularyItem[] = [];
+
+        // Khởi tạo Set cho lessonId nếu chưa có
+        if (!wordsByLesson.has(lessonId)) {
+            wordsByLesson.set(lessonId, new Set<string>());
+        }
+        const lessonWords = wordsByLesson.get(lessonId)!;
+
+        for (const pair of wordPairs) {
+            // Fetch correct word
+            try {
+                const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${pair.correct}`);
+                const data = response.data[0];
+                const phonetic = data.phonetic || data.phonetics?.[0]?.text || "";
+                const audioUrl = data.phonetics?.find((p: any) => p.audio)?.audio || "";
+                const meanings = data.meanings || [];
+                if (meanings.length > 0) {
+                    const meaning = meanings[0].definitions[0].definition || "No definition available";
+                    const example = meanings[0].definitions[0].example || `${pair.correct} in a sentence.`;
+                    if (!lessonWords.has(pair.correct)) {
+                        vocabItems.push({
+                            word: pair.correct,
+                            phonetic,
+                            meaning,
+                            exampleSentence: example,
+                            sound,
+                            audioUrl,
+                            isCorrect: true,
+                        });
+                        lessonWords.add(pair.correct);
+                    }
+                }
+            } catch (error: any) {
+                if (error.response && error.response.status === 404) {
+                    console.warn(`Word "${pair.correct}" not found in API, skipping...`);
+                } else {
+                    console.error(`Error fetching ${pair.correct}:`, error);
+                }
+            }
+            await delay(1000);
+
+            // Fetch wrong word
+            try {
+                const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${pair.wrong}`);
+                const data = response.data[0];
+                const phonetic = data.phonetic || data.phonetics?.[0]?.text || "";
+                const audioUrl = data.phonetics?.find((p: any) => p.audio)?.audio || "";
+                const meanings = data.meanings || [];
+                if (meanings.length > 0) {
+                    const meaning = meanings[0].definitions[0].definition || "No definition available";
+                    const example = meanings[0].definitions[0].example || `${pair.wrong} in a sentence.`;
+                    if (!lessonWords.has(pair.wrong)) {
+                        vocabItems.push({
+                            word: pair.wrong,
+                            phonetic,
+                            meaning,
+                            exampleSentence: example,
+                            sound,
+                            audioUrl,
+                            isCorrect: false,
+                        });
+                        lessonWords.add(pair.wrong);
+                    }
+                }
+            } catch (error: any) {
+                if (error.response && error.response.status === 404) {
+                    console.warn(`Wrong word "${pair.wrong}" not found in API, skipping...`);
+                } else {
+                    console.error(`Error fetching ${pair.wrong}:`, error);
+                }
+            }
+            await delay(1000);
+        }
+        return vocabItems;
+    };
+
+    const endingSoundWords: EndingSoundWords = {
+        "/p/": [
+            { correct: "stop", wrong: "stock" },
+            { correct: "map", wrong: "mat" },
+            { correct: "cap", wrong: "cat" },
+            { correct: "lip", wrong: "lit" },
+            { correct: "sip", wrong: "sit" },
+        ],
+        "/b/": [
+            { correct: "web", wrong: "wet" },
+            { correct: "club", wrong: "clue" },
+            { correct: "job", wrong: "jog" },
+            { correct: "cab", wrong: "cap" },
+            { correct: "rib", wrong: "rip" },
+        ],
+        "/t/": [
+            { correct: "cat", wrong: "cap" },
+            { correct: "hat", wrong: "hot" },
+            { correct: "mat", wrong: "map" },
+            { correct: "bat", wrong: "bad" },
+            { correct: "sit", wrong: "sip" },
+        ],
+        "/d/": [
+            { correct: "bed", wrong: "bet" },
+            { correct: "red", wrong: "rat" },
+            { correct: "sad", wrong: "sat" },
+            { correct: "mad", wrong: "mat" },
+            { correct: "kid", wrong: "kit" },
+        ],
+        "/k/": [
+            { correct: "back", wrong: "bag" },
+            { correct: "lock", wrong: "log" },
+            { correct: "sick", wrong: "sit" },
+            { correct: "duck", wrong: "dock" },
+            { correct: "kick", wrong: "kit" },
+        ],
+        "/g/": [
+            { correct: "dog", wrong: "dot" },
+            { correct: "bag", wrong: "bat" },
+            { correct: "pig", wrong: "pit" },
+            { correct: "fog", wrong: "log" },
+            { correct: "bug", wrong: "but" },
+        ],
+        "/f/": [
+            { correct: "leaf", wrong: "leave" },
+            { correct: "roof", wrong: "room" },
+            { correct: "off", wrong: "of" },
+            { correct: "safe", wrong: "save" },
+            { correct: "elf", wrong: "else" },
+        ],
+        "/v/": [
+            { correct: "love", wrong: "live" },
+            { correct: "dove", wrong: "dive" },
+            { correct: "give", wrong: "gift" },
+            { correct: "live", wrong: "leave" },
+            { correct: "wave", wrong: "wage" },
+        ],
+        "/θ/": [
+            { correct: "think", wrong: "this" },
+            { correct: "bath", wrong: "bat" },
+            { correct: "teeth", wrong: "teethe" },
+            { correct: "path", wrong: "pat" },
+            { correct: "math", wrong: "mat" },
+        ],
+        "/ð/": [
+            { correct: "this", wrong: "think" },
+            { correct: "that", wrong: "hat" },
+            { correct: "with", wrong: "wit" },
+            { correct: "mother", wrong: "mutter" },
+            { correct: "father", wrong: "farther" },
+        ],
+        "/s/": [
+            { correct: "bus", wrong: "buzz" },
+            { correct: "kiss", wrong: "kit" },
+            { correct: "miss", wrong: "mix" },
+            { correct: "class", wrong: "clash" },
+            { correct: "dress", wrong: "drew" },
+        ],
+        "/z/": [
+            { correct: "zoo", wrong: "sue" },
+            { correct: "buzz", wrong: "bus" },
+            { correct: "nose", wrong: "noose" },
+            { correct: "rose", wrong: "rows" },
+            { correct: "jazz", wrong: "jar" },
+        ],
+        "/ʃ/": [
+            { correct: "shoe", wrong: "sue" },
+            { correct: "fish", wrong: "fit" },
+            { correct: "wish", wrong: "wit" },
+            { correct: "dish", wrong: "dip" },
+            { correct: "rush", wrong: "rut" },
+        ],
+        "/ʒ/": [
+            { correct: "beige", wrong: "badge" },
+            { correct: "garage", wrong: "garbage" },
+            { correct: "measure", wrong: "mature" },
+            { correct: "pleasure", wrong: "pressure" },
+            { correct: "treasure", wrong: "tressure" },
+        ],
+        "/h/": [
+            { correct: "hat", wrong: "hot" },
+            { correct: "hit", wrong: "hot" },
+            { correct: "hot", wrong: "hat" },
+            { correct: "hope", wrong: "hop" },
+            { correct: "house", wrong: "hose" },
+        ],
+        "/tʃ/": [
+            { correct: "church", wrong: "search" },
+            { correct: "watch", wrong: "wash" },
+            { correct: "catch", wrong: "cash" },
+            { correct: "match", wrong: "mash" },
+            { correct: "teach", wrong: "teak" },
+        ],
+        "/dʒ/": [
+            { correct: "judge", wrong: "jut" },
+            { correct: "age", wrong: "ache" },
+            { correct: "page", wrong: "pace" },
+            { correct: "cage", wrong: "cake" },
+            { correct: "edge", wrong: "etch" },
+        ],
+        "/m/": [
+            { correct: "room", wrong: "root" },
+            { correct: "team", wrong: "teat" },
+            { correct: "dream", wrong: "dread" },
+            { correct: "arm", wrong: "art" },
+            { correct: "him", wrong: "hit" },
+        ],
+        "/n/": [
+            { correct: "sun", wrong: "sum" },
+            { correct: "run", wrong: "rum" },
+            { correct: "fun", wrong: "funny" },
+            { correct: "man", wrong: "mat" },
+            { correct: "pin", wrong: "pit" },
+        ],
+        "/ŋ/": [
+            { correct: "sing", wrong: "sin" },
+            { correct: "ring", wrong: "rang" },
+            { correct: "song", wrong: "son" },
+            { correct: "king", wrong: "kin" },
+            { correct: "wing", wrong: "win" },
+        ],
+    };
+
+    const iSoundWords = {
+        "/iː/": [
+            { correct: "see", wrong: "sit" },
+            { correct: "tree", wrong: "trip" },
+            { correct: "green", wrong: "grin" },
+            { correct: "deep", wrong: "dip" },
+            { correct: "feet", wrong: "fit" },
+        ],
+        "/ɪ/": [
+            { correct: "sit", wrong: "see" },
+            { correct: "bit", wrong: "beat" },
+            { correct: "hit", wrong: "heat" },
+            { correct: "lip", wrong: "leap" },
+            { correct: "fit", wrong: "feet" },
+        ],
+    };
+
+    const aSoundWords = {
+        "/æ/": [
+            { correct: "cat", wrong: "cut" },
+            { correct: "hat", wrong: "hot" },
+            { correct: "bat", wrong: "but" },
+            { correct: "map", wrong: "mop" },
+            { correct: "sad", wrong: "sod" },
+        ],
+        "/ʌ/": [
+            { correct: "cup", wrong: "cap" },
+            { correct: "but", wrong: "bat" },
+            { correct: "cut", wrong: "cat" },
+            { correct: "sun", wrong: "son" },
+            { correct: "run", wrong: "ran" },
+        ],
+        "/ɑː/": [
+            { correct: "car", wrong: "core" },
+            { correct: "far", wrong: "four" },
+            { correct: "star", wrong: "store" },
+            { correct: "bar", wrong: "bore" },
+            { correct: "hard", wrong: "heard" },
+        ],
+    };
+
+    const thSoundWords = {
+        "/θ/": [
+            { correct: "think", wrong: "this" },
+            { correct: "bath", wrong: "bat" },
+            { correct: "teeth", wrong: "teethe" },
+            { correct: "path", wrong: "pat" },
+            { correct: "math", wrong: "mat" },
+        ],
+        "/ð/": [
+            { correct: "this", wrong: "think" },
+            { correct: "that", wrong: "hat" },
+            { correct: "with", wrong: "wit" },
+            { correct: "mother", wrong: "mutter" },
+            { correct: "father", wrong: "farther" },
+        ],
+    };
+
+    const rzsSoundWords = {
+        "/r/": [
+            { correct: "red", wrong: "led" },
+            { correct: "run", wrong: "lung" },
+            { correct: "rat", wrong: "lat" },
+            { correct: "rose", wrong: "lose" },
+            { correct: "rain", wrong: "lane" },
+        ],
+        "/z/": [
+            { correct: "zoo", wrong: "sue" },
+            { correct: "buzz", wrong: "bus" },
+            { correct: "nose", wrong: "noose" },
+            { correct: "rose", wrong: "rows" },
+            { correct: "jazz", wrong: "jar" },
+        ],
+        "/ʃ/": [
+            { correct: "shoe", wrong: "sue" },
+            { correct: "fish", wrong: "fit" },
+            { correct: "wish", wrong: "wit" },
+            { correct: "dish", wrong: "dip" },
+            { correct: "rush", wrong: "rut" },
+        ],
+    };
+
+    const intonationWords = [
+        { correct: "yes", wrong: "yet" },
+        { correct: "no", wrong: "now" },
+        { correct: "hello", wrong: "halo" },
+        { correct: "goodbye", wrong: "goodly" },
+        { correct: "sorry", wrong: "sorely" },
+    ];
+    const longerWordsData = [
+        { correct: "beautiful", wrong: "beauty" },
+        { correct: "education", wrong: "educate" },
+        { correct: "information", wrong: "inform" },
+        { correct: "technology", wrong: "technical" },
+        { correct: "relationship", wrong: "relative" },
     ];
 
-    const iSoundWords: VocabularyItem[] = [
-        { word: "sheep", phonetic: "/ʃiːp/", meaning: "a farm animal", exampleSentence: "The sheep are grazing.", sound: "/iː/" },
-        { word: "ship", phonetic: "/ʃɪp/", meaning: "a large boat", exampleSentence: "The ship sailed away.", sound: "/ɪ/" },
-        { word: "see", phonetic: "/siː/", meaning: "to perceive with the eyes", exampleSentence: "I can see the mountain.", sound: "/iː/" },
-        { word: "sit", phonetic: "/sɪt/", meaning: "to rest on the buttocks", exampleSentence: "Please sit down.", sound: "/ɪ/" },
-    ];
-
-    const aSoundWords: VocabularyItem[] = [
-        { word: "cat", phonetic: "/kæt/", meaning: "a small domesticated animal", exampleSentence: "The cat is playful.", sound: "/æ/" },
-        { word: "cup", phonetic: "/kʌp/", meaning: "a small container", exampleSentence: "Drink from the cup.", sound: "/ʌ/" },
-        { word: "car", phonetic: "/kɑːr/", meaning: "a vehicle", exampleSentence: "The car is fast.", sound: "/ɑː/" },
-    ];
-
-    const thSoundWords: VocabularyItem[] = [
-        { word: "think", phonetic: "/θɪŋk/", meaning: "to consider", exampleSentence: "I think about you.", sound: "/θ/" },
-        { word: "this", phonetic: "/ðɪs/", meaning: "indicating something close", exampleSentence: "This is my house.", sound: "/ð/" },
-    ];
-
-    const rzsSoundWords: VocabularyItem[] = [
-        { word: "red", phonetic: "/rɛd/", meaning: "a color", exampleSentence: "The apple is red.", sound: "/r/" },
-        { word: "zoo", phonetic: "/zuː/", meaning: "a place for animals", exampleSentence: "We visited the zoo.", sound: "/z/" },
-        { word: "shoe", phonetic: "/ʃuː/", meaning: "footwear", exampleSentence: "Put on your shoe.", sound: "/ʃ/" },
-    ];
-
-    const intonationWords: VocabularyItem[] = [
-        { word: "okay", phonetic: "/əʊˈkeɪ/", meaning: "acceptable", exampleSentence: "Are you okay?", sound: "intonation" },
-        { word: "fine", phonetic: "/faɪn/", meaning: "good", exampleSentence: "I’m feeling fine.", sound: "intonation" },
-    ];
-
-    const longerWordsData: VocabularyItem[] = [
-        { word: "international", phonetic: "/ˌɪntərˈnæʃənl/", meaning: "between nations", exampleSentence: "This is an international event.", sound: "" },
-        { word: "weather", phonetic: "/ˈwɛðər/", meaning: "atmospheric conditions", exampleSentence: "The weather is nice today.", sound: "" },
-    ];
-
-    // Track unique words to avoid duplicates
-    const existingWords = new Set<string>();
-
-    // Create Vocabulary, Exercise, ExerciseVocabulary, and History for each sub-lesson
     for (const subLesson of subLessons) {
         let vocabWords: VocabularyItem[] = [];
         let lessonSound = subLesson.title.match(/\/[^/]+\//)?.[0] as string || "";
+        const lessonId = subLesson?._id?.toString() as string;
 
         if (subLesson.parentLessonId instanceof mongoose.Types.ObjectId && subLesson.parentLessonId.equals(parentLessons[0]._id as mongoose.Types.ObjectId)) {
-            vocabWords = endingSoundWords.filter(w => w.sound === lessonSound);
+            const words = endingSoundWords[lessonSound] || [];
+            vocabWords = await fetchVocabulary(words, lessonSound, lessonId);
         } else if (subLesson.parentLessonId instanceof mongoose.Types.ObjectId && subLesson.parentLessonId.equals(parentLessons[1]._id as mongoose.Types.ObjectId)) {
             if (subLesson.title.includes("/iː/") && !subLesson.title.includes("vs")) {
-                vocabWords = iSoundWords.filter(w => w.sound === "/iː/");
+                vocabWords = await fetchVocabulary(iSoundWords["/iː/"], "/iː/", lessonId);
             } else if (subLesson.title.includes("/ɪ/") && !subLesson.title.includes("vs")) {
-                vocabWords = iSoundWords.filter(w => w.sound === "/ɪ/");
+                vocabWords = await fetchVocabulary(iSoundWords["/ɪ/"], "/ɪ/", lessonId);
             } else {
-                vocabWords = iSoundWords;
+                vocabWords = [...(await fetchVocabulary(iSoundWords["/iː/"], "/iː/", lessonId)), ...(await fetchVocabulary(iSoundWords["/ɪ/"], "/ɪ/", lessonId))];
             }
         } else if (subLesson.parentLessonId instanceof mongoose.Types.ObjectId && subLesson.parentLessonId.equals(parentLessons[2]._id as mongoose.Types.ObjectId)) {
             if (subLesson.title.includes("/æ/") && !subLesson.title.includes("Introduction") && !subLesson.title.includes("Minimal pairs")) {
-                vocabWords = aSoundWords.filter(w => w.sound === "/æ/");
+                vocabWords = await fetchVocabulary(aSoundWords["/æ/"], "/æ/", lessonId);
             } else if (subLesson.title.includes("/ʌ/") && !subLesson.title.includes("Introduction") && !subLesson.title.includes("Minimal pairs")) {
-                vocabWords = aSoundWords.filter(w => w.sound === "/ʌ/");
+                vocabWords = await fetchVocabulary(aSoundWords["/ʌ/"], "/ʌ/", lessonId);
             } else if (subLesson.title.includes("/ɑː/") && !subLesson.title.includes("Introduction") && !subLesson.title.includes("Minimal pairs")) {
-                vocabWords = aSoundWords.filter(w => w.sound === "/ɑː/");
+                vocabWords = await fetchVocabulary(aSoundWords["/ɑː/"], "/ɑː/", lessonId);
             } else {
-                vocabWords = aSoundWords;
+                vocabWords = [...(await fetchVocabulary(aSoundWords["/æ/"], "/æ/", lessonId)), ...(await fetchVocabulary(aSoundWords["/ʌ/"], "/ʌ/", lessonId)), ...(await fetchVocabulary(aSoundWords["/ɑː/"], "/ɑː/", lessonId))];
             }
         } else if (subLesson.parentLessonId instanceof mongoose.Types.ObjectId && subLesson.parentLessonId.equals(parentLessons[3]._id as mongoose.Types.ObjectId)) {
             if (subLesson.title.includes("/θ/") && !subLesson.title.includes("vs")) {
-                vocabWords = thSoundWords.filter(w => w.sound === "/θ/");
+                vocabWords = await fetchVocabulary(thSoundWords["/θ/"], "/θ/", lessonId);
             } else if (subLesson.title.includes("/ð/") && !subLesson.title.includes("vs")) {
-                vocabWords = thSoundWords.filter(w => w.sound === "/ð/");
+                vocabWords = await fetchVocabulary(thSoundWords["/ð/"], "/ð/", lessonId);
             } else {
-                vocabWords = thSoundWords;
+                vocabWords = [...(await fetchVocabulary(thSoundWords["/θ/"], "/θ/", lessonId)), ...(await fetchVocabulary(thSoundWords["/ð/"], "/ð/", lessonId))];
             }
         } else if (subLesson.parentLessonId instanceof mongoose.Types.ObjectId && subLesson.parentLessonId.equals(parentLessons[4]._id as mongoose.Types.ObjectId)) {
             if (subLesson.title.includes("/r/") && !subLesson.title.includes("Introduction") && !subLesson.title.includes("Minimal pairs")) {
-                vocabWords = rzsSoundWords.filter(w => w.sound === "/r/");
+                vocabWords = await fetchVocabulary(rzsSoundWords["/r/"], "/r/", lessonId);
             } else if (subLesson.title.includes("/z/") && !subLesson.title.includes("Introduction") && !subLesson.title.includes("Minimal pairs")) {
-                vocabWords = rzsSoundWords.filter(w => w.sound === "/z/");
+                vocabWords = await fetchVocabulary(rzsSoundWords["/z/"], "/z/", lessonId);
             } else if (subLesson.title.includes("/ʃ/") && !subLesson.title.includes("Introduction") && !subLesson.title.includes("Minimal pairs")) {
-                vocabWords = rzsSoundWords.filter(w => w.sound === "/ʃ/");
+                vocabWords = await fetchVocabulary(rzsSoundWords["/ʃ/"], "/ʃ/", lessonId);
             } else {
-                vocabWords = rzsSoundWords;
+                vocabWords = [...(await fetchVocabulary(rzsSoundWords["/r/"], "/r/", lessonId)), ...(await fetchVocabulary(rzsSoundWords["/z/"], "/z/", lessonId)), ...(await fetchVocabulary(rzsSoundWords["/ʃ/"], "/ʃ/", lessonId))];
             }
         } else if (subLesson.parentLessonId instanceof mongoose.Types.ObjectId && subLesson.parentLessonId.equals(parentLessons[5]._id as mongoose.Types.ObjectId)) {
-            vocabWords = intonationWords;
+            vocabWords = await fetchVocabulary(intonationWords, "intonation", lessonId);
         } else if (subLesson.parentLessonId instanceof mongoose.Types.ObjectId && subLesson.parentLessonId.equals(parentLessons[6]._id as mongoose.Types.ObjectId)) {
-            vocabWords = longerWordsData;
+            vocabWords = await fetchVocabulary(longerWordsData, "", lessonId);
         }
 
-        // Create Vocabulary for the sub-lesson, avoiding duplicates
         for (const vocab of vocabWords) {
-            if (!existingWords.has(vocab.word)) {
-                const vocabulary = {
-                    lessonId: subLesson._id as mongoose.Types.ObjectId,
-                    word: vocab.word,
-                    phonetic: vocab.phonetic,
-                    meaning: vocab.meaning,
-                    exampleSentence: vocab.exampleSentence,
-                    audioUrl: `https://example.com/audio/${vocab.word}.mp3`,
-                    createdAt: new Date("2025-05-06T08:02:11.445Z"),
-                    updatedAt: new Date("2025-05-06T08:02:11.445Z"),
-                };
-                vocabularyData.push(vocabulary);
-                existingWords.add(vocab.word);
-            }
+            const vocabulary = {
+                lessonId: subLesson._id as mongoose.Types.ObjectId,
+                word: vocab.word,
+                phonetic: vocab.phonetic,
+                meaning: vocab.meaning,
+                exampleSentence: vocab.exampleSentence,
+                audioUrl: vocab.audioUrl || `https://example.com/audio/${vocab.word}.mp3`,
+                createdAt: new Date("2025-05-06T08:02:11.445Z"),
+                updatedAt: new Date("2025-05-06T08:02:11.445Z"),
+            };
+            vocabularyData.push(vocabulary);
         }
 
-        // Create Exercise for the sub-lesson
         const exercise = {
             lessonId: subLesson._id as mongoose.Types.ObjectId,
             type: "pronunciation" as const,
-            prompt: `Practice pronouncing the sound in "${vocabWords[0]?.word || 'word'}"`,
-            correctPronunciation: vocabWords[0]?.phonetic || lessonSound || "N/A",
+            prompt: `Practice pronouncing the sounds in ${vocabWords.filter(v => v.isCorrect).map(v => v.word).join(", ")}`,
+            correctPronunciation: vocabWords.filter(v => v.isCorrect).map(v => v.phonetic).join(" / ") || lessonSound || "N/A",
             difficultyLevel: "easy" as const,
             createdAt: new Date("2025-05-06T08:02:11.445Z"),
             updatedAt: new Date("2025-05-06T08:02:11.445Z"),
@@ -484,7 +734,6 @@ const seed = async () => {
     const vocabularies = await Vocabulary.insertMany(vocabularyData) as IVocabularyDoc[];
     const exercises = await Exercise.insertMany(exercisesData) as IExerciseDoc[];
 
-    // Create ExerciseVocabulary to link Exercise and Vocabulary
     for (let i = 0; i < exercises.length; i++) {
         const subLessonVocabs = vocabularies.filter(v => {
             if (v.lessonId instanceof mongoose.Types.ObjectId && exercises[i].lessonId instanceof mongoose.Types.ObjectId) {
@@ -501,7 +750,6 @@ const seed = async () => {
             });
         }
 
-        // Create History for each Exercise
         historyData.push({
             userId,
             lessonId: exercises[i].lessonId as mongoose.Types.ObjectId,
@@ -516,7 +764,6 @@ const seed = async () => {
     await ExerciseVocabulary.insertMany(exerciseVocabularyData);
     await History.insertMany(historyData);
 
-    // Create LessonProgress for all sub-lessons
     const userIdProgress = new mongoose.Types.ObjectId("6814e1d4f941dc16637b6235");
     const progressData = subLessons.map(lesson => ({
         lessonId: lesson._id as mongoose.Types.ObjectId,
