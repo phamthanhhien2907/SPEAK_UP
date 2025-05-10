@@ -9,8 +9,6 @@ const loginSuccessRoutes: (RouteObject & { role?: string[] })[] = [
         <LoginSuccessPage />
       </Suspense>
     ),
-    index: true,
-    role: ["student", "teacher", "admin"],
   },
 ];
 export default loginSuccessRoutes;

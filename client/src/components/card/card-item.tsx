@@ -56,13 +56,15 @@ export default function CardItem() {
                 }}
               >
                 {lessonData?.map((lesson) => (
-                  <div onClick={() => navigation(`/speech/${lesson?._id}`)}>
+                  <div
+                    key={lesson?._id}
+                    onClick={() => navigation(`/speech/${lesson?._id}`)}
+                  >
                     <CustomCard
                       data="lesson"
                       title={lesson?.title}
                       description={lesson?.content}
                       thumbnail={lesson?.thumbnail}
-                      key={lesson?._id}
                     />
                   </div>
                 ))}
