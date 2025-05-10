@@ -95,7 +95,6 @@ export const handleTokenExpiry = () => async (dispatch: Dispatch) => {
 export const loginSuccessAction = (id: unknown, tokenLogin: unknown) => async (dispatch: Dispatch<AuthAction>) => {
   try {
     const response = await apiLoginSuccess(id, tokenLogin) as unknown as ApiResponse;
-
     if (response?.data) {
       dispatch({
         type: actionType.LOGIN_SUCCESS,

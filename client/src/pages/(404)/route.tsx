@@ -5,7 +5,7 @@ const notFoundRoutes: (RouteObject & { role?: string[] })[] = [
   {
     path: "*",
     element: <NotFoundPage />,
-    role: ["admin"],
+    role: ["student", "teacher", "admin"],
   },
 ];
 export default notFoundRoutes;
