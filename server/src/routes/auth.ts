@@ -88,6 +88,77 @@ router.get(
         res.redirect(`${process.env.CLIENT_URL}/login-success/${id}/${tokenLogin}`);
     }
 );
+// auth.routes.ts
+router.get(
+    "/mobile/google",
+    passport.authenticate("google", {
+        scope: ["profile", "email"],
+        session: false,
+    })
+);
+
+router.get(
+    "/mobile/google/callback",
+    (req: Request, res: Response, next: NextFunction) => {
+        passport.authenticate("google", (err: Error | null,
+            user: Express.User | false | null,
+            info: object | undefined) => {
+            if (err) return next(err);
+            if (!user) return res.redirect(`${process.env.MOBILE_REDIRECT_URL}/login-failure`);
+            req.user = user as Express.User;
+            next();
+        })(req, res, next);
+    },
+    async (req: Request, res: Response) => {
+        const { id, tokenLogin, _id } = req.user || {};
+        const userDB = await User.findOne({ id: _id });
+        if (!userDB) {
+            return res.redirect(`${process.env.MOBILE_REDIRECT_URL}/login-failure`);
+        }
+
+        // ⚠️ Trả về mobile deep link (ví dụ myapp://login-success/...)
+        return res.redirect(
+            `${process.env.MOBILE_REDIRECT_URL}/login-success/${id}/${tokenLogin}?refreshToken=${userDB.refreshToken}`
+        );
+    }
+);
+
+// Facebook Mobile
+router.get(
+    "/mobile/facebook",
+    passport.authenticate("facebook", {
+        scope: ["email"],
+        session: false,
+    })
+);
+
+router.get(
+    "/mobile/facebook/callback",
+    (req: Request, res: Response, next: NextFunction) => {
+        passport.authenticate("facebook", (err: Error | null,
+            user: Express.User | false | null,
+            info: object | undefined) => {
+            if (err) return next(err);
+            if (!user) return res.redirect(`${process.env.MOBILE_REDIRECT_URL}/login-failure`);
+            req.user = user as Express.User;
+            next();
+        })(req, res, next);
+    },
+    async (req: Request, res: Response) => {
+        const { id, tokenLogin, _id } = req.user || {};
+        const userDB = await User.findOne({ id: _id });
+        if (!userDB) {
+            return res.redirect(`${process.env.MOBILE_REDIRECT_URL}/login-failure`);
+        }
+
+        return res.redirect(
+            `${process.env.MOBILE_REDIRECT_URL}/login-success/${id}/${tokenLogin}?refreshToken=${userDB.refreshToken}`
+        );
+    }
+);
+
+
+
 router.post("/login-success", loginSuccess);
 router.post("/refreshToken", refreshAccessToken);
 

@@ -16,4 +16,4 @@ const EnrollmentSchema = new Schema<IEnrollment>({
     timestamps: true
 });
 
-export default mongoose.model<IEnrollment>("Enrollment", EnrollmentSchema);
+export default mongoose.model<IEnrollment>("Enrollment", EnrollmentSchema); ``
