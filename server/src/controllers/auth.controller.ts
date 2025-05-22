@@ -4,6 +4,8 @@ import { generateAccessToken, generateRefreshToken } from "../middlewares/jwt";
 import { v4 as uuidv4 } from 'uuid';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
+
+
 dotenv.config();
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -160,3 +162,7 @@ export const loginSuccess = async (req: Request, res: Response): Promise<void> =
         });
     }
 }
+
+
+
+

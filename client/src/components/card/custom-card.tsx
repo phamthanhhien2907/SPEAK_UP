@@ -1,15 +1,26 @@
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+
 interface Props {
   title?: string;
   description?: string;
   thumbnail?: string;
   data: string;
+  category?: string;
 }
-const CustomCard = ({ title, description, thumbnail, data }: Props) => {
+const CustomCard = ({
+  title,
+  description,
+  thumbnail,
+  data,
+  category,
+}: Props) => {
   return (
     <Card
       sx={{
@@ -31,10 +42,23 @@ const CustomCard = ({ title, description, thumbnail, data }: Props) => {
           flex: 1,
         }}
       >
+        {data === "explore" && (
+          <CardMedia
+            component="img"
+            sx={{
+              width: 50,
+              height: 50,
+              objectFit: "cover",
+              marginLeft: 1,
+            }}
+            image={thumbnail}
+            alt="thumbnail"
+          />
+        )}
         <CardContent
           sx={{
             flex: "1 0 auto",
-            px: 4,
+            // px: 4,
             display: "flex",
             flexDirection: "column",
             gap: 1.5,
@@ -46,30 +70,70 @@ const CustomCard = ({ title, description, thumbnail, data }: Props) => {
             fontWeight={data === "lesson" ? 600 : 500}
             component="div"
             variant="h5"
+            sx={{
+              fontSize: data === "explore" && 20,
+            }}
           >
             {title}
           </Typography>
           <Typography
             variant="subtitle2"
             component="div"
-            sx={{ color: "text.secondary" }}
+            sx={{
+              color: "text.secondary",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              wordBreak: "break-word",
+              fontSize: data === "explore" && 12,
+            }}
           >
             {description}
           </Typography>
+          {data === "lesson" && (
+            <Button
+              variant="contained"
+              style={{
+                width: "auto",
+                height: 25,
+                fontSize: 12,
+                textTransform: "capitalize",
+              }}
+            >
+              {category}
+            </Button>
+          )}
         </CardContent>
       </Box>
-      <CardMedia
-        component="img"
-        sx={{
-          width: data === "lesson" ? 160 : 100,
-          height: data === "lesson" ? "auto" : 100,
-          borderRadius: data === "lesson" ? 0 : "50%",
-          objectFit: "cover",
-          marginRight: data === "lesson" ? 0 : 2,
-        }}
-        image={thumbnail}
-        alt="thumbnail"
-      />
+      {data !== "explore" && (
+        <CardMedia
+          component="img"
+          sx={{
+            width: data === "lesson" ? 160 : data === "explore" ? 50 : 100,
+            height: data === "lesson" ? "auto" : data === "explore" ? 50 : 100,
+            borderRadius: data === "lesson" ? 0 : "50%",
+            objectFit: "cover",
+            marginRight: data === "lesson" || data === "explore" ? 0 : 2,
+          }}
+          image={thumbnail}
+          alt="thumbnail"
+        />
+      )}
+      {data === "explore" && (
+        <IconButton
+          sx={{
+            background: "linear-gradient(to right, #667eea, #764ba2);",
+            color: "white",
+            width: 30,
+            height: 30,
+          }}
+          className="translate-y-10 translate-x-[-12px]"
+        >
+          <PlayArrowIcon />
+        </IconButton>
+      )}
     </Card>
   );
 };

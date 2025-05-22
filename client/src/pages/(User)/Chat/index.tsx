@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import auth from "@/assets/user/icon-auth.jpeg";
-import { apiGetLessonById } from "@/services/lesson.services";
-import { Lesson } from "@/types/lesson";
 import { MdKeyboardArrowLeft, MdMicNone } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { FaPaperPlane, FaTrash } from "react-icons/fa";
@@ -58,43 +55,9 @@ interface ApiResponse {
 }
 
 const API_BASE_URL = "http://localhost:8000";
+const DEFAULT_TOPIC = "General Conversation";
 
-const ROLE_GENDER_MAP: Record<string, "male" | "female"> = {
-  "Taxi driver": "male",
-  "Hotel manager": "female",
-  Cashier: "female",
-  "Store employee": "male",
-  Waiter: "male",
-  Barista: "female",
-  "Bank employee": "female",
-  "Real estate agent": "female",
-  "Gym employee": "male",
-  "Your co-worker": "female",
-  "Salon manager": "female",
-  "Dry cleaner clerk": "male",
-  "Post office clerk": "male",
-  "Travel agent": "female",
-  Repairman: "male",
-  Consultant: "male",
-  "Airline representative": "male",
-  Veterinarian: "female",
-  Roommate: "female",
-  "Best friend": "female",
-  Neighbor: "female",
-  "New employee": "male",
-  "Your partner": "female",
-  "Intriguing Stranger": "female",
-  "Company owner": "female",
-  "HR person": "male",
-  Vendor: "female",
-  Mechanic: "male",
-  "Tech support representative": "male",
-  Customer: "male",
-  "HR manager": "female",
-};
-
-const Speech: React.FC = () => {
-  const [lessonData, setLessonData] = useState<Lesson | null>(null);
+const Chat: React.FC = () => {
   const [conversations, setConversations] = useState<
     { userText: string; aiResponse: string; audioUrl?: string }[]
   >([]);
@@ -110,13 +73,14 @@ const Speech: React.FC = () => {
     "settings"
   );
   const [currentUserText, setCurrentUserText] = useState("");
-  const [voiceGender, setVoiceGender] = useState<"male" | "female">("female");
   const [isInputMode, setIsInputMode] = useState(false);
   const [waveformHeights, setWaveformHeights] = useState<number[]>([]);
-
-  const { lessonId } = useParams<{ lessonId: string }>();
+  const [showTopicButtons, setShowTopicButtons] = useState(true);
+  const isInitialSpeakDone = useRef(false);
+  const voicesLoaded = useRef(false); // Sử dụng ref để theo dõi việc tải giọng nói
+  const activeUtterances = useRef<SpeechSynthesisUtterance[]>([]); // Theo dõi các utterance đang phát
+  const mounted = useRef(true);
   const { userData } = useSelector((state: RootState) => state.user);
-
   const {
     transcript,
     listening,
@@ -125,71 +89,10 @@ const Speech: React.FC = () => {
   } = useSpeechRecognition();
   const conversationRef = useRef<HTMLDivElement>(null);
   const audioRefs = useRef<HTMLAudioElement[]>([]);
-  const isInitialSpeakDone = useRef(false);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-
-  const getLessonById = async (lessonId: string): Promise<void> => {
-    const response = await apiGetLessonById(lessonId);
-    if (response?.data?.success) {
-      setLessonData(response?.data?.rs);
-      const gender = ROLE_GENDER_MAP[response?.data?.rs.name] || "female";
-      setVoiceGender(gender);
-    }
-  };
-
-  useEffect(() => {
-    if (lessonId) getLessonById(lessonId);
-  }, [lessonId]);
-
-  useEffect(() => {
-    if (
-      lessonData?.title &&
-      conversations.length === 0 &&
-      !isInitialSpeakDone.current
-    ) {
-      const initialGreeting = `${
-        lessonData?.content
-          ? lessonData?.content
-          : "Learn common phrases used in conversations"
-      } \n Hello! How can I help you today?`;
-      setConversations((prev) => [
-        ...prev,
-        { userText: "", aiResponse: initialGreeting, audioUrl: undefined },
-      ]);
-      speakText(initialGreeting, selectedLanguage, voiceGender);
-      isInitialSpeakDone.current = true;
-    }
-  }, [
-    lessonData,
-    conversations.length,
-    isInitialSpeakDone,
-    selectedLanguage,
-    voiceGender,
-  ]);
-  useEffect(() => {
-    return () => {
-      window.speechSynthesis.cancel();
-      audioRefs.current.forEach((audio) => {
-        if (audio) {
-          audio.pause();
-          audio.currentTime = 0;
-        }
-      });
-      audioRefs.current = [];
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-      }
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      if (sourceRef.current) {
-        sourceRef.current.disconnect();
-      }
-    };
-  }, []);
 
   const getVoiceByGender = (gender: "male" | "female", language: string) => {
     const voices = window.speechSynthesis.getVoices();
@@ -218,24 +121,129 @@ const Speech: React.FC = () => {
   const speakText = (
     text: string,
     language: string,
-    gender: "male" | "female"
+    gender: "male" | "female" = "female"
   ) => {
     const utterance = new SpeechSynthesisUtterance(text);
     const voice = getVoiceByGender(gender, language);
     if (voice) {
       utterance.voice = voice;
       utterance.lang = voice.lang;
+      activeUtterances.current.push(utterance);
+      utterance.onend = () => {
+        console.log("Speech finished:", text);
+        activeUtterances.current = activeUtterances.current.filter(
+          (u) => u !== utterance
+        );
+      };
+      utterance.onerror = (event) => {
+        if (event.error !== "interrupted") {
+          console.error("Speech synthesis error:", event.error);
+          setConversations((prev) => [
+            ...prev,
+            { userText: "", aiResponse: `Lỗi phát âm thanh: ${event.error}` },
+          ]);
+        }
+        activeUtterances.current = activeUtterances.current.filter(
+          (u) => u !== utterance
+        );
+      };
       window.speechSynthesis.speak(utterance);
+    } else {
+      console.error("No voice available for language:", language);
+      setConversations((prev) => [
+        ...prev,
+        {
+          userText: "",
+          aiResponse: `Không tìm thấy giọng nói cho ngôn ngữ ${language}. Vui lòng thử ngôn ngữ khác.`,
+        },
+      ]);
     }
   };
+
+  useEffect(() => {
+    const loadVoicesAndSpeak = () => {
+      if (voicesLoaded.current || isInitialSpeakDone.current) return;
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        voicesLoaded.current = true;
+        const initialGreeting =
+          "Hey! I'm Emma, your personal AI language teacher. Ask me anything, or click on a topic below:";
+
+        setConversations((prev) => [
+          ...prev,
+          { userText: "", aiResponse: initialGreeting, audioUrl: undefined },
+        ]);
+
+        // Sử dụng setTimeout đúng cách
+        setTimeout(() => {
+          speakText(initialGreeting, selectedLanguage, "female");
+          isInitialSpeakDone.current = true;
+        }, 100);
+      }
+    };
+
+    // Gọi ngay lập tức
+    loadVoicesAndSpeak();
+
+    // Thêm fallback với giới hạn thời gian (ví dụ: thử tối đa 5 giây)
+    let attempts = 0;
+    const maxAttempts = 50; // Tương đương 5 giây với interval 100ms
+    const checkVoicesInterval = setInterval(() => {
+      attempts++;
+      if (voicesLoaded.current || attempts >= maxAttempts) {
+        clearInterval(checkVoicesInterval);
+      } else {
+        loadVoicesAndSpeak();
+      }
+    }, 100);
+
+    // Lắng nghe sự kiện voiceschanged
+    window.speechSynthesis.onvoiceschanged = loadVoicesAndSpeak;
+
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+      clearInterval(checkVoicesInterval);
+    };
+  }, [selectedLanguage]);
+
+  // Cleanup khi component unmount
+  useEffect(() => {
+    mounted.current = true; // Set to true when component mounts
+    return () => {
+      mounted.current = false; // Set to false when component unmounts
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+      }
+      activeUtterances.current = [];
+      audioRefs.current.forEach((audio) => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.src = ""; // Clear the source to stop any loading
+        }
+      });
+      audioRefs.current = [];
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      if (sourceRef.current) {
+        sourceRef.current.disconnect();
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (conversationRef.current) {
       conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
     }
   }, [conversations]);
 
-  // Khởi tạo và phân tích sóng âm thanh
-  const NUMBER_OF_BARS = 50;
+  const NUMBER_OF_BARS = 1000;
+  // const NUMBER_OF_BARS = 120;
+
   const MIN_HEIGHT = 2;
   const MAX_HEIGHT = 120;
 
@@ -261,13 +269,11 @@ const Speech: React.FC = () => {
         if (!analyserRef.current) return;
         analyserRef.current.getByteFrequencyData(dataArray);
 
-        // Tính giá trị trung bình của cường độ âm thanh
         const average =
           dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
         const normalizedAmplitude =
           (average / 255) * (MAX_HEIGHT - MIN_HEIGHT) + MIN_HEIGHT;
 
-        // Cập nhật chiều cao sóng âm
         setWaveformHeights((prev) =>
           prev.map(() => Math.max(normalizedAmplitude, MIN_HEIGHT))
         );
@@ -280,6 +286,7 @@ const Speech: React.FC = () => {
       console.error("Error accessing microphone:", err);
     }
   };
+
   const stopAudioAnalysis = () => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
@@ -330,20 +337,22 @@ const Speech: React.FC = () => {
   const handleSend = () => {
     stopRecognition();
     const newTranscript = transcript.trim();
+    let textToSend = "";
+
     if (newTranscript) {
-      setCurrentUserText(newTranscript);
-      setConversations((prev) => [
-        ...prev,
-        { userText: newTranscript, aiResponse: "" },
-      ]);
-      handleSendRequest(newTranscript);
+      textToSend = newTranscript;
     } else if (currentUserText) {
+      textToSend = currentUserText;
+    }
+
+    if (textToSend) {
       setConversations((prev) => [
         ...prev,
-        { userText: currentUserText, aiResponse: "" },
+        { userText: textToSend, aiResponse: "" },
       ]);
-      handleSendRequest(currentUserText);
+      handleSendRequest(textToSend);
     }
+    setCurrentUserText("");
     setIsInputMode(false);
   };
 
@@ -371,7 +380,7 @@ const Speech: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_text: text,
-          topic: lessonData?.title,
+          topic: DEFAULT_TOPIC,
           language: selectedLanguage,
         }),
       });
@@ -392,67 +401,111 @@ const Speech: React.FC = () => {
         );
       });
 
-      if (data.audio_url) {
+      if (data.audio_url && mounted.current) {
         setAudioLoading(true);
         const audio = new Audio(`${API_BASE_URL}${data.audio_url}`);
         audioRefs.current.push(audio);
-        audio.onloadeddata = () => setAudioLoading(false);
-        audio
-          .play()
-          .catch((err) =>
-            setConversations((prev) => [
-              ...prev,
-              { userText: "", aiResponse: `Lỗi phát âm thanh: ${err.message}` },
-            ])
-          );
+        audio.onloadeddata = () => {
+          if (mounted.current) {
+            setAudioLoading(false);
+            audio.play().catch((err) =>
+              setConversations((prev) => [
+                ...prev,
+                {
+                  userText: "",
+                  aiResponse: `Lỗi phát âm thanh: ${err.message}`,
+                },
+              ])
+            );
+          } else {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.src = "";
+          }
+        };
       }
+      setShowTopicButtons(false);
     } catch (err: any) {
       setConversations((prev) => [
         ...prev,
-        { userText: "", aiResponse: `Something was wrong : ${err.message}` },
+        { userText: "", aiResponse: `Something was wrong: ${err.message}` },
       ]);
     } finally {
       setLoading(false);
     }
   };
-  const suggestResponse = async () => {
-    const lastResponse = conversations[conversations.length - 1]?.aiResponse;
-    if (lastResponse) {
-      setLoading(true);
-      try {
-        const res = await fetch(`${API_BASE_URL}/suggest-response/`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_text: lastResponse,
-            topic: lessonData?.title || "",
-            language: selectedLanguage,
-          }),
-        });
-        const data = await res.json();
-        setConversations((prev) => [
-          ...prev,
-          { userText: data.ai_response, aiResponse: "" },
-        ]);
-        handleSendRequest(data.ai_response);
-      } catch (err) {
-        setConversations((prev) => [
-          ...prev,
-          {
-            userText: "",
-            aiResponse: `Error suggesting response: ${err.message}`,
-          },
-        ]);
-      } finally {
-        setLoading(false);
+
+  const handleSuggestTopic = async (type: string) => {
+    setConversations((prev) => [
+      ...prev,
+      {
+        userText: type,
+        aiResponse: "",
+      },
+    ]);
+    setLoading(true);
+    setShowTopicButtons(false);
+    try {
+      const res = await fetch(`${API_BASE_URL}/text-and-respond/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_text: type,
+          topic: DEFAULT_TOPIC,
+          language: selectedLanguage,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+
+      const data: ApiResponse = await res.json();
+      setConversations((prev) => [
+        ...prev,
+        {
+          userText: "",
+          aiResponse: data.ai_response,
+          audioUrl: data.audio_url,
+        },
+      ]);
+
+      if (data.audio_url && mounted.current) {
+        setAudioLoading(true);
+        const audio = new Audio(`${API_BASE_URL}${data.audio_url}`);
+        audioRefs.current.push(audio);
+        audio.onloadeddata = () => {
+          if (mounted.current) {
+            setAudioLoading(false);
+            audio.play().catch((err) =>
+              setConversations((prev) => [
+                ...prev,
+                {
+                  userText: "",
+                  aiResponse: `Lỗi phát âm thanh: ${err.message}`,
+                },
+              ])
+            );
+          } else {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.src = "";
+          }
+        };
       }
+    } catch (err: any) {
+      setConversations((prev) => [
+        ...prev,
+        { userText: "", aiResponse: `Something was wrong: ${err.message}` },
+      ]);
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div
       className={
         showSidebar
-          ? "flex flex-col h-screen bg-gray-50 px-8 py-6 relative"
+          ? "flex flex-col h-screen bg-gray-50 px-8 py-6 relative w-[calc(100%-400px)]"
           : "flex flex-col h-screen bg-gray-50 px-8 py-6 relative w-full"
       }
     >
@@ -469,9 +522,7 @@ const Speech: React.FC = () => {
             className="text-gray-700 cursor-pointer hover:text-gray-900"
             onClick={() => history.back()}
           />
-          <h6 className="text-2xl font-bold text-gray-800">
-            {lessonData?.title || "Chat Lesson"}
-          </h6>
+          <h6 className="text-2xl font-bold text-gray-800">Chat</h6>
         </div>
         <button
           onClick={() => {
@@ -509,12 +560,12 @@ const Speech: React.FC = () => {
                 <div className="flex gap-3 items-start">
                   <div className="flex flex-col items-center justify-center gap-2">
                     <img
-                      src={lessonData?.aiImg}
+                      src="/default-avatar.png"
                       className="w-12 h-12 rounded-full border-2 border-gray-200"
                       alt="Assistant"
                     />
                     <span className="text-sm font-bold font-spaceGrotesk">
-                      {lessonData?.name}
+                      Emma
                     </span>
                   </div>
                   <div className="bg-gradient-to-r from-white to-gray-50 border border-gray-200 px-4 py-3 rounded-xl shadow-md max-w-xl">
@@ -530,22 +581,19 @@ const Speech: React.FC = () => {
                               `${API_BASE_URL}${conv.audioUrl}`
                             );
                             audioRefs.current.push(audio);
-                            audio.play().catch((err) => {
-                              console.error(
-                                "Audio playback failed:",
-                                err.message
+                            audio
+                              .play()
+                              .catch((err) =>
+                                console.error(
+                                  "Audio playback failed:",
+                                  err.message
+                                )
                               );
-                            });
                           } else if (index === 0) {
-                            const initialGreeting = `${
-                              lessonData?.content
-                                ? lessonData?.content
-                                : "Learn common phrases used in conversations"
-                            } \n Hello! How can I help you today?`;
                             speakText(
-                              initialGreeting,
+                              "Hey! I'm Emma, your personal AI language teacher. Ask me anything, or click on a topic below:",
                               selectedLanguage,
-                              voiceGender
+                              "female"
                             );
                           }
                         }}
@@ -576,6 +624,28 @@ const Speech: React.FC = () => {
               )}
             </div>
           ))}
+          {showTopicButtons && (
+            <div className="flex justify-end items-center gap-4 mt-4">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+                onClick={() => handleSuggestTopic("Fun")}
+              >
+                Fun
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+                onClick={() => handleSuggestTopic("Interesting")}
+              >
+                Interesting
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+                onClick={() => handleSuggestTopic("Decide")}
+              >
+                You Decide
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -594,26 +664,49 @@ const Speech: React.FC = () => {
         </div>
       )}
 
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-6 left-8 right-8">
         {!isInputMode ? (
-          <div
-            className="p-5 rounded-full bg-blue-600 shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
-            onClick={() => {
-              setIsInputMode(true);
-              startRecognition();
-            }}
-          >
-            <MdMicNone size={36} className="text-white" />
+          <div className="flex items-center bg-white border border-gray-200 rounded-full p-2 shadow-lg">
+            <input
+              type="text"
+              value={currentUserText}
+              onChange={(e) => setCurrentUserText(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                  setCurrentUserText("");
+                  setShowTopicButtons(false);
+                }
+              }}
+              placeholder="Aa"
+              className="flex-1 px-4 py-2 outline-none"
+            />
+            <button
+              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+              onClick={() => {
+                setIsInputMode(true);
+                startRecognition();
+              }}
+            >
+              <MdMicNone size={24} />
+            </button>
+            <button
+              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+              onClick={handleSend}
+            >
+              <FaPaperPlane size={20} />
+            </button>
           </div>
         ) : (
-          <div className="flex items-center bg-blue-600 rounded-full p-2 shadow-lg">
+          <div className="w-full flex items-center bg-blue-600 rounded-full p-2 shadow-lg">
             <button
               className="text-white p-2 hover:bg-blue-700 rounded-full"
               onClick={handleClear}
             >
               <FaTrash size={20} />
             </button>
-            <div className="flex h-10 w-60 flex-row items-center justify-end gap-1 overflow-hidden">
+            <div className="flex h-10 w-full flex-row items-center justify-end gap-1 overflow-hidden">
               {waveformHeights.map((height, index) => (
                 <div
                   key={index}
@@ -637,19 +730,14 @@ const Speech: React.FC = () => {
             </button>
           </div>
         )}
-        <button
-          className={
-            isInputMode
-              ? "text-center w-full text-gray-500 hover:text-gray-700 text-sm"
-              : "text-center w-full text-gray-500 hover:text-gray-700 text-sm"
-          }
-          onClick={() => {
-            setIsInputMode(false);
-            suggestResponse();
-          }}
-        >
-          Skip
-        </button>
+        {isInputMode && (
+          <button
+            className="text-center w-full text-gray-500 hover:text-gray-700 text-sm mt-2"
+            onClick={() => setIsInputMode(false)}
+          >
+            Skip
+          </button>
+        )}
       </div>
 
       <div
@@ -716,38 +804,18 @@ const Speech: React.FC = () => {
                 className="mb-4"
                 style={{ maxHeight: "500px", overflowY: "auto" }}
               >
-                {translatedTexts[-1] && (
-                  <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                {Object.entries(translatedTexts).map(([key, translated]) => (
+                  <div key={key} className="mb-4 p-3 bg-gray-50 rounded-lg">
                     <p className="font-medium text-sm text-gray-600">English</p>
                     <p className="text-gray-900 text-base mt-1">
-                      {lessonData?.content}
+                      {conversations[Number(key)]?.aiResponse}
                     </p>
                     <p className="font-medium text-sm text-gray-600 mt-2">
                       {LANGUAGE_MAP[translationLanguage].name}
                     </p>
-                    <p className="text-blue-600 text-base mt-1">
-                      {translatedTexts[-1]}
-                    </p>
+                    <p className="text-blue-600 text-base mt-1">{translated}</p>
                   </div>
-                )}
-                {Object.entries(translatedTexts)
-                  .filter(([key]) => key !== "-1")
-                  .map(([key, translated]) => (
-                    <div key={key} className="mb-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="font-medium text-sm text-gray-600">
-                        English
-                      </p>
-                      <p className="text-gray-900 text-base mt-1">
-                        {conversations[Number(key)]?.aiResponse}
-                      </p>
-                      <p className="font-medium text-sm text-gray-600 mt-2">
-                        {LANGUAGE_MAP[translationLanguage].name}
-                      </p>
-                      <p className="text-blue-600 text-base mt-1">
-                        {translated}
-                      </p>
-                    </div>
-                  ))}
+                ))}
               </div>
               <button
                 onClick={() => setTranslatedTexts({})}
@@ -763,4 +831,4 @@ const Speech: React.FC = () => {
   );
 };
 
-export default Speech;
+export default Chat;

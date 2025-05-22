@@ -9,15 +9,19 @@ import {
 import bg_lesson from "@/assets/user/bg_lesson.jpg";
 import bg_course from "@/assets/user/bg_course.png";
 
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import CustomCard from "./custom-card";
 import { useNavigate } from "react-router-dom";
+import { features, gameTypes } from "@/lib/helper";
+import Progress from "@/pages/(User)/Progress";
+import Settings from "@/pages/(User)/Settings";
+const ChatPage = lazy(() => import("@/pages/(User)/Chat/index"));
+
 export default function CardItem() {
   const [lessonData, setLessonData] = useState([]);
   const [parentLessonData, setParentLessonData] = useState([]);
   const { selectedPage } = useSelectedPageContext();
   const navigation = useNavigate();
-
   const getAllLesson = async () => {
     const response = await apiGetAllLesson();
     if (response?.data?.success) {
@@ -40,7 +44,7 @@ export default function CardItem() {
   }, []);
   const renderContent = () => {
     switch (selectedPage) {
-      case "Trang chủ":
+      case "Home":
         return (
           <>
             <section className="flex-1 overflow-auto bg-gray-50 scrollbar-hide">
@@ -65,6 +69,7 @@ export default function CardItem() {
                       title={lesson?.title}
                       description={lesson?.content}
                       thumbnail={lesson?.thumbnail}
+                      category={lesson?.category}
                     />
                   </div>
                 ))}
@@ -85,7 +90,7 @@ export default function CardItem() {
             </section>
           </>
         );
-      case "Bài học":
+      case "Lesson":
         return (
           <>
             <section className="flex-1 overflow-auto bg-gray-50 scrollbar-hide">
@@ -145,24 +150,69 @@ export default function CardItem() {
             </section>
           </>
         );
-      case "Khám phá":
+      case "Explore":
         return (
-          <div className="p-4 text-xl">
-            Tính năng khám phá đang được phát triển.
-          </div>
+          <>
+            <section className="flex-1 overflow-auto bg-gray-50 scrollbar-hide">
+              <h6 className="text-2xl font-bold pt-8 justify-center flex items-center">
+                Phân tích giọng nói
+              </h6>
+              <Box
+                sx={{
+                  // maxHeight: "80vh",
+                  width: "100%",
+                  maxWidth: "1200px",
+                  padding: "16px",
+                }}
+              >
+                {features?.map((feature, index) => (
+                  <div key={index}>
+                    <CustomCard
+                      data="explore"
+                      description={feature?.description}
+                      title={feature?.title}
+                      thumbnail={feature?.icon}
+                    />
+                  </div>
+                ))}
+              </Box>
+            </section>
+            <section className="w-full md:w-[550px] pr-4 pt-4 bg-gray-100 flex flex-col gap-4 items-center">
+              <h6 className="text-2xl font-bold pt-8 justify-center flex items-center">
+                Loại trò chơi
+              </h6>
+
+              <div className="grid grid-cols-3 gap-x-4 gap-y-8 px-8 w-full">
+                {gameTypes?.map((gameType, index) => (
+                  <div key={index} className="flex flex-col items-center gap-2">
+                    <img
+                      className={`w-20 h-20 object-cover bg-${gameType?.colorBackground} `}
+                      src={gameType?.icon}
+                      alt={gameType?.title}
+                    />
+                    <span className="text-center font-medium mt-2">
+                      {gameType?.title}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
         );
-      case "Tiến độ":
+      case "Progress":
+        return <Progress />;
+      case "Profile":
+        return <Settings />;
+      case "Chat":
         return (
-          <div className="p-4 text-xl">
-            Tính năng khám phá đang được phát triển.
-          </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ChatPage />
+          </Suspense>
         );
+      case "Settings":
+        return <Settings />;
       default:
-        return (
-          <div className="p-4 text-xl">
-            Chọn một mục trong thanh điều hướng.
-          </div>
-        );
+        return <Settings />;
     }
   };
   return <>{renderContent()}</>;

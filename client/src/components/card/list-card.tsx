@@ -2,9 +2,16 @@ import bg_pronunciation from "@/assets/user/bg_pronunciation.jpg";
 import { apiGetLessonByParent } from "@/services/lesson.services";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaCheck, FaPlay } from "react-icons/fa";
+import {
+  FaCheck,
+  FaPlay,
+  FaMicrophone,
+  FaHeadphones,
+  FaLock,
+} from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import ConfirmModal from "../modals/confirm-modal";
+
 type Lesson = {
   lessonId: string;
   title: string;
@@ -26,6 +33,7 @@ const ListCard = () => {
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
   const { parentLessonId } = useParams();
   const navigate = useNavigate();
+
   const getLessonByParent = async (parentLessonId: string | undefined) => {
     const response = await apiGetLessonByParent(parentLessonId);
     if (response?.data) setLessonByParentData(response?.data);
@@ -44,14 +52,23 @@ const ListCard = () => {
     lessonByParentData?.lessons?.filter((l) => l.score >= 60).length || 0;
   const progressPercentage =
     totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
-  const handleLessonClick = (lesson: Lesson) => {
+
+  const handleLessonClick = (lesson, index) => {
+    // Check if the lesson is locked (previous lesson not completed)
+    if (index > 0 && lessonByParentData?.lessons[index - 1].score < 60) {
+      return; // Do nothing if locked
+    }
+
     if (lesson.score >= 60) {
       setSelectedLesson(lesson);
       setShowConfirmModal(true);
     } else {
-      navigate(`/vocabulary/${lesson.lessonId}`, { state: lesson });
+      navigate(`/vocabulary/${lesson.lessonId}`, {
+        state: { lesson, lessonIndex: index },
+      });
     }
   };
+
   return (
     <div className="w-full h-full flex flex-col gap-4 px-4 relative">
       {/* Banner */}
@@ -103,31 +120,51 @@ const ListCard = () => {
       <div
         className={`w-full max-w-5xl mx-auto flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-200px)] scrollbar-thin scrollbar-thumb-gray-300 transition-all duration-300 relative `}
       >
-        {lessonByParentData?.lessons?.map((lesson, index) => (
-          <div
-            // onClick={() =>
-            //   navigate(`/vocabulary/${lesson?.lessonId}`, { state: lesson })
-            // }
-            onClick={() => handleLessonClick(lesson)}
-            key={lesson.lessonId}
-            className="group  flex items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer hover:bg-blue-500"
-          >
-            <div className="flex items-center gap-4">
-              <div
-                className={`flex-shrink-0 w-10 h-10 rounded-full text-white flex items-center justify-center font-semibold text-sm ${
-                  lesson.score >= 60
-                    ? "bg-green-500"
-                    : "bg-blue-500 group-hover:bg-white group-hover:text-black"
-                } `}
-              >
-                {lesson.score >= 60 ? <FaCheck size={16} /> : index + 1}
+        {lessonByParentData?.lessons?.map((lesson, index) => {
+          const isListening = index % 2 !== 0; // Start with headphone (speaking) at index 0
+          const Icon = isListening ? FaMicrophone : FaHeadphones;
+          const isLocked =
+            index > 0 && lessonByParentData?.lessons[index - 1].score < 60;
+
+          return (
+            <div
+              onClick={() => !isLocked && handleLessonClick(lesson, index)}
+              key={lesson.lessonId}
+              className={`group flex items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm transition ${
+                isLocked
+                  ? "cursor-not-allowed opacity-50"
+                  : "hover:shadow-md cursor-pointer hover:bg-blue-500"
+              }`}
+            >
+              <div className="flex items-center gap-4">
+                <div
+                  className={`flex-shrink-0 w-10 h-10 rounded-full text-white flex items-center justify-center font-semibold text-sm ${
+                    lesson.score >= 60
+                      ? "bg-green-500"
+                      : isLocked
+                      ? "bg-gray-400"
+                      : "bg-blue-500 group-hover:bg-white group-hover:text-black"
+                  } `}
+                >
+                  {lesson.score >= 60 ? (
+                    <FaCheck size={16} />
+                  ) : isLocked ? (
+                    <FaLock size={16} />
+                  ) : (
+                    <Icon size={16} />
+                  )}
+                </div>
+                <span
+                  className={`text-lg font-medium ${
+                    isLocked ? "text-gray-500" : "group-hover:text-white"
+                  }`}
+                >
+                  {lesson.title}
+                </span>
               </div>
-              <span className="text-lg font-medium group-hover:text-white">
-                {lesson.title}
-              </span>
             </div>
-          </div>
-        ))}
+          );
+        })}
         {showConfirmModal && selectedLesson && (
           <ConfirmModal
             title="Làm lại bài học?"
@@ -137,7 +174,12 @@ const ListCard = () => {
             onCancel={() => setShowConfirmModal(false)}
             onConfirm={() => {
               navigate(`/vocabulary/${selectedLesson.lessonId}`, {
-                state: selectedLesson,
+                state: {
+                  lesson: selectedLesson,
+                  lessonIndex: lessonByParentData?.lessons.findIndex(
+                    (l) => l.lessonId === selectedLesson.lessonId
+                  ),
+                },
               });
               setShowConfirmModal(false);
             }}

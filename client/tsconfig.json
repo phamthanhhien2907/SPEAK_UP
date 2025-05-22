@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "lib": ["dom", "esnext"],
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
