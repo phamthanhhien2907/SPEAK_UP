@@ -7,6 +7,9 @@ export interface ILesson extends Document {
     type: "listening" | "speaking" | "vocabulary" | "pronunciation";
     parentLessonId?: mongoose.Types.ObjectId;
     thumbnail?: string;
+    aiImg?: string;
+    name?: string;
+    category: "basics" | "intermediate" | "professional"
     level?: number;
     createdAt: Date;
     updatedAt: Date;
@@ -20,6 +23,9 @@ export interface ILessonInput {
     content?: string;
     type: "listening" | "speaking" | "vocabulary" | "pronunciation";
     thumbnail?: string;
+    aiImg?: string;
+    name?: string;
+    category?: "Basics" | "Intermediate" | "Professional";
     level?: number;
     createdAt?: Date;
     updatedAt?: Date;
@@ -32,6 +38,9 @@ const LessonSchema = new Schema<ILesson>({
     type: { type: String, enum: ["listening", "speaking", "vocabulary", "pronunciation"], required: true },
     parentLessonId: { type: Schema.Types.ObjectId, ref: "Lesson", default: null },
     thumbnail: { type: String, default: "" },
+    aiImg: { type: String, default: "" },
+    name: { type: String, default: "" },
+    category: { type: String, enum: ["Basics", "Intermediate", "Professional"], required: true },
     level: { type: Number, default: 1 },
 }, {
     timestamps: true

@@ -11,21 +11,21 @@ import { SelectedPageProvider } from "@/components/navigation/navigation-provide
 const items = [
   {
     id: 1,
-    name: "Trang chủ",
+    name: "Home",
     icon: (
       <img src={home} className="stroke-gray-800/70 stroke-[1] min-w-8 w-8" />
     ),
   },
   {
     id: 2,
-    name: "Bài học",
+    name: "Lesson",
     icon: (
       <img src={lesson} className="stroke-gray-800/70 stroke-[1] min-w-8 w-8" />
     ),
   },
   {
     id: 3,
-    name: "Khám phá",
+    name: "Explore",
     icon: (
       <img
         src={explore}
@@ -35,7 +35,7 @@ const items = [
   },
   {
     id: 4,
-    name: "Tiến độ",
+    name: "Progress",
     icon: (
       <img
         src={progress}
@@ -45,7 +45,7 @@ const items = [
   },
   {
     id: 5,
-    name: "Hồ sơ",
+    name: "Profile",
     icon: (
       <img
         src={briefcase}
@@ -62,7 +62,7 @@ const items = [
   },
   {
     id: 7,
-    name: "Setting",
+    name: "Settings",
     icon: (
       <img
         src={setting}
@@ -74,7 +74,7 @@ const items = [
 const Public = () => {
   return (
     <div>
-      <SelectedPageProvider initialPage="Trang chủ">
+      <SelectedPageProvider initialPage="Home">
         <main className="w-full h-screen flex flex-row relative bg-white overflow-hidden gap-4 basis-1/6">
           <div className="flex flex-col bg-gray-100 h-screen">
             <NavigationBar items={items} />

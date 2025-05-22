@@ -7,6 +7,9 @@ export default {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         spaceGrotesk: ["Space Grotesk", "sans-serif"],
+        ancizarSans: ["Ancizar Sans", "sans-serif"],
+        oswald: ["Oswald", "sans-serif"],
+        iBMPlexSans: ["IBM Plex Sans", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

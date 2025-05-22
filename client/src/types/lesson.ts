@@ -6,7 +6,10 @@ export type Lesson = {
     title?: string;
     content?: string;
     type?: "listening" | "speaking" | "vocabulary" | 'pronunciation';
-    level?: string
+    level?: string;
+    aiImg?: string;
+    category?: "Basics" | "Intermediate" | "Professional";
+    name?: string;
 };
 export enum LessonType {
     LISTENING = "listening",

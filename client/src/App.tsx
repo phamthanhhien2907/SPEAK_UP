@@ -9,8 +9,6 @@ import { AppDispatch } from "./main";
 import { setNavigate } from "./lib/navigate";
 function App() {
   const { isLoggedIn, current } = useSelector((state: RootState) => state.auth);
-  const { userData } = useSelector((state: RootState) => state.user);
-  console.log(userData);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {

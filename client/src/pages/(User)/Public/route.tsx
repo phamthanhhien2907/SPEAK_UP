@@ -6,6 +6,7 @@ const LessonPage = lazy(() => import("../Lesson/index"));
 const SpeechPage = lazy(() => import("../Speech/index"));
 const PronunciationPage = lazy(() => import("../Pronunciation/index"));
 const VocabularyPage = lazy(() => import("../Vocabulary/index"));
+
 const publicRoutes: (RouteObject & { role?: string[] })[] = [
   {
     path: "/",
@@ -37,7 +38,7 @@ const publicRoutes: (RouteObject & { role?: string[] })[] = [
         ),
       },
       {
-        path: "/pronunciation/:lessonId",
+        path: "/pronunciation",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <PronunciationPage />
