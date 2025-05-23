@@ -1,4 +1,4 @@
-import loginImg from "@/assets/admin/login.svg";
+import loginImg from "@/assets/admin/login.svg?url";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import facebook from "@/assets/admin/facebook.png";
 import google from "@/assets/admin/google.png";
@@ -41,6 +41,7 @@ const Login = ({
       [name]: value,
     }));
   };
+  console.log(input);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -69,6 +70,11 @@ const Login = ({
           });
       }
     } catch (error) {
+      setLoading(false);
+      const msg =
+        error.response?.data?.msg || "Login failed. Please try again.";
+      toast.error(msg);
+
       console.error("Login failed:", error);
     }
   };
@@ -106,7 +112,11 @@ const Login = ({
                     placeholder="Password"
                     onChange={handleInput}
                   />
-                  <span className="icon" onClick={onTogglePassword}>
+                  <span
+                    className="icon"
+                    data-testid="toggle-password-icon"
+                    onClick={onTogglePassword}
+                  >
                     {onShowPassword ? (
                       <AiOutlineEyeInvisible />
                     ) : (

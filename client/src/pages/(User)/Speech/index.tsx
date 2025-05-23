@@ -478,6 +478,7 @@ const Speech: React.FC = () => {
             setShowSidebar(true);
             setDrawerMode("settings");
           }}
+          data-testid="settings-button"
           className="text-gray-600 hover:text-gray-800"
         >
           <FiSettings size={24} />

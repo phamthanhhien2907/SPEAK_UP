@@ -137,7 +137,11 @@ const Register = ({
                   value={input.password}
                   onChange={handleInput}
                 />
-                <span className="icon" onClick={onTogglePassword}>
+                <span
+                  className="icon"
+                  data-testid="toggle-password-icon"
+                  onClick={onTogglePassword}
+                >
                   {onShowPassword ? (
                     <AiOutlineEyeInvisible />
                   ) : (
