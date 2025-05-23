@@ -669,6 +669,7 @@ const Chat: React.FC = () => {
           <div className="flex items-center bg-white border border-gray-200 rounded-full p-2 shadow-lg">
             <input
               type="text"
+              name="chat"
               value={currentUserText}
               onChange={(e) => setCurrentUserText(e.target.value)}
               onKeyPress={(e) => {
@@ -694,6 +695,7 @@ const Chat: React.FC = () => {
             <button
               className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
               onClick={handleSend}
+              data-testid="send-chat"
             >
               <FaPaperPlane size={20} />
             </button>

@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 
 
 dotenv.config();
+//method post = path(delele, post, put,get )
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password, typeLogin, firstname, lastname } = req.body
@@ -58,6 +59,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     if (response && await response.isCorrectPassword(password)) {
         // Tách password và role ra khỏi response
         const { password, role, refreshToken, ...userData } = response.toObject()
+
         // Tạo access token
         const accessToken = generateAccessToken(response._id, role)
         // Tạo refresh token
@@ -111,7 +113,6 @@ export const refreshAccessToken = async (req: Request, res: Response): Promise<v
 
 export const loginSuccess = async (req: Request, res: Response): Promise<void> => {
     const { id, tokenLogin } = req?.body;
-    console.log(id, tokenLogin);
     try {
         if (!id || !tokenLogin) {
             res.status(400).json({

@@ -3,9 +3,11 @@ import * as React from "react";
 import { useState } from "react";
 import Select from "react-select";
 import { FaArrowLeft } from "react-icons/fa6";
+import { useAppDispatch } from "@/hooks/use-dispatch";
+import { logout } from "@/stores/actions/authAction";
 const Settings: React.FC = () => {
   const { selectedPage } = useSelectedPageContext();
-  console.log(selectedPage);
+  const dispatch = useAppDispatch();
   const [activeSection, setActiveSection] = useState(selectedPage || "Profile");
   const [profileSubSection, setProfileSubSection] = useState("");
   const [emailNotifications, setEmailNotifications] = useState({
@@ -243,8 +245,11 @@ const Settings: React.FC = () => {
               </span>
             </li>
             <li
-              className="flex items-center p-3 rounded-lg cursor-pointer text-pink-600 hover:bg-gray-100 transition-colors duration-200"
-              onClick={() => handleSectionChange("Logout")}
+              className="flex items-center p-3 rounded-lg cursor-pointer text-pink-600 hover:bg-gray-100 transition-colors duration-200 "
+              onClick={() => {
+                handleSectionChange("Logout");
+                dispatch(logout());
+              }}
             >
               <svg
                 className="w-6 h-6 mr-3"
@@ -261,7 +266,7 @@ const Settings: React.FC = () => {
                 ></path>
               </svg>
 
-              <span className="text-[15px] font-medium">Log out</span>
+              <span className="text-[15px] font-medium ">Log out</span>
             </li>
           </ul>
         </div>

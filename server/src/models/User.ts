@@ -22,7 +22,7 @@ export interface IUser extends Document {
 }
 
 const UserSchema = new Schema<IUser>({
-    id: { type: String, unique: true },
+    id: { type: String },
     typeLogin: { type: String },
     tokenLogin: { type: String },
     username: { type: String },
