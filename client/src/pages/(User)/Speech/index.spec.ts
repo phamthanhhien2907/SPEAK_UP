@@ -37,7 +37,5 @@ test.describe('Speech Page', () => {
         await page.getByRole('button', { name: /skip/i }).click();
         await page.waitForTimeout(25000); // Đợi 7 giây
         await page.getByRole('button', { name: /translate/i }).first().click();
-
-
     });
 });

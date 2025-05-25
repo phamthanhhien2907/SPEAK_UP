@@ -207,3 +207,68 @@ export const getLessonsByParent = async (req: Request, res: Response): Promise<v
         res.status(500).json({ message: "Lỗi khi lấy dữ liệu bài học con" });
     }
 };
+export const getLessonByParentTopicId = async (req: Request, res: Response): Promise<void> => {
+    const { parentTopicId } = req.params;
+    const userId = req?.user?._id;
+
+    // Kiểm tra userId và parentTopicId
+    if (!userId) {
+        throw new Error("Unauthorized");
+    }
+    if (!parentTopicId) {
+        throw new Error("Missing parent topic id");
+    }
+
+    try {
+        // Lấy tất cả bài học thuộc parentTopicId
+        const lessons = await Lesson.find({ parentTopicId: parentTopicId })
+            .populate({
+                path: "parentTopicId",
+                select: "title content level thumbnail totalLessons section",
+            })
+            .lean();
+
+        if (!lessons || lessons.length === 0) {
+            res.status(200).json({
+                success: false,
+                rs: "Lessons not found",
+            });
+            return;
+        }
+
+        // Lấy tiến độ của người dùng cho các bài học
+        const lessonIds = lessons.map((l) => l._id);
+        const progresses = await LessonProgress.find({
+            userId,
+            lessonId: { $in: lessonIds },
+        }).lean();
+
+        // Tạo map để truy cập nhanh tiến độ
+        const progressMap = new Map(progresses.map((p) => [p.lessonId.toString(), p]));
+
+        // Tính toán score, isCompleted, và progress cho từng bài học
+        const result = lessons.map((lesson) => {
+            const progress = progressMap.get(lesson._id.toString());
+            const score = progress?.score || 0;
+            const isCompleted = score >= 60;
+
+            // Tính progress: vì không có bài học con trực tiếp ở đây, progress sẽ dựa trên trạng thái hoàn thành
+            const progressText = isCompleted ? "Hoàn thành" : "Chưa hoàn thành";
+
+            return {
+                ...lesson,
+                score,
+                isCompleted,
+                progress: progressText,
+            };
+        });
+
+        res.status(200).json({
+            success: true,
+            rs: result,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Lỗi khi lấy danh sách bài học" });
+    }
+};

@@ -8,7 +8,7 @@ import { FiSettings } from "react-icons/fi";
 import { FaPaperPlane, FaTrash } from "react-icons/fa";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
-
+import emma from "@/assets/user/image.webp";
 interface Language {
   name: string;
   speechLang: string;
@@ -560,7 +560,7 @@ const Chat: React.FC = () => {
                 <div className="flex gap-3 items-start">
                   <div className="flex flex-col items-center justify-center gap-2">
                     <img
-                      src="/default-avatar.png"
+                      src={emma}
                       className="w-12 h-12 rounded-full border-2 border-gray-200"
                       alt="Assistant"
                     />
