@@ -6,6 +6,7 @@ const LessonPage = lazy(() => import("../Lesson/index"));
 const SpeechPage = lazy(() => import("../Speech/index"));
 const PronunciationPage = lazy(() => import("../Pronunciation/index"));
 const VocabularyPage = lazy(() => import("../Vocabulary/index"));
+const TopicPage = lazy(() => import("../Topic/index"));
 
 const publicRoutes: (RouteObject & { role?: string[] })[] = [
   {
@@ -18,7 +19,7 @@ const publicRoutes: (RouteObject & { role?: string[] })[] = [
         index: true,
       },
       {
-        path: "/lesson/:parentLessonId",
+        path: "/lesson/:parentTopicId",
         element: <LessonPage />,
       },
       {
@@ -34,6 +35,14 @@ const publicRoutes: (RouteObject & { role?: string[] })[] = [
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <VocabularyPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/topic/",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <TopicPage />
           </Suspense>
         ),
       },

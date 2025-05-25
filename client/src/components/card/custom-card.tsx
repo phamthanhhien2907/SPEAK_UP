@@ -13,6 +13,8 @@ interface Props {
   thumbnail?: string;
   data: string;
   category?: string;
+  totalLesson?: string;
+  progressText?: string;
 }
 const CustomCard = ({
   title,
@@ -20,13 +22,16 @@ const CustomCard = ({
   thumbnail,
   data,
   category,
+  totalLesson,
+  progressText,
 }: Props) => {
   return (
     <Card
       sx={{
         display: "flex",
-        maxWidth: "700px",
         width: "100%",
+        maxWidth: "700px",
+        height: data === "card" && "350px",
         margin: "16px auto",
         boxShadow: 3,
         borderRadius: "8px",
@@ -39,10 +44,11 @@ const CustomCard = ({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          flexDirection: data === "card" && "column",
           flex: 1,
         }}
       >
-        {data === "explore" && (
+        {data === "explore" ? (
           <CardMedia
             component="img"
             sx={{
@@ -54,11 +60,23 @@ const CustomCard = ({
             image={thumbnail}
             alt="thumbnail"
           />
-        )}
+        ) : data === "card" ? (
+          <CardMedia
+            component="img"
+            sx={{
+              width: "100%",
+              height: 200,
+              objectFit: "cover",
+              marginLeft: 1,
+            }}
+            image={thumbnail}
+            alt="thumbnail"
+          />
+        ) : null}
         <CardContent
           sx={{
             flex: "1 0 auto",
-            // px: 4,
+            px: 4,
             display: "flex",
             flexDirection: "column",
             gap: 1.5,
@@ -92,6 +110,45 @@ const CustomCard = ({
           >
             {description}
           </Typography>
+          <Typography
+            variant="subtitle2"
+            component="div"
+            sx={{
+              color: "text.secondary",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              wordBreak: "break-word",
+              fontSize: 12,
+            }}
+          >
+            {progressText}
+          </Typography>
+          {data === "card" && (
+            <div className="flex items-center justify-between w-full">
+              <Typography
+                variant="subtitle2"
+                component="div"
+                sx={{
+                  color: "text.secondary",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  wordBreak: "break-word",
+                  fontSize: 12,
+                }}
+              >
+                {totalLesson}
+              </Typography>
+              <Button variant="contained" className="w-32 h-8">
+                Read More
+              </Button>
+            </div>
+          )}
           {data === "lesson" && (
             <Button
               variant="contained"
@@ -107,7 +164,7 @@ const CustomCard = ({
           )}
         </CardContent>
       </Box>
-      {data !== "explore" && (
+      {data !== "explore" && data !== "card" && (
         <CardMedia
           component="img"
           sx={{

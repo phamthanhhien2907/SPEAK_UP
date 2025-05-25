@@ -13,6 +13,7 @@ import vocabularyRoute from './vocabulary'
 import authRoute from './auth'
 import pronunciationScoreRoute from './pronunciationScore'
 import recommendationRoute from './recommendation'
+import topicRoute from './topic'
 
 export const initRoutes = (app: Application) => {
     app.use("/api/auth", authRoute);
@@ -29,6 +30,7 @@ export const initRoutes = (app: Application) => {
     app.use("/api/progressTracking", progressTrackingRoute);
     app.use("/api/pronunciationScore", pronunciationScoreRoute);
     app.use("/api/recommendation", recommendationRoute);
+    app.use("/api/topic", topicRoute);
 
 };
 

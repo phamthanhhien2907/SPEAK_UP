@@ -36,6 +36,18 @@ export const apiGetLessonByParent = async (parentLessonId: string) => {
         throw error;
     }
 }
+export const apiGetLessonByParentTopicId = async (parentTopicId: string) => {
+    try {
+        const response = await axiosConfig({
+            method: "GET",
+            url: "/lesson/getLessonByParentTopicId/" + parentTopicId,
+        });
+        return response;
+    } catch (error) {
+        console.error("Error fetching parent lesson by ID:", error);
+        throw error;
+    }
+}
 export const apiGetLessonById = async (id: string) => {
     try {
         const response = await axiosConfig({

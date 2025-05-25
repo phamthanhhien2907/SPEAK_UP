@@ -2,10 +2,7 @@ import Box from "@mui/material/Box";
 import { useSelectedPageContext } from "@/hooks/use-context";
 import SliderProvider from "../slider/slider-provider";
 import ListProvider from "../list/list-provider";
-import {
-  apiGetAllLesson,
-  apiGetParentLesson,
-} from "@/services/lesson.services";
+import { apiGetAllLesson } from "@/services/lesson.services";
 import bg_lesson from "@/assets/user/bg_lesson.jpg";
 import bg_course from "@/assets/user/bg_course.png";
 
@@ -15,30 +12,36 @@ import { useNavigate } from "react-router-dom";
 import { features, gameTypes } from "@/lib/helper";
 import Progress from "@/pages/(User)/Progress";
 import Settings from "@/pages/(User)/Settings";
+import { apiGetAllTopic } from "@/services/topic.services";
 const ChatPage = lazy(() => import("@/pages/(User)/Chat/index"));
 
 export default function CardItem() {
-  const [lessonData, setLessonData] = useState([]);
-  const [parentLessonData, setParentLessonData] = useState([]);
+  const [lessonAIConversationData, setLessonAIConversationData] = useState([]);
+  const [topicData, setTopicData] = useState([]);
   const { selectedPage } = useSelectedPageContext();
   const navigation = useNavigate();
-  const getAllLesson = async () => {
-    const response = await apiGetAllLesson();
+  const getAllTopicLesson = async () => {
+    const response = await apiGetAllTopic();
     if (response?.data?.success) {
-      const lessonType = response?.data?.rs?.filter(
-        (lesson) => lesson?.type === "speaking"
+      const sectionLesson = response?.data?.rs?.filter(
+        (item) => item.section === "lesson"
       );
-      setLessonData(lessonType);
+      setTopicData(sectionLesson);
     }
   };
-  const getParentLesson = async () => {
-    const response = await apiGetParentLesson();
-    if (response?.data) setParentLessonData(response?.data);
-  };
 
+  const getLessonAIConversationEnable = async () => {
+    const response = await apiGetAllLesson();
+    if (response?.data?.success) {
+      const lessonAIConversation = response?.data?.rs?.filter(
+        (item) => item.isAIConversationEnabled === true
+      );
+      setLessonAIConversationData(lessonAIConversation);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
-      await Promise.all([getAllLesson(), getParentLesson()]);
+      await Promise.all([getAllTopicLesson(), getLessonAIConversationEnable()]);
     };
     fetchData();
   }, []);
@@ -59,7 +62,7 @@ export default function CardItem() {
                   padding: "16px",
                 }}
               >
-                {lessonData?.map((lesson) => (
+                {lessonAIConversationData?.map((lesson) => (
                   <div
                     key={lesson?._id}
                     onClick={() => navigation(`/speech/${lesson?._id}`)}
@@ -80,7 +83,10 @@ export default function CardItem() {
               <span className="font-semibold text-end w-full px-16 cursor-pointer">
                 Xem tất cả
               </span>
-              <SliderProvider />
+              <SliderProvider
+                widthClass="w-[80%]"
+                heightClass="min-h-[250px]"
+              />
               <div className="flex flex-col items-center justify-center gap-4">
                 <h6 className="font-bold text-xl">
                   Hôm nay, chúng ta nên làm gì?
@@ -105,18 +111,17 @@ export default function CardItem() {
                   padding: "16px",
                 }}
               >
-                {parentLessonData?.map((parentLesson) => (
+                {topicData?.map((topicLesson) => (
                   <div
-                    onClick={() =>
-                      navigation(`/lesson/${parentLesson?.lessonId}`)
-                    }
-                    key={parentLesson?.lessonId}
+                    onClick={() => navigation(`/lesson/${topicLesson?._id}`)}
+                    key={topicLesson?._id}
                   >
                     <CustomCard
                       data="parentLesson"
-                      description={parentLesson?.progress}
-                      title={parentLesson?.title}
-                      thumbnail={parentLesson?.thumbnail}
+                      description={topicLesson?.content}
+                      title={topicLesson?.title}
+                      thumbnail={topicLesson?.thumbnail}
+                      progressText={topicLesson?.progressText}
                     />
                   </div>
                 ))}
@@ -124,7 +129,7 @@ export default function CardItem() {
             </section>
             <section className="w-full md:w-[550px] pr-4 pt-4 bg-gray-100 flex items-center flex-col gap-4">
               <div className="w-full px-8 flex flex-col gap-4">
-                <div className="relative">
+                <div className="relative cursor-pointer">
                   <img
                     src={bg_lesson}
                     alt="background"
@@ -135,7 +140,10 @@ export default function CardItem() {
                     Bài học
                   </span>
                 </div>
-                <div className="relative">
+                <div
+                  className="relative cursor-pointer"
+                  onClick={() => navigation("/topic")}
+                >
                   <img
                     src={bg_course}
                     alt="background"
