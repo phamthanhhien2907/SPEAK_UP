@@ -38,7 +38,7 @@ export const getColumns = (
     accessorKey: "lessonId",
     header: "Lesson Id Title",
     cell: ({ row }) => {
-      const lesson = row.original.lessonId as Lesson; // Access courseId from the row's original data
+      const lesson = row.original.lessonId as Lesson;
       return <div className="capitalize">{lesson?.title || "N/A"}</div>;
     },
   },

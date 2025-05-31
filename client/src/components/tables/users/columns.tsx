@@ -70,7 +70,20 @@ export const getColumns = (
       <div className="capitalize">{row.getValue("level")}</div>
     ),
   },
-
+  {
+    accessorKey: "total_score",
+    header: "Total Score",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("total_score")}</div>
+    ),
+  },
+  {
+    accessorKey: "avatar",
+    header: "Avatar",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("avatar")}</div>
+    ),
+  },
   {
     id: "actions",
     header: "Actions",

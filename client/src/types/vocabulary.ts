@@ -1,3 +1,5 @@
+import { Lesson } from "./lesson";
+
 export type Vocabulary = {
     _id?: string;
     word?: string;
@@ -5,5 +7,6 @@ export type Vocabulary = {
     meaning?: string;
     exampleSentence?: string;
     audioUrl?: string;
+    lessonId?: Lesson;
 };
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -7,10 +7,12 @@ import auth from "@/assets/user/icon-auth.jpeg";
 import { apiGetLessonById } from "@/services/lesson.services";
 import { Lesson } from "@/types/lesson";
 import { MdKeyboardArrowLeft, MdMicNone } from "react-icons/md";
-import { FiSettings } from "react-icons/fi";
-import { FaPaperPlane, FaTrash } from "react-icons/fa";
+import { FiLogOut, FiSettings } from "react-icons/fi";
+import { FaPaperPlane, FaTrash, FaLightbulb } from "react-icons/fa";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/hooks/use-dispatch";
+import { logout } from "@/stores/actions/authAction";
 
 interface Language {
   name: string;
@@ -51,13 +53,27 @@ const LANGUAGE_MAP: Record<string, Language> = {
   },
 };
 
+interface Conversation {
+  userText: string;
+  aiResponse: string;
+  audioUrl?: string;
+  isLoading?: boolean;
+  isAudioLoading?: boolean;
+}
+
 interface ApiResponse {
   user_text: string;
   ai_response: string;
   audio_url?: string;
 }
 
-const API_BASE_URL = "http://localhost:8000";
+interface SuggestResponse {
+  user_text: string;
+  ai_response: string;
+  language: string;
+}
+
+const API_BASE_URL = "http://localhost:3000";
 
 const ROLE_GENDER_MAP: Record<string, "male" | "female"> = {
   "Taxi driver": "male",
@@ -95,14 +111,10 @@ const ROLE_GENDER_MAP: Record<string, "male" | "female"> = {
 
 const Speech: React.FC = () => {
   const [lessonData, setLessonData] = useState<Lesson | null>(null);
-  const [conversations, setConversations] = useState<
-    { userText: string; aiResponse: string; audioUrl?: string }[]
-  >([]);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
   const [translatedTexts, setTranslatedTexts] = useState<{
     [index: number]: string;
   }>({});
-  const [loading, setLoading] = useState(false);
-  const [audioLoading, setAudioLoading] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [translationLanguage, setTranslationLanguage] = useState("vi");
@@ -130,6 +142,8 @@ const Speech: React.FC = () => {
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const getLessonById = async (lessonId: string): Promise<void> => {
     const response = await apiGetLessonById(lessonId);
@@ -169,6 +183,7 @@ const Speech: React.FC = () => {
     selectedLanguage,
     voiceGender,
   ]);
+
   useEffect(() => {
     return () => {
       window.speechSynthesis.cancel();
@@ -228,13 +243,13 @@ const Speech: React.FC = () => {
       window.speechSynthesis.speak(utterance);
     }
   };
+
   useEffect(() => {
     if (conversationRef.current) {
       conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
     }
   }, [conversations]);
 
-  // Khởi tạo và phân tích sóng âm thanh
   const NUMBER_OF_BARS = 50;
   const MIN_HEIGHT = 2;
   const MAX_HEIGHT = 120;
@@ -261,13 +276,11 @@ const Speech: React.FC = () => {
         if (!analyserRef.current) return;
         analyserRef.current.getByteFrequencyData(dataArray);
 
-        // Tính giá trị trung bình của cường độ âm thanh
         const average =
           dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
         const normalizedAmplitude =
           (average / 255) * (MAX_HEIGHT - MIN_HEIGHT) + MIN_HEIGHT;
 
-        // Cập nhật chiều cao sóng âm
         setWaveformHeights((prev) =>
           prev.map(() => Math.max(normalizedAmplitude, MIN_HEIGHT))
         );
@@ -280,6 +293,7 @@ const Speech: React.FC = () => {
       console.error("Error accessing microphone:", err);
     }
   };
+
   const stopAudioAnalysis = () => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
@@ -330,20 +344,22 @@ const Speech: React.FC = () => {
   const handleSend = () => {
     stopRecognition();
     const newTranscript = transcript.trim();
+    let textToSend = "";
+
     if (newTranscript) {
-      setCurrentUserText(newTranscript);
-      setConversations((prev) => [
-        ...prev,
-        { userText: newTranscript, aiResponse: "" },
-      ]);
-      handleSendRequest(newTranscript);
+      textToSend = newTranscript;
     } else if (currentUserText) {
+      textToSend = currentUserText;
+    }
+
+    if (textToSend) {
       setConversations((prev) => [
         ...prev,
-        { userText: currentUserText, aiResponse: "" },
+        { userText: textToSend, aiResponse: "", isLoading: true },
       ]);
-      handleSendRequest(currentUserText);
+      handleSendRequest(textToSend);
     }
+    setCurrentUserText("");
     setIsInputMode(false);
   };
 
@@ -364,7 +380,6 @@ const Speech: React.FC = () => {
   };
 
   const handleSendRequest = async (text: string): Promise<void> => {
-    setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/text-and-respond/`, {
         method: "POST",
@@ -373,6 +388,7 @@ const Speech: React.FC = () => {
           user_text: text,
           topic: lessonData?.title,
           language: selectedLanguage,
+          role: lessonData?.name || "conversational partner",
         }),
       });
 
@@ -387,67 +403,102 @@ const Speech: React.FC = () => {
                 ...conv,
                 aiResponse: data.ai_response,
                 audioUrl: data.audio_url,
+                isLoading: false,
+                isAudioLoading: !!data.audio_url,
               }
             : conv
         );
       });
 
       if (data.audio_url) {
-        setAudioLoading(true);
         const audio = new Audio(`${API_BASE_URL}${data.audio_url}`);
         audioRefs.current.push(audio);
-        audio.onloadeddata = () => setAudioLoading(false);
-        audio
-          .play()
-          .catch((err) =>
+        audio.onloadeddata = () => {
+          setConversations((prev) => {
+            const lastIndex = prev.length - 1;
+            return prev.map((conv, index) =>
+              index === lastIndex ? { ...conv, isAudioLoading: false } : conv
+            );
+          });
+          audio.play().catch((err) =>
             setConversations((prev) => [
               ...prev,
-              { userText: "", aiResponse: `Lỗi phát âm thanh: ${err.message}` },
+              {
+                userText: "",
+                aiResponse: `Lỗi phát âm thanh: ${err.message}`,
+              },
             ])
           );
+        };
       }
+    } catch (err: any) {
+      setConversations((prev) => {
+        const lastIndex = prev.length - 1;
+        return prev.map((conv, index) =>
+          index === lastIndex
+            ? {
+                ...conv,
+                aiResponse: `Something was wrong: ${err.message}`,
+                isLoading: false,
+              }
+            : conv
+        );
+      });
+    }
+  };
+
+  const handleSuggestResponse = async () => {
+    const lastConversation = conversations[conversations.length - 1];
+    // Lấy câu hỏi từ phản hồi gần nhất của AI hoặc nội dung ban đầu
+    let userText = "";
+    if (conversations.length === 0 && lessonData?.content) {
+      // Lấy phần câu hỏi từ content (giả sử câu hỏi ở cuối sau "\n")
+      const parts = lessonData.content.split("\n");
+      userText =
+        parts.length > 1 ? parts[parts.length - 1].trim() : lessonData.content;
+    } else if (lastConversation?.aiResponse) {
+      // Lấy phần câu hỏi từ phản hồi gần nhất của AI
+      userText =
+        lastConversation.aiResponse.split("\n").pop()?.trim() ||
+        lastConversation.aiResponse;
+    }
+    const role = lessonData?.name || "conversational partner";
+    try {
+      const res = await fetch(`${API_BASE_URL}/suggest-response/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_text: userText,
+          topic: lessonData?.title || "",
+          language: selectedLanguage,
+          role: role,
+          suggest_for: "user",
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+
+      const data: SuggestResponse = await res.json();
+      setConversations((prev) => [
+        ...prev,
+        {
+          userText: "",
+          aiResponse: `Gợi ý: ${data.ai_response}`,
+          isLoading: false,
+        },
+      ]);
     } catch (err: any) {
       setConversations((prev) => [
         ...prev,
-        { userText: "", aiResponse: `Something was wrong : ${err.message}` },
+        {
+          userText: "",
+          aiResponse: `Không thể gợi ý: ${err.message}`,
+          isLoading: false,
+        },
       ]);
-    } finally {
-      setLoading(false);
     }
   };
-  const suggestResponse = async () => {
-    const lastResponse = conversations[conversations.length - 1]?.aiResponse;
-    if (lastResponse) {
-      setLoading(true);
-      try {
-        const res = await fetch(`${API_BASE_URL}/suggest-response/`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_text: lastResponse,
-            topic: lessonData?.title || "",
-            language: selectedLanguage,
-          }),
-        });
-        const data = await res.json();
-        setConversations((prev) => [
-          ...prev,
-          { userText: data.ai_response, aiResponse: "" },
-        ]);
-        handleSendRequest(data.ai_response);
-      } catch (err) {
-        setConversations((prev) => [
-          ...prev,
-          {
-            userText: "",
-            aiResponse: `Error suggesting response: ${err.message}`,
-          },
-        ]);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
+
   return (
     <div
       className={
@@ -506,7 +557,7 @@ const Speech: React.FC = () => {
                   />
                 </div>
               )}
-              {conv.aiResponse && (
+              {(conv.aiResponse || conv.isLoading || conv.isAudioLoading) && (
                 <div className="flex gap-3 items-start">
                   <div className="flex flex-col items-center justify-center gap-2">
                     <img
@@ -519,59 +570,71 @@ const Speech: React.FC = () => {
                     </span>
                   </div>
                   <div className="bg-gradient-to-r from-white to-gray-50 border border-gray-200 px-4 py-3 rounded-xl shadow-md max-w-xl">
-                    <p className="text-gray-900 text-lg font-medium font-iBMPlexSans">
-                      {conv.aiResponse}
-                    </p>
-                    <div className="mt-2 flex gap-3 text-sm text-blue-600">
-                      <button
-                        className="hover:underline"
-                        onClick={() => {
-                          if (conv.audioUrl) {
-                            const audio = new Audio(
-                              `${API_BASE_URL}${conv.audioUrl}`
-                            );
-                            audioRefs.current.push(audio);
-                            audio.play().catch((err) => {
-                              console.error(
-                                "Audio playback failed:",
-                                err.message
+                    {conv.isLoading ? (
+                      <p className="text-gray-600 text-lg font-medium font-iBMPlexSans">
+                        Đang suy nghĩ...
+                      </p>
+                    ) : conv.isAudioLoading ? (
+                      <p className="text-gray-600 text-lg font-medium font-iBMPlexSans">
+                        Đang tải âm thanh...
+                      </p>
+                    ) : (
+                      <>
+                        <p className="text-gray-900 text-lg font-medium font-iBMPlexSans">
+                          {conv.aiResponse}
+                        </p>
+                        <div className="mt-2 flex gap-3 text-sm text-blue-600">
+                          <button
+                            className="hover:underline"
+                            onClick={() => {
+                              if (conv.audioUrl) {
+                                const audio = new Audio(
+                                  `${API_BASE_URL}${conv.audioUrl}`
+                                );
+                                audioRefs.current.push(audio);
+                                audio.play().catch((err) => {
+                                  console.error(
+                                    "Audio playback failed:",
+                                    err.message
+                                  );
+                                });
+                              } else if (index === 0) {
+                                const initialGreeting = `${
+                                  lessonData?.content
+                                    ? lessonData?.content
+                                    : "Learn common phrases used in conversations"
+                                } \n Hello! How can I help you today?`;
+                                speakText(
+                                  initialGreeting,
+                                  selectedLanguage,
+                                  voiceGender
+                                );
+                              }
+                            }}
+                          >
+                            🔁 Repeat
+                          </button>
+                          <button
+                            className="hover:underline"
+                            onClick={async () => {
+                              setTranslatedTexts({});
+                              setShowSidebar(true);
+                              setDrawerMode("translation");
+                              const translation = await translateText(
+                                conv.aiResponse,
+                                translationLanguage
                               );
-                            });
-                          } else if (index === 0) {
-                            const initialGreeting = `${
-                              lessonData?.content
-                                ? lessonData?.content
-                                : "Learn common phrases used in conversations"
-                            } \n Hello! How can I help you today?`;
-                            speakText(
-                              initialGreeting,
-                              selectedLanguage,
-                              voiceGender
-                            );
-                          }
-                        }}
-                      >
-                        🔁 Repeat
-                      </button>
-                      <button
-                        className="hover:underline"
-                        onClick={async () => {
-                          setTranslatedTexts({});
-                          setShowSidebar(true);
-                          setDrawerMode("translation");
-                          const translation = await translateText(
-                            conv.aiResponse,
-                            translationLanguage
-                          );
-                          setTranslatedTexts((prev) => ({
-                            ...prev,
-                            [index]: translation,
-                          }));
-                        }}
-                      >
-                        🌐 Translate
-                      </button>
-                    </div>
+                              setTranslatedTexts((prev) => ({
+                                ...prev,
+                                [index]: translation,
+                              }));
+                            }}
+                          >
+                            🌐 Translate
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
@@ -580,31 +643,45 @@ const Speech: React.FC = () => {
         </div>
       </div>
 
-      {(loading || audioLoading) && (
-        <div className="absolute bottom-4 right-4 flex gap-2">
-          {loading && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-              Đang xử lý...
-            </span>
-          )}
-          {audioLoading && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              Đang tải âm thanh...
-            </span>
-          )}
-        </div>
-      )}
-
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-6 left-8 right-8">
         {!isInputMode ? (
-          <div
-            className="p-5 rounded-full bg-blue-600 shadow-lg cursor-pointer hover:scale-105 transition-transform duration-200"
-            onClick={() => {
-              setIsInputMode(true);
-              startRecognition();
-            }}
-          >
-            <MdMicNone size={36} className="text-white" />
+          <div className="flex items-center bg-white border border-gray-200 rounded-full p-2 shadow-lg">
+            <input
+              type="text"
+              name="chat"
+              value={currentUserText}
+              onChange={(e) => setCurrentUserText(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                  setCurrentUserText("");
+                }
+              }}
+              placeholder="Aa"
+              className="flex-1 px-4 py-2 outline-none"
+            />
+            <button
+              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+              onClick={() => {
+                setIsInputMode(true);
+                startRecognition();
+              }}
+            >
+              <MdMicNone size={24} />
+            </button>
+            <button
+              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+              onClick={handleSuggestResponse}
+            >
+              <FaLightbulb size={24} />
+            </button>
+            <button
+              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+              onClick={handleSend}
+            >
+              <FaPaperPlane size={20} />
+            </button>
           </div>
         ) : (
           <div className="flex items-center bg-blue-600 rounded-full p-2 shadow-lg">
@@ -614,7 +691,7 @@ const Speech: React.FC = () => {
             >
               <FaTrash size={20} />
             </button>
-            <div className="flex h-10 w-60 flex-row items-center justify-end gap-1 overflow-hidden">
+            <div className="flex h-10 w-full flex-row items-center justify-end gap-1 overflow-hidden">
               {waveformHeights.map((height, index) => (
                 <div
                   key={index}
@@ -638,19 +715,14 @@ const Speech: React.FC = () => {
             </button>
           </div>
         )}
-        <button
-          className={
-            isInputMode
-              ? "text-center w-full text-gray-500 hover:text-gray-700 text-sm"
-              : "text-center w-full text-gray-500 hover:text-gray-700 text-sm"
-          }
-          onClick={() => {
-            setIsInputMode(false);
-            suggestResponse();
-          }}
-        >
-          Skip
-        </button>
+        {isInputMode && (
+          <button
+            className="text-center w-full text-gray-500 hover:text-gray-700 text-sm mt-2"
+            onClick={() => setIsInputMode(false)}
+          >
+            Skip
+          </button>
+        )}
       </div>
 
       <div
@@ -706,8 +778,15 @@ const Speech: React.FC = () => {
               </div>
               <hr className="border-t border-gray-200" />
               <div>
-                <button className="w-full flex items-center justify-center gap-2 text-red-700 font-semibold bg-red-50 border border-red-200 rounded-xl px-4 py-2 hover:bg-red-100 transition">
-                  🚪 Logout
+                <button
+                  className="w-full flex items-center justify-center gap-2 text-red-700 font-semibold bg-red-50 border border-red-200 rounded-xl px-4 py-2 hover:bg-red-100 transition"
+                  onClick={() => {
+                    dispatch(logout());
+                    navigate("/clean");
+                  }}
+                >
+                  <FiLogOut />
+                  Logout
                 </button>
               </div>
             </>

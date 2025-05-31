@@ -17,6 +17,8 @@ interface ApiResponse {
 }
 
 export interface authActionProps {
+  typeLogin?: string;
+  username?: string;
   email: string;
   password: string;
 }

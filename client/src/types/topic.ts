@@ -1,19 +1,20 @@
+import { Course } from "./course";
 
 export type Topic = {
     _id?: string;
     title?: string;
-    description?: string;
     level?: number;
     thumbnail?: string;
-    courseId: string;
+    courseId?: Course;
     content?: string;
     type?: "speaking" | "pronunciation" | "vocabulary" | "listening"
-    section?: "lesson" | "topic";
+    section?: "lesson" | "topic" | "ai-conversation"
     totalLessons?: number;
 };
-export enum Section {
+export enum SectionType {
     LESSON = "lesson",
-    TOPIC = "topic"
+    TOPIC = "topic",
+    AI_CONVERSATION = "ai-conversation"
 }
 export enum TopicType {
     SPEAKING = "speaking",

@@ -5,6 +5,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { ModalData, ModalType } from "@/hooks/use-model-store";
 import { Lesson } from "@/types/lesson";
+import { Course } from "@/types/course";
+import { Topic } from "@/types/topic";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
 ): ColumnDef<Lesson>[] => [
@@ -72,7 +74,7 @@ export const getColumns = (
     accessorKey: "courseId", // Add this accessorKey for courseId.title
     header: "Course Title",
     cell: ({ row }) => {
-      const course = row.original.courseId as Lesson; // Access courseId from the row's original data
+      const course = row.original.courseId as Course; // Access courseId from the row's original data
       return <div className="capitalize">{course?.title || "N/A"}</div>;
     },
   },
@@ -81,7 +83,68 @@ export const getColumns = (
     header: "Type",
     cell: ({ row }) => <div className="capitalize">{row.getValue("type")}</div>,
   },
-
+  {
+    accessorKey: "level",
+    header: "Level",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("level")}</div>
+    ),
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("category")}</div>
+    ),
+  },
+  {
+    accessorKey: "parentLessonId.title",
+    id: "parentLessonId.title",
+    header: "Parent Lesson Id",
+    cell: ({ row }) => {
+      const lessonParent = row.original.parentLessonId as Lesson;
+      return <div className="capitalize">{lessonParent?.title || "N/A"}</div>;
+    },
+  },
+  {
+    accessorKey: "parentTopicId.title",
+    id: "parentTopicId.title",
+    header: "Parent Lesson Id",
+    cell: ({ row }) => {
+      const topic = row.original.parentTopicId as Topic;
+      return <div className="capitalize">{topic?.title || "N/A"}</div>;
+    },
+  },
+  {
+    accessorKey: "thumbnail",
+    header: "Thumbnail",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("thumbnail")}</div>
+    ),
+  },
+  {
+    accessorKey: "aiImg",
+    header: "AI Image",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("aiImg")}</div>
+    ),
+  },
+  {
+    accessorKey: "isAIConversationEnabled",
+    header: "AI Conversation Enabled",
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {row.getValue("isAIConversationEnabled")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "totalLessons",
+    header: "Total Lesson",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("totalLessons")}</div>
+    ),
+  },
   {
     id: "actions",
     header: "Actions",

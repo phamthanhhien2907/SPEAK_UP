@@ -13,6 +13,7 @@ import {
   Pagination,
 } from "swiper/modules";
 import topic from "@/assets/user/topic_img.jpg";
+import { useNavigate } from "react-router-dom";
 type SliderProviderCss = {
   widthClass: string;
   heightClass: string;
@@ -24,6 +25,8 @@ export default function SliderProvider({
   heightClass,
   type,
 }: SliderProviderCss) {
+  const navigate = useNavigate();
+
   return (
     <div className={`${widthClass} ${heightClass} relative`}>
       {type === "topic" ? (
@@ -58,7 +61,10 @@ export default function SliderProvider({
           ]}
           className="w-full h-full mySwiper"
         >
-          <SwiperSlide className="w-full h-full">
+          <SwiperSlide
+            className="w-full h-full"
+            onClick={() => navigate("/topic/categories")}
+          >
             <img
               src={topic}
               alt="topic"

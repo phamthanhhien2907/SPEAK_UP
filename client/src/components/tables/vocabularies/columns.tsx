@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
 import { Vocabulary } from "@/types/vocabulary";
+import { Lesson } from "@/types/lesson";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
 ): ColumnDef<Vocabulary>[] => [
@@ -31,6 +32,15 @@ export const getColumns = (
     ),
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "lessonId.title",
+    id: "lessonId.title",
+    header: "Lesson Title",
+    cell: ({ row }) => {
+      const lesson = row.original.lessonId as Lesson;
+      return <div className="capitalize">{lesson?.title || "N/A"}</div>;
+    },
   },
   {
     accessorKey: "word",
@@ -65,7 +75,6 @@ export const getColumns = (
       <div className="capitalize">{row.getValue("audioUrl")}</div>
     ),
   },
-
   {
     id: "actions",
     header: "Actions",

@@ -5,10 +5,11 @@ import SpeechRecognition, {
 import auth from "@/assets/user/icon-auth.jpeg";
 import { MdKeyboardArrowLeft, MdMicNone } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
-import { FaPaperPlane, FaTrash } from "react-icons/fa";
+import { FaPaperPlane, FaTrash, FaLightbulb } from "react-icons/fa";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
 import emma from "@/assets/user/image.webp";
+
 interface Language {
   name: string;
   speechLang: string;
@@ -48,24 +49,34 @@ const LANGUAGE_MAP: Record<string, Language> = {
   },
 };
 
+interface Conversation {
+  userText: string;
+  aiResponse: string;
+  audioUrl?: string;
+  isLoading?: boolean;
+  isAudioLoading?: boolean;
+}
+
 interface ApiResponse {
   user_text: string;
   ai_response: string;
   audio_url?: string;
 }
 
-const API_BASE_URL = "http://localhost:8000";
+interface SuggestResponse {
+  user_text: string;
+  ai_response: string;
+  language: string;
+}
+
+const API_BASE_URL = "http://localhost:3000";
 const DEFAULT_TOPIC = "General Conversation";
 
 const Chat: React.FC = () => {
-  const [conversations, setConversations] = useState<
-    { userText: string; aiResponse: string; audioUrl?: string }[]
-  >([]);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
   const [translatedTexts, setTranslatedTexts] = useState<{
     [index: number]: string;
   }>({});
-  const [loading, setLoading] = useState(false);
-  const [audioLoading, setAudioLoading] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [translationLanguage, setTranslationLanguage] = useState("vi");
@@ -77,8 +88,8 @@ const Chat: React.FC = () => {
   const [waveformHeights, setWaveformHeights] = useState<number[]>([]);
   const [showTopicButtons, setShowTopicButtons] = useState(true);
   const isInitialSpeakDone = useRef(false);
-  const voicesLoaded = useRef(false); // Sử dụng ref để theo dõi việc tải giọng nói
-  const activeUtterances = useRef<SpeechSynthesisUtterance[]>([]); // Theo dõi các utterance đang phát
+  const voicesLoaded = useRef(false);
+  const activeUtterances = useRef<SpeechSynthesisUtterance[]>([]);
   const mounted = useRef(true);
   const { userData } = useSelector((state: RootState) => state.user);
   const {
@@ -174,7 +185,6 @@ const Chat: React.FC = () => {
           { userText: "", aiResponse: initialGreeting, audioUrl: undefined },
         ]);
 
-        // Sử dụng setTimeout đúng cách
         setTimeout(() => {
           speakText(initialGreeting, selectedLanguage, "female");
           isInitialSpeakDone.current = true;
@@ -182,12 +192,10 @@ const Chat: React.FC = () => {
       }
     };
 
-    // Gọi ngay lập tức
     loadVoicesAndSpeak();
 
-    // Thêm fallback với giới hạn thời gian (ví dụ: thử tối đa 5 giây)
     let attempts = 0;
-    const maxAttempts = 50; // Tương đương 5 giây với interval 100ms
+    const maxAttempts = 50;
     const checkVoicesInterval = setInterval(() => {
       attempts++;
       if (voicesLoaded.current || attempts >= maxAttempts) {
@@ -197,7 +205,6 @@ const Chat: React.FC = () => {
       }
     }, 100);
 
-    // Lắng nghe sự kiện voiceschanged
     window.speechSynthesis.onvoiceschanged = loadVoicesAndSpeak;
 
     return () => {
@@ -206,11 +213,10 @@ const Chat: React.FC = () => {
     };
   }, [selectedLanguage]);
 
-  // Cleanup khi component unmount
   useEffect(() => {
-    mounted.current = true; // Set to true when component mounts
+    mounted.current = true;
     return () => {
-      mounted.current = false; // Set to false when component unmounts
+      mounted.current = false;
       if (window.speechSynthesis.speaking) {
         window.speechSynthesis.cancel();
       }
@@ -219,7 +225,7 @@ const Chat: React.FC = () => {
         if (audio) {
           audio.pause();
           audio.currentTime = 0;
-          audio.src = ""; // Clear the source to stop any loading
+          audio.src = "";
         }
       });
       audioRefs.current = [];
@@ -242,8 +248,6 @@ const Chat: React.FC = () => {
   }, [conversations]);
 
   const NUMBER_OF_BARS = 1000;
-  // const NUMBER_OF_BARS = 120;
-
   const MIN_HEIGHT = 2;
   const MAX_HEIGHT = 120;
 
@@ -348,7 +352,7 @@ const Chat: React.FC = () => {
     if (textToSend) {
       setConversations((prev) => [
         ...prev,
-        { userText: textToSend, aiResponse: "" },
+        { userText: textToSend, aiResponse: "", isLoading: true },
       ]);
       handleSendRequest(textToSend);
     }
@@ -373,7 +377,6 @@ const Chat: React.FC = () => {
   };
 
   const handleSendRequest = async (text: string): Promise<void> => {
-    setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/text-and-respond/`, {
         method: "POST",
@@ -396,18 +399,24 @@ const Chat: React.FC = () => {
                 ...conv,
                 aiResponse: data.ai_response,
                 audioUrl: data.audio_url,
+                isLoading: false,
+                isAudioLoading: true,
               }
             : conv
         );
       });
 
       if (data.audio_url && mounted.current) {
-        setAudioLoading(true);
         const audio = new Audio(`${API_BASE_URL}${data.audio_url}`);
         audioRefs.current.push(audio);
         audio.onloadeddata = () => {
           if (mounted.current) {
-            setAudioLoading(false);
+            setConversations((prev) => {
+              const lastIndex = prev.length - 1;
+              return prev.map((conv, index) =>
+                index === lastIndex ? { ...conv, isAudioLoading: false } : conv
+              );
+            });
             audio.play().catch((err) =>
               setConversations((prev) => [
                 ...prev,
@@ -426,12 +435,55 @@ const Chat: React.FC = () => {
       }
       setShowTopicButtons(false);
     } catch (err: any) {
+      setConversations((prev) => {
+        const lastIndex = prev.length - 1;
+        return prev.map((conv, index) =>
+          index === lastIndex
+            ? {
+                ...conv,
+                aiResponse: `Something was wrong: ${err.message}`,
+                isLoading: false,
+              }
+            : conv
+        );
+      });
+    }
+  };
+
+  const handleSuggestResponse = async () => {
+    const lastConversation = conversations[conversations.length - 1];
+    const userText = lastConversation?.userText || "";
+    try {
+      const res = await fetch(`${API_BASE_URL}/suggest-response/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_text: userText,
+          topic: DEFAULT_TOPIC,
+          language: selectedLanguage,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+
+      const data: SuggestResponse = await res.json();
       setConversations((prev) => [
         ...prev,
-        { userText: "", aiResponse: `Something was wrong: ${err.message}` },
+        {
+          userText: "",
+          aiResponse: `Gợi ý: ${data.ai_response}`,
+          isLoading: false,
+        },
       ]);
-    } finally {
-      setLoading(false);
+    } catch (err: any) {
+      setConversations((prev) => [
+        ...prev,
+        {
+          userText: "",
+          aiResponse: `Không thể gợi ý: ${err.message}`,
+          isLoading: false,
+        },
+      ]);
     }
   };
 
@@ -441,9 +493,9 @@ const Chat: React.FC = () => {
       {
         userText: type,
         aiResponse: "",
+        isLoading: true,
       },
     ]);
-    setLoading(true);
     setShowTopicButtons(false);
     try {
       const res = await fetch(`${API_BASE_URL}/text-and-respond/`, {
@@ -459,22 +511,32 @@ const Chat: React.FC = () => {
       if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
 
       const data: ApiResponse = await res.json();
-      setConversations((prev) => [
-        ...prev,
-        {
-          userText: "",
-          aiResponse: data.ai_response,
-          audioUrl: data.audio_url,
-        },
-      ]);
+      setConversations((prev) => {
+        const lastIndex = prev.length - 1;
+        return prev.map((conv, index) =>
+          index === lastIndex
+            ? {
+                userText: type,
+                aiResponse: data.ai_response,
+                audioUrl: data.audio_url,
+                isLoading: false,
+                isAudioLoading: true,
+              }
+            : conv
+        );
+      });
 
       if (data.audio_url && mounted.current) {
-        setAudioLoading(true);
         const audio = new Audio(`${API_BASE_URL}${data.audio_url}`);
         audioRefs.current.push(audio);
         audio.onloadeddata = () => {
           if (mounted.current) {
-            setAudioLoading(false);
+            setConversations((prev) => {
+              const lastIndex = prev.length - 1;
+              return prev.map((conv, index) =>
+                index === lastIndex ? { ...conv, isAudioLoading: false } : conv
+              );
+            });
             audio.play().catch((err) =>
               setConversations((prev) => [
                 ...prev,
@@ -492,12 +554,18 @@ const Chat: React.FC = () => {
         };
       }
     } catch (err: any) {
-      setConversations((prev) => [
-        ...prev,
-        { userText: "", aiResponse: `Something was wrong: ${err.message}` },
-      ]);
-    } finally {
-      setLoading(false);
+      setConversations((prev) => {
+        const lastIndex = prev.length - 1;
+        return prev.map((conv, index) =>
+          index === lastIndex
+            ? {
+                ...conv,
+                aiResponse: `Something was wrong: ${err.message}`,
+                isLoading: false,
+              }
+            : conv
+        );
+      });
     }
   };
 
@@ -556,72 +624,84 @@ const Chat: React.FC = () => {
                   />
                 </div>
               )}
-              {conv.aiResponse && (
-                <div className="flex gap-3 items-start">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <img
-                      src={emma}
-                      className="w-12 h-12 rounded-full border-2 border-gray-200"
-                      alt="Assistant"
-                    />
-                    <span className="text-sm font-bold font-spaceGrotesk">
-                      Emma
-                    </span>
-                  </div>
-                  <div className="bg-gradient-to-r from-white to-gray-50 border border-gray-200 px-4 py-3 rounded-xl shadow-md max-w-xl">
-                    <p className="text-gray-900 text-lg font-medium font-iBMPlexSans">
-                      {conv.aiResponse}
-                    </p>
-                    <div className="mt-2 flex gap-3 text-sm text-blue-600">
-                      <button
-                        className="hover:underline"
-                        onClick={() => {
-                          if (conv.audioUrl) {
-                            const audio = new Audio(
-                              `${API_BASE_URL}${conv.audioUrl}`
-                            );
-                            audioRefs.current.push(audio);
-                            audio
-                              .play()
-                              .catch((err) =>
-                                console.error(
-                                  "Audio playback failed:",
-                                  err.message
-                                )
-                              );
-                          } else if (index === 0) {
-                            speakText(
-                              "Hey! I'm Emma, your personal AI language teacher. Ask me anything, or click on a topic below:",
-                              selectedLanguage,
-                              "female"
-                            );
-                          }
-                        }}
-                      >
-                        🔁 Repeat
-                      </button>
-                      <button
-                        className="hover:underline"
-                        onClick={async () => {
-                          setTranslatedTexts({});
-                          setShowSidebar(true);
-                          setDrawerMode("translation");
-                          const translation = await translateText(
-                            conv.aiResponse,
-                            translationLanguage
-                          );
-                          setTranslatedTexts((prev) => ({
-                            ...prev,
-                            [index]: translation,
-                          }));
-                        }}
-                      >
-                        🌐 Translate
-                      </button>
-                    </div>
-                  </div>
+              <div className="flex gap-3 items-start">
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <img
+                    src={emma}
+                    className="w-12 h-12 rounded-full border-2 border-gray-200"
+                    alt="Assistant"
+                  />
+                  <span className="text-sm font-bold font-spaceGrotesk">
+                    Emma
+                  </span>
                 </div>
-              )}
+                <div className="bg-gradient-to-r from-white to-gray-50 border border-gray-200 px-4 py-3 rounded-xl shadow-md max-w-xl">
+                  {conv.isLoading ? (
+                    <p className="text-gray-600 text-lg font-medium font-iBMPlexSans">
+                      Đang suy nghĩ...
+                    </p>
+                  ) : conv.isAudioLoading ? (
+                    <p className="text-gray-600 text-lg font-medium font-iBMPlexSans">
+                      Đang tải âm thanh...
+                    </p>
+                  ) : (
+                    <>
+                      <p className="text-gray-900 text-lg font-medium font-iBMPlexSans">
+                        {conv.aiResponse}
+                      </p>
+                      {conv.aiResponse && (
+                        <div className="mt-2 flex gap-3 text-sm text-blue-600">
+                          <button
+                            className="hover:underline"
+                            onClick={() => {
+                              if (conv.audioUrl) {
+                                const audio = new Audio(
+                                  `${API_BASE_URL}${conv.audioUrl}`
+                                );
+                                audioRefs.current.push(audio);
+                                audio
+                                  .play()
+                                  .catch((err) =>
+                                    console.error(
+                                      "Audio playback failed:",
+                                      err.message
+                                    )
+                                  );
+                              } else if (index === 0) {
+                                speakText(
+                                  "Hey! I'm Emma, your personal AI language teacher. Ask me anything, or click on a topic below:",
+                                  selectedLanguage,
+                                  "female"
+                                );
+                              }
+                            }}
+                          >
+                            🔁 Repeat
+                          </button>
+                          <button
+                            className="hover:underline"
+                            onClick={async () => {
+                              setTranslatedTexts({});
+                              setShowSidebar(true);
+                              setDrawerMode("translation");
+                              const translation = await translateText(
+                                conv.aiResponse,
+                                translationLanguage
+                              );
+                              setTranslatedTexts((prev) => ({
+                                ...prev,
+                                [index]: translation,
+                              }));
+                            }}
+                          >
+                            🌐 Translate
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
           {showTopicButtons && (
@@ -648,21 +728,6 @@ const Chat: React.FC = () => {
           )}
         </div>
       </div>
-
-      {(loading || audioLoading) && (
-        <div className="absolute bottom-4 right-4 flex gap-2">
-          {loading && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-              Đang xử lý...
-            </span>
-          )}
-          {audioLoading && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              Đang tải âm thanh...
-            </span>
-          )}
-        </div>
-      )}
 
       <div className="absolute bottom-6 left-8 right-8">
         {!isInputMode ? (
@@ -691,6 +756,12 @@ const Chat: React.FC = () => {
               }}
             >
               <MdMicNone size={24} />
+            </button>
+            <button
+              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+              onClick={handleSuggestResponse}
+            >
+              <FaLightbulb size={24} />
             </button>
             <button
               className="text-blue-500 p-2 hover:text-blue-700 rounded-full"

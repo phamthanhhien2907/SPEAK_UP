@@ -4,7 +4,7 @@ import { loginSuccessAction } from "@/stores/actions/authAction";
 import { useAppDispatch } from "@/hooks/use-dispatch";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-
+import "./index.css";
 const LoginSuccess = () => {
   const { userId, tokenLogin } = useParams();
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);

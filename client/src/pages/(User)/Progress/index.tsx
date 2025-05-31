@@ -78,7 +78,7 @@ const Progress = () => {
     },
   };
 
-  const [calendarDate, setCalendarDate] = useState(new Date(2025, 4, 19));
+  const [calendarDate, setCalendarDate] = useState(new Date());
 
   // Handle onChange with proper typing for react-calendar
   const handleCalendarChange = (value: Date | Date[] | null) => {
@@ -302,13 +302,14 @@ const Progress = () => {
             formatShortWeekday={(locale, date) =>
               ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"][date.getDay()]
             }
-            tileClassName={({ date }) =>
-              date.getDate() === 19 &&
-              date.getMonth() === 4 &&
-              date.getFullYear() === 2025
+            tileClassName={({ date }) => {
+              const today = new Date(); // Lấy ngày hiện tại: 29/5/2025
+              return date.getDate() === today.getDate() &&
+                date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear()
                 ? "highlight"
-                : null
-            }
+                : null;
+            }}
             showNeighboringMonth={false}
             minDetail="month"
             maxDetail="month"

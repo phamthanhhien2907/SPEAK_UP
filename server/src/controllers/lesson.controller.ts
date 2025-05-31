@@ -7,7 +7,15 @@ export const getLessons = async (req: Request, res: Response): Promise<void> => 
     const lessons = await Lesson.find().populate({
         path: "courseId",
         select: "title description level thumbnail",
+    }).populate({
+        path: "parentTopicId",
+        select: "title content",
+    }).populate({
+        path: "parentLessonId",
+        select: "title content",
     });
+
+
     res.status(200).json({
         success: lessons ? true : false,
         rs: lessons ? lessons : 'Lessons not found'
@@ -199,7 +207,7 @@ export const getLessonsByParent = async (req: Request, res: Response): Promise<v
         res.json({
             introVideo: "Video Giới thiệu", // Giả định, có thể lấy từ trường khác hoặc cấu hình
             progress: `${completed}/${total}`,
-            levelName: `Level ${parentLesson.level || 1} - ${parentLesson.title} ?`,
+            levelName: `Level ${parentLesson.level || 1} - ${parentLesson.title}`,
             lessons: result,
         });
     } catch (error) {
@@ -210,7 +218,7 @@ export const getLessonsByParent = async (req: Request, res: Response): Promise<v
 export const getLessonByParentTopicId = async (req: Request, res: Response): Promise<void> => {
     const { parentTopicId } = req.params;
     const userId = req?.user?._id;
-
+    console.log(parentTopicId);
     // Kiểm tra userId và parentTopicId
     if (!userId) {
         throw new Error("Unauthorized");
