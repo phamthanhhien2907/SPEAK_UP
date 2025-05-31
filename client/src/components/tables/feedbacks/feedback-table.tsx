@@ -127,7 +127,7 @@ export function FeedBackTable() {
         </div>
       </div>
       <div className="rounded-md border">
-        <Table>
+        <Table className="equal-widths">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

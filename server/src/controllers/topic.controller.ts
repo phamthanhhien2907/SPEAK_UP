@@ -13,7 +13,11 @@ export const getTopics = async (req: Request, res: Response): Promise<void> => {
 
     try {
         // Lấy tất cả topics
-        const topics = await Topic.find().lean();
+        const topics = await Topic.find().lean().populate({
+            path: "courseId",
+            select: "title description level thumbnail",
+        })
+
 
         if (!topics || topics.length === 0) {
             res.status(200).json({

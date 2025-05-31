@@ -48,7 +48,6 @@ export const getColumns = (
     id: "exerciseId.id",
     header: "Exercise Course Title",
     cell: ({ row }) => {
-      console.log(row.original.exerciseId);
       const exercise = row.original.exerciseId as Excercise;
       return <div className="capitalize">{exercise?.prompt || "N/A"}</div>;
     },

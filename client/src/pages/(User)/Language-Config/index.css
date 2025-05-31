@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.fi {
+  line-height: inherit !important;
+  background-size: cover !important; /* Đảm bảo lá cờ lấp đầy container */
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  width: inherit !important; /* Đảm bảo chiều rộng của lá cờ là 100% */
+  height: inherit !important; /* Đảm bảo chiều cao của lá cờ là 100% */
+}

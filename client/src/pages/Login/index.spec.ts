@@ -55,12 +55,31 @@ test.describe('Login Page', () => {
     test('login with valid credentials', async ({ page }) => {
         await page.fill('input[name="email"]', 'tanquanga6k39@gmail.com');
         await page.fill('input[name="password"]', 'Quang@2003');
+        await page.getByTestId('toggle-password-icon').click();
+        await page.getByRole('button', { name: /login/i }).click();
+        // Kiểm tra điều hướng hoặc thông báo thành công
+        await expect(page).toHaveURL('http://localhost:5173/');
+        await page.waitForTimeout(7000); // Đợi 7 giây
+    });
+    test('login with invalid credentials', async ({ page }) => {
+        await page.fill('input[name="email"]', 'phamthanhhien2003@gmail.com');
+        await page.fill('input[name="password"]', 'quang123');
+        await page.getByTestId('toggle-password-icon').click();
+        await page.getByRole('button', { name: /login/i }).click();
+        // Kiểm tra điều hướng hoặc thông báo thành công
+        await expect(page.getByText(/incorrect email or password/i)).toBeVisible();
+
+    });
+    test('login admin with valid credentials', async ({ page }) => {
+        await page.fill('input[name="email"]', 'admin@gmail.com');
+        await page.fill('input[name="password"]', 'Admin123@');
+        await page.getByTestId('toggle-password-icon').click();
         await page.getByRole('button', { name: /login/i }).click();
         // Kiểm tra điều hướng hoặc thông báo thành công
         await expect(page).toHaveURL('http://localhost:5173/');
     });
-    test('login with invalid credentials', async ({ page }) => {
-        await page.fill('input[name="email"]', 'phamthanhhien2003@gmail.com');
+    test('login admin with invalid credentials', async ({ page }) => {
+        await page.fill('input[name="email"]', 'admin@gmail.com');
         await page.fill('input[name="password"]', 'quang123');
         await page.getByTestId('toggle-password-icon').click();
         await page.getByRole('button', { name: /login/i }).click();

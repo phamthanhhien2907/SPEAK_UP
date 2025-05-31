@@ -124,8 +124,9 @@ const NavigationBarAdmin = ({ items }: { items: ItemType[] }) => {
         <a
           onClick={() => {
             dispatch(logout());
-            if (current === "admin") navigate("/admin/auth");
-            else navigate("/auth");
+            // if (current === "admin") navigate("/admin/auth");
+            // else navigate("/auth");
+            navigate("/auth");
           }}
           className="flex items-center justify-start px-2 py-2 gap-2 font-normal cursor-pointer stroke-[0.75] place-items-center hover:bg-gray-300/50 p-1 rounded hover:stroke-neutral-100 stroke-neutral-400 transition-colors duration-100"
         >

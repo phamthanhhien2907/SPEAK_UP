@@ -5,9 +5,15 @@ import Select from "react-select";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useAppDispatch } from "@/hooks/use-dispatch";
 import { logout } from "@/stores/actions/authAction";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+
 const Settings: React.FC = () => {
   const { selectedPage } = useSelectedPageContext();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { userData } = useSelector((state: RootState) => state.user);
   const [activeSection, setActiveSection] = useState(selectedPage || "Profile");
   const [profileSubSection, setProfileSubSection] = useState("");
   const [emailNotifications, setEmailNotifications] = useState({
@@ -18,15 +24,23 @@ const Settings: React.FC = () => {
     specialOffers: true,
     learningNotifications: false,
   });
-  // Đồng bộ activeSection với selectedPage
+  // Local state for editable fields
+  const [editedUserData, setEditedUserData] = useState({
+    email: userData?.email || "",
+    firstname: userData?.firstname || "",
+    lastname: userData?.lastname || "",
+  });
+
+  // Sync activeSection with selectedPage
   React.useEffect(() => {
     if (selectedPage === "Settings" || selectedPage === "Profile") {
       setActiveSection(selectedPage);
-      setProfileSubSection(""); // Reset profileSubSection khi chuyển section
+      setProfileSubSection(""); // Reset profileSubSection when changing section
     } else {
       setActiveSection("Profile");
     }
   }, [selectedPage]);
+
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
     setProfileSubSection("");
@@ -52,6 +66,19 @@ const Settings: React.FC = () => {
       ...prev,
       [type]: !prev[type],
     }));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditedUserData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = () => {
+    // Optionally, you can add a success message or reset the form
+    console.log("User data saved:", editedUserData);
   };
 
   const languages = [
@@ -90,9 +117,7 @@ const Settings: React.FC = () => {
       borderRadius: "0.5rem",
       borderColor: "#e5e7eb",
       boxShadow: "none",
-      "&:hover": {
-        borderColor: "#e5e7eb",
-      },
+      "&:hover": { borderColor: "#e5e7eb" },
     }),
     option: (provided: any, state: any) => ({
       ...provided,
@@ -101,9 +126,7 @@ const Settings: React.FC = () => {
       padding: "0.5rem",
       backgroundColor: state.isSelected ? "#f0f9ff" : "white",
       color: "black",
-      "&:hover": {
-        backgroundColor: "#f0f9ff",
-      },
+      "&:hover": { backgroundColor: "#f0f9ff" },
     }),
     singleValue: (provided: any) => ({
       ...provided,
@@ -113,9 +136,9 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 w-full">
-      <div className="w-full mx-auto flex bg-white rounded-xl shadow-lg">
-        {/* Cột trái: Danh sách các mục */}
+    <div className="min-h-screen bg-gray-50 w-full">
+      <div className="w-full mx-auto flex min-h-screen bg-white rounded-xl shadow-lg px-4">
+        {/* Left column: Menu items */}
         <div className="w-1/2 border-r border-gray-200 py-2">
           <div className="flex items-center justify-start gap-2 mb-12">
             <FaArrowLeft fontSize={20} className="cursor-pointer" />
@@ -169,30 +192,7 @@ const Settings: React.FC = () => {
               </svg>
               <span className="text-[15px] font-medium">Profile</span>
             </li>
-            <li
-              className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors duration-200 ${
-                activeSection === "Personalization"
-                  ? "bg-blue-100 text-blue-800 font-medium"
-                  : "text-gray-700 hover:bg-gray-100 font-medium"
-              }`}
-              onClick={() => handleSectionChange("Personalization")}
-            >
-              <svg
-                className="w-6 h-6 mr-3"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-              <span className="text-[15px] font-medium">Personalization</span>
-            </li>
+
             <li
               className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors duration-200 ${
                 activeSection === "Settings"
@@ -245,10 +245,11 @@ const Settings: React.FC = () => {
               </span>
             </li>
             <li
-              className="flex items-center p-3 rounded-lg cursor-pointer text-pink-600 hover:bg-gray-100 transition-colors duration-200 "
+              className="flex items-center p-3 rounded-lg cursor-pointer text-pink-600 hover:bg-gray-100 transition-colors duration-200"
               onClick={() => {
                 handleSectionChange("Logout");
                 dispatch(logout());
+                navigate("/auth");
               }}
             >
               <svg
@@ -265,13 +266,12 @@ const Settings: React.FC = () => {
                   d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                 ></path>
               </svg>
-
-              <span className="text-[15px] font-medium ">Log out</span>
+              <span className="text-[15px] font-medium">Log out</span>
             </li>
           </ul>
         </div>
 
-        <div className="w-1/2 py-2">
+        <div className="w-1/2 py-2 px-8">
           {activeSection === "Profile" && (
             <div className="space-y-6">
               {profileSubSection === "Personal details" ? (
@@ -287,9 +287,10 @@ const Settings: React.FC = () => {
                         </label>
                         <input
                           type="email"
-                          value="tanquang1510@gmail.com"
-                          readOnly
-                          className="w-full p-3 mt-1 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          name="email"
+                          value={editedUserData.email}
+                          onChange={handleInputChange}
+                          className="w-full p-3 mt-1 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                       <div>
@@ -298,8 +299,10 @@ const Settings: React.FC = () => {
                         </label>
                         <input
                           type="text"
-                          value="Nguyễn"
-                          className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          name="firstname"
+                          value={editedUserData.firstname}
+                          onChange={handleInputChange}
+                          className="w-full p-3 mt-1 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                       <div>
@@ -308,15 +311,17 @@ const Settings: React.FC = () => {
                         </label>
                         <input
                           type="text"
-                          value="Quang"
-                          className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          name="lastname"
+                          value={editedUserData.lastname}
+                          onChange={handleInputChange}
+                          className="w-full p-3 mt-1 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700">
                           Your time zone
                         </label>
-                        <select className="w-full p-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select className="w-full p-3 mt-1 border border-gray-300 rounded-xl">
                           <option>UTC+07:00</option>
                           <option>UTC+00:00</option>
                           <option>UTC+01:00</option>
@@ -324,8 +329,11 @@ const Settings: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6">
-                    <button className="w-full bg-gray-200 text-gray-800 p-3 rounded-lg font-medium hover:bg-gray-300 transition-colors duration-200">
+                  <div className="mb-6">
+                    <button
+                      onClick={handleSave}
+                      className="w-full bg-blue-600 text-white p-3 rounded-xl font-medium hover:bg-blue-700 transition-colors duration-200"
+                    >
                       Save
                     </button>
                   </div>
@@ -528,18 +536,16 @@ const Settings: React.FC = () => {
                           Special offers
                         </span>
                         <button
-                          onClick={() =>
-                            toggleEmailNotification("specialOffers")
-                          }
+                          onClick={() => toggleAppNotification("specialOffers")}
                           className={`w-12 h-6 rounded-full p-1 ${
-                            emailNotifications.specialOffers
+                            appNotifications.specialOffers
                               ? "bg-blue-600"
                               : "bg-gray-300"
                           }`}
                         >
                           <div
                             className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                              emailNotifications.specialOffers
+                              appNotifications.specialOffers
                                 ? "translate-x-6"
                                 : "translate-x-0"
                             }`}
@@ -549,7 +555,7 @@ const Settings: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-semibold text-gray-700">
-                        Learning emails
+                        Learning notifications
                       </h3>
                       <p className="text-xs text-gray-500">
                         Stay on top of your language learning journey. Receive
@@ -557,21 +563,21 @@ const Settings: React.FC = () => {
                       </p>
                       <div className="flex items-center justify-between mt-2">
                         <span className="text-sm text-gray-700">
-                          Learning emails
+                          Learning notifications
                         </span>
                         <button
                           onClick={() =>
-                            toggleEmailNotification("learningEmails")
+                            toggleAppNotification("learningNotifications")
                           }
                           className={`w-12 h-6 rounded-full p-1 ${
-                            emailNotifications.learningEmails
+                            appNotifications.learningNotifications
                               ? "bg-blue-600"
                               : "bg-gray-300"
                           }`}
                         >
                           <div
                             className={`w-4 h-4 bg-white rounded-full transition-transform ${
-                              emailNotifications.learningEmails
+                              appNotifications.learningNotifications
                                 ? "translate-x-6"
                                 : "translate-x-0"
                             }`}
@@ -642,7 +648,6 @@ const Settings: React.FC = () => {
                           d="M12 1a5 5 0 00-5 5v4H6a1 1 0 00-1 1v11a1 1 0 001 1h12a1 1 0 001-1V11a1 1 0 00-1-1h-1V6a5 5 0 00-5-5zm-3 9V6a3 3 0 016 0v4H9zm3 4a1.5 1.5 0 11-1.5 1.5A1.5 1.5 0 0112 14z"
                         />
                       </svg>
-
                       <div>
                         <h3 className="text-sm font-semibold text-gray-700">
                           Change password
@@ -652,7 +657,6 @@ const Settings: React.FC = () => {
                         </p>
                       </div>
                     </div>
-
                     <div
                       className="flex items-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
                       onClick={() =>
@@ -818,17 +822,6 @@ const Settings: React.FC = () => {
                   />
                 </div>
               </div>
-            </div>
-          )}
-
-          {activeSection === "Personalization" && (
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Personalization
-              </h2>
-              <p className="text-sm text-gray-500">
-                Adapt the app for your needs.
-              </p>
             </div>
           )}
 

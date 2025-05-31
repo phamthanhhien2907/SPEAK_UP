@@ -1,9 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ModalData, ModalType } from "@/hooks/use-model-store";
 import { ProgressTracking } from "@/types/progress-tracking";
+import { User } from "@/types/user";
 export const getColumns = (
   onOpen: (type: ModalType, data?: ModalData) => void
 ): ColumnDef<ProgressTracking>[] => [
@@ -37,9 +38,10 @@ export const getColumns = (
     accessorKey: "userId.email",
     id: "userId.email",
     header: "User Email",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("userId.email")}</div>
-    ),
+    cell: ({ row }) => {
+      const course = row.original.userId as User;
+      return <div className="capitalize">{course?.email || "N/A"}</div>;
+    },
   },
   {
     accessorKey: "completedLessons",

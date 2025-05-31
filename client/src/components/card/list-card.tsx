@@ -48,11 +48,9 @@ const ListCard = () => {
   const progressPercentage =
     totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
   const handleLessonClick = (lesson, index) => {
-    // Check if the lesson is locked (previous lesson not completed)
     if (index > 0 && lessonTopicData[index - 1]?.score < 60) {
-      return; // Do nothing if locked
+      return;
     }
-
     if (lesson.score >= 60) {
       setSelectedLesson(lesson);
       setShowConfirmModal(true);

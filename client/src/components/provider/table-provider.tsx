@@ -11,6 +11,7 @@ import { FeedBackTable } from "@/components/tables/feedbacks/feedback-table";
 import { LessonProgressTable } from "@/components/tables/lesson-progress/lesson-progress-table";
 import { PronunciationScoreTable } from "@/components/tables/pronunciation-score/pronunciation-score-table";
 import { ExcerciseVocabularyTable } from "@/components/tables/exercise-vocabulary/exercise-vocabulary-table";
+import { TopicTable } from "@/components/tables/topic/topic-table";
 const TableProvider = () => {
   const { selectedPage } = useSelectedPageContext();
 
@@ -28,6 +29,8 @@ const TableProvider = () => {
       {selectedPage === "FeedBack" && <FeedBackTable />}
       {selectedPage === "Lesson Progress" && <LessonProgressTable />}
       {selectedPage === "Pronunciation Score" && <PronunciationScoreTable />}
+      {selectedPage === "Topic" && <TopicTable />}
+
       {/* {selectedPage === "Settings" && <VocabularyTable />} */}
     </>
   );

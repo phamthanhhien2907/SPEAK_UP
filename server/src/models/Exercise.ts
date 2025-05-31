@@ -9,7 +9,6 @@ export interface IExercise extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
-
 const ExerciseSchema = new Schema<IExercise>({
     lessonId: { type: Schema.Types.ObjectId, ref: "Lesson", required: true },
     type: { type: String, enum: ["repeat_sentence", "fill_in_blank", "pronunciation", "listening"], required: true },

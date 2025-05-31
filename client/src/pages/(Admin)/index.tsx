@@ -8,12 +8,13 @@ import {
   BookOpenIcon,
   ChatBubbleLeftRightIcon,
   CheckCircleIcon,
-  AdjustmentsHorizontalIcon,
   SpeakerWaveIcon,
   ClipboardDocumentListIcon,
   PencilIcon,
   UserIcon,
+  MapIcon,
 } from "@heroicons/react/24/outline";
+
 import ModalProvider from "@/components/provider/modal-provider";
 import TableProvider from "@/components/provider/table-provider";
 import { SelectedPageProvider } from "@/components/navigation/navigation-provider";
@@ -45,6 +46,7 @@ const items = [
       <ChartPieIcon className="stroke-gray-800/70 stroke-[1] min-w-8 w-8" />
     ),
   },
+
   {
     id: 5,
     name: "Enrollments",
@@ -97,10 +99,8 @@ const items = [
   },
   {
     id: 13,
-    name: "Settings",
-    icon: (
-      <AdjustmentsHorizontalIcon className="stroke-gray-800/70 stroke-[1] min-w-8 w-8" />
-    ),
+    name: "Topic",
+    icon: <MapIcon className="stroke-gray-800/70 stroke-[1] min-w-8 w-8" />,
   },
 ];
 

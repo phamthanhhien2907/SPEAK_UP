@@ -28,7 +28,8 @@ export const apiGetLessonByParent = async (parentLessonId: string) => {
     try {
         const response = await axiosConfig({
             method: "GET",
-            url: "/lesson/getLessonByParent/" + parentLessonId,
+            url: `/lesson/getLessonByParent/${parentLessonId}`,
+
         });
         return response;
     } catch (error) {

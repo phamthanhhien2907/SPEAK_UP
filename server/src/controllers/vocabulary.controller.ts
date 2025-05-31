@@ -3,7 +3,10 @@ import { Request, Response } from "express"
 import Vocabulary from "../models/Vocabulary";
 
 export const getVocabularies = async (req: Request, res: Response): Promise<void> => {
-    const vocabularies = await Vocabulary.find()
+    const vocabularies = await Vocabulary.find().populate({
+        path: "lessonId",
+        select: "title content type courseId",
+    });
     res.status(200).json({
         success: vocabularies ? true : false,
         rs: vocabularies ? vocabularies : 'Vocabularies not found'

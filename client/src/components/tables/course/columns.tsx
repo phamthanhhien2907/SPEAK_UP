@@ -64,7 +64,13 @@ export const getColumns = (
       <div className="capitalize">{row.getValue("level")}</div>
     ),
   },
-
+  {
+    accessorKey: "thumbnail",
+    header: "Thumbnail",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("thumbnail")}</div>
+    ),
+  },
   {
     id: "actions",
     header: "Actions",

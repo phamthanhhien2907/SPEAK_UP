@@ -12,6 +12,7 @@ import { Enrollment } from "@/types/enrollment";
 import { History } from "@/types/history";
 import { ProgressTracking } from "@/types/progress-tracking";
 import { PronunciationScore } from "@/types/pronunciation-score";
+import { Topic } from "@/types/topic";
 export type ModalType =
   | "createUser"
   | "editUser"
@@ -34,7 +35,7 @@ export type ModalType =
   "deleteFeedBack" | "editFeedBack" |
   "createtLessonProgress" | "deleteLessonProgress" |
   "editLessonProgress" | "createProgressTracking" | "deleteProgressTracking" |
-  "editProgressTracking" | "createPronunciationScore" | "deletePronunciationScore" | "editPronunciationScore" | "createExerciseVocabulary" | "editExerciseVocabulary" | "deleteExerciseVocabulary"
+  "editProgressTracking" | "createPronunciationScore" | "deletePronunciationScore" | "editPronunciationScore" | "createExerciseVocabulary" | "editExerciseVocabulary" | "deleteExerciseVocabulary" | "createTopic" | "editTopic" | "deleteTopic"
 
 export interface ModalData {
   user?: User;
@@ -49,6 +50,7 @@ export interface ModalData {
   feedback?: Feedback;
   pronunciationScore?: PronunciationScore;
   enrollment?: Enrollment;
+  topic?: Topic;
 }
 interface ModalStore {
   type: ModalType | null;

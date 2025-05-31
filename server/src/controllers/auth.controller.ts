@@ -4,20 +4,23 @@ import { generateAccessToken, generateRefreshToken } from "../middlewares/jwt";
 import { v4 as uuidv4 } from 'uuid';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { splitName } from "../utils/helper";
 
 
 dotenv.config();
 //method post = path(delele, post, put,get )
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password, typeLogin, firstname, lastname } = req.body
-        if (!email || !password) {
+        const { email, password, typeLogin, username } = req.body
+        console.log(username);
+        if (!email || !password || !username) {
             res.status(400).json({
                 success: false,
                 mes: 'Missing inputs'
             })
             return
         }
+        const { firstName, lastName } = splitName(username);
         if (typeLogin === "email" && !password) {
             res.status(400).json({
                 success: false,
@@ -33,7 +36,11 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             })
             return
         }
-        const newUser = await User.create(req.body)
+        const newUser = await User.create({
+            ...req.body,
+            firstname: firstName,
+            lastname: lastName
+        })
         await newUser.save()
         res.status(200).json({
             success: newUser ? true : false,

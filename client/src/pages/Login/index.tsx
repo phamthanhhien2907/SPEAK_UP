@@ -15,8 +15,6 @@ type loginProps = {
   onTogglePassword?: () => void;
   onShowPassword?: boolean;
   onClickTypeLogin: (type: string) => void;
-  isAdmin?: boolean;
-  isUser?: boolean;
 };
 const Login = ({
   onRegister,
@@ -24,8 +22,6 @@ const Login = ({
   onTogglePassword,
   onShowPassword,
   onClickTypeLogin,
-  isAdmin,
-  isUser,
 }: loginProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -81,81 +77,80 @@ const Login = ({
 
   return (
     <>
-      {isUser ? (
-        <div>
-          <div className="main-container --flex-center">
-            <div className="img-container-auth flex items-center justify-center ">
-              <img
-                src={icon_auth}
-                alt="login"
-                className="w-[70%] h-[90%] object-cover mx-auto -rotate-6 rounded-3xl"
+      <div>
+        <div className="main-container --flex-center">
+          <div className="img-container-auth flex items-center justify-center ">
+            <img
+              src={icon_auth}
+              alt="login"
+              className="w-[70%] h-[90%] object-cover mx-auto -rotate-6 rounded-3xl"
+            />
+          </div>
+          <div className="form-container">
+            <form onSubmit={handleSubmit} className="--form-control">
+              <h2 className="--color-dark --text-center font-bold">Login</h2>
+              <span className="font-normal text-gray-500/80 text-[18px] flex items-center justify-center">
+                Welcome to Speak-Up!
+              </span>
+              <input
+                onChange={handleInput}
+                name="email"
+                type="text"
+                className="--width-100 !rounded-xl"
+                placeholder="Email"
               />
-            </div>
-            <div className="form-container">
-              <form onSubmit={handleSubmit} className="--form-control">
-                <h2 className="--color-dark --text-center font-bold">Login</h2>
-                <span className="font-normal text-gray-500/80 text-[18px] flex items-center justify-center">
-                  Welcome to Speak-Up!
-                </span>
+              <div className="password">
                 <input
-                  onChange={handleInput}
-                  name="email"
-                  type="text"
+                  type={onShowPassword ? "text" : "password"}
+                  name="password"
                   className="--width-100 !rounded-xl"
-                  placeholder="Email"
+                  placeholder="Password"
+                  onChange={handleInput}
                 />
-                <div className="password">
-                  <input
-                    type={onShowPassword ? "text" : "password"}
-                    name="password"
-                    className="--width-100 !rounded-xl"
-                    placeholder="Password"
-                    onChange={handleInput}
-                  />
-                  <span
-                    className="icon"
-                    data-testid="toggle-password-icon"
-                    onClick={onTogglePassword}
-                  >
-                    {onShowPassword ? (
-                      <AiOutlineEyeInvisible />
-                    ) : (
-                      <AiOutlineEye />
-                    )}
-                  </span>
-                </div>
-                <button className="--btn --btn-dark hover:bg-black/90 hover:text-gray-300/90 --btn-block">
-                  Login
-                </button>
-                <a className="--text-sm" onClick={onReset}>
-                  Forgot password?
-                </a>
-                <span className="--text-sm --block">
-                  Don't have an account?
-                  <a className="--text-sm" onClick={onRegister}>
-                    Register
-                  </a>
+                <span
+                  className="icon"
+                  data-testid="toggle-password-icon"
+                  onClick={onTogglePassword}
+                >
+                  {onShowPassword ? (
+                    <AiOutlineEyeInvisible />
+                  ) : (
+                    <AiOutlineEye />
+                  )}
                 </span>
-                <div className="flex items-center justify-center gap-4 pt-4">
-                  <img
-                    className="h-14 w-14 object-cover cursor-pointer"
-                    src={facebook}
-                    alt="facebook"
-                    onClick={() => onClickTypeLogin("facebook")}
-                  />
-                  <img
-                    className="h-14 w-14 object-cover cursor-pointer"
-                    src={google}
-                    alt="google"
-                    onClick={() => onClickTypeLogin("google")}
-                  />
-                </div>
-              </form>
-            </div>
+              </div>
+              <button className="--btn --btn-dark hover:bg-black/90 hover:text-gray-300/90 --btn-block">
+                Login
+              </button>
+              <a className="--text-sm cursor-pointer" onClick={onReset}>
+                Forgot password?
+              </a>
+              <span className="--text-sm --block">
+                Don't have an account?
+                <a className="--text-sm cursor-pointer" onClick={onRegister}>
+                  Register
+                </a>
+              </span>
+              <div className="flex items-center justify-center gap-4 pt-4">
+                <img
+                  className="h-14 w-14 object-cover cursor-pointer"
+                  src={facebook}
+                  alt="facebook"
+                  onClick={() => onClickTypeLogin("facebook")}
+                />
+                <img
+                  className="h-14 w-14 object-cover cursor-pointer"
+                  src={google}
+                  alt="google"
+                  onClick={() => onClickTypeLogin("google")}
+                />
+              </div>
+            </form>
           </div>
         </div>
-      ) : isAdmin ? (
-        <div className="main-container --flex-center">
+      </div>
+
+      {/* <div className="main-container --flex-center">
           <div className="img-container">
             <img src={loginImg} alt="login" />
           </div>
@@ -213,8 +208,7 @@ const Login = ({
               </div>
             </form>
           </div>
-        </div>
-      ) : null}
+        </div> */}
     </>
   );
 };

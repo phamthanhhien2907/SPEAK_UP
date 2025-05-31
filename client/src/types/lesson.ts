@@ -6,14 +6,28 @@ export type Lesson = {
     title?: string;
     content?: string;
     type?: "listening" | "speaking" | "vocabulary" | 'pronunciation';
-    level?: string;
+    parentLessonId?: Lesson;
+    parentTopicId?: string;
+    totalLessons?: number;
+    level?: number;
+    thumbnail?: string;
     aiImg?: string;
-    category?: "Basics" | "Intermediate" | "Professional";
     name?: string;
+    isAIConversationEnabled?: "true" | "false";
+    category?: "basics" | "intermediate" | "professional"
 };
 export enum LessonType {
     LISTENING = "listening",
     SPEAKING = "speaking",
     VOCABULARY = "vocabulary",
     PRONUNCIATION = "pronunciation"
+}
+export enum CategoryType {
+    BASICS = "basics",
+    INTERMEDIATE = "intermediate",
+    PROFESSIONAL = "professional"
+}
+export enum AIConversationEnabledType {
+    TRUE = "true",
+    FALSE = "false"
 }

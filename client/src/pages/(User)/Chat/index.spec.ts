@@ -14,7 +14,7 @@ test.describe('Chat Page', () => {
         await page.goto('http://localhost:5173/');
 
         // Kiểm tra xem ListCard có hiển thị không
-        await page.getByText(/chat/i).click();
+        await page.getByText('Chat', { exact: true }).click()
         await page.getByRole('button', { name: /fun/i }).click();
         await page.waitForTimeout(7000); // Đợi 7 giây
         await page.fill('input[name="chat"]', 'I want to talk about the food topic');
@@ -32,7 +32,8 @@ test.describe('Chat Page', () => {
         await page.goto('http://localhost:5173/');
 
         // Kiểm tra xem ListCard có hiển thị không
-        await page.getByText(/chat/i).click();
+        await page.getByText('Chat', { exact: true }).click()
+
         await page.getByRole('button', { name: /interesting/i }).click();
         await page.waitForTimeout(7000); // Đợi 7 giây
         await page.fill('input[name="chat"]', 'I want to talk about the food topic');
@@ -49,7 +50,8 @@ test.describe('Chat Page', () => {
         await page.goto('http://localhost:5173/');
 
         // Kiểm tra xem ListCard có hiển thị không
-        await page.getByText(/chat/i).click();
+        await page.getByText('Chat', { exact: true }).click()
+
         await page.getByRole('button', { name: /you decide/i }).click();
         await page.waitForTimeout(7000); // Đợi 7 giây
         await page.fill('input[name="chat"]', 'I want to talk about the food topic');

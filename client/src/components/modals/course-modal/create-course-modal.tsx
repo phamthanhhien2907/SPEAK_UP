@@ -113,7 +113,7 @@ export const CreateCourseModal = () => {
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter content"
+                        placeholder="Enter description"
                         {...field}
                         type="text"
                       />
@@ -168,7 +168,7 @@ export const CreateCourseModal = () => {
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter content"
+                        placeholder="Enter thumbnail"
                         {...field}
                         type="text"
                       />

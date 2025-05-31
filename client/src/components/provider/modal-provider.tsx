@@ -28,6 +28,9 @@ import { EditProgressTrackingModal } from "../modals/progress-tracking-modal/edi
 import { CreatePronunciationScoreModal } from "../modals/pronunciation-score-modal/create-pronunciation-score-modal";
 import { DeletePronunciationScoreModal } from "../modals/pronunciation-score-modal/delete-pronunciation-score-modal";
 import { EditPronunciationScoreModal } from "../modals/pronunciation-score-modal/edit-pronunciation-score-modal";
+import { CreateTopicModal } from "../modals/topic-modal/create-topic-modal";
+import { DeleteTopicModal } from "../modals/topic-modal/delete-topic-modal";
+import { EditTopicModal } from "../modals/topic-modal/edit-topic-modal";
 import { CreateUserModal } from "../modals/user-modal/create-user-modal";
 import { DeleteUserModal } from "../modals/user-modal/delete-user-modal";
 import { EditUserModal } from "../modals/user-modal/edit-user-modal";
@@ -74,6 +77,9 @@ const ModalProvider = () => {
       <CreateVocabularyModal />
       <EditVocabularyModal />
       <DeleteVocabularyModal />
+      <CreateTopicModal />
+      <EditTopicModal />
+      <DeleteTopicModal />
     </>
   );
 };

@@ -15,9 +15,10 @@ function App() {
     const setTimeoutId = setTimeout(() => {
       if (isLoggedIn) dispatch(getCurrent());
       else {
-        const pathname = location.pathname;
-        const isAdminPath = pathname.startsWith("/admin");
-        navigate(isAdminPath ? "/admin/auth" : "/auth");
+        // const pathname = location.pathname;
+        // const isAdminPath = pathname.startsWith("/admin");
+        // navigate(isAdminPath ? "/admin/auth" : "/auth");
+        navigate("/auth");
       }
     }, 1000);
     return () => {
@@ -43,7 +44,19 @@ function App() {
   // }
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div id="load">
+          <div>G</div>
+          <div>N</div>
+          <div>I</div>
+          <div>D</div>
+          <div>A</div>
+          <div>O</div>
+          <div>L</div>
+        </div>
+      }
+    >
       <Routes>
         {filteredRoutes.map((route) => {
           const isAdminRoute = route.role?.includes("admin");
