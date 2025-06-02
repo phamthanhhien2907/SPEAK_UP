@@ -185,7 +185,7 @@ export const updateProfileOrPassword = async (req: Request, res: Response): Prom
         user.address = address ?? user.address;
         user.gender = gender ?? user.gender;
         user.phoneNumber = phoneNumber ?? user.phoneNumber;
-
+        user.username = (firstname && lastname) ? `${firstname} ${lastname}` : user.username ?? `${user.firstname} ${user.lastname}`;
         // Xử lý avatar nếu có
         if (files && files["avatar"]?.length > 0) {
             const imageFile = files["avatar"][0];
