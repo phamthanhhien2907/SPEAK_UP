@@ -1,7 +1,7 @@
 import loginImg from "@/assets/admin/login.svg?url";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import facebook from "@/assets/admin/facebook.png";
-import google from "@/assets/admin/google.png";
+import google from "@/assets/admin/google.webp";
 import icon_auth from "@/assets/user/icon-auth.jpeg";
 import { apiLogin } from "@/services/auth.services";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -79,12 +79,15 @@ const Login = ({
     <>
       <div>
         <div className="main-container --flex-center">
-          <div className="img-container-auth flex items-center justify-center ">
+          {/* <div className="img-container-auth flex items-center justify-center ">
             <img
               src={icon_auth}
               alt="login"
               className="w-[70%] h-[90%] object-cover mx-auto -rotate-6 rounded-3xl"
             />
+          </div> */}
+          <div className="img-container">
+            <img src={loginImg} alt="login" />
           </div>
           <div className="form-container">
             <form onSubmit={handleSubmit} className="--form-control">

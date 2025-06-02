@@ -2,15 +2,18 @@ import { useSelectedPageContext } from "@/hooks/use-context";
 import * as React from "react";
 import { useState } from "react";
 import Select from "react-select";
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowLeft, FaEye, FaEyeSlash } from "react-icons/fa6"; // Added FaEye and FaEyeSlash
 import { useAppDispatch } from "@/hooks/use-dispatch";
 import { logout } from "@/stores/actions/authAction";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { apiUpdateProfile } from "@/services/user.services";
+import toast from "react-hot-toast";
+import { getCurrent } from "@/stores/actions/userAction";
 
 const Settings: React.FC = () => {
-  const { selectedPage } = useSelectedPageContext();
+  const { selectedPage, setSelectedPage } = useSelectedPageContext();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { userData } = useSelector((state: RootState) => state.user);
@@ -24,22 +27,48 @@ const Settings: React.FC = () => {
     specialOffers: true,
     learningNotifications: false,
   });
-  // Local state for editable fields
   const [editedUserData, setEditedUserData] = useState({
-    email: userData?.email || "",
     firstname: userData?.firstname || "",
     lastname: userData?.lastname || "",
+    avatar: userData?.avatar || null,
+    avatarPreview: userData?.avatar || "",
+    gender: userData?.gender || "",
+    address: userData?.address || "",
+    phoneNumber: userData?.phoneNumber || "",
   });
+  // States for password management
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    repeatPassword: "",
+  });
+  const [passwordError, setPasswordError] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
-  // Sync activeSection with selectedPage
   React.useEffect(() => {
     if (selectedPage === "Settings" || selectedPage === "Profile") {
       setActiveSection(selectedPage);
-      setProfileSubSection(""); // Reset profileSubSection when changing section
+      setProfileSubSection("");
     } else {
       setActiveSection("Profile");
     }
   }, [selectedPage]);
+  React.useEffect(() => {
+    dispatch(getCurrent());
+  }, [dispatch]);
+  React.useEffect(() => {
+    setEditedUserData({
+      firstname: userData?.firstname || "",
+      lastname: userData?.lastname || "",
+      avatar: null,
+      avatarPreview: userData?.avatar || "",
+      gender: userData?.gender || "",
+      address: userData?.address || "",
+      phoneNumber: userData?.phoneNumber || "",
+    });
+  }, [userData]);
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
@@ -76,9 +105,78 @@ const Settings: React.FC = () => {
     }));
   };
 
-  const handleSave = () => {
-    // Optionally, you can add a success message or reset the form
-    console.log("User data saved:", editedUserData);
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPasswordData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setPasswordError("");
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      console.log("Selected file:", file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditedUserData((prev) => ({
+          ...prev,
+          avatar: file,
+          avatarPreview: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = async () => {
+    const formData = new FormData();
+    formData.append("firstname", editedUserData.firstname);
+    formData.append("lastname", editedUserData.lastname);
+    formData.append("phoneNumber", editedUserData.phoneNumber);
+    formData.append("gender", editedUserData.gender);
+    formData.append("address", editedUserData.address);
+    if (editedUserData.avatar instanceof File) {
+      console.log("Appending file:", editedUserData.avatar);
+      formData.append("avatar", editedUserData.avatar);
+    }
+
+    try {
+      const response = await apiUpdateProfile(formData);
+      console.log(response);
+      if (response?.data?.success) {
+        toast.success("Profile updated successfully");
+      }
+    } catch (error) {
+      console.error("Failed to update profile:", error.message);
+      toast.error("Failed to update profile");
+    }
+  };
+
+  const handlePasswordSave = async () => {
+    if (passwordData.newPassword !== passwordData.repeatPassword) {
+      setPasswordError("New password and repeat password do not match");
+      return;
+    }
+
+    try {
+      // await apiUpdatePassword(passwordData);
+      const response = await apiUpdateProfile({
+        currentPassword: passwordData?.currentPassword,
+        password: passwordData.repeatPassword,
+      });
+      console.log(response);
+      toast.success("Password updated successfully");
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        repeatPassword: "",
+      });
+    } catch (error) {
+      console.error("Failed to update password:", error.message);
+      toast.error("Failed to update password");
+    }
   };
 
   const languages = [
@@ -138,9 +236,11 @@ const Settings: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 w-full">
       <div className="w-full mx-auto flex min-h-screen bg-white rounded-xl shadow-lg px-4">
-        {/* Left column: Menu items */}
         <div className="w-1/2 border-r border-gray-200 py-2">
-          <div className="flex items-center justify-start gap-2 mb-12">
+          <div
+            className="flex items-center justify-start gap-2 mb-12"
+            onClick={() => setSelectedPage("Home")}
+          >
             <FaArrowLeft fontSize={20} className="cursor-pointer" />
             <span className="text-[22px] font-medium text-gray-900">
               Account
@@ -149,7 +249,7 @@ const Settings: React.FC = () => {
           <h2 className="text-xl font-medium text-gray-900 mb-6">
             Target language
           </h2>
-          <div className="py-4 bg-gray-50 rounded-lg mb-4">
+          <div className="py-4 bg-gray-50 rounded-xl mb-4">
             <Select
               options={languages}
               defaultValue={languages[0]}
@@ -169,7 +269,7 @@ const Settings: React.FC = () => {
           <h1 className="text-xl font-medium text-gray-900 mb-6">Account</h1>
           <ul className="space-y-6">
             <li
-              className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors duration-200 ${
+              className={`flex items-center p-3 rounded-xl cursor-pointer transition-colors duration-200 ${
                 activeSection === "Profile"
                   ? "bg-blue-100 text-blue-800 font-medium"
                   : "text-gray-700 hover:bg-gray-100 font-medium"
@@ -192,9 +292,8 @@ const Settings: React.FC = () => {
               </svg>
               <span className="text-[15px] font-medium">Profile</span>
             </li>
-
             <li
-              className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors duration-200 ${
+              className={`flex items-center p-3 rounded-xl cursor-pointer transition-colors duration-200 ${
                 activeSection === "Settings"
                   ? "bg-blue-100 text-blue-800 font-medium"
                   : "text-gray-700 hover:bg-gray-100 font-medium"
@@ -218,7 +317,7 @@ const Settings: React.FC = () => {
               <span className="text-[15px] font-medium">Settings</span>
             </li>
             <li
-              className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors duration-200 ${
+              className={`flex items-center p-3 rounded-xl cursor-pointer transition-colors duration-200 ${
                 activeSection === "Theme"
                   ? "bg-blue-100 text-blue-800 font-medium"
                   : "text-gray-700 hover:bg-gray-100 font-medium"
@@ -245,7 +344,7 @@ const Settings: React.FC = () => {
               </span>
             </li>
             <li
-              className="flex items-center p-3 rounded-lg cursor-pointer text-pink-600 hover:bg-gray-100 transition-colors duration-200"
+              className="flex items-center p-3 rounded-xl cursor-pointer text-pink-600 hover:bg-gray-100 transition-colors duration-200"
               onClick={() => {
                 handleSectionChange("Logout");
                 dispatch(logout());
@@ -277,22 +376,16 @@ const Settings: React.FC = () => {
               {profileSubSection === "Personal details" ? (
                 <div className="min-h-screen flex flex-col justify-between">
                   <div>
-                    <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                      Personal details
-                    </h2>
+                    <div
+                      className="flex items-center justify-start gap-3 mb-8"
+                      onClick={() => setProfileSubSection("")}
+                    >
+                      <FaArrowLeft fontSize={20} className="cursor-pointer" />
+                      <h6 className="text-xl font-semibold text-gray-900">
+                        Personal details
+                      </h6>
+                    </div>
                     <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                          Your email address
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={editedUserData.email}
-                          onChange={handleInputChange}
-                          className="w-full p-3 mt-1 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700">
                           First name
@@ -327,6 +420,34 @@ const Settings: React.FC = () => {
                           <option>UTC+01:00</option>
                         </select>
                       </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <div className="mt-1 flex items-center space-x-4">
+                          {editedUserData.avatarPreview && (
+                            <img
+                              src={editedUserData.avatarPreview}
+                              alt="Profile Preview"
+                              className="w-16 h-16 object-cover rounded-full border-2 border-gray-300"
+                            />
+                          )}
+                          <label
+                            htmlFor="avatar-upload"
+                            className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition duration-200"
+                          >
+                            Upload Image
+                          </label>
+                          <input
+                            id="avatar-upload"
+                            type="file"
+                            name="avatar"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="mb-6">
@@ -339,7 +460,16 @@ const Settings: React.FC = () => {
                   </div>
                 </div>
               ) : profileSubSection === "Change password" ? (
-                <div className="p-4 bg-gray-100 rounded-lg">
+                <div className="p-4 rounded-xl">
+                  <div
+                    className="flex items-center justify-start gap-3 mb-8"
+                    onClick={() => setProfileSubSection("")}
+                  >
+                    <FaArrowLeft fontSize={20} className="cursor-pointer" />
+                    <h6 className="text-xl font-semibold text-gray-900">
+                      Change Password
+                    </h6>
+                  </div>
                   <div className="space-y-4">
                     <div>
                       <label className="text-sm text-gray-600">
@@ -347,30 +477,26 @@ const Settings: React.FC = () => {
                       </label>
                       <div className="relative">
                         <input
-                          type="password"
-                          placeholder="Password"
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-lg"
+                          type={showCurrentPassword ? "text" : "password"}
+                          name="currentPassword"
+                          value={passwordData.currentPassword}
+                          onChange={handlePasswordChange}
+                          placeholder="Current Password"
+                          className="w-full p-2 mt-1 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
-                        <svg
-                          className="w-5 h-5 absolute right-2 top-3 text-gray-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setShowCurrentPassword(!showCurrentPassword)
+                          }
+                          className="absolute right-2 top-3 text-gray-600"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                          ></path>
-                        </svg>
+                          {showCurrentPassword ? (
+                            <FaEyeSlash className="w-5 h-5" />
+                          ) : (
+                            <FaEye className="w-5 h-5" />
+                          )}
+                        </button>
                       </div>
                     </div>
                     <div>
@@ -379,30 +505,24 @@ const Settings: React.FC = () => {
                       </label>
                       <div className="relative">
                         <input
-                          type="password"
-                          placeholder="Password"
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-lg"
+                          type={showNewPassword ? "text" : "password"}
+                          name="newPassword"
+                          value={passwordData.newPassword}
+                          onChange={handlePasswordChange}
+                          placeholder="New Password"
+                          className="w-full p-2 mt-1 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
-                        <svg
-                          className="w-5 h-5 absolute right-2 top-3 text-gray-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <button
+                          type="button"
+                          onClick={() => setShowNewPassword(!showNewPassword)}
+                          className="absolute right-2 top-3 text-gray-600"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                          ></path>
-                        </svg>
+                          {showNewPassword ? (
+                            <FaEyeSlash className="w-5 h-5" />
+                          ) : (
+                            <FaEye className="w-5 h-5" />
+                          )}
+                        </button>
                       </div>
                     </div>
                     <div>
@@ -411,33 +531,39 @@ const Settings: React.FC = () => {
                       </label>
                       <div className="relative">
                         <input
-                          type="password"
-                          placeholder="Password"
-                          className="w-full p-2 mt-1 border border-gray-300 rounded-lg"
+                          type={showRepeatPassword ? "text" : "password"}
+                          name="repeatPassword"
+                          value={passwordData.repeatPassword}
+                          onChange={handlePasswordChange}
+                          placeholder="Repeat Password"
+                          className={`w-full p-2 mt-1 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                            passwordError ? "border-red-500" : "border-gray-300"
+                          }`}
                         />
-                        <svg
-                          className="w-5 h-5 absolute right-2 top-3 text-gray-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setShowRepeatPassword(!showRepeatPassword)
+                          }
+                          className="absolute right-2 top-3 text-gray-600"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                          ></path>
-                        </svg>
+                          {showRepeatPassword ? (
+                            <FaEyeSlash className="w-5 h-5" />
+                          ) : (
+                            <FaEye className="w-5 h-5" />
+                          )}
+                        </button>
                       </div>
+                      {passwordError && (
+                        <p className="text-sm text-red-500 mt-1">
+                          {passwordError}
+                        </p>
+                      )}
                     </div>
-                    <button className="w-full bg-blue-600 text-white p-2 rounded-lg">
+                    <button
+                      onClick={handlePasswordSave}
+                      className="w-full bg-blue-600 text-white p-2 rounded-xl hover:bg-blue-700 transition-colors duration-200"
+                    >
                       Save
                     </button>
                     <p className="text-center text-sm text-gray-600">
@@ -449,8 +575,17 @@ const Settings: React.FC = () => {
                   </div>
                 </div>
               ) : profileSubSection === "Email notifications" ? (
-                <div className="p-4 bg-gray-100 rounded-lg">
+                <div className="p-4">
                   <div className="space-y-4">
+                    <div
+                      className="flex items-center justify-start gap-3 mb-8"
+                      onClick={() => setProfileSubSection("")}
+                    >
+                      <FaArrowLeft fontSize={20} className="cursor-pointer" />
+                      <h6 className="text-xl font-semibold text-gray-900">
+                        Email Notifications
+                      </h6>
+                    </div>
                     <div>
                       <h3 className="text-sm font-semibold text-gray-700">
                         Special offers
@@ -522,8 +657,17 @@ const Settings: React.FC = () => {
                   </div>
                 </div>
               ) : profileSubSection === "App notifications" ? (
-                <div className="p-4 bg-gray-100 rounded-lg">
+                <div className="p-4">
                   <div className="space-y-4">
+                    <div
+                      className="flex items-center justify-start gap-3 mb-8"
+                      onClick={() => setProfileSubSection("")}
+                    >
+                      <FaArrowLeft fontSize={20} className="cursor-pointer" />
+                      <h6 className="text-xl font-semibold text-gray-900">
+                        App Notifications
+                      </h6>
+                    </div>
                     <div>
                       <h3 className="text-sm font-semibold text-gray-700">
                         Special offers
@@ -594,16 +738,18 @@ const Settings: React.FC = () => {
                 </div>
               ) : (
                 <div>
-                  <div className="flex items-center justify-start gap-2 mb-6 px-4">
+                  <div
+                    className="flex items-center justify-start gap-2 mb-6"
+                    onClick={() => setActiveSection("")}
+                  >
                     <FaArrowLeft fontSize={20} className="cursor-pointer" />
                     <span className="text-xl font-medium text-gray-900">
                       Profile
                     </span>
                   </div>
-
                   <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-12rem)]">
                     <div
-                      className="flex items-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
+                      className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
                       onClick={() =>
                         handleProfileSubSectionChange("Personal details")
                       }
@@ -632,7 +778,7 @@ const Settings: React.FC = () => {
                       </div>
                     </div>
                     <div
-                      className="flex items-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
+                      className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
                       onClick={() =>
                         handleProfileSubSectionChange("Change password")
                       }
@@ -658,7 +804,7 @@ const Settings: React.FC = () => {
                       </div>
                     </div>
                     <div
-                      className="flex items-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
+                      className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
                       onClick={() =>
                         handleProfileSubSectionChange("Email notifications")
                       }
@@ -687,7 +833,7 @@ const Settings: React.FC = () => {
                       </div>
                     </div>
                     <div
-                      className="flex items-center p-4 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
+                      className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors duration-200"
                       onClick={() =>
                         handleProfileSubSectionChange("App notifications")
                       }
@@ -715,7 +861,7 @@ const Settings: React.FC = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center p-4 bg-gray-50 rounded-xl">
                       <svg
                         className="w-6 h-6 mr-3 text-gray-600"
                         fill="none"
@@ -730,7 +876,7 @@ const Settings: React.FC = () => {
                           d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a2 2 0 012 2v1H8V5a2 2 0 012-2z"
                         ></path>
                       </svg>
-                      <div>
+                      <div className="cursor-pointer">
                         <h3 className="text-sm font-semibold text-gray-700">
                           Delete account
                         </h3>
@@ -747,11 +893,17 @@ const Settings: React.FC = () => {
 
           {activeSection === "Settings" && (
             <div className="h-screen w-full overflow-y-auto pb-12">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Account settings
-              </h2>
+              <div
+                className="flex items-center justify-start gap-3 mb-8"
+                onClick={() => setActiveSection("")}
+              >
+                <FaArrowLeft fontSize={20} className="cursor-pointer" />
+                <h6 className="text-xl font-semibold text-gray-900">
+                  Account settings
+                </h6>
+              </div>
               <div className="space-y-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xl">
                   <h3 className="text-sm font-semibold text-gray-700 mb-2">
                     Choose interface language
                   </h3>
@@ -771,7 +923,7 @@ const Settings: React.FC = () => {
                     )}
                   />
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xl">
                   <h3 className="text-sm font-semibold text-gray-700 mb-2">
                     Choose translation language
                   </h3>
@@ -791,7 +943,7 @@ const Settings: React.FC = () => {
                     )}
                   />
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xl">
                   <h3 className="text-sm font-semibold text-gray-700 mb-2">
                     Choose target language
                   </h3>
@@ -811,7 +963,7 @@ const Settings: React.FC = () => {
                     )}
                   />
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xl">
                   <h3 className="text-sm font-semibold text-gray-700 mb-2">
                     Change your target language level
                   </h3>
@@ -827,9 +979,13 @@ const Settings: React.FC = () => {
 
           {activeSection === "Theme" && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Theme
-              </h2>
+              <div
+                className="flex items-center justify-start gap-3 mb-8"
+                onClick={() => setActiveSection("")}
+              >
+                <FaArrowLeft fontSize={20} className="cursor-pointer" />
+                <h6 className="text-xl font-semibold text-gray-900">Theme</h6>
+              </div>
               <p className="text-sm text-gray-500">Manage your theme.</p>
             </div>
           )}

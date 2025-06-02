@@ -15,10 +15,21 @@ function App() {
     const setTimeoutId = setTimeout(() => {
       if (isLoggedIn) dispatch(getCurrent());
       else {
+        const publicPaths = [
+          /^\/auth$/,
+          /^\/forgot-password$/,
+          /^\/reset-password\/[^/]+$/,
+        ];
+        const isPublicPath = publicPaths.some((pattern) =>
+          pattern.test(location.pathname)
+        );
+        if (!isPublicPath) {
+          navigate("/auth");
+        }
+
         // const pathname = location.pathname;
         // const isAdminPath = pathname.startsWith("/admin");
         // navigate(isAdminPath ? "/admin/auth" : "/auth");
-        navigate("/auth");
       }
     }, 1000);
     return () => {

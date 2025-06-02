@@ -105,7 +105,7 @@ const CustomCard = ({
             flex: 1,
             position: "relative",
           }}
-          className={`${pulsing ? "pulse" : ""} loadable`}
+          className={`${pulsing ? "pulse" : ""} loadable !shadow-none`}
         >
           {data === "explore" ? (
             <>
@@ -310,7 +310,9 @@ const CustomCard = ({
                   height: data === "lesson" ? "auto" : 100,
                   borderRadius: data === "lesson" ? 0 : "50%",
                   objectFit: "cover",
-                  marginRight: data === "lesson" ? 0 : 2,
+                  marginRight:
+                    data === "lesson" ? 0 : data === "parentLesson" ? 24 : 2,
+                  marginTop: data === "parentLesson" ? 16 : 0,
                 }}
                 src={thumbnail}
                 alt="thumbnail"

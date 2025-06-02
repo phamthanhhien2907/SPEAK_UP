@@ -68,8 +68,8 @@ interface ApiResponse {
 }
 
 interface SuggestResponse {
-  user_text: string;
-  ai_response: string;
+  ai_response: string; // Cập nhật để phù hợp với backend
+  suggested_response: string; // Thay đổi từ ai_response thành suggested_response
   language: string;
 }
 
@@ -194,7 +194,10 @@ const Speech: React.FC = () => {
         }
       });
       audioRefs.current = [];
-      if (audioContextRef.current) {
+      if (
+        audioContextRef.current &&
+        audioContextRef.current.state !== "closed"
+      ) {
         audioContextRef.current.close();
       }
       if (animationFrameRef.current) {
@@ -340,9 +343,9 @@ const Speech: React.FC = () => {
   const stopRecognition = (): void => {
     SpeechRecognition.stopListening();
   };
-
   const handleSend = () => {
     stopRecognition();
+    resetTranscript();
     const newTranscript = transcript.trim();
     let textToSend = "";
 
@@ -449,26 +452,14 @@ const Speech: React.FC = () => {
 
   const handleSuggestResponse = async () => {
     const lastConversation = conversations[conversations.length - 1];
-    // Lấy câu hỏi từ phản hồi gần nhất của AI hoặc nội dung ban đầu
-    let userText = "";
-    if (conversations.length === 0 && lessonData?.content) {
-      // Lấy phần câu hỏi từ content (giả sử câu hỏi ở cuối sau "\n")
-      const parts = lessonData.content.split("\n");
-      userText =
-        parts.length > 1 ? parts[parts.length - 1].trim() : lessonData.content;
-    } else if (lastConversation?.aiResponse) {
-      // Lấy phần câu hỏi từ phản hồi gần nhất của AI
-      userText =
-        lastConversation.aiResponse.split("\n").pop()?.trim() ||
-        lastConversation.aiResponse;
-    }
+    const aiResponse = lastConversation?.aiResponse || "";
     const role = lessonData?.name || "conversational partner";
     try {
       const res = await fetch(`${API_BASE_URL}/suggest-response/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user_text: userText,
+          ai_response: aiResponse, // Sử dụng ai_response thay vì user_text
           topic: lessonData?.title || "",
           language: selectedLanguage,
           role: role,
@@ -483,7 +474,7 @@ const Speech: React.FC = () => {
         ...prev,
         {
           userText: "",
-          aiResponse: `Gợi ý: ${data.ai_response}`,
+          aiResponse: `Gợi ý: ${data.suggested_response}`,
           isLoading: false,
         },
       ]);
@@ -785,8 +776,7 @@ const Speech: React.FC = () => {
                     navigate("/clean");
                   }}
                 >
-                  <FiLogOut />
-                  Logout
+                  <FiLogOut /> Logout
                 </button>
               </div>
             </>

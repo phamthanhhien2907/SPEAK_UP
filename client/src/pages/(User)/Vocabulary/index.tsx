@@ -8,158 +8,6 @@ import { useSelector } from "react-redux";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import axios from "axios";
-
-// Levenshtein distance for approximate matching
-const levenshteinDistance = (a, b) => {
-  const matrix = Array(a.length + 1)
-    .fill(null)
-    .map(() => Array(b.length + 1).fill(null));
-
-  for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
-  for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
-
-  for (let i = 1; i <= a.length; i++) {
-    for (let j = 1; j <= b.length; j++) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      matrix[i][j] = Math.min(
-        matrix[i - 1][j] + 1,
-        matrix[i][j - 1] + 1,
-        matrix[i - 1][j - 1] + cost
-      );
-    }
-  }
-  return matrix[a.length][b.length];
-};
-
-// Normalize phonemes to handle common variations
-const normalizePhoneme = (phoneme) => {
-  const phonemeMap = {
-    // Vowels (Short and Long)
-    æ: "a", // /æ/ as in "cat" (American English)
-    ɑ: "a", // /ɑ/ as in "father" (American English)
-    ɒ: "o", // /ɒ/ as in "hot" (British English)
-    ɔ: "o", // /ɔ/ as in "caught" (American English)
-    ɔː: "o", // /ɔː/ as in "thought" (British English)
-    ɛ: "e", // /ɛ/ as in "bet"
-    e: "e", // /e/ as in some dialects (less common)
-    ɪ: "i", // /ɪ/ as in "bit"
-    i: "i", // /i/ as in "see" (long /iː/)
-    ɪ̈: "i", // Centralized /ɪ/ (dialectal)
-    ʊ: "u", // /ʊ/ as in "put"
-    u: "u", // /u/ as in "food" (long /uː/)
-    ʌ: "u", // /ʌ/ as in "cup" (American English)
-    ə: "u", // /ə/ as in "about" (schwa)
-    ɜː: "u", // /ɜː/ as in "bird" (British English, rhotic)
-    ɝ: "u", // /ɝ/ as in "bird" (American English, rhotic)
-    ɚ: "u", // /ɚ/ as in "butter" (American English, rhotic)
-
-    // Diphthongs
-    aɪ: "ai", // /aɪ/ as in "ride"
-    eɪ: "ei", // /eɪ/ as in "day"
-    oɪ: "oi", // /oɪ/ as in "boy"
-    aʊ: "au", // /aʊ/ as in "out"
-    oʊ: "ou", // /oʊ/ as in "go" (American English)
-    ʊə: "ua", // /ʊə/ as in "poor" (British English)
-
-    // Consonants
-    p: "p", // /p/ as in "pin"
-    b: "b", // /b/ as in "bin"
-    t: "t", // /t/ as in "tin"
-    d: "d", // /d/ as in "din"
-    k: "k", // /k/ as in "cat"
-    ɡ: "g", // /ɡ/ as in "go"
-    f: "f", // /f/ as in "fan"
-    v: "v", // /v/ as in "van"
-    θ: "th", // /θ/ as in "think" (voiceless th)
-    ð: "dh", // /ð/ as in "this" (voiced th)
-    s: "s", // /s/ as in "see"
-    z: "z", // /z/ as in "zoo"
-    ʃ: "sh", // /ʃ/ as in "shoe"
-    ʒ: "zh", // /ʒ/ as in "measure"
-    h: "h", // /h/ as in "hat"
-    m: "m", // /m/ as in "man"
-    n: "n", // /n/ as in "no"
-    ŋ: "ng", // /ŋ/ as in "sing"
-    l: "l", // /l/ as in "love"
-    r: "r", // /r/ as in "red"
-    j: "y", // /j/ as in "yes"
-    w: "w", // /w/ as in "we"
-    tʃ: "ch", // /tʃ/ as in "church"
-    dʒ: "j", // /dʒ/ as in "judge"
-
-    // Diacritics and Modifiers (now quoted)
-    "˘": "", // Remove short marker
-    ː̃: "", // Remove nasalized length marker
-    "̃": "", // Remove nasalization marker
-    ʰ: "", // Remove aspiration marker
-    ʷ: "", // Remove labialization marker
-    ˠ: "", // Remove velarization marker
-
-    // Rare or Dialectal Variants
-    ɐ: "a", // /ɐ/ as in some Australian English vowels
-    ʉ: "u", // /ʉ/ as in some non-rhotic accents
-    ɘ: "e", // /ɘ/ as in centralized mid vowel
-    ɤ: "o", // /ɤ/ as in some dialects
-    ʏ: "i", // /ʏ/ as in some European English dialects
-  };
-  return phonemeMap[phoneme] || phoneme; // Return original phoneme if no mapping exists
-};
-
-// Parse IPA phonetic transcription into phonemes
-const parseIPAPhonemes = (ipa) => {
-  const cleaned = ipa.replace(/\/|\[|\]/g, "");
-  // Updated regex to include all phonemes (consonants, vowels, diphthongs)
-  const phonemes = cleaned
-    .split(/(?=[pbtdkɡfvszʃʒhɒɔæʌɑɪʊuɛeɪoʊaʊaɪɝɚɜθðŋmnlrjwː])/)
-    .filter(Boolean)
-    .map(normalizePhoneme);
-  return phonemes;
-};
-
-// Get phonemes from Dictionary API
-const getPhonemesFromAPI = async (word) => {
-  try {
-    const response = await axios.get(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-    );
-    const dictData = response.data[0];
-    const phonetic = dictData.phonetic || dictData.phonetics[0]?.text || word;
-    const phonemes = parseIPAPhonemes(phonetic);
-    return phonemes;
-  } catch (error) {
-    console.error(`Error fetching phonemes for ${word}:`, error);
-    return word.toLowerCase().split(""); // Fallback to character split
-  }
-};
-
-// Compare phonemes with approximate matching
-const comparePhonemes = (expectedPhonemes, spokenPhonemes) => {
-  const results = expectedPhonemes.map((phoneme, index) => {
-    const spokenPhoneme =
-      index < spokenPhonemes.length ? spokenPhonemes[index] : null;
-    const distance = spokenPhoneme
-      ? levenshteinDistance(phoneme, spokenPhoneme)
-      : Infinity;
-    const isCorrect = distance <= 2; // Increased threshold for more flexibility
-    return {
-      phoneme,
-      letter: spokenPhoneme,
-      isCorrect,
-    };
-  });
-  return results;
-};
-
-// Map phonemes to word characters for display
-const mapPhonemesToLetters = (word, phonemeResults) => {
-  const letters = word.toLowerCase().split("");
-  return letters.map((letter, index) => ({
-    letter,
-    isCorrect:
-      index < phonemeResults.length ? phonemeResults[index].isCorrect : true,
-  }));
-};
 
 const Vocabulary = () => {
   const [vocabulary, setVocabulary] = useState([]);
@@ -171,7 +19,6 @@ const Vocabulary = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [shuffledOptions, setShuffledOptions] = useState([]);
-  const [phonemeFeedback, setPhonemeFeedback] = useState([]);
   const [phonemeScore, setPhonemeScore] = useState(0);
   const [showExtraInfo, setShowExtraInfo] = useState(false);
   const { lessonId } = useParams();
@@ -179,56 +26,21 @@ const Vocabulary = () => {
   const navigate = useNavigate();
   const lesson = location.state?.lesson;
   const lessonIndex = location.state?.lessonIndex;
-  console.log("Phoneme Feedback:", phonemeFeedback);
   const { userData } = useSelector((state: RootState) => state.user);
   const isSpeakingLesson = lessonIndex % 2 === 0;
   const {
-    transcript,
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
   } = useSpeechRecognition();
-  const previousTranscript = useRef("");
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
 
   const getVocabularyByLessonId = async (lessonId) => {
     try {
       const response = await apiGetVocabularyByLessonId(lessonId);
-      if (response?.data && !isSpeakingLesson) {
-        const updatedVocabulary = await Promise.all(
-          response.data.map(async (item) => {
-            try {
-              const dictResponse = await axios.get(
-                `https://api.dictionaryapi.dev/api/v2/entries/en/${item.word}`
-              );
-              const dictData = dictResponse.data[0];
-              const phonetic =
-                dictData.phonetic ||
-                dictData.phonetics[0]?.text ||
-                item.phonetic;
-              const audioUrl =
-                dictData.phonetics.find((p) => p.audio)?.audio || item.audioUrl;
-              const phonemes = await getPhonemesFromAPI(item.word);
-              return {
-                ...item,
-                phonetic,
-                audioUrl,
-                phonemes,
-              };
-            } catch (error) {
-              console.error(
-                `Error fetching dictionary data for ${item.word}:`,
-                error
-              );
-              return {
-                ...item,
-                phonemes: item.word.toLowerCase().split(""),
-              };
-            }
-          })
-        );
-        setVocabulary(updatedVocabulary);
-      } else {
+      if (response?.data) {
         setVocabulary(response.data);
       }
     } catch (error) {
@@ -266,12 +78,93 @@ const Vocabulary = () => {
 
   const handlePlayAudio = (audioUrl) => {
     const audio = new Audio(audioUrl);
-    audio.play().catch((error) => {
-      console.error("Error playing audio:", error);
+    audio.play().catch((error) => console.error("Error playing audio:", error));
+  };
+
+  const startMediaRecorder = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = recorder;
+
+      recordedChunksRef.current = [];
+      recorder.ondataavailable = (event) => {
+        if (event.data.size > 0) recordedChunksRef.current.push(event.data);
+      };
+
+      recorder.onstop = async () => {
+        const blob = new Blob(recordedChunksRef.current, {
+          type: "audio/webm",
+        });
+        const base64Audio = await convertAudioToBase64(blob);
+        await evaluateSpeechWithPython(base64Audio);
+      };
+    } catch (error) {
+      console.error("Media device error:", error);
+    }
+  };
+
+  const convertAudioToBase64 = (audioBlob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(audioBlob);
+      reader.onloadend = () => {
+        const base64Audio = reader.result?.toString().split(",")[1];
+        resolve(base64Audio);
+      };
+      reader.onerror = (error) => reject(error);
     });
   };
 
-  const handleStartListening = () => {
+  const evaluateSpeechWithPython = async (base64Audio) => {
+    const baseIndex = currentPairIndex * 2;
+    const currentVocab = vocabulary[baseIndex];
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:3000/GetAccuracyFromRecordedAudio",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-Key": "rll5QsTiv83nti99BW6uCmvs9BDVxSB39SVFceYb",
+          },
+          body: JSON.stringify({
+            recorded_audio: base64Audio,
+            word: currentVocab.word,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      const phonemeScore = data.accuracy || 0;
+      setPhonemeScore(phonemeScore);
+
+      setIsCorrect(
+        phonemeScore >= 80
+          ? "correct"
+          : phonemeScore >= 60
+          ? "nearly"
+          : "incorrect"
+      );
+      setIsChecked(true);
+      setTotalCount((prev) => prev + 1);
+
+      if (phonemeScore >= 80) {
+        setCorrectCount((prev) => prev + 1);
+      }
+
+      await apiUpdateLessonProgressByLessonId(lessonId, {
+        userId: userData?._id,
+        score: Math.round(phonemeScore),
+        isCompleted: false,
+      });
+    } catch (error) {
+      console.error("Error sending audio to Python server:", error);
+    }
+  };
+
+  const handleStartListening = async () => {
     if (
       !isSpeakingLesson &&
       browserSupportsSpeechRecognition &&
@@ -281,77 +174,25 @@ const Vocabulary = () => {
       resetTranscript();
       setIsChecked(false);
       setIsCorrect(null);
-      setPhonemeFeedback([]);
       setPhonemeScore(0);
+      await startMediaRecorder();
       SpeechRecognition.startListening({
         continuous: false,
         language: "en-US",
       });
-    }
-  };
-
-  const evaluateSpeech = async () => {
-    const baseIndex = currentPairIndex * 2;
-    const currentVocab = vocabulary[baseIndex];
-    const spokenWord = transcript.toLowerCase().trim();
-
-    const expectedPhonemes =
-      currentVocab.phonemes || (await getPhonemesFromAPI(currentVocab.word));
-    const spokenPhonemes = await getPhonemesFromAPI(spokenWord);
-
-    console.log("Expected Phonemes:", expectedPhonemes); // Debug
-    console.log("Spoken Phonemes:", spokenPhonemes); // Debug
-
-    const phonemeResults = comparePhonemes(expectedPhonemes, spokenPhonemes);
-    const letterFeedback = mapPhonemesToLetters(
-      currentVocab.word,
-      phonemeResults
-    );
-    setPhonemeFeedback(letterFeedback);
-
-    const correctPhonemes = phonemeResults.filter((r) => r.isCorrect).length;
-    const phonemeScore = (correctPhonemes / phonemeResults.length) * 100 || 0;
-    setPhonemeScore(phonemeScore);
-
-    setIsCorrect(
-      phonemeScore >= 80
-        ? "correct"
-        : phonemeScore >= 60
-        ? "nearly"
-        : "incorrect"
-    );
-    setIsChecked(true);
-    setTotalCount((prev) => prev + 1);
-
-    if (phonemeScore >= 80) {
-      setCorrectCount((prev) => prev + 1);
-    }
-
-    try {
-      await apiUpdateLessonProgressByLessonId(lessonId, {
-        userId: userData?._id,
-        score: Math.round(phonemeScore),
-        isCompleted: false,
-      });
-    } catch (error) {
-      console.error("Error updating lesson progress:", error);
+      mediaRecorderRef.current?.start();
+      setTimeout(() => {
+        mediaRecorderRef.current?.stop();
+        SpeechRecognition.stopListening();
+      }, 3000); // Ghi âm trong 3 giây
     }
   };
 
   useEffect(() => {
-    if (
-      !isSpeakingLesson &&
-      listening &&
-      transcript !== previousTranscript.current
-    ) {
-      const words = transcript.trim().split(/\s+/);
-      if (words.length === 1 && transcript.trim().length > 0) {
-        SpeechRecognition.stopListening();
-        evaluateSpeech();
-      }
-      previousTranscript.current = transcript;
+    if (!isSpeakingLesson && !listening && mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
     }
-  }, [transcript, listening, isSpeakingLesson]);
+  }, [listening, isSpeakingLesson]);
 
   const handleCheck = () => {
     if (isSpeakingLesson && selectedOption) {
@@ -375,7 +216,6 @@ const Vocabulary = () => {
       setSelectedOption(null);
       setIsCorrect(null);
       setIsChecked(false);
-      setPhonemeFeedback([]);
       setPhonemeScore(0);
       resetTranscript();
     } else {
@@ -387,7 +227,6 @@ const Vocabulary = () => {
     setSelectedOption(null);
     setIsCorrect(null);
     setIsChecked(false);
-    setPhonemeFeedback([]);
     setPhonemeScore(0);
     resetTranscript();
     if (isSpeakingLesson) {
@@ -402,7 +241,6 @@ const Vocabulary = () => {
     setSelectedOption(null);
     setIsCorrect(null);
     setIsChecked(false);
-    setPhonemeFeedback([]);
     setPhonemeScore(0);
     resetTranscript();
     if (isSpeakingLesson) {
@@ -531,20 +369,7 @@ const Vocabulary = () => {
 
         <div className="bg-white shadow-md border border-gray-200 rounded-xl p-6 w-full max-w-3xl text-center space-y-2">
           <h2 className="text-3xl font-bold text-gray-800">
-            {phonemeFeedback.length > 0
-              ? phonemeFeedback.map((item, index) => (
-                  <span
-                    key={index}
-                    style={{
-                      textDecoration: !item.isCorrect
-                        ? "underline red"
-                        : "none",
-                    }}
-                  >
-                    {item.letter}
-                  </span>
-                ))
-              : currentVocab.word}
+            {currentVocab.word}
           </h2>
           <p className="text-blue-600 text-xl">
             {currentVocab.phonetic || "N/A"}
@@ -580,25 +405,22 @@ const Vocabulary = () => {
                     : "Try Again!"}
                 </p>
                 <p className="text-lg text-gray-600">
-                  You sound {Math.round(phonemeScore)}% like a native speaker!
+                  You sound {Math.max(0, Math.round(phonemeScore))}% like a
+                  native speaker!
                 </p>
               </div>
               <div className="relative w-16 h-16">
                 <svg className="w-full h-full" viewBox="0 0 36 36">
                   <path
                     className="text-gray-200"
-                    d="M18 2.0845
-                      a 15.9155 15.9155 0 0 1 0 31.831
-                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
                   />
                   <path
                     className="text-green-500"
-                    d="M18 2.0845
-                      a 15.9155 15.9155 0 0 1 0 31.831
-                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
