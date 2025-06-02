@@ -17,10 +17,12 @@ export interface IUser extends Document {
     total_score: number;
     address: string,
     gender: "male" | "female" | "other"
+    phoneNumber: string,
     isCorrectPassword(password: string): Promise<boolean>;
     createPasswordChangedToken(): string;
     passwordResetToken?: string;
-    passwordResetExpires?: number;
+    passwordResetExpires?: Date;
+    passwordChangedAt?: string;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -38,9 +40,11 @@ const UserSchema = new Schema<IUser>({
     level: { type: Number, default: 0 },
     address: { type: String, default: "" },
     gender: { type: String, default: "male" },
+    phoneNumber: { type: String, default: "" },
     total_score: { type: Number, default: 0 },
     passwordResetToken: { type: String },
-    passwordResetExpires: { type: Number },
+    passwordResetExpires: { type: Date },
+    passwordChangedAt: { type: String },
 },
     {
         timestamps: true
@@ -72,7 +76,7 @@ UserSchema.methods.createPasswordChangedToken = function (): string {
         .createHash("sha256")
         .update(resetToken)
         .digest("hex");
-    this.passwordResetExpires = Date.now() + 15 * 60 * 1000; // 15 phút
+    this.passwordResetExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 phút
     return resetToken;
 };
 export default mongoose.model<IUser>("User", UserSchema);

@@ -28,7 +28,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             })
             return
         }
-        const existingUser = await User.findOne({ email })
+        const existingUser = await User.findOne({ email, typeLogin })
         if (existingUser) {
             res.status(409).json({
                 err: 0,
@@ -171,6 +171,61 @@ export const loginSuccess = async (req: Request, res: Response): Promise<void> =
     }
 }
 
+export const loginSuccessMobile = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.body;
 
+    try {
+        if (!id) {
+            res.status(400).json({
+                err: 1,
+                msg: "missing input",
+            });
+            return;
+        }
 
+        // ✅ Tìm user chỉ theo ID
+        const user = await User.findOne({ id });
 
+        if (!user) {
+            res.status(404).json({
+                err: 3,
+                msg: "User not found",
+                token: null,
+            });
+            return;
+        }
+
+        // ✅ Sau khi login thành công mới cập nhật tokenLogin
+        const newTokenLogin = uuidv4();
+        await User.updateOne({ id }, { $set: { tokenLogin: newTokenLogin } });
+
+        const token = jwt.sign(
+            {
+                id: user.id,
+                email: user.email,
+                _id: user._id,
+                role: user.role,
+            },
+            process.env.JWT_SECRET as string,
+            { expiresIn: "5d" }
+        );
+
+        res.status(200).json({
+            err: 0,
+            msg: "OK",
+            token,
+            role: user.role,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            avatar: user.avatar,
+            email: user.email,
+            address: user.address,
+            gender: user.gender,
+        });
+    } catch (error) {
+        res.status(500).json({
+            err: -1,
+            msg: "Failed at auth controller: " + error,
+        });
+    }
+};

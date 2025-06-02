@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from 'multer'
-import { createUser, deleteUser, getCurrent, getUser, getUsers, logout, updateUser } from "../controllers/user.controller";
+import { deleteUser, forgotPassword, getCurrent, getUser, getUsers, logout, resetPassword, updateProfileOrPassword, updateUser } from "../controllers/user.controller";
 
 import { verifyAccessToken } from "../middlewares/verifyToken";
 const router = Router();
@@ -11,11 +11,15 @@ router.get("/current", verifyAccessToken, getCurrent);
 router.get("/", getUsers);
 router.get("/:id", getUser);
 router.post("/logout", logout);
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password', resetPassword);
+router.put(
+    "/profile",
+    verifyAccessToken,
+    upload.fields([{ name: "avatar", maxCount: 1 }]),
+    updateProfileOrPassword
+);
 router.put("/:id", verifyAccessToken, updateUser);
 router.delete("/:id", verifyAccessToken, deleteUser);
-router.post("/", upload.fields([
-    { name: 'image', maxCount: 1 },
-]), verifyAccessToken, createUser);
-
 
 export default router;

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import passport from "passport";
-import { login, loginSuccess, refreshAccessToken, register } from "../controllers/auth.controller";
+import { login, loginSuccess, loginSuccessMobile, refreshAccessToken, register } from "../controllers/auth.controller";
 import User from "../models/User";
 const router = Router();
 router.post("/register", register);
@@ -156,10 +156,8 @@ router.get(
         );
     }
 );
-
-
-
 router.post("/login-success", loginSuccess);
+router.post("/login-success-mobile", loginSuccessMobile);
 router.post("/refreshToken", refreshAccessToken);
 
 

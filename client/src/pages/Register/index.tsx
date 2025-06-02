@@ -4,7 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { GoDotFill } from "react-icons/go";
 import { FaCheck } from "react-icons/fa";
 import facebook from "@/assets/admin/facebook.png";
-import google from "@/assets/admin/google.png";
+import google from "@/assets/admin/google.webp";
 import toast from "react-hot-toast";
 import { apiRegister } from "@/services/auth.services";
 import { authActionProps } from "@/stores/actions/authAction";
@@ -216,12 +216,15 @@ const Register = ({
             {/* Pass Strength Indicator */}
           </form>
         </div>
-        <div className="img-container-auth flex items-center justify-center ">
+        {/* <div className="img-container-auth flex items-center justify-center ">
           <img
             src={icon_auth}
             alt="login"
             className="w-[70%] h-[90%] object-cover mx-auto -rotate-6 rounded-3xl"
           />
+        </div> */}
+        <div className="img-container">
+          <img src={registerImg} alt="login" />
         </div>
       </div>
 
