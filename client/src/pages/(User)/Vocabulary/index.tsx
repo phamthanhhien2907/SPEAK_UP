@@ -1,6 +1,6 @@
 import { apiGetVocabularyByLessonId } from "@/services/vocabulary.services";
 import { useEffect, useState, useRef } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaVolumeUp, FaMicrophone } from "react-icons/fa";
 import { apiUpdateLessonProgressByLessonId } from "@/services/lesson-progress.services";
 import { RootState } from "@/store";
@@ -23,9 +23,7 @@ const Vocabulary = () => {
   const [phonemeScore, setPhonemeScore] = useState(0);
   const [showExtraInfo, setShowExtraInfo] = useState(false);
   const { lessonId } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
-  const lesson = location.state?.lesson;
   const { userData } = useSelector((state: RootState) => state.user);
   const {
     listening,
