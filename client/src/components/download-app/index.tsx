@@ -38,8 +38,8 @@ const DownloadApp: React.FC = () => (
         <div className="flex justify-center space-x-4 mb-8">
           <div className="w-[170px] h-[48px] rounded-xl overflow-hidden">
             <img
-              src={app_store}
-              alt="app_store"
+              src={google_play}
+              alt="google_play"
               className="w-full h-full object-cover"
             />
           </div>
