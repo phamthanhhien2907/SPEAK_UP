@@ -1,24 +1,28 @@
 import CustomCard from "@/components/card/custom-card";
 import { useEffect, useState } from "react";
 import bg_pronunciation from "@/assets/user/bg_pronunciation.jpg";
-import { apiGetLessonByParentTopicId } from "@/services/lesson.services";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { apiGetLessonByParentTopicId } from "@/services/lesson.services";
 const ListCardTopic = () => {
-  const [topicData, setTopicData] = useState([]);
+  const [lessonData, setLessonData] = useState([]);
   const navigate = useNavigate();
-  const { topicId } = useParams();
   const location = useLocation();
-
+  const { topicId } = useParams();
   const { topic } = location.state || {};
-  const getAllTopic = async (topicId) => {
+  const getAllLessonByTopicId = async (topicId) => {
     const response = await apiGetLessonByParentTopicId(topicId);
+    console.log(response?.data);
     if (response?.data?.success) {
-      setTopicData(response?.data?.rs);
+      const filterParentLesson = response?.data?.rs?.filter(
+        (lesson) => lesson?.parentLessonId === null
+      );
+      setLessonData(filterParentLesson);
     }
   };
+  console.log(lessonData);
   useEffect(() => {
-    getAllTopic(topicId);
+    getAllLessonByTopicId(topicId);
   }, [topicId]);
   return (
     <div>
@@ -30,8 +34,8 @@ const ListCardTopic = () => {
         />
         <h6 className="text-2xl font-bold text-gray-800">{topic?.title}</h6>
       </div>
-      <div className="grid grid-cols-3 w-5/6 mx-auto sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 bg-gray-200 rounded-lg shadow-md overflow-y-auto scrollbar-hide max-h-full scrollbar-thin scrollbar-thumb-gray-300">
-        {topicData?.map((topic) => (
+      <div className="grid grid-cols-3 w-5/6 mx-auto sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 rounded-lg overflow-y-auto scrollbar-hide max-h-full scrollbar-thin scrollbar-thumb-gray-300">
+        {lessonData?.map((topic) => (
           <div
             key={topic?._id}
             onClick={() =>
@@ -43,7 +47,7 @@ const ListCardTopic = () => {
             <CustomCard
               title={topic?.title}
               description={topic?.content}
-              thumbnail={bg_pronunciation}
+              thumbnail={topic?.thumbnail ? topic?.thumbnail : bg_pronunciation}
               data="topicCard"
               totalLesson={topic?.parentTopicId?.totalLessons}
             />

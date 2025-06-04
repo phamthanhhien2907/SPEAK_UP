@@ -130,7 +130,9 @@ const Topic = () => {
               <CustomCard
                 title={topic?.title}
                 description={topic?.content}
-                thumbnail={bg_pronunciation}
+                thumbnail={
+                  topic?.thumbnail ? topic?.thumbnail : bg_pronunciation
+                }
                 data="topic"
                 totalLesson={topic?.totalLessons}
               />

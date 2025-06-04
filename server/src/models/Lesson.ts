@@ -12,7 +12,7 @@ export interface ILesson extends Document {
     aiImg?: string;
     name?: string;
     isAIConversationEnabled?: boolean;
-    category: "basics" | "intermediate" | "professional"
+    category: "Basics" | "Intermediate" | "Professional"
     level?: number;
     createdAt: Date;
     updatedAt: Date;
@@ -49,7 +49,7 @@ const LessonSchema = new Schema<ILesson>({
     thumbnail: { type: String, default: "" },
     aiImg: { type: String, default: "" },
     name: { type: String, default: "" },
-    category: { type: String, enum: ["Basics", "Intermediate", "Professional"], required: true },
+    category: { type: String, enum: ["Basics", "Intermediate", "Professional"], required: true, default: "Basics" },
     level: { type: Number, default: 1 },
 }, {
     timestamps: true

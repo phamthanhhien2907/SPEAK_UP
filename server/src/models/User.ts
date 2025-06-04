@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+import ProgressTracking from "./ProgressTracking";
 export interface IUser extends Document {
     typeLogin: String;
     id: string;
@@ -16,7 +17,9 @@ export interface IUser extends Document {
     level: number;
     total_score: number;
     address: string,
-    gender: "male" | "female" | "other"
+    gender: "male" | "female" | "other";
+
+    enrolledCoursesCount: number;
     phoneNumber: string,
     isCorrectPassword(password: string): Promise<boolean>;
     createPasswordChangedToken(): string;
@@ -42,6 +45,7 @@ const UserSchema = new Schema<IUser>({
     gender: { type: String, default: "male" },
     phoneNumber: { type: String, default: "" },
     total_score: { type: Number, default: 0 },
+    enrolledCoursesCount: { type: Number, default: 0 },
     passwordResetToken: { type: String },
     passwordResetExpires: { type: Date },
     passwordChangedAt: { type: String },
@@ -55,6 +59,13 @@ UserSchema.pre<IUser>('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt)
     next()
 })
+UserSchema.post('save', async function (doc) {
+    const progress = await ProgressTracking.findOne({ userId: doc._id });
+    if (progress) {
+        doc.total_score = progress.totalScore;
+        await doc.save();
+    }
+});
 UserSchema.methods.isCorrectPassword = async function (
     password: string
 ): Promise<boolean> {
