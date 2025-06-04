@@ -14,6 +14,7 @@ import authRoute from './auth'
 import pronunciationScoreRoute from './pronunciationScore'
 import recommendationRoute from './recommendation'
 import topicRoute from './topic'
+import wishListRoute from './wishlist'
 
 export const initRoutes = (app: Application) => {
     app.use("/api/auth", authRoute);
@@ -31,6 +32,6 @@ export const initRoutes = (app: Application) => {
     app.use("/api/pronunciationScore", pronunciationScoreRoute);
     app.use("/api/recommendation", recommendationRoute);
     app.use("/api/topic", topicRoute);
-
+    app.use("/api/wishlist", wishListRoute);
 };
 

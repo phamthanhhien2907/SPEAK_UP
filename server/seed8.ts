@@ -133,16 +133,16 @@ const seed = async () => {
     });
     console.log("Connected to MongoDB");
 
-    await Promise.all([
-        Course.deleteMany({}),
-        Topic.deleteMany({}),
-        Lesson.deleteMany({}),
-        LessonProgress.deleteMany({}),
-        Vocabulary.deleteMany({}),
-        Exercise.deleteMany({}),
-        History.deleteMany({}),
-        ExerciseVocabulary.deleteMany({}),
-    ]);
+    // await Promise.all([
+    //     Course.deleteMany({}),
+    //     Topic.deleteMany({}),
+    //     Lesson.deleteMany({}),
+    //     LessonProgress.deleteMany({}),
+    //     Vocabulary.deleteMany({}),
+    //     Exercise.deleteMany({}),
+    //     History.deleteMany({}),
+    //     ExerciseVocabulary.deleteMany({}),
+    // ]);
 
     const course = await Course.create({
         _id: new mongoose.Types.ObjectId("6819c20302afe322ee61b1d2"),

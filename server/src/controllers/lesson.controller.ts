@@ -73,48 +73,6 @@ export const deleteLesson = async (req: Request, res: Response): Promise<void> =
     })
 }
 
-
-// export const getLessonsGroupedByLevel = async (req: Request, res: Response) => {
-//     const { userId } = req.params;
-//     try {
-//         const lessons = await Lesson.find().lean();
-//         const progresses = await LessonProgress.find({ userId }).lean();
-//         const progressMap = new Map(progresses.map(p => [p.lessonId.toString(), p]));
-
-//         // Nhóm bài học theo level
-//         const grouped: Record<string, any[]> = {};
-//         lessons.forEach(lesson => {
-//             const level = lesson.level || "Uncategorized";
-//             if (!grouped[level]) grouped[level] = [];
-
-//             const progress = progressMap.get(lesson._id.toString());
-//             grouped[level].push({
-//                 lessonId: lesson._id,
-//                 title: lesson.title,
-//                 score: progress?.score || 0,
-//                 isCompleted: (progress?.score || 0) >= 60,
-//             });
-//         });
-
-//         // Gộp trả về
-//         const result = Object.entries(grouped).map(([levelName, lessons]) => {
-//             const completed = lessons.filter(l => l.isCompleted).length;
-//             return {
-//                 levelName: `Level ${levelName} - /i/, /I/ ?`,
-//                 progress: `${completed}/${lessons.length}`,
-//                 lessons,
-//             };
-//         });
-
-//         res.json(result);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: "Lỗi khi lấy dữ liệu bài học theo level" });
-//     }
-// };
-
-
-// API lấy các bài học cha không được tham chiếu bởi bài học con
 export const getParentLessons = async (req: Request, res: Response): Promise<void> => {
     const userId = req?.user?._id;
     if (!userId) {
@@ -125,7 +83,6 @@ export const getParentLessons = async (req: Request, res: Response): Promise<voi
         // Lấy tất cả bài học cha với type: "pronunciation"
         const parentLessons = await Lesson.find({
             parentLessonId: null,
-            type: "pronunciation"
         }).lean();
 
         // Lấy tất cả bài học con của các bài học cha
@@ -157,21 +114,45 @@ export const getParentLessons = async (req: Request, res: Response): Promise<voi
             const progressText = `${completed}/${total} Bài học`;
 
             return {
-                lessonId: parent._id,
+                _id: parent._id,
                 thumbnail: parent.thumbnail,
                 title: parent.title,
                 level: parent.level || "Uncategorized",
                 score: progressMap.get(parent._id.toString())?.score || 0,
                 isCompleted: (progressMap.get(parent._id.toString())?.score || 0) >= 60,
-                progress: progressText
+                progress: progressText,
+                parrent: parent,
+                totalLessons: total
             };
         }).filter(item => item !== null);
-        res.json(result);
+        res.json({
+            success: result ? true : false,
+            rs: result
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Lỗi khi lấy danh sách bài học cha" });
     }
 };
+// export const getParentLessons = async (req: Request, res: Response): Promise<void> => {
+//     const userId = req?.user?._id;
+//     if (!userId) {
+//         throw new Error("Unauthorized");
+//     }
+//     try {
+//         // Lấy tất cả bài học cha với type: "pronunciation"
+//         const parentLessons = await Lesson.find({
+//             parentLessonId: null,
+//         }).lean();
+//         res.json({
+//             success: parentLessons ? true : false,
+//             rs: parentLessons
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Lỗi khi lấy danh sách bài học cha" });
+//     }
+// };
 export const getLessonsByParent = async (req: Request, res: Response): Promise<void> => {
     const userId = req?.user?._id
     if (!userId) {

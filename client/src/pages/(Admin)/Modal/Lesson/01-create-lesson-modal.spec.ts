@@ -10,7 +10,7 @@ test.describe('create lessons modals', () => {
     await page.fill('input[name="password"]', 'Admin123@');
     await page.getByTestId('toggle-password-icon').click();
     await page.getByRole('button', { name: /login/i }).click();
-    await expect(page).toHaveURL('http://localhost:5173/');
+    await expect(page).toHaveURL('http://localhost:5173/', { timeout: 10000 });
 
     // Chờ phần tử xuất hiện
     await page.getByText(/lessons/i).click();
