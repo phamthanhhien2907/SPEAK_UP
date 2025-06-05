@@ -52,7 +52,7 @@ export default function CardItem() {
           <>
             <section className="flex-1 overflow-auto bg-gray-50 scrollbar-hide">
               <h6 className="text-2xl font-bold pt-8 justify-center flex items-center">
-                Các cuộc đàm thoại
+                Conversations
               </h6>
               <Box
                 sx={{
@@ -101,7 +101,7 @@ export default function CardItem() {
           <>
             <section className="flex-1 overflow-auto bg-gray-50 scrollbar-hide">
               <h6 className="text-2xl font-bold pt-8 justify-center flex items-center">
-                Gợi ý cho bạn
+                Suggestions for you
               </h6>
               <Box
                 sx={{
@@ -137,7 +137,7 @@ export default function CardItem() {
                   />
                   <div className="absolute inset-0 bg-black/40 rounded-xl"></div>
                   <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white text-3xl font-mono font-bold drop-shadow-xl shadow-2xl">
-                    Bài học
+                    Lessons
                   </span>
                 </div>
                 <div
@@ -151,7 +151,7 @@ export default function CardItem() {
                   />
                   <div className="absolute inset-0 bg-black/20 rounded-xl"></div>
                   <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white text-3xl font-mono font-bold drop-shadow-xl shadow-2xl">
-                    Chủ đề
+                    Topics
                   </span>
                 </div>
               </div>
@@ -163,7 +163,7 @@ export default function CardItem() {
           <>
             <section className="flex-1 overflow-auto bg-gray-50 scrollbar-hide">
               <h6 className="text-2xl font-bold pt-8 justify-center flex items-center">
-                Phân tích giọng nói
+                Voice Analysis
               </h6>
               <Box
                 sx={{
