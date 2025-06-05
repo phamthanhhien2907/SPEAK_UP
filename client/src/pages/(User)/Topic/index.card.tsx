@@ -34,7 +34,7 @@ const ListCardTopic = () => {
         />
         <h6 className="text-2xl font-bold text-gray-800">{topic?.title}</h6>
       </div>
-      <div className="grid grid-cols-3 w-5/6 mx-auto sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 rounded-lg overflow-y-auto scrollbar-hide max-h-full scrollbar-thin scrollbar-thumb-gray-300">
+      <div className="grid grid-cols-3 w-5/6 mx-auto sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 rounded-lg overflow-y-auto scrollbar-hide max-h-full pb-10 scrollbar-thin scrollbar-thumb-gray-300">
         {lessonData?.map((topic) => (
           <div
             key={topic?._id}

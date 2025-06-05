@@ -62,7 +62,7 @@ const CustomCard = ({
 
   const result =
     data === "topic" || data === "topicCard"
-      ? `${totalLesson} Bài học`
+      ? `${totalLesson} Lessons`
       : totalLesson;
 
   return (

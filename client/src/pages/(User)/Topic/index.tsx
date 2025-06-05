@@ -78,16 +78,16 @@ const Topic = () => {
           />
           <div className="absolute inset-0 bg-black/50 rounded-xl max-w-5xl mx-auto"></div>
           <h6 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-semibold z-20 text-center px-4">
-            Chủ đề
+            Topic
           </h6>
         </div>
 
         <div className="w-full max-w-5xl mx-auto bg-white p-4 rounded-xl shadow-md flex items-center justify-between hover:shadow-lg transition">
           <div className="flex items-center gap-3">
-            <span className="text-lg font-medium">Danh mục</span>
+            <span className="text-lg font-medium">Categories</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-lg font-medium">Xem tất cả</span>
+            <span className="text-lg font-medium">See all</span>
           </div>
         </div>
         <div
@@ -101,7 +101,7 @@ const Topic = () => {
         </div>
         <div className="w-full max-w-5xl mx-auto bg-white p-4 rounded-xl shadow-md flex items-center justify-between hover:shadow-lg transition">
           <div className="flex items-center gap-3">
-            <span className="text-lg font-medium">Đang thịnh hành</span>
+            <span className="text-lg font-medium">Common</span>
           </div>
         </div>
 

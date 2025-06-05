@@ -72,7 +72,7 @@ export default function SliderProvider({
             />
             <div className="absolute flex flex-col items-center justify-center text-center text-white font-bold z-50 w-full translate-y-[50%] left-0 right-0 top-20">
               <span className="text-4xl">Basics </span>
-              <span className="text-4xl">30 chủ đề</span>
+              <span className="text-4xl">30 topics</span>
             </div>
           </SwiperSlide>
           <SwiperSlide className="w-full h-full">
@@ -83,7 +83,7 @@ export default function SliderProvider({
             />
             <div className="absolute flex flex-col items-center justify-center text-center text-white font-bold z-50 w-full translate-y-[50%] left-0 right-0 top-20">
               <span className="text-4xl">Basics </span>
-              <span className="text-4xl">30 chủ đề</span>
+              <span className="text-4xl">30 topics</span>
             </div>
           </SwiperSlide>
         </Swiper>

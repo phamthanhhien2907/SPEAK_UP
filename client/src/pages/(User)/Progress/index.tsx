@@ -89,12 +89,12 @@ const Progress = () => {
 
   return (
     <div className="p-6 bg-gradient-to-b w-full from-blue-50 to-gray-50 min-h-screen overflow-y-auto">
-      <h1 className="text-3xl font-bold text-gray-800 text-center">Tiến độ</h1>
+      <h1 className="text-3xl font-bold text-gray-800 text-center">Progress</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
         {/* Daily Feedback */}
-        <div className="flex flex-col py-8">
+        <div className="flex flex-col gap-2">
           <CustomPaper className="!bg-yellow-300 flex justify-between items-center">
-            <div>
+            <div className="py-4">
               <Typography variant="h6" component="h2" sx={{ color: "black" }}>
                 Daily Feedback
               </Typography>
