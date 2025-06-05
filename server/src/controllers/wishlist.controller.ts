@@ -72,20 +72,41 @@ export const removeFromWishlist = async (req: Request, res: Response): Promise<v
     }
 };
 
-// Lấy danh sách bài học trong wishlist của user
 export const getWishlist = async (req: Request, res: Response): Promise<void> => {
     try {
-        const userId = req?.user?._id
+        const userId = req?.user?._id;
         if (!userId) {
-            throw new Error("Unauthorized");
+            res.status(401).json({ message: "Unauthorized" });
+            return; // ✅ chỉ return để thoát hàm, không return response
         }
-        // Lấy danh sách wishlist và populate thông tin bài học
+
         const wishlist = await WishList.find({ userId }).populate({
             path: "lessonId",
             select: "title type category level thumbnail content totalLessons",
         });
 
-        res.status(200).json({ message: "Wishlist retrieved successfully", data: wishlist });
+        const enriched = await Promise.all(
+            wishlist.map(async (item) => {
+                const lesson = item.lessonId as any;
+
+                const subCount = await Lesson.countDocuments({
+                    parentLessonId: lesson._id,
+                });
+
+                return {
+                    ...item.toObject(),
+                    lessonId: {
+                        ...lesson.toObject(),
+                        totalLessons: subCount, // 👈 Trả ra đúng tên mà Flutter đang dùng
+                    },
+                };
+            })
+        );
+
+        res.status(200).json({
+            message: "Wishlist retrieved successfully",
+            data: enriched,
+        });
     } catch (error) {
         res.status(500).json({ message: "Server error", error });
     }

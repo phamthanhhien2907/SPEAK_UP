@@ -51,7 +51,7 @@ const Vocabulary = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [phonemeScore, setPhonemeScore] = useState(0);
-  const [showExtraInfo, setShowExtraInfo] = useState(false);
+  const [showExtraInfo, setShowExtraInfo] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lettersOfWordAreCorrect, setLettersOfWordAreCorrect] = useState<
     string[]
@@ -105,7 +105,6 @@ const Vocabulary = () => {
       setError("Failed to load vocabulary. Please try again.");
     }
   };
-
   useEffect(() => {
     if (lessonId) {
       getVocabularyByLessonId(lessonId);
@@ -455,35 +454,34 @@ const Vocabulary = () => {
   }
 
   return (
-    <div className="w-full h-full flex justify-center items-start p-6 bg-gray-100">
-      <div className="w-full max-w-3xl space-y-6">
-        <div className="flex justify-between items-center">
+    <div className="w-full h-full flex justify-center  items-start p-6 bg-gray-100">
+      <div className="w-full max-w-5xl space-y-6 flex items-center flex-col">
+        <div className="flex justify-end items-center w-full">
           <button
             onClick={handleBack}
             className="text-gray-600 hover:text-black text-2xl font-bold"
           >
             ✕
           </button>
-          <div className="flex gap-2">
-            <button className="px-4 py-1 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300">
-              Regular
-            </button>
-            <button className="px-4 py-1 bg-green-500 text-white rounded-full hover:bg-green-600">
-              Advanced
-            </button>
-          </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => handlePlayAudio(currentVocab.audioUrl)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow"
-            disabled={!currentVocab.audioUrl}
-          >
-            <FaVolumeUp />
-            Nghe
-          </button>
-          <p className="text-lg text-gray-700">Nghe và nói từ hiển thị.</p>
+        <div className="flex items-center gap-3 w-full justify-around">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => handlePlayAudio(currentVocab.audioUrl)}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow"
+              disabled={!currentVocab.audioUrl}
+            >
+              <FaVolumeUp />
+              Nghe
+            </button>
+            <p className="text-lg text-gray-700">Nghe và nói từ hiển thị.</p>
+          </div>
+          <div className="flex gap-2">
+            <button className="px-4 py-1 bg-green-500 text-white rounded-xl hover:bg-green-600">
+              {currentIndex + 1}/{vocabulary?.length} Bài học
+            </button>
+          </div>
         </div>
 
         <div className="bg-white shadow-md border border-gray-200 rounded-xl p-6 w-full max-w-3xl text-center space-y-2">
@@ -581,9 +579,9 @@ const Vocabulary = () => {
         </div>
 
         {showExtraInfo && (
-          <div className="bg-white shadow-md border border-gray-200 rounded-xl p-6 w-full max-w-3xl text-center space-y-2">
-            <p className="text-gray-700">{currentVocab.meaning}</p>
-            <p className="italic text-gray-500">
+          <div className="bg-white shadow-md border opacity-80 border-gray-200 rounded-xl p-6 w-full max-w-3xl text-center space-y-2">
+            <p className="text-gray-700 italic">{currentVocab.meaning}</p>
+            <p className=" text-gray-500 italic">
               {currentVocab.exampleSentence}
             </p>
           </div>
