@@ -1,8 +1,7 @@
-import loginImg from "@/assets/admin/login.svg?url";
+import loginImg from "@/assets/admin/login.svg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import facebook from "@/assets/admin/facebook.png";
 import google from "@/assets/admin/google.webp";
-import icon_auth from "@/assets/user/icon-auth.jpeg";
 import { apiLogin } from "@/services/auth.services";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { authActionProps, loginAction } from "@/stores/actions/authAction";

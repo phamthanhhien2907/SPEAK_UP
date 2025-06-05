@@ -119,7 +119,7 @@ export const EditTopicModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-y-auto h-screen">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Edit Course
+            Edit Topic
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
