@@ -2,6 +2,8 @@ import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 import { useState, useEffect, JSX } from "react";
 import NavigationLink from "./navigation-link";
 // import ProjectLink from "./project-link";
+import logo_v3 from "@/assets/user/logo-v3.png";
+
 import ProjectNavigation from "./project-navigation";
 import { useSelectedPageContext } from "@/hooks/use-context";
 import { LogOut } from "lucide-react";
@@ -80,7 +82,16 @@ const NavigationBarAdmin = ({ items }: { items: ItemType[] }) => {
         className="dark:bg-gray-800 flex flex-col z-10 gap-12 p-5  h-full "
       >
         <div className="flex flex-row w-full justify-between place-items-center">
-          <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-full" />
+          <img
+            src={logo_v3}
+            alt="logo_v3"
+            className={`${
+              !isOpen ? "w-10 h-10 object-cover" : "w-16 h-16 object-cover"
+            }`}
+          />
+          <h6 className="font-bold text-xl font-poppins overflow-clip truncate whitespace-nowrap tracking-wide">
+            SPEAK-UP
+          </h6>
           <button
             className="p-1 rounded-full flex"
             onClick={() => handleOpenClose()}

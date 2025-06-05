@@ -7,6 +7,7 @@ import { useSelectedPageContext } from "@/hooks/use-context";
 import { LogOut } from "lucide-react";
 import { useAppDispatch } from "@/hooks/use-dispatch";
 import { logout } from "@/stores/actions/authAction";
+import logo_v3 from "@/assets/user/logo-v3.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -83,9 +84,15 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
         className="dark:bg-gray-800 flex w-full flex-col justify-between z-10 p-5 shadow-2xl h-full"
       >
         <div className="flex flex-col gap-12">
-          <div className="flex flex-row w-full justify-between place-items-center">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-full" />
-            <button
+          <div className="flex flex-row w-full justify-center gap-2 place-items-center">
+            {/* <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-full" /> */}
+            <img
+              src={logo_v3}
+              alt="logo_v3"
+              className="w-16 h-16 object-cover"
+            />
+            <h6 className="font-bold text-xl">SPEAK-UP</h6>
+            {/* <button
               className="p-1 rounded-full flex"
               onClick={() => handleOpenClose()}
             >
@@ -97,7 +104,7 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
                 stroke="currentColor"
                 className="w-8 h-8 stroke-gray-800/70"
               >
-                {/* <motion.path
+                <motion.path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   variants={svgVariants}
@@ -107,9 +114,9 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
                     duration: 0.5,
                     ease: "easeInOut",
                   }}
-                /> */}
+                />
               </svg>
-            </button>
+            </button> */}
           </div>
 
           <div className="flex flex-col gap-3">
@@ -127,15 +134,12 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
           </div>
         </div>
 
-        <button className="flex items-center justify-start px-2 py-4 gap-2 font-normal cursor-pointer stroke-[0.75] place-items-center hover:bg-gray-300/80 shadow-2xl bg-[#e6e2e2] rounded hover:stroke-neutral-100 stroke-neutral-400 transition-colors duration-100">
-          <Stack direction="row" spacing={2}>
-            <Avatar
-              className="stroke-gray-800/70 stroke-[1] min-w-8 w-8"
-              sx={{ bgcolor: deepOrange[500], width: 35, height: 35 }}
-            >
-              N
-            </Avatar>
-          </Stack>
+        <button className="flex items-center justify-start px-3 py-2 gap-3 font-normal cursor-pointer transition-colors duration-150 rounded-lg shadow-sm bg-gray-200 border border-gray-200">
+          <img
+            src={userData?.avatar}
+            alt="avatar"
+            className="w-10 h-10 rounded-full object-cover"
+          />
           <div className="flex flex-col items-start justify-center text-[11px] font-poppins overflow-clip truncate whitespace-nowrap tracking-wide font-medium">
             <p className="text-[10px] truncate font-medium">
               {userData?.firstname && userData?.lastname

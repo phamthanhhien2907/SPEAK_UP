@@ -56,8 +56,10 @@ const Settings: React.FC = () => {
     }
   }, [selectedPage]);
   React.useEffect(() => {
-    dispatch(getCurrent());
-  }, [dispatch]);
+    if (profileSubSection === "Personal details") {
+      dispatch(getCurrent());
+    }
+  }, [dispatch, profileSubSection]);
   React.useEffect(() => {
     setEditedUserData({
       firstname: userData?.firstname || "",
@@ -68,7 +70,7 @@ const Settings: React.FC = () => {
       address: userData?.address || "",
       phoneNumber: userData?.phoneNumber || "",
     });
-  }, [userData]);
+  }, [userData, profileSubSection]);
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
@@ -117,7 +119,6 @@ const Settings: React.FC = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      console.log("Selected file:", file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setEditedUserData((prev) => ({
@@ -147,6 +148,7 @@ const Settings: React.FC = () => {
       console.log(response);
       if (response?.data?.success) {
         toast.success("Profile updated successfully");
+        setProfileSubSection("");
       }
     } catch (error) {
       console.error("Failed to update profile:", error.message);
@@ -239,7 +241,9 @@ const Settings: React.FC = () => {
         <div className="w-1/2 border-r border-gray-200 py-2">
           <div
             className="flex items-center justify-start gap-2 mb-12"
-            onClick={() => setSelectedPage("Home")}
+            onClick={() => {
+              setSelectedPage("Home");
+            }}
           >
             <FaArrowLeft fontSize={20} className="cursor-pointer" />
             <span className="text-[22px] font-medium text-gray-900">
@@ -274,7 +278,9 @@ const Settings: React.FC = () => {
                   ? "bg-blue-100 text-blue-800 font-medium"
                   : "text-gray-700 hover:bg-gray-100 font-medium"
               }`}
-              onClick={() => handleSectionChange("Profile")}
+              onClick={() => {
+                handleSectionChange("Profile");
+              }}
             >
               <svg
                 className="w-6 h-6 mr-3"
@@ -378,7 +384,9 @@ const Settings: React.FC = () => {
                   <div>
                     <div
                       className="flex items-center justify-start gap-3 mb-8"
-                      onClick={() => setProfileSubSection("")}
+                      onClick={() => {
+                        setProfileSubSection("");
+                      }}
                     >
                       <FaArrowLeft fontSize={20} className="cursor-pointer" />
                       <h6 className="text-xl font-semibold text-gray-900">

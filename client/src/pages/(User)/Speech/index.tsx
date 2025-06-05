@@ -536,8 +536,8 @@ const Speech: React.FC = () => {
             <div key={index} className="flex flex-col gap-2">
               {conv.userText && (
                 <div className="flex justify-end gap-3">
-                  <div className="bg-blue-100 px-4 py-3 rounded-xl shadow-md max-w-md">
-                    <p className="text-gray-800 text-lg font-medium font-iBMPlexSans">
+                  <div className="bg-blue-100 px-4 py-3 rounded-xl shadow-lg max-w-md">
+                    <p className="text-gray-800 text-xl font-medium font-iBMPlexSans">
                       {conv.userText}
                     </p>
                   </div>
