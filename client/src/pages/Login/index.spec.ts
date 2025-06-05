@@ -53,13 +53,13 @@ test.describe('Login Page', () => {
 
     // Thêm test đăng nhập thành công / thất bại nếu có API mock hoặc test account
     test('login with valid credentials', async ({ page }) => {
-        await page.fill('input[name="email"]', 'tanquanga6k39@gmail.com');
-        await page.fill('input[name="password"]', 'Quang@2003');
+        await page.fill('input[name="email"]', 'tanquanga6k88@gmail.com');
+        await page.fill('input[name="password"]', 'Quang@123');
         await page.getByTestId('toggle-password-icon').click();
         await page.getByRole('button', { name: /login/i }).click();
         // Kiểm tra điều hướng hoặc thông báo thành công
         await expect(page).toHaveURL('http://localhost:5173/');
-        await page.waitForTimeout(7000); // Đợi 7 giây
+        await page.goto('http://localhost:5173/');
     });
     test('login with invalid credentials', async ({ page }) => {
         await page.fill('input[name="email"]', 'phamthanhhien2003@gmail.com');
@@ -77,6 +77,7 @@ test.describe('Login Page', () => {
         await page.getByRole('button', { name: /login/i }).click();
         // Kiểm tra điều hướng hoặc thông báo thành công
         await expect(page).toHaveURL('http://localhost:5173/');
+        await page.goto('http://localhost:5173/');
     });
     test('login admin with invalid credentials', async ({ page }) => {
         await page.fill('input[name="email"]', 'admin@gmail.com');
