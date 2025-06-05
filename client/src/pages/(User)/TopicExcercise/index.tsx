@@ -24,6 +24,8 @@ interface VocabularyItem {
 
 // Định nghĩa kiểu dữ liệu cho kết quả phân tích phát âm
 interface PronunciationAnalysisResult {
+  accuracy: number;
+  ipa_accuracy: { [key: string]: number };
   ipa_transcript: string;
   pronunciation_accuracy: string;
   real_transcripts_ipa: string;
@@ -37,7 +39,6 @@ interface PronunciationAnalysisResult {
 
 const API_MAIN_PATH_STS = "http://127.0.0.1:3000";
 const ST_SCORE_API_KEY = "rll5QsTiv83nti99BW6uCmvs9BDVxSB39SVFceYb";
-const SOUNDS_PATH = "/static";
 const ACCURACY_COLORS = ["green", "orange", "red"];
 const BAD_SCORE_THRESHOLD = 30;
 const MEDIUM_SCORE_THRESHOLD = 70;
@@ -145,9 +146,9 @@ const TopicExercise = () => {
       };
 
       const soundFiles = [
-        { ref: soundFileGoodRef, path: `${SOUNDS_PATH}/ASR_good.wav` },
-        { ref: soundFileOkayRef, path: `${SOUNDS_PATH}/ASR_okay.wav` },
-        { ref: soundFileBadRef, path: `${SOUNDS_PATH}/ASR_bad.wav` },
+        { ref: soundFileGoodRef, path: ASR_bad },
+        { ref: soundFileOkayRef, path: ASR_okay },
+        { ref: soundFileBadRef, path: ASR_good },
       ];
 
       for (const { ref, path } of soundFiles) {
@@ -670,7 +671,24 @@ const TopicExercise = () => {
     const initializeApp = async () => {
       await cacheSoundFiles();
       await getTopicExercises(lessonId);
-      changeLanguage(AILanguage);
+      setAILanguage("en"); // Set language to English
+      const voices = window.speechSynthesis.getVoices();
+      for (const voice of voices) {
+        if (voice.lang.startsWith("en") && voice.name === "Daniel") {
+          voiceSynthRefRef.current = voice;
+          languageFoundRef.current = true;
+          break;
+        }
+      }
+      if (!languageFoundRef.current) {
+        for (const voice of voices) {
+          if (voice.lang.startsWith("en")) {
+            voiceSynthRefRef.current = voice;
+            languageFoundRef.current = true;
+            break;
+          }
+        }
+      }
     };
     initializeApp();
 
@@ -684,13 +702,7 @@ const TopicExercise = () => {
         audioContextRef.current.close();
       }
     };
-  }, [
-    cacheSoundFiles,
-    getTopicExercises,
-    changeLanguage,
-    AILanguage,
-    lessonId,
-  ]);
+  }, [cacheSoundFiles, getTopicExercises, lessonId]);
 
   useEffect(() => {
     updateCurrentItemDisplay();
@@ -773,50 +785,10 @@ const TopicExercise = () => {
             ✕
           </button>
           <div className="relative inline-block text-left">
-            <button
-              type="button"
-              className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              Language:{" "}
-              <span className="font-semibold ml-1">
-                {AILanguage === "de" ? "German" : "English"}
+            <div className="relative inline-block text-left">
+              <span className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700">
+                Language: <span className="font-semibold ml-1">English</span>
               </span>
-              <svg
-                className="-mr-1 ml-2 h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-            <div className="origin-top-right absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
-              <div className="py-1">
-                <a
-                  href="#"
-                  className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    changeLanguage("en");
-                  }}
-                >
-                  English
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    changeLanguage("de");
-                  }}
-                >
-                  German
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -869,7 +841,7 @@ const TopicExercise = () => {
                 <strong className="text-blue-700">{currentDisplayWord}</strong>
               </span>
             </label>
-            <label className="flex items-center cursor-pointer">
+            {/* <label className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="pronounceMode"
@@ -884,7 +856,7 @@ const TopicExercise = () => {
                   {currentExampleSentence}
                 </strong>
               </span>
-            </label>
+            </label> */}
           </div>
         </div>
 

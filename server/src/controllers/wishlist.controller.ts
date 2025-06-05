@@ -82,7 +82,7 @@ export const getWishlist = async (req: Request, res: Response): Promise<void> =>
         // Lấy danh sách wishlist và populate thông tin bài học
         const wishlist = await WishList.find({ userId }).populate({
             path: "lessonId",
-            select: "title type category level thumbnail",
+            select: "title type category level thumbnail content totalLessons",
         });
 
         res.status(200).json({ message: "Wishlist retrieved successfully", data: wishlist });
