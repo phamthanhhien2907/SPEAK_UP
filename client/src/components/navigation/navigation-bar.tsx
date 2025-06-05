@@ -82,7 +82,6 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
         initial="close"
         className="dark:bg-gray-800 flex w-full flex-col justify-between z-10 p-5 shadow-2xl h-full"
       >
-        {/* Top: Logo + Navigation */}
         <div className="flex flex-col gap-12">
           <div className="flex flex-row w-full justify-between place-items-center">
             <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-full" />
