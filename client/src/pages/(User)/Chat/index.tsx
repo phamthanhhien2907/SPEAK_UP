@@ -654,32 +654,14 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full">
-      {errorMessage && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-          <span>{errorMessage}</span>
-          <button
-            className="absolute top-0 right-0 px-4 py-3"
-            onClick={() => setErrorMessage(null)}
-          >
-            ✕
-          </button>
-        </div>
-      )}
+    <div className="flex h-screen bg-gray-50">
       <div
-        className={
-          showSidebar
-            ? "flex flex-col h-screen bg-gray-50 px-8 py-6 relative"
-            : "flex flex-col h-screen bg-gray-50 px-8 py-6 relative w-full"
-        }
+        className={`flex flex-col flex-1 px-8 py-6 relative transition-all duration-300 ${
+          showSidebar ? "pr-0" : "pr-8"
+        }`}
       >
-        <div
-          className={
-            showSidebar
-              ? "flex items-center justify-between mb-6"
-              : "flex items-center justify-between mb-6"
-          }
-        >
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-4">
             <MdKeyboardArrowLeft
               size={28}
@@ -699,6 +681,7 @@ const Chat: React.FC = () => {
           </button>
         </div>
 
+        {/* Chat Messages */}
         <div className="flex flex-1 gap-6 overflow-hidden pb-20">
           <div
             ref={conversationRef}
@@ -707,15 +690,15 @@ const Chat: React.FC = () => {
             {conversations.map((conv, index) => (
               <div key={index} className="flex flex-col gap-2">
                 {conv.userText && (
-                  <div className="flex justify-end gap-3">
-                    <div className="bg-blue-100 px-4 py-3 rounded-xl shadow-md max-w-md">
-                      <p className="text-gray-800 text-lg font-medium font-iBMPlexSans">
+                  <div className="flex justify-end gap-3 px-4">
+                    <div className="bg-blue-100 px-4 py-3 rounded-xl shadow-md max-w-[70%] w-fit break-words">
+                      <p className="text-gray-800 text-[15px] font-medium font-iBMPlexSans">
                         {conv.userText}
                       </p>
                     </div>
                     <img
                       src={userData?.avatar ? userData?.avatar : auth}
-                      className="w-12 h-12 rounded-full border-2 border-gray-200"
+                      className="w-10 h-10 rounded-full border-2 border-gray-200"
                       alt="User"
                     />
                   </div>
@@ -839,6 +822,7 @@ const Chat: React.FC = () => {
           </div>
         </div>
 
+        {/* Input Area */}
         <div className="absolute bottom-6 left-8 right-8">
           {!isInputMode ? (
             <div className="flex items-center bg-white border border-gray-200 rounded-full p-2 shadow-lg">
@@ -922,98 +906,107 @@ const Chat: React.FC = () => {
             </button>
           )}
         </div>
+      </div>
 
-        <div
-          className={`fixed top-0 right-0 h-full w-[400px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
-            showSidebar ? "translate-x-0" : "translate-x-full"
-          } rounded-l-2xl border-l`}
-        >
-          <div className="flex justify-between items-center p-6 border-b border-gray-200">
-            <h3 className="text-xl font-bold text-gray-800">
-              {drawerMode === "settings" ? "Settings" : "Translation"}
-            </h3>
-            <button
-              onClick={() => setShowSidebar(false)}
-              className="text-gray-500 hover:text-gray-800 text-2xl"
-            >
-              ✕
-            </button>
-          </div>
-          <div className="p-6 space-y-6">
-            {drawerMode === "settings" ? (
-              <>
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700">
-                    Choose speech language
-                  </label>
-                  <select
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-                    value={selectedLanguage}
-                    onChange={(e) => setSelectedLanguage(e.target.value)}
+      <div
+        className={`h-full bg-white shadow-2xl transition-all duration-300 ml-4 ${
+          showSidebar ? "w-[400px]" : "w-0"
+        } rounded-l-2xl border-l overflow-hidden`}
+      >
+        {showSidebar && (
+          <div className="flex flex-col h-full">
+            <div className="flex justify-between items-center p-6 border-b border-gray-200">
+              <h3 className="text-xl font-bold text-gray-800">
+                {drawerMode === "settings" ? "Settings" : "Translation"}
+              </h3>
+              <button
+                onClick={() => setShowSidebar(false)}
+                className="text-gray-500 hover:text-gray-800 text-2xl"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-6 space-y-6 overflow-y-auto flex-1">
+              {drawerMode === "settings" ? (
+                <>
+                  <div>
+                    <label className="block mb-2 font-medium text-gray-700">
+                      Choose speech language
+                    </label>
+                    <select
+                      className="w-full border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                      value={selectedLanguage}
+                      onChange={(e) => setSelectedLanguage(e.target.value)}
+                    >
+                      {Object.entries(LANGUAGE_MAP).map(([code, { name }]) => (
+                        <option key={code} value={code} className="py-1">
+                          {name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block mb-2 font-medium text-gray-700">
+                      Choose translation language
+                    </label>
+                    <select
+                      className="w-full border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                      value={translationLanguage}
+                      onChange={(e) => setTranslationLanguage(e.target.value)}
+                    >
+                      {Object.entries(LANGUAGE_MAP).map(([code, { name }]) => (
+                        <option key={code} value={code} className="py-1">
+                          {name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <hr className="border-t border-gray-200" />
+                  <div>
+                    <button className="w-full flex items-center justify-center gap-2 text-red-700 font-semibold bg-red-50 border border-red-200 rounded-xl px-4 py-2 hover:bg-red-100 transition">
+                      🚪 Logout
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div
+                    className="mb-4"
+                    style={{ maxHeight: "500px", overflowY: "auto" }}
                   >
-                    {Object.entries(LANGUAGE_MAP).map(([code, { name }]) => (
-                      <option key={code} value={code} className="py-1">
-                        {name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block mb-2 font-medium text-gray-700">
-                    Choose translation language
-                  </label>
-                  <select
-                    className="w-full border border-gray-300 rounded-xl px-4 py-2 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-                    value={translationLanguage}
-                    onChange={(e) => setTranslationLanguage(e.target.value)}
+                    {Object.entries(translatedTexts).map(
+                      ([key, translated]) => (
+                        <div
+                          key={key}
+                          className="mb-4 p-3 bg-gray-50 rounded-lg"
+                        >
+                          <p className="font-medium text-sm text-gray-600">
+                            English
+                          </p>
+                          <p className="text-gray-900 text-base mt-1">
+                            {conversations[Number(key)]?.aiResponse}
+                          </p>
+                          <p className="font-medium text-sm text-gray-600 mt-2">
+                            {LANGUAGE_MAP[translationLanguage].name}
+                          </p>
+                          <p className="text-blue-600 text-base mt-1">
+                            {translated}
+                          </p>
+                        </div>
+                      )
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setTranslatedTexts({})}
+                    className="w-full text-center text-red-600 hover:text-red-800 text-sm"
                   >
-                    {Object.entries(LANGUAGE_MAP).map(([code, { name }]) => (
-                      <option key={code} value={code} className="py-1">
-                        {name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <hr className="border-t border-gray-200" />
-                <div>
-                  <button className="w-full flex items-center justify-center gap-2 text-red-700 font-semibold bg-red-50 border border-red-200 rounded-xl px-4 py-2 hover:bg-red-100 transition">
-                    🚪 Logout
+                    Clear All Translations
                   </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div
-                  className="mb-4"
-                  style={{ maxHeight: "500px", overflowY: "auto" }}
-                >
-                  {Object.entries(translatedTexts).map(([key, translated]) => (
-                    <div key={key} className="mb-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="font-medium text-sm text-gray-600">
-                        English
-                      </p>
-                      <p className="text-gray-900 text-base mt-1">
-                        {conversations[Number(key)]?.aiResponse}
-                      </p>
-                      <p className="font-medium text-sm text-gray-600 mt-2">
-                        {LANGUAGE_MAP[translationLanguage].name}
-                      </p>
-                      <p className="text-blue-600 text-base mt-1">
-                        {translated}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <button
-                  onClick={() => setTranslatedTexts({})}
-                  className="w-full text-center text-red-600 hover:text-red-800 text-sm"
-                >
-                  Clear All Translations
-                </button>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
