@@ -1,0 +1,59 @@
+import.meta.env = {"BASE_URL": "/", "DEV": true, "MODE": "development", "PROD": false, "SSR": false, "VITE_CLERK_PUBLISHABLE_KEY": "pk_test_ZGVzdGluZWQtdXJjaGluLTY2LmNsZXJrLmFjY291bnRzLmRldiQ"};import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport1_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const StrictMode = __vite__cjsImport1_react["StrictMode"];
+import __vite__cjsImport2_reactDom_client from "/node_modules/.vite/deps/react-dom_client.js?v=56c19215"; const createRoot = __vite__cjsImport2_reactDom_client["createRoot"];
+import "/src/index.css?t=1749224350575";
+import App from "/src/App.tsx?t=1749224350575";
+import { BrowserRouter } from "/node_modules/.vite/deps/react-router-dom.js?v=d7300cd7";
+import { ClerkProvider } from "/node_modules/.vite/deps/@clerk_clerk-react.js?v=6d5011c8";
+import { Provider } from "/node_modules/.vite/deps/react-redux.js?v=3230fe88";
+import { PersistGate } from "/node_modules/.vite/deps/redux-persist_integration_react.js?v=875bb05b";
+import reduxStore from "/src/store.ts";
+const { store, persistor } = reduxStore();
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+if (!PUBLISHABLE_KEY) {
+    throw new Error("Add your Clerk Publishable Key to the .env file");
+}
+createRoot(document.getElementById("root")).render(/*#__PURE__*/ _jsxDEV(StrictMode, {
+    children: /*#__PURE__*/ _jsxDEV(Provider, {
+        store: store,
+        children: /*#__PURE__*/ _jsxDEV(PersistGate, {
+            loading: null,
+            persistor: persistor,
+            children: /*#__PURE__*/ _jsxDEV(BrowserRouter, {
+                children: /*#__PURE__*/ _jsxDEV(ClerkProvider, {
+                    publishableKey: PUBLISHABLE_KEY,
+                    afterSignOutUrl: "/sign-in",
+                    signUpFallbackRedirectUrl: "/",
+                    signInFallbackRedirectUrl: "/",
+                    children: /*#__PURE__*/ _jsxDEV(App, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/main.tsx",
+                        lineNumber: 30,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/main.tsx",
+                    lineNumber: 24,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/main.tsx",
+                lineNumber: 23,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "D:/DATN/client/src/main.tsx",
+            lineNumber: 22,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/main.tsx",
+        lineNumber: 21,
+        columnNumber: 5
+    }, this)
+}, void 0, false, {
+    fileName: "D:/DATN/client/src/main.tsx",
+    lineNumber: 20,
+    columnNumber: 3
+}, this));
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1haW4udHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IFN0cmljdE1vZGUgfSBmcm9tIFwicmVhY3RcIjtcclxuaW1wb3J0IHsgY3JlYXRlUm9vdCB9IGZyb20gXCJyZWFjdC1kb20vY2xpZW50XCI7XHJcbmltcG9ydCBcIi4vaW5kZXguY3NzXCI7XHJcbmltcG9ydCBBcHAgZnJvbSBcIkAvQXBwXCI7XHJcbmltcG9ydCB7IEJyb3dzZXJSb3V0ZXIgfSBmcm9tIFwicmVhY3Qtcm91dGVyLWRvbVwiO1xyXG5pbXBvcnQgeyBDbGVya1Byb3ZpZGVyIH0gZnJvbSBcIkBjbGVyay9jbGVyay1yZWFjdFwiO1xyXG5pbXBvcnQgeyBQcm92aWRlciB9IGZyb20gXCJyZWFjdC1yZWR1eFwiO1xyXG5pbXBvcnQgeyBQZXJzaXN0R2F0ZSB9IGZyb20gXCJyZWR1eC1wZXJzaXN0L2ludGVncmF0aW9uL3JlYWN0XCI7XHJcbmltcG9ydCByZWR1eFN0b3JlIGZyb20gXCJAL3N0b3JlXCI7XHJcblxyXG5jb25zdCB7IHN0b3JlLCBwZXJzaXN0b3IgfSA9IHJlZHV4U3RvcmUoKTtcclxuZXhwb3J0IHR5cGUgUm9vdFN0YXRlID0gUmV0dXJuVHlwZTx0eXBlb2Ygc3RvcmUuZ2V0U3RhdGU+O1xyXG5leHBvcnQgdHlwZSBBcHBEaXNwYXRjaCA9IHR5cGVvZiBzdG9yZS5kaXNwYXRjaDtcclxuY29uc3QgUFVCTElTSEFCTEVfS0VZID0gaW1wb3J0Lm1ldGEuZW52LlZJVEVfQ0xFUktfUFVCTElTSEFCTEVfS0VZO1xyXG5pZiAoIVBVQkxJU0hBQkxFX0tFWSkge1xyXG4gIHRocm93IG5ldyBFcnJvcihcIkFkZCB5b3VyIENsZXJrIFB1Ymxpc2hhYmxlIEtleSB0byB0aGUgLmVudiBmaWxlXCIpO1xyXG59XHJcblxyXG5jcmVhdGVSb290KGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwicm9vdFwiKSEpLnJlbmRlcihcclxuICA8U3RyaWN0TW9kZT5cclxuICAgIDxQcm92aWRlciBzdG9yZT17c3RvcmV9PlxyXG4gICAgICA8UGVyc2lzdEdhdGUgbG9hZGluZz17bnVsbH0gcGVyc2lzdG9yPXtwZXJzaXN0b3J9PlxyXG4gICAgICAgIDxCcm93c2VyUm91dGVyPlxyXG4gICAgICAgICAgPENsZXJrUHJvdmlkZXJcclxuICAgICAgICAgICAgcHVibGlzaGFibGVLZXk9e1BVQkxJU0hBQkxFX0tFWX1cclxuICAgICAgICAgICAgYWZ0ZXJTaWduT3V0VXJsPVwiL3NpZ24taW5cIlxyXG4gICAgICAgICAgICBzaWduVXBGYWxsYmFja1JlZGlyZWN0VXJsPVwiL1wiXHJcbiAgICAgICAgICAgIHNpZ25JbkZhbGxiYWNrUmVkaXJlY3RVcmw9XCIvXCJcclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPEFwcCAvPlxyXG4gICAgICAgICAgPC9DbGVya1Byb3ZpZGVyPlxyXG4gICAgICAgIDwvQnJvd3NlclJvdXRlcj5cclxuICAgICAgPC9QZXJzaXN0R2F0ZT5cclxuICAgIDwvUHJvdmlkZXI+XHJcbiAgPC9TdHJpY3RNb2RlPlxyXG4pO1xyXG4iXSwibmFtZXMiOlsiU3RyaWN0TW9kZSIsImNyZWF0ZVJvb3QiLCJBcHAiLCJCcm93c2VyUm91dGVyIiwiQ2xlcmtQcm92aWRlciIsIlByb3ZpZGVyIiwiUGVyc2lzdEdhdGUiLCJyZWR1eFN0b3JlIiwic3RvcmUiLCJwZXJzaXN0b3IiLCJQVUJMSVNIQUJMRV9LRVkiLCJlbnYiLCJWSVRFX0NMRVJLX1BVQkxJU0hBQkxFX0tFWSIsIkVycm9yIiwiZG9jdW1lbnQiLCJnZXRFbGVtZW50QnlJZCIsInJlbmRlciIsImxvYWRpbmciLCJwdWJsaXNoYWJsZUtleSIsImFmdGVyU2lnbk91dFVybCIsInNpZ25VcEZhbGxiYWNrUmVkaXJlY3RVcmwiLCJzaWduSW5GYWxsYmFja1JlZGlyZWN0VXJsIl0sIm1hcHBpbmdzIjoiO0FBQUEsU0FBU0EsVUFBVSxRQUFRLFFBQVE7QUFDbkMsU0FBU0MsVUFBVSxRQUFRLG1CQUFtQjtBQUM5QyxPQUFPLGNBQWM7QUFDckIsT0FBT0MsU0FBUyxRQUFRO0FBQ3hCLFNBQVNDLGFBQWEsUUFBUSxtQkFBbUI7QUFDakQsU0FBU0MsYUFBYSxRQUFRLHFCQUFxQjtBQUNuRCxTQUFTQyxRQUFRLFFBQVEsY0FBYztBQUN2QyxTQUFTQyxXQUFXLFFBQVEsa0NBQWtDO0FBQzlELE9BQU9DLGdCQUFnQixVQUFVO0FBRWpDLE1BQU0sRUFBRUMsS0FBSyxFQUFFQyxTQUFTLEVBQUUsR0FBR0Y7QUFHN0IsTUFBTUcsa0JBQWtCLFlBQVlDLEdBQUcsQ0FBQ0MsMEJBQTBCO0FBQ2xFLElBQUksQ0FBQ0YsaUJBQWlCO0lBQ3BCLE1BQU0sSUFBSUcsTUFBTTtBQUNsQjtBQUVBWixXQUFXYSxTQUFTQyxjQUFjLENBQUMsU0FBVUMsTUFBTSxlQUNqRCxRQUFDaEI7Y0FDQyxjQUFBLFFBQUNLO1FBQVNHLE9BQU9BO2tCQUNmLGNBQUEsUUFBQ0Y7WUFBWVcsU0FBUztZQUFNUixXQUFXQTtzQkFDckMsY0FBQSxRQUFDTjswQkFDQyxjQUFBLFFBQUNDO29CQUNDYyxnQkFBZ0JSO29CQUNoQlMsaUJBQWdCO29CQUNoQkMsMkJBQTBCO29CQUMxQkMsMkJBQTBCOzhCQUUxQixjQUFBLFFBQUNuQiJ9

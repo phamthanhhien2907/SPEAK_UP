@@ -18,7 +18,8 @@ test.describe('Chat Page', () => {
         await page.getByRole('button', { name: /fun/i }).click();
         await page.waitForTimeout(7000); // Đợi 7 giây
         await page.fill('input[name="chat"]', 'I want to talk about the food topic');
-        await page.getByTestId("send-chat").click();
+        const sendButton = page.locator('button:has(svg:has(path[d^="M476 3.2L12.5 270.6"]))');
+        await sendButton.click();
         await page.waitForTimeout(7000); // Đợi 7 giây
 
     });
@@ -37,7 +38,8 @@ test.describe('Chat Page', () => {
         await page.getByRole('button', { name: /interesting/i }).click();
         await page.waitForTimeout(7000); // Đợi 7 giây
         await page.fill('input[name="chat"]', 'I want to talk about the food topic');
-        await page.getByTestId("send-chat").click();
+        const sendButton = page.locator('button:has(svg:has(path[d^="M476 3.2L12.5 270.6"]))');
+        await sendButton.click();
         await page.waitForTimeout(7000); // Đợi 7 giây
 
     });
@@ -55,7 +57,8 @@ test.describe('Chat Page', () => {
         await page.getByRole('button', { name: /you decide/i }).click();
         await page.waitForTimeout(7000); // Đợi 7 giây
         await page.fill('input[name="chat"]', 'I want to talk about the food topic');
-        await page.getByTestId("send-chat").click();
+        const sendButton = page.locator('button:has(svg:has(path[d^="M476 3.2L12.5 270.6"]))');
+        await sendButton.click();
         await page.waitForTimeout(7000); // Đợi 7 giây
 
     });
@@ -73,7 +76,7 @@ test.describe('Chat Page', () => {
         await page.getByText('Chat', { exact: true }).click()
         await page.getByRole('button', { name: '🔁 Repeat' }).click();
         await page.waitForTimeout(20000); // Đợi 7 giây
-    
+
     });
 
     test('login with valid credentials then make a chat press button translate ', async ({ page }) => {
@@ -91,7 +94,7 @@ test.describe('Chat Page', () => {
     });
 
 
-    
+
     // test('login with valid credentials then make a chat button click setting ', async ({ page }) => {
     //     await page.fill('input[name="email"]', 'tanquanga6k39@gmail.com');
     //     await page.fill('input[name="password"]', 'Quang@2003');
@@ -106,7 +109,7 @@ test.describe('Chat Page', () => {
     //     await page.selectOption('select', { value: 'vi' });
     //     // await page.locator('button[aria-label="microphone"]').click();
     //     await page.waitForTimeout(20000); // Đợi 7 giây
-        
+
 
 
     // });
@@ -126,11 +129,11 @@ test.describe('Chat Page', () => {
         await chatInput.fill('Hello, I want to go to the airport');
         await page.locator('button:has(svg:has(path[d^="M476 3.2L12.5 270.6"]))').click();
         await page.waitForTimeout(20000); // Đợi 7 giây
-    
+
 
     });
 
-    
+
     test('login with valid credentials then make a chat click on suggestion icon ', async ({ page }) => {
         await page.fill('input[name="email"]', 'tanquanga6k39@gmail.com');
         await page.fill('input[name="password"]', 'Quang@2003');
@@ -141,10 +144,10 @@ test.describe('Chat Page', () => {
 
         // Kiểm tra xem ListCard có hiển thị không
         await page.getByText('Chat', { exact: true }).click()
-         const settingsBtn = page.getByTestId('settings-button').locator('svg');
+        const settingsBtn = page.getByTestId('settings-button').locator('svg');
         await expect(settingsBtn).toBeVisible({ timeout: 10000 });
         await settingsBtn.click();
         await page.waitForTimeout(20000); // Đợi 7 giây
-    })    
+    })
 
 });

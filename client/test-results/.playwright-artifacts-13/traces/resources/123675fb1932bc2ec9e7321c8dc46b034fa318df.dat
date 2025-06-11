@@ -1,0 +1,47 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/navigation/navigation-provider.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/navigation/navigation-provider.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+// SelectedPageProvider.tsx
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const useState = __vite__cjsImport2_react["useState"];
+import { SelectedPageContext } from "/src/hooks/use-context.tsx";
+export const SelectedPageProvider = ({ children, initialPage = "Users" })=>{
+    _s();
+    const [selectedPage, setSelectedPage] = useState(initialPage);
+    return /*#__PURE__*/ _jsxDEV(SelectedPageContext.Provider, {
+        value: {
+            selectedPage,
+            setSelectedPage
+        },
+        children: children
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/components/navigation/navigation-provider.tsx",
+        lineNumber: 14,
+        columnNumber: 5
+    }, this);
+};
+_s(SelectedPageProvider, "+oZheqw1Nk071skiUse6bCEpQsA=");
+_c = SelectedPageProvider;
+var _c;
+$RefreshReg$(_c, "SelectedPageProvider");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/navigation/navigation-provider.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/navigation/navigation-provider.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tcHJvdmlkZXIudHN4Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIFNlbGVjdGVkUGFnZVByb3ZpZGVyLnRzeFxyXG5pbXBvcnQgeyBSZWFjdE5vZGUsIHVzZVN0YXRlIH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IFNlbGVjdGVkUGFnZUNvbnRleHQgfSBmcm9tIFwiQC9ob29rcy91c2UtY29udGV4dFwiO1xyXG5cclxuZXhwb3J0IGNvbnN0IFNlbGVjdGVkUGFnZVByb3ZpZGVyID0gKHtcclxuICBjaGlsZHJlbixcclxuICBpbml0aWFsUGFnZSA9IFwiVXNlcnNcIixcclxufToge1xyXG4gIGNoaWxkcmVuOiBSZWFjdE5vZGU7XHJcbiAgaW5pdGlhbFBhZ2U/OiBzdHJpbmc7XHJcbn0pID0+IHtcclxuICBjb25zdCBbc2VsZWN0ZWRQYWdlLCBzZXRTZWxlY3RlZFBhZ2VdID0gdXNlU3RhdGUoaW5pdGlhbFBhZ2UpO1xyXG4gIHJldHVybiAoXHJcbiAgICA8U2VsZWN0ZWRQYWdlQ29udGV4dC5Qcm92aWRlciB2YWx1ZT17eyBzZWxlY3RlZFBhZ2UsIHNldFNlbGVjdGVkUGFnZSB9fT5cclxuICAgICAge2NoaWxkcmVufVxyXG4gICAgPC9TZWxlY3RlZFBhZ2VDb250ZXh0LlByb3ZpZGVyPlxyXG4gICk7XHJcbn07XHJcbiJdLCJuYW1lcyI6WyJ1c2VTdGF0ZSIsIlNlbGVjdGVkUGFnZUNvbnRleHQiLCJTZWxlY3RlZFBhZ2VQcm92aWRlciIsImNoaWxkcmVuIiwiaW5pdGlhbFBhZ2UiLCJzZWxlY3RlZFBhZ2UiLCJzZXRTZWxlY3RlZFBhZ2UiLCJQcm92aWRlciIsInZhbHVlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7OztBQUFBLDJCQUEyQjs7O0FBQzNCLFNBQW9CQSxRQUFRLFFBQVEsUUFBUTtBQUM1QyxTQUFTQyxtQkFBbUIsUUFBUSxzQkFBc0I7QUFFMUQsT0FBTyxNQUFNQyx1QkFBdUIsQ0FBQyxFQUNuQ0MsUUFBUSxFQUNSQyxjQUFjLE9BQU8sRUFJdEI7O0lBQ0MsTUFBTSxDQUFDQyxjQUFjQyxnQkFBZ0IsR0FBR04sU0FBU0k7SUFDakQscUJBQ0UsUUFBQ0gsb0JBQW9CTSxRQUFRO1FBQUNDLE9BQU87WUFBRUg7WUFBY0M7UUFBZ0I7a0JBQ2xFSDs7Ozs7O0FBR1AsRUFBRTtHQWJXRDtLQUFBQSJ9

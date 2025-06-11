@@ -1,0 +1,41 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/(User)/Language-Config/route.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/(User)/Language-Config/route.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const lazy = __vite__cjsImport2_react["lazy"];
+const LanguageConfigPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Language-Config/index.tsx"));
+_c = LanguageConfigPage;
+const authRoutes = [
+    {
+        path: "/language-config",
+        element: /*#__PURE__*/ _jsxDEV(LanguageConfigPage, {}, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/(User)/Language-Config/route.tsx",
+            lineNumber: 7,
+            columnNumber: 14
+        }, this),
+        index: true
+    }
+];
+export default authRoutes;
+var _c;
+$RefreshReg$(_c, "LanguageConfigPage");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/(User)/Language-Config/route.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/(User)/Language-Config/route.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBsYXp5IH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IFJvdXRlT2JqZWN0IH0gZnJvbSBcInJlYWN0LXJvdXRlci1kb21cIjtcclxuY29uc3QgTGFuZ3VhZ2VDb25maWdQYWdlID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL2luZGV4XCIpKTtcclxuY29uc3QgYXV0aFJvdXRlczogKFJvdXRlT2JqZWN0ICYgeyByb2xlPzogc3RyaW5nW10gfSlbXSA9IFtcclxuICB7XHJcbiAgICBwYXRoOiBcIi9sYW5ndWFnZS1jb25maWdcIixcclxuICAgIGVsZW1lbnQ6IDxMYW5ndWFnZUNvbmZpZ1BhZ2UgLz4sXHJcbiAgICBpbmRleDogdHJ1ZSxcclxuICB9LFxyXG5dO1xyXG5leHBvcnQgZGVmYXVsdCBhdXRoUm91dGVzO1xyXG4iXSwibmFtZXMiOlsibGF6eSIsIkxhbmd1YWdlQ29uZmlnUGFnZSIsImF1dGhSb3V0ZXMiLCJwYXRoIiwiZWxlbWVudCIsImluZGV4Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBQSxTQUFTQSxJQUFJLFFBQVEsUUFBUTtBQUU3QixNQUFNQyxtQ0FBcUJELEtBQUssSUFBTSxNQUFNLENBQUM7S0FBdkNDO0FBQ04sTUFBTUMsYUFBb0Q7SUFDeEQ7UUFDRUMsTUFBTTtRQUNOQyx1QkFBUyxRQUFDSDs7Ozs7UUFDVkksT0FBTztJQUNUO0NBQ0Q7QUFDRCxlQUFlSCxXQUFXIn0=

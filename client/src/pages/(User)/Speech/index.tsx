@@ -59,17 +59,21 @@ interface Conversation {
   audioUrl?: string;
   isLoading?: boolean;
   isAudioLoading?: boolean;
+  suggestion?: string;
 }
 
 interface ApiResponse {
   user_text: string;
   ai_response: string;
   audio_url?: string;
+  error?: string;
+  suggestion?: string;
+  hint?: string;
 }
 
 interface SuggestResponse {
-  ai_response: string; // Cập nhật để phù hợp với backend
-  suggested_response: string; // Thay đổi từ ai_response thành suggested_response
+  ai_response: string;
+  suggested_response: string;
   language: string;
 }
 
@@ -144,7 +148,7 @@ const Speech: React.FC = () => {
   const animationFrameRef = useRef<number | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  console.log(conversations);
   const getLessonById = async (lessonId: string): Promise<void> => {
     const response = await apiGetLessonById(lessonId);
     if (response?.data?.success) {
@@ -253,7 +257,7 @@ const Speech: React.FC = () => {
     }
   }, [conversations]);
 
-  const NUMBER_OF_BARS = 50;
+  const NUMBER_OF_BARS = 1000;
   const MIN_HEIGHT = 2;
   const MAX_HEIGHT = 120;
 
@@ -343,6 +347,7 @@ const Speech: React.FC = () => {
   const stopRecognition = (): void => {
     SpeechRecognition.stopListening();
   };
+
   const handleSend = () => {
     stopRecognition();
     resetTranscript();
@@ -392,10 +397,30 @@ const Speech: React.FC = () => {
           topic: lessonData?.title,
           language: selectedLanguage,
           role: lessonData?.name || "conversational partner",
+          chat_mode: "topic_based",
         }),
       });
 
-      if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+      if (!res.ok) {
+        const data: ApiResponse = await res.json();
+        setConversations((prev) => {
+          const lastIndex = prev.length - 1;
+          return prev.map((conv, index) =>
+            index === lastIndex
+              ? {
+                  ...conv,
+                  aiResponse:
+                    data.ai_response || data.error || "Something went wrong",
+                  audioUrl: data.audio_url,
+                  isLoading: false,
+                  isAudioLoading: !!data.audio_url,
+                  suggestion: data.hint, // Add hint to suggestion if available
+                }
+              : conv
+          );
+        });
+        return; // Stop further processing on error
+      }
 
       const data: ApiResponse = await res.json();
       setConversations((prev) => {
@@ -441,7 +466,7 @@ const Speech: React.FC = () => {
           index === lastIndex
             ? {
                 ...conv,
-                aiResponse: `Something was wrong: ${err.message}`,
+                aiResponse: `No network connection, please check again!`,
                 isLoading: false,
               }
             : conv
@@ -459,11 +484,12 @@ const Speech: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ai_response: aiResponse, // Sử dụng ai_response thay vì user_text
+          ai_response: aiResponse,
           topic: lessonData?.title || "",
           language: selectedLanguage,
           role: role,
           suggest_for: "user",
+          chat_mode: "topic_based",
         }),
       });
 
@@ -483,7 +509,7 @@ const Speech: React.FC = () => {
         ...prev,
         {
           userText: "",
-          aiResponse: `Không thể gợi ý: ${err.message}`,
+          aiResponse: `No network connection, please check again!`,
           isLoading: false,
         },
       ]);
@@ -574,6 +600,11 @@ const Speech: React.FC = () => {
                         <p className="text-gray-900 text-lg font-medium font-iBMPlexSans">
                           {conv.aiResponse}
                         </p>
+                        {conv.suggestion && (
+                          <p className="text-blue-600 text-sm mt-1">
+                            Suggestion: {conv.suggestion}
+                          </p>
+                        )}
                         <div className="mt-2 flex gap-3 text-sm text-blue-600">
                           <button
                             className="hover:underline"
@@ -661,12 +692,15 @@ const Speech: React.FC = () => {
             >
               <MdMicNone size={24} />
             </button>
-            <button
-              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
-              onClick={handleSuggestResponse}
-            >
-              <FaLightbulb size={24} />
-            </button>
+            {conversations[1]?.userText && (
+              <button
+                className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+                onClick={handleSuggestResponse}
+              >
+                <FaLightbulb size={24} />
+              </button>
+            )}
+
             <button
               className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
               onClick={handleSend}

@@ -1,0 +1,13 @@
+let navigateFunction;
+export const setNavigate = (navigate)=>{
+    navigateFunction = navigate;
+};
+export const navigate = (path)=>{
+    if (navigateFunction) {
+        navigateFunction(path);
+    } else {
+        console.error("Navigate function not initialized yet.");
+    }
+};
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRlLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImxldCBuYXZpZ2F0ZUZ1bmN0aW9uOiAocGF0aDogc3RyaW5nKSA9PiB2b2lkO1xyXG5cclxuZXhwb3J0IGNvbnN0IHNldE5hdmlnYXRlID0gKG5hdmlnYXRlOiAocGF0aDogc3RyaW5nKSA9PiB2b2lkKSA9PiB7XHJcbiAgICBuYXZpZ2F0ZUZ1bmN0aW9uID0gbmF2aWdhdGU7XHJcbn07XHJcblxyXG5leHBvcnQgY29uc3QgbmF2aWdhdGUgPSAocGF0aDogc3RyaW5nKSA9PiB7XHJcbiAgICBpZiAobmF2aWdhdGVGdW5jdGlvbikge1xyXG4gICAgICAgIG5hdmlnYXRlRnVuY3Rpb24ocGF0aCk7XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICAgIGNvbnNvbGUuZXJyb3IoXCJOYXZpZ2F0ZSBmdW5jdGlvbiBub3QgaW5pdGlhbGl6ZWQgeWV0LlwiKTtcclxuICAgIH1cclxufTsiXSwibmFtZXMiOlsibmF2aWdhdGVGdW5jdGlvbiIsInNldE5hdmlnYXRlIiwibmF2aWdhdGUiLCJwYXRoIiwiY29uc29sZSIsImVycm9yIl0sIm1hcHBpbmdzIjoiQUFBQSxJQUFJQTtBQUVKLE9BQU8sTUFBTUMsY0FBYyxDQUFDQztJQUN4QkYsbUJBQW1CRTtBQUN2QixFQUFFO0FBRUYsT0FBTyxNQUFNQSxXQUFXLENBQUNDO0lBQ3JCLElBQUlILGtCQUFrQjtRQUNsQkEsaUJBQWlCRztJQUNyQixPQUFPO1FBQ0hDLFFBQVFDLEtBQUssQ0FBQztJQUNsQjtBQUNKLEVBQUUifQ==

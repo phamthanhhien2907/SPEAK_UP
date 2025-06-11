@@ -1,0 +1,311 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/tables/lesson-progress/lesson-progress-table.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport2_react);
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "/node_modules/.vite/deps/@tanstack_react-table.js?v=be52afe0";
+import { ChevronDown } from "/node_modules/.vite/deps/lucide-react.js?v=e8ebe34d";
+import { Button } from "/src/components/ui/button.tsx";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "/src/components/ui/dropdown-menu.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "/src/components/ui/table.tsx";
+import { getColumns } from "/src/components/tables/lesson-progress/columns.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import { apiGetAllLessonProgress } from "/src/services/lesson-progress.services.ts";
+export function LessonProgressTable() {
+    _s();
+    const { onOpen } = useModal();
+    const columns = React.useMemo(()=>getColumns(onOpen), [
+        onOpen
+    ]);
+    const [lessonProgressData, setLessonProgressData] = React.useState([]);
+    const [sorting, setSorting] = React.useState([]);
+    const [columnFilters, setColumnFilters] = React.useState([]);
+    const [columnVisibility, setColumnVisibility] = React.useState({});
+    const [rowSelection, setRowSelection] = React.useState({});
+    const table = useReactTable({
+        data: lessonProgressData,
+        columns,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection
+        },
+        initialState: {
+            pagination: {
+                pageSize: 5
+            }
+        }
+    });
+    const getAllLessonProgress = async ()=>{
+        const lessonProgress = await apiGetAllLessonProgress();
+        if (lessonProgress.data.success) {
+            setLessonProgressData(lessonProgress.data.rs);
+        } else {
+            console.log("Failed to fetch lessonProgress");
+        }
+    };
+    React.useEffect(()=>{
+        getAllLessonProgress();
+    }, []);
+    return /*#__PURE__*/ _jsxDEV("div", {
+        className: "w-full shadow-lg drop-shadow-lg ",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center py-4 justify-between",
+                children: [
+                    /*#__PURE__*/ _jsxDEV(Input, {
+                        placeholder: "Filter by email...",
+                        value: table.getColumn("userId.email")?.getFilterValue() ?? "",
+                        onChange: (event)=>table.getColumn("userId.email")?.setFilterValue(event.target.value),
+                        className: "max-w-sm"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                        lineNumber: 87,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        onClick: ()=>onOpen("createtLessonProgress"),
+                        className: "flex items-center space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                className: "bg-blue-500 hover:bg-blue-700 text-white rounded-[4px]",
+                                children: "Add new lesson progress"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                lineNumber: 101,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DropdownMenu, {
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuTrigger, {
+                                        asChild: true,
+                                        children: /*#__PURE__*/ _jsxDEV(Button, {
+                                            variant: "outline",
+                                            className: "ml-auto",
+                                            children: [
+                                                "Columns ",
+                                                /*#__PURE__*/ _jsxDEV(ChevronDown, {}, void 0, false, {
+                                                    fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                                    lineNumber: 107,
+                                                    columnNumber: 25
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                            lineNumber: 106,
+                                            columnNumber: 15
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                        lineNumber: 105,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuContent, {
+                                        align: "end",
+                                        children: table.getAllColumns().filter((column)=>column.getCanHide()).map((column)=>{
+                                            return /*#__PURE__*/ _jsxDEV(DropdownMenuCheckboxItem, {
+                                                className: "capitalize",
+                                                checked: column.getIsVisible(),
+                                                onCheckedChange: (value)=>column.toggleVisibility(!!value),
+                                                children: column.id
+                                            }, column.id, false, {
+                                                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                                lineNumber: 116,
+                                                columnNumber: 21
+                                            }, this);
+                                        })
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                        lineNumber: 110,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                lineNumber: 104,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                        lineNumber: 97,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                lineNumber: 86,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "rounded-md border",
+                children: /*#__PURE__*/ _jsxDEV(Table, {
+                    className: "equal-widths",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV(TableHeader, {
+                            children: table.getHeaderGroups().map((headerGroup)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    children: headerGroup.headers.map((header)=>{
+                                        return /*#__PURE__*/ _jsxDEV(TableHead, {
+                                            children: header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())
+                                        }, header.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                            lineNumber: 139,
+                                            columnNumber: 21
+                                        }, this);
+                                    })
+                                }, headerGroup.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                    lineNumber: 136,
+                                    columnNumber: 15
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                            lineNumber: 134,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV(TableBody, {
+                            children: table.getRowModel().rows?.length ? table.getRowModel().rows.map((row)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    "data-state": row.getIsSelected() && "selected",
+                                    children: row.getVisibleCells().map((cell)=>/*#__PURE__*/ _jsxDEV(TableCell, {
+                                            children: flexRender(cell.column.columnDef.cell, cell.getContext())
+                                        }, cell.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                            lineNumber: 160,
+                                            columnNumber: 21
+                                        }, this))
+                                }, row.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                    lineNumber: 155,
+                                    columnNumber: 17
+                                }, this)) : /*#__PURE__*/ _jsxDEV(TableRow, {
+                                children: /*#__PURE__*/ _jsxDEV(TableCell, {
+                                    colSpan: columns.length,
+                                    className: "h-24 text-center",
+                                    children: "No results."
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                    lineNumber: 171,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                lineNumber: 170,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                            lineNumber: 152,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                    lineNumber: 133,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                lineNumber: 132,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center justify-end space-x-2 py-4",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "flex-1 text-sm text-muted-foreground",
+                        children: [
+                            table.getFilteredSelectedRowModel().rows.length,
+                            " of",
+                            " ",
+                            table.getFilteredRowModel().rows.length,
+                            " row(s) selected."
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                        lineNumber: 183,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.previousPage(),
+                                disabled: !table.getCanPreviousPage(),
+                                children: "Previous"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                lineNumber: 188,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.nextPage(),
+                                disabled: !table.getCanNextPage(),
+                                children: "Next"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                                lineNumber: 196,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                        lineNumber: 187,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+                lineNumber: 182,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx",
+        lineNumber: 85,
+        columnNumber: 5
+    }, this);
+}
+_s(LessonProgressTable, "MifJi6vJzyW9j6pVOcbiqSLlaQo=", false, function() {
+    return [
+        useModal,
+        useReactTable
+    ];
+});
+_c = LessonProgressTable;
+var _c;
+$RefreshReg$(_c, "LessonProgressTable");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/tables/lesson-progress/lesson-progress-table.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxlc3Nvbi1wcm9ncmVzcy10YWJsZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgUmVhY3QgZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7XHJcbiAgQ29sdW1uRmlsdGVyc1N0YXRlLFxyXG4gIFNvcnRpbmdTdGF0ZSxcclxuICBWaXNpYmlsaXR5U3RhdGUsXHJcbiAgZmxleFJlbmRlcixcclxuICBnZXRDb3JlUm93TW9kZWwsXHJcbiAgZ2V0RmlsdGVyZWRSb3dNb2RlbCxcclxuICBnZXRQYWdpbmF0aW9uUm93TW9kZWwsXHJcbiAgZ2V0U29ydGVkUm93TW9kZWwsXHJcbiAgdXNlUmVhY3RUYWJsZSxcclxufSBmcm9tIFwiQHRhbnN0YWNrL3JlYWN0LXRhYmxlXCI7XHJcbmltcG9ydCB7IENoZXZyb25Eb3duIH0gZnJvbSBcImx1Y2lkZS1yZWFjdFwiO1xyXG5cclxuaW1wb3J0IHsgQnV0dG9uIH0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9idXR0b25cIjtcclxuaW1wb3J0IHtcclxuICBEcm9wZG93bk1lbnUsXHJcbiAgRHJvcGRvd25NZW51Q2hlY2tib3hJdGVtLFxyXG4gIERyb3Bkb3duTWVudUNvbnRlbnQsXHJcbiAgRHJvcGRvd25NZW51VHJpZ2dlcixcclxufSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2Ryb3Bkb3duLW1lbnVcIjtcclxuaW1wb3J0IHsgSW5wdXQgfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2lucHV0XCI7XHJcbmltcG9ydCB7XHJcbiAgVGFibGUsXHJcbiAgVGFibGVCb2R5LFxyXG4gIFRhYmxlQ2VsbCxcclxuICBUYWJsZUhlYWQsXHJcbiAgVGFibGVIZWFkZXIsXHJcbiAgVGFibGVSb3csXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS90YWJsZVwiO1xyXG5pbXBvcnQgeyBnZXRDb2x1bW5zIH0gZnJvbSBcIi4vY29sdW1uc1wiO1xyXG5pbXBvcnQgeyB1c2VNb2RhbCB9IGZyb20gXCJAL2hvb2tzL3VzZS1tb2RlbC1zdG9yZVwiO1xyXG5pbXBvcnQgeyBMZXNzb25Qcm9ncmVzcyB9IGZyb20gXCJAL3R5cGVzL2xlc3Nvbi1wcm9ncmVzc1wiO1xyXG5pbXBvcnQgeyBhcGlHZXRBbGxMZXNzb25Qcm9ncmVzcyB9IGZyb20gXCJAL3NlcnZpY2VzL2xlc3Nvbi1wcm9ncmVzcy5zZXJ2aWNlc1wiO1xyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIExlc3NvblByb2dyZXNzVGFibGUoKSB7XHJcbiAgY29uc3QgeyBvbk9wZW4gfSA9IHVzZU1vZGFsKCk7XHJcbiAgY29uc3QgY29sdW1ucyA9IFJlYWN0LnVzZU1lbW8oKCkgPT4gZ2V0Q29sdW1ucyhvbk9wZW4pLCBbb25PcGVuXSk7XHJcbiAgY29uc3QgW2xlc3NvblByb2dyZXNzRGF0YSwgc2V0TGVzc29uUHJvZ3Jlc3NEYXRhXSA9IFJlYWN0LnVzZVN0YXRlPFxyXG4gICAgTGVzc29uUHJvZ3Jlc3NbXVxyXG4gID4oW10pO1xyXG4gIGNvbnN0IFtzb3J0aW5nLCBzZXRTb3J0aW5nXSA9IFJlYWN0LnVzZVN0YXRlPFNvcnRpbmdTdGF0ZT4oW10pO1xyXG4gIGNvbnN0IFtjb2x1bW5GaWx0ZXJzLCBzZXRDb2x1bW5GaWx0ZXJzXSA9IFJlYWN0LnVzZVN0YXRlPENvbHVtbkZpbHRlcnNTdGF0ZT4oXHJcbiAgICBbXVxyXG4gICk7XHJcbiAgY29uc3QgW2NvbHVtblZpc2liaWxpdHksIHNldENvbHVtblZpc2liaWxpdHldID1cclxuICAgIFJlYWN0LnVzZVN0YXRlPFZpc2liaWxpdHlTdGF0ZT4oe30pO1xyXG4gIGNvbnN0IFtyb3dTZWxlY3Rpb24sIHNldFJvd1NlbGVjdGlvbl0gPSBSZWFjdC51c2VTdGF0ZSh7fSk7XHJcbiAgY29uc3QgdGFibGUgPSB1c2VSZWFjdFRhYmxlKHtcclxuICAgIGRhdGE6IGxlc3NvblByb2dyZXNzRGF0YSxcclxuICAgIGNvbHVtbnMsXHJcbiAgICBvblNvcnRpbmdDaGFuZ2U6IHNldFNvcnRpbmcsXHJcbiAgICBvbkNvbHVtbkZpbHRlcnNDaGFuZ2U6IHNldENvbHVtbkZpbHRlcnMsXHJcbiAgICBnZXRDb3JlUm93TW9kZWw6IGdldENvcmVSb3dNb2RlbCgpLFxyXG4gICAgZ2V0UGFnaW5hdGlvblJvd01vZGVsOiBnZXRQYWdpbmF0aW9uUm93TW9kZWwoKSxcclxuICAgIGdldFNvcnRlZFJvd01vZGVsOiBnZXRTb3J0ZWRSb3dNb2RlbCgpLFxyXG4gICAgZ2V0RmlsdGVyZWRSb3dNb2RlbDogZ2V0RmlsdGVyZWRSb3dNb2RlbCgpLFxyXG4gICAgb25Db2x1bW5WaXNpYmlsaXR5Q2hhbmdlOiBzZXRDb2x1bW5WaXNpYmlsaXR5LFxyXG4gICAgb25Sb3dTZWxlY3Rpb25DaGFuZ2U6IHNldFJvd1NlbGVjdGlvbixcclxuICAgIHN0YXRlOiB7XHJcbiAgICAgIHNvcnRpbmcsXHJcbiAgICAgIGNvbHVtbkZpbHRlcnMsXHJcbiAgICAgIGNvbHVtblZpc2liaWxpdHksXHJcbiAgICAgIHJvd1NlbGVjdGlvbixcclxuICAgIH0sXHJcblxyXG4gICAgaW5pdGlhbFN0YXRlOiB7XHJcbiAgICAgIHBhZ2luYXRpb246IHtcclxuICAgICAgICBwYWdlU2l6ZTogNSxcclxuICAgICAgfSxcclxuICAgIH0sXHJcbiAgfSk7XHJcbiAgY29uc3QgZ2V0QWxsTGVzc29uUHJvZ3Jlc3MgPSBhc3luYyAoKSA9PiB7XHJcbiAgICBjb25zdCBsZXNzb25Qcm9ncmVzcyA9IGF3YWl0IGFwaUdldEFsbExlc3NvblByb2dyZXNzKCk7XHJcbiAgICBpZiAobGVzc29uUHJvZ3Jlc3MuZGF0YS5zdWNjZXNzKSB7XHJcbiAgICAgIHNldExlc3NvblByb2dyZXNzRGF0YShsZXNzb25Qcm9ncmVzcy5kYXRhLnJzKTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIGNvbnNvbGUubG9nKFwiRmFpbGVkIHRvIGZldGNoIGxlc3NvblByb2dyZXNzXCIpO1xyXG4gICAgfVxyXG4gIH07XHJcbiAgUmVhY3QudXNlRWZmZWN0KCgpID0+IHtcclxuICAgIGdldEFsbExlc3NvblByb2dyZXNzKCk7XHJcbiAgfSwgW10pO1xyXG4gIHJldHVybiAoXHJcbiAgICA8ZGl2IGNsYXNzTmFtZT1cInctZnVsbCBzaGFkb3ctbGcgZHJvcC1zaGFkb3ctbGcgXCI+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgcHktNCBqdXN0aWZ5LWJldHdlZW5cIj5cclxuICAgICAgICA8SW5wdXRcclxuICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRmlsdGVyIGJ5IGVtYWlsLi4uXCJcclxuICAgICAgICAgIHZhbHVlPXtcclxuICAgICAgICAgICAgKHRhYmxlLmdldENvbHVtbihcInVzZXJJZC5lbWFpbFwiKT8uZ2V0RmlsdGVyVmFsdWUoKSBhcyBzdHJpbmcpID8/IFwiXCJcclxuICAgICAgICAgIH1cclxuICAgICAgICAgIG9uQ2hhbmdlPXsoZXZlbnQpID0+XHJcbiAgICAgICAgICAgIHRhYmxlLmdldENvbHVtbihcInVzZXJJZC5lbWFpbFwiKT8uc2V0RmlsdGVyVmFsdWUoZXZlbnQudGFyZ2V0LnZhbHVlKVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgICAgY2xhc3NOYW1lPVwibWF4LXctc21cIlxyXG4gICAgICAgIC8+XHJcbiAgICAgICAgPGRpdlxyXG4gICAgICAgICAgb25DbGljaz17KCkgPT4gb25PcGVuKFwiY3JlYXRldExlc3NvblByb2dyZXNzXCIpfVxyXG4gICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0yXCJcclxuICAgICAgICA+XHJcbiAgICAgICAgICA8QnV0dG9uIGNsYXNzTmFtZT1cImJnLWJsdWUtNTAwIGhvdmVyOmJnLWJsdWUtNzAwIHRleHQtd2hpdGUgcm91bmRlZC1bNHB4XVwiPlxyXG4gICAgICAgICAgICBBZGQgbmV3IGxlc3NvbiBwcm9ncmVzc1xyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICA8RHJvcGRvd25NZW51PlxyXG4gICAgICAgICAgICA8RHJvcGRvd25NZW51VHJpZ2dlciBhc0NoaWxkPlxyXG4gICAgICAgICAgICAgIDxCdXR0b24gdmFyaWFudD1cIm91dGxpbmVcIiBjbGFzc05hbWU9XCJtbC1hdXRvXCI+XHJcbiAgICAgICAgICAgICAgICBDb2x1bW5zIDxDaGV2cm9uRG93biAvPlxyXG4gICAgICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgICA8L0Ryb3Bkb3duTWVudVRyaWdnZXI+XHJcbiAgICAgICAgICAgIDxEcm9wZG93bk1lbnVDb250ZW50IGFsaWduPVwiZW5kXCI+XHJcbiAgICAgICAgICAgICAge3RhYmxlXHJcbiAgICAgICAgICAgICAgICAuZ2V0QWxsQ29sdW1ucygpXHJcbiAgICAgICAgICAgICAgICAuZmlsdGVyKChjb2x1bW4pID0+IGNvbHVtbi5nZXRDYW5IaWRlKCkpXHJcbiAgICAgICAgICAgICAgICAubWFwKChjb2x1bW4pID0+IHtcclxuICAgICAgICAgICAgICAgICAgcmV0dXJuIChcclxuICAgICAgICAgICAgICAgICAgICA8RHJvcGRvd25NZW51Q2hlY2tib3hJdGVtXHJcbiAgICAgICAgICAgICAgICAgICAgICBrZXk9e2NvbHVtbi5pZH1cclxuICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgY2hlY2tlZD17Y29sdW1uLmdldElzVmlzaWJsZSgpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25DaGVja2VkQ2hhbmdlPXsodmFsdWUpID0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNvbHVtbi50b2dnbGVWaXNpYmlsaXR5KCEhdmFsdWUpXHJcbiAgICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAge2NvbHVtbi5pZH1cclxuICAgICAgICAgICAgICAgICAgICA8L0Ryb3Bkb3duTWVudUNoZWNrYm94SXRlbT5cclxuICAgICAgICAgICAgICAgICAgKTtcclxuICAgICAgICAgICAgICAgIH0pfVxyXG4gICAgICAgICAgICA8L0Ryb3Bkb3duTWVudUNvbnRlbnQ+XHJcbiAgICAgICAgICA8L0Ryb3Bkb3duTWVudT5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgPC9kaXY+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwicm91bmRlZC1tZCBib3JkZXJcIj5cclxuICAgICAgICA8VGFibGUgY2xhc3NOYW1lPVwiZXF1YWwtd2lkdGhzXCI+XHJcbiAgICAgICAgICA8VGFibGVIZWFkZXI+XHJcbiAgICAgICAgICAgIHt0YWJsZS5nZXRIZWFkZXJHcm91cHMoKS5tYXAoKGhlYWRlckdyb3VwKSA9PiAoXHJcbiAgICAgICAgICAgICAgPFRhYmxlUm93IGtleT17aGVhZGVyR3JvdXAuaWR9PlxyXG4gICAgICAgICAgICAgICAge2hlYWRlckdyb3VwLmhlYWRlcnMubWFwKChoZWFkZXIpID0+IHtcclxuICAgICAgICAgICAgICAgICAgcmV0dXJuIChcclxuICAgICAgICAgICAgICAgICAgICA8VGFibGVIZWFkIGtleT17aGVhZGVyLmlkfT5cclxuICAgICAgICAgICAgICAgICAgICAgIHtoZWFkZXIuaXNQbGFjZWhvbGRlclxyXG4gICAgICAgICAgICAgICAgICAgICAgICA/IG51bGxcclxuICAgICAgICAgICAgICAgICAgICAgICAgOiBmbGV4UmVuZGVyKFxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyLmNvbHVtbi5jb2x1bW5EZWYuaGVhZGVyLFxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyLmdldENvbnRleHQoKVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgICAgICAgPC9UYWJsZUhlYWQ+XHJcbiAgICAgICAgICAgICAgICAgICk7XHJcbiAgICAgICAgICAgICAgICB9KX1cclxuICAgICAgICAgICAgICA8L1RhYmxlUm93PlxyXG4gICAgICAgICAgICApKX1cclxuICAgICAgICAgIDwvVGFibGVIZWFkZXI+XHJcbiAgICAgICAgICA8VGFibGVCb2R5PlxyXG4gICAgICAgICAgICB7dGFibGUuZ2V0Um93TW9kZWwoKS5yb3dzPy5sZW5ndGggPyAoXHJcbiAgICAgICAgICAgICAgdGFibGUuZ2V0Um93TW9kZWwoKS5yb3dzLm1hcCgocm93KSA9PiAoXHJcbiAgICAgICAgICAgICAgICA8VGFibGVSb3dcclxuICAgICAgICAgICAgICAgICAga2V5PXtyb3cuaWR9XHJcbiAgICAgICAgICAgICAgICAgIGRhdGEtc3RhdGU9e3Jvdy5nZXRJc1NlbGVjdGVkKCkgJiYgXCJzZWxlY3RlZFwifVxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICB7cm93LmdldFZpc2libGVDZWxscygpLm1hcCgoY2VsbCkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICAgIDxUYWJsZUNlbGwga2V5PXtjZWxsLmlkfT5cclxuICAgICAgICAgICAgICAgICAgICAgIHtmbGV4UmVuZGVyKFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjZWxsLmNvbHVtbi5jb2x1bW5EZWYuY2VsbCxcclxuICAgICAgICAgICAgICAgICAgICAgICAgY2VsbC5nZXRDb250ZXh0KClcclxuICAgICAgICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgICAgICAgPC9UYWJsZUNlbGw+XHJcbiAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgPC9UYWJsZVJvdz5cclxuICAgICAgICAgICAgICApKVxyXG4gICAgICAgICAgICApIDogKFxyXG4gICAgICAgICAgICAgIDxUYWJsZVJvdz5cclxuICAgICAgICAgICAgICAgIDxUYWJsZUNlbGxcclxuICAgICAgICAgICAgICAgICAgY29sU3Bhbj17Y29sdW1ucy5sZW5ndGh9XHJcbiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImgtMjQgdGV4dC1jZW50ZXJcIlxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICBObyByZXN1bHRzLlxyXG4gICAgICAgICAgICAgICAgPC9UYWJsZUNlbGw+XHJcbiAgICAgICAgICAgICAgPC9UYWJsZVJvdz5cclxuICAgICAgICAgICAgKX1cclxuICAgICAgICAgIDwvVGFibGVCb2R5PlxyXG4gICAgICAgIDwvVGFibGU+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktZW5kIHNwYWNlLXgtMiBweS00XCI+XHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4LTEgdGV4dC1zbSB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgIHt0YWJsZS5nZXRGaWx0ZXJlZFNlbGVjdGVkUm93TW9kZWwoKS5yb3dzLmxlbmd0aH0gb2Z7XCIgXCJ9XHJcbiAgICAgICAgICB7dGFibGUuZ2V0RmlsdGVyZWRSb3dNb2RlbCgpLnJvd3MubGVuZ3RofSByb3cocykgc2VsZWN0ZWQuXHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS14LTJcIj5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgdmFyaWFudD1cIm91dGxpbmVcIlxyXG4gICAgICAgICAgICBzaXplPVwic21cIlxyXG4gICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB0YWJsZS5wcmV2aW91c1BhZ2UoKX1cclxuICAgICAgICAgICAgZGlzYWJsZWQ9eyF0YWJsZS5nZXRDYW5QcmV2aW91c1BhZ2UoKX1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgUHJldmlvdXNcclxuICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgPEJ1dHRvblxyXG4gICAgICAgICAgICB2YXJpYW50PVwib3V0bGluZVwiXHJcbiAgICAgICAgICAgIHNpemU9XCJzbVwiXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHRhYmxlLm5leHRQYWdlKCl9XHJcbiAgICAgICAgICAgIGRpc2FibGVkPXshdGFibGUuZ2V0Q2FuTmV4dFBhZ2UoKX1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgTmV4dFxyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufVxyXG4iXSwibmFtZXMiOlsiUmVhY3QiLCJmbGV4UmVuZGVyIiwiZ2V0Q29yZVJvd01vZGVsIiwiZ2V0RmlsdGVyZWRSb3dNb2RlbCIsImdldFBhZ2luYXRpb25Sb3dNb2RlbCIsImdldFNvcnRlZFJvd01vZGVsIiwidXNlUmVhY3RUYWJsZSIsIkNoZXZyb25Eb3duIiwiQnV0dG9uIiwiRHJvcGRvd25NZW51IiwiRHJvcGRvd25NZW51Q2hlY2tib3hJdGVtIiwiRHJvcGRvd25NZW51Q29udGVudCIsIkRyb3Bkb3duTWVudVRyaWdnZXIiLCJJbnB1dCIsIlRhYmxlIiwiVGFibGVCb2R5IiwiVGFibGVDZWxsIiwiVGFibGVIZWFkIiwiVGFibGVIZWFkZXIiLCJUYWJsZVJvdyIsImdldENvbHVtbnMiLCJ1c2VNb2RhbCIsImFwaUdldEFsbExlc3NvblByb2dyZXNzIiwiTGVzc29uUHJvZ3Jlc3NUYWJsZSIsIm9uT3BlbiIsImNvbHVtbnMiLCJ1c2VNZW1vIiwibGVzc29uUHJvZ3Jlc3NEYXRhIiwic2V0TGVzc29uUHJvZ3Jlc3NEYXRhIiwidXNlU3RhdGUiLCJzb3J0aW5nIiwic2V0U29ydGluZyIsImNvbHVtbkZpbHRlcnMiLCJzZXRDb2x1bW5GaWx0ZXJzIiwiY29sdW1uVmlzaWJpbGl0eSIsInNldENvbHVtblZpc2liaWxpdHkiLCJyb3dTZWxlY3Rpb24iLCJzZXRSb3dTZWxlY3Rpb24iLCJ0YWJsZSIsImRhdGEiLCJvblNvcnRpbmdDaGFuZ2UiLCJvbkNvbHVtbkZpbHRlcnNDaGFuZ2UiLCJvbkNvbHVtblZpc2liaWxpdHlDaGFuZ2UiLCJvblJvd1NlbGVjdGlvbkNoYW5nZSIsInN0YXRlIiwiaW5pdGlhbFN0YXRlIiwicGFnaW5hdGlvbiIsInBhZ2VTaXplIiwiZ2V0QWxsTGVzc29uUHJvZ3Jlc3MiLCJsZXNzb25Qcm9ncmVzcyIsInN1Y2Nlc3MiLCJycyIsImNvbnNvbGUiLCJsb2ciLCJ1c2VFZmZlY3QiLCJkaXYiLCJjbGFzc05hbWUiLCJwbGFjZWhvbGRlciIsInZhbHVlIiwiZ2V0Q29sdW1uIiwiZ2V0RmlsdGVyVmFsdWUiLCJvbkNoYW5nZSIsImV2ZW50Iiwic2V0RmlsdGVyVmFsdWUiLCJ0YXJnZXQiLCJvbkNsaWNrIiwiYXNDaGlsZCIsInZhcmlhbnQiLCJhbGlnbiIsImdldEFsbENvbHVtbnMiLCJmaWx0ZXIiLCJjb2x1bW4iLCJnZXRDYW5IaWRlIiwibWFwIiwiY2hlY2tlZCIsImdldElzVmlzaWJsZSIsIm9uQ2hlY2tlZENoYW5nZSIsInRvZ2dsZVZpc2liaWxpdHkiLCJpZCIsImdldEhlYWRlckdyb3VwcyIsImhlYWRlckdyb3VwIiwiaGVhZGVycyIsImhlYWRlciIsImlzUGxhY2Vob2xkZXIiLCJjb2x1bW5EZWYiLCJnZXRDb250ZXh0IiwiZ2V0Um93TW9kZWwiLCJyb3dzIiwibGVuZ3RoIiwicm93IiwiZGF0YS1zdGF0ZSIsImdldElzU2VsZWN0ZWQiLCJnZXRWaXNpYmxlQ2VsbHMiLCJjZWxsIiwiY29sU3BhbiIsImdldEZpbHRlcmVkU2VsZWN0ZWRSb3dNb2RlbCIsInNpemUiLCJwcmV2aW91c1BhZ2UiLCJkaXNhYmxlZCIsImdldENhblByZXZpb3VzUGFnZSIsIm5leHRQYWdlIiwiZ2V0Q2FuTmV4dFBhZ2UiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxZQUFZQSxXQUFXLFFBQVE7QUFDL0IsU0FJRUMsVUFBVSxFQUNWQyxlQUFlLEVBQ2ZDLG1CQUFtQixFQUNuQkMscUJBQXFCLEVBQ3JCQyxpQkFBaUIsRUFDakJDLGFBQWEsUUFDUix3QkFBd0I7QUFDL0IsU0FBU0MsV0FBVyxRQUFRLGVBQWU7QUFFM0MsU0FBU0MsTUFBTSxRQUFRLHlCQUF5QjtBQUNoRCxTQUNFQyxZQUFZLEVBQ1pDLHdCQUF3QixFQUN4QkMsbUJBQW1CLEVBQ25CQyxtQkFBbUIsUUFDZCxnQ0FBZ0M7QUFDdkMsU0FBU0MsS0FBSyxRQUFRLHdCQUF3QjtBQUM5QyxTQUNFQyxLQUFLLEVBQ0xDLFNBQVMsRUFDVEMsU0FBUyxFQUNUQyxTQUFTLEVBQ1RDLFdBQVcsRUFDWEMsUUFBUSxRQUNILHdCQUF3QjtBQUMvQixTQUFTQyxVQUFVLFFBQVEsWUFBWTtBQUN2QyxTQUFTQyxRQUFRLFFBQVEsMEJBQTBCO0FBRW5ELFNBQVNDLHVCQUF1QixRQUFRLHNDQUFzQztBQUU5RSxPQUFPLFNBQVNDOztJQUNkLE1BQU0sRUFBRUMsTUFBTSxFQUFFLEdBQUdIO0lBQ25CLE1BQU1JLFVBQVV6QixNQUFNMEIsT0FBTyxDQUFDLElBQU1OLFdBQVdJLFNBQVM7UUFBQ0E7S0FBTztJQUNoRSxNQUFNLENBQUNHLG9CQUFvQkMsc0JBQXNCLEdBQUc1QixNQUFNNkIsUUFBUSxDQUVoRSxFQUFFO0lBQ0osTUFBTSxDQUFDQyxTQUFTQyxXQUFXLEdBQUcvQixNQUFNNkIsUUFBUSxDQUFlLEVBQUU7SUFDN0QsTUFBTSxDQUFDRyxlQUFlQyxpQkFBaUIsR0FBR2pDLE1BQU02QixRQUFRLENBQ3RELEVBQUU7SUFFSixNQUFNLENBQUNLLGtCQUFrQkMsb0JBQW9CLEdBQzNDbkMsTUFBTTZCLFFBQVEsQ0FBa0IsQ0FBQztJQUNuQyxNQUFNLENBQUNPLGNBQWNDLGdCQUFnQixHQUFHckMsTUFBTTZCLFFBQVEsQ0FBQyxDQUFDO0lBQ3hELE1BQU1TLFFBQVFoQyxjQUFjO1FBQzFCaUMsTUFBTVo7UUFDTkY7UUFDQWUsaUJBQWlCVDtRQUNqQlUsdUJBQXVCUjtRQUN2Qi9CLGlCQUFpQkE7UUFDakJFLHVCQUF1QkE7UUFDdkJDLG1CQUFtQkE7UUFDbkJGLHFCQUFxQkE7UUFDckJ1QywwQkFBMEJQO1FBQzFCUSxzQkFBc0JOO1FBQ3RCTyxPQUFPO1lBQ0xkO1lBQ0FFO1lBQ0FFO1lBQ0FFO1FBQ0Y7UUFFQVMsY0FBYztZQUNaQyxZQUFZO2dCQUNWQyxVQUFVO1lBQ1o7UUFDRjtJQUNGO0lBQ0EsTUFBTUMsdUJBQXVCO1FBQzNCLE1BQU1DLGlCQUFpQixNQUFNM0I7UUFDN0IsSUFBSTJCLGVBQWVWLElBQUksQ0FBQ1csT0FBTyxFQUFFO1lBQy9CdEIsc0JBQXNCcUIsZUFBZVYsSUFBSSxDQUFDWSxFQUFFO1FBQzlDLE9BQU87WUFDTEMsUUFBUUMsR0FBRyxDQUFDO1FBQ2Q7SUFDRjtJQUNBckQsTUFBTXNELFNBQVMsQ0FBQztRQUNkTjtJQUNGLEdBQUcsRUFBRTtJQUNMLHFCQUNFLFFBQUNPO1FBQUlDLFdBQVU7OzBCQUNiLFFBQUNEO2dCQUFJQyxXQUFVOztrQ0FDYixRQUFDM0M7d0JBQ0M0QyxhQUFZO3dCQUNaQyxPQUNFLEFBQUNwQixNQUFNcUIsU0FBUyxDQUFDLGlCQUFpQkMsb0JBQStCO3dCQUVuRUMsVUFBVSxDQUFDQyxRQUNUeEIsTUFBTXFCLFNBQVMsQ0FBQyxpQkFBaUJJLGVBQWVELE1BQU1FLE1BQU0sQ0FBQ04sS0FBSzt3QkFFcEVGLFdBQVU7Ozs7OztrQ0FFWixRQUFDRDt3QkFDQ1UsU0FBUyxJQUFNekMsT0FBTzt3QkFDdEJnQyxXQUFVOzswQ0FFVixRQUFDaEQ7Z0NBQU9nRCxXQUFVOzBDQUF5RDs7Ozs7OzBDQUczRSxRQUFDL0M7O2tEQUNDLFFBQUNHO3dDQUFvQnNELE9BQU87a0RBQzFCLGNBQUEsUUFBQzFEOzRDQUFPMkQsU0FBUTs0Q0FBVVgsV0FBVTs7Z0RBQVU7OERBQ3BDLFFBQUNqRDs7Ozs7Ozs7Ozs7Ozs7OztrREFHYixRQUFDSTt3Q0FBb0J5RCxPQUFNO2tEQUN4QjlCLE1BQ0UrQixhQUFhLEdBQ2JDLE1BQU0sQ0FBQyxDQUFDQyxTQUFXQSxPQUFPQyxVQUFVLElBQ3BDQyxHQUFHLENBQUMsQ0FBQ0Y7NENBQ0oscUJBQ0UsUUFBQzdEO2dEQUVDOEMsV0FBVTtnREFDVmtCLFNBQVNILE9BQU9JLFlBQVk7Z0RBQzVCQyxpQkFBaUIsQ0FBQ2xCLFFBQ2hCYSxPQUFPTSxnQkFBZ0IsQ0FBQyxDQUFDLENBQUNuQjswREFHM0JhLE9BQU9PLEVBQUU7K0NBUExQLE9BQU9PLEVBQUU7Ozs7O3dDQVVwQjs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzBCQUtWLFFBQUN2QjtnQkFBSUMsV0FBVTswQkFDYixjQUFBLFFBQUMxQztvQkFBTTBDLFdBQVU7O3NDQUNmLFFBQUN0QztzQ0FDRW9CLE1BQU15QyxlQUFlLEdBQUdOLEdBQUcsQ0FBQyxDQUFDTyw0QkFDNUIsUUFBQzdEOzhDQUNFNkQsWUFBWUMsT0FBTyxDQUFDUixHQUFHLENBQUMsQ0FBQ1M7d0NBQ3hCLHFCQUNFLFFBQUNqRTtzREFDRWlFLE9BQU9DLGFBQWEsR0FDakIsT0FDQWxGLFdBQ0VpRixPQUFPWCxNQUFNLENBQUNhLFNBQVMsQ0FBQ0YsTUFBTSxFQUM5QkEsT0FBT0csVUFBVTsyQ0FMVEgsT0FBT0osRUFBRTs7Ozs7b0NBUzdCO21DQVphRSxZQUFZRixFQUFFOzs7Ozs7Ozs7O3NDQWdCakMsUUFBQy9EO3NDQUNFdUIsTUFBTWdELFdBQVcsR0FBR0MsSUFBSSxFQUFFQyxTQUN6QmxELE1BQU1nRCxXQUFXLEdBQUdDLElBQUksQ0FBQ2QsR0FBRyxDQUFDLENBQUNnQixvQkFDNUIsUUFBQ3RFO29DQUVDdUUsY0FBWUQsSUFBSUUsYUFBYSxNQUFNOzhDQUVsQ0YsSUFBSUcsZUFBZSxHQUFHbkIsR0FBRyxDQUFDLENBQUNvQixxQkFDMUIsUUFBQzdFO3NEQUNFZixXQUNDNEYsS0FBS3RCLE1BQU0sQ0FBQ2EsU0FBUyxDQUFDUyxJQUFJLEVBQzFCQSxLQUFLUixVQUFVOzJDQUhIUSxLQUFLZixFQUFFOzs7OzttQ0FKcEJXLElBQUlYLEVBQUU7Ozs7MERBY2YsUUFBQzNEOzBDQUNDLGNBQUEsUUFBQ0g7b0NBQ0M4RSxTQUFTckUsUUFBUStELE1BQU07b0NBQ3ZCaEMsV0FBVTs4Q0FDWDs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzBCQVFYLFFBQUNEO2dCQUFJQyxXQUFVOztrQ0FDYixRQUFDRDt3QkFBSUMsV0FBVTs7NEJBQ1psQixNQUFNeUQsMkJBQTJCLEdBQUdSLElBQUksQ0FBQ0MsTUFBTTs0QkFBQzs0QkFBSTs0QkFDcERsRCxNQUFNbkMsbUJBQW1CLEdBQUdvRixJQUFJLENBQUNDLE1BQU07NEJBQUM7Ozs7Ozs7a0NBRTNDLFFBQUNqQzt3QkFBSUMsV0FBVTs7MENBQ2IsUUFBQ2hEO2dDQUNDMkQsU0FBUTtnQ0FDUjZCLE1BQUs7Z0NBQ0wvQixTQUFTLElBQU0zQixNQUFNMkQsWUFBWTtnQ0FDakNDLFVBQVUsQ0FBQzVELE1BQU02RCxrQkFBa0I7MENBQ3BDOzs7Ozs7MENBR0QsUUFBQzNGO2dDQUNDMkQsU0FBUTtnQ0FDUjZCLE1BQUs7Z0NBQ0wvQixTQUFTLElBQU0zQixNQUFNOEQsUUFBUTtnQ0FDN0JGLFVBQVUsQ0FBQzVELE1BQU0rRCxjQUFjOzBDQUNoQzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBT1g7R0E1S2dCOUU7O1FBQ0tGO1FBWUxmOzs7S0FiQWlCIn0=

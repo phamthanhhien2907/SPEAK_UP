@@ -47,7 +47,6 @@ const ListCard = () => {
       });
     }
   };
-
   return (
     <div className="w-full h-full flex flex-col gap-4 px-4 relative">
       {/* Banner */}
@@ -109,7 +108,7 @@ const ListCard = () => {
               <div className="flex items-center gap-4">
                 <div
                   className={`flex-shrink-0 w-10 h-10 rounded-full text-white flex items-center justify-center font-semibold text-sm ${
-                    lesson.score >= 60
+                    lesson?.score >= 70
                       ? "bg-green-500"
                       : isLocked
                       ? "bg-gray-400"

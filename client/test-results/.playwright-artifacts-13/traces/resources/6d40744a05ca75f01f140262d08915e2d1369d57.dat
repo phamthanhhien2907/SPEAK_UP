@@ -1,0 +1,605 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/(User)/Public/route.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/(User)/Public/route.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"]; const _Fragment = __vite__cjsImport1_react_jsxDevRuntime["Fragment"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const lazy = __vite__cjsImport2_react["lazy"]; const Suspense = __vite__cjsImport2_react["Suspense"];
+import PublicPageWrapper from "/src/pages/(User)/Public/wrapper.tsx";
+const HomePage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Home/index.tsx?t=1749224350575"));
+_c = HomePage;
+const LessonPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Lesson/index.tsx"));
+_c1 = LessonPage;
+const SpeechPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Speech/index.tsx"));
+_c2 = SpeechPage;
+const PronunciationPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Pronunciation/index.tsx"));
+_c3 = PronunciationPage;
+const VocabularyPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Vocabulary/index.tsx"));
+_c4 = VocabularyPage;
+const TopicPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Topic/index.tsx"));
+_c5 = TopicPage;
+const ListTopicPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Topic/index.card.tsx"));
+_c6 = ListTopicPage;
+const TopicDetailsPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/Topic/_id.tsx"));
+_c7 = TopicDetailsPage;
+const TopicExcercisePage = /*#__PURE__*/ lazy(()=>import("/src/pages/(User)/TopicExcercise/index.tsx"));
+_c8 = TopicExcercisePage;
+import "/src/pages/(User)/Public/index.css";
+const publicRoutes = [
+    {
+        path: "/",
+        element: /*#__PURE__*/ _jsxDEV(PublicPageWrapper, {}, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+            lineNumber: 18,
+            columnNumber: 14
+        }, this),
+        children: [
+            {
+                path: "",
+                element: /*#__PURE__*/ _jsxDEV(HomePage, {}, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 22,
+                    columnNumber: 18
+                }, this),
+                index: true
+            },
+            {
+                path: "/lesson/:parentTopicId",
+                element: /*#__PURE__*/ _jsxDEV(LessonPage, {}, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 28,
+                    columnNumber: 18
+                }, this)
+            },
+            {
+                path: "/speech/:lessonId",
+                element: /*#__PURE__*/ _jsxDEV(Suspense, {
+                    fallback: /*#__PURE__*/ _jsxDEV("div", {
+                        id: "load",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: "G"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                lineNumber: 36,
+                                columnNumber: 17
+                            }, void 0),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: "N"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                lineNumber: 37,
+                                columnNumber: 17
+                            }, void 0),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: "I"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                lineNumber: 38,
+                                columnNumber: 17
+                            }, void 0),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: "D"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                lineNumber: 39,
+                                columnNumber: 17
+                            }, void 0),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: "A"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                lineNumber: 40,
+                                columnNumber: 17
+                            }, void 0),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: "O"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                lineNumber: 41,
+                                columnNumber: 17
+                            }, void 0),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: "L"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                lineNumber: 42,
+                                columnNumber: 17
+                            }, void 0)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 35,
+                        columnNumber: 15
+                    }, void 0),
+                    children: /*#__PURE__*/ _jsxDEV(SpeechPage, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 46,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 33,
+                    columnNumber: 11
+                }, this)
+            },
+            {
+                path: "/vocabulary/:lessonId",
+                element: /*#__PURE__*/ _jsxDEV(Suspense, {
+                    fallback: /*#__PURE__*/ _jsxDEV(_Fragment, {
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            id: "load",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "G"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 57,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "N"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 58,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "I"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 59,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "D"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 60,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "A"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 61,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "O"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 62,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "L"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 63,
+                                    columnNumber: 19
+                                }, void 0)
+                            ]
+                        }, void 0, true, {
+                            fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                            lineNumber: 56,
+                            columnNumber: 17
+                        }, void 0)
+                    }, void 0, false),
+                    children: /*#__PURE__*/ _jsxDEV(VocabularyPage, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 68,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 53,
+                    columnNumber: 11
+                }, this)
+            },
+            {
+                path: "/topic/",
+                element: /*#__PURE__*/ _jsxDEV(Suspense, {
+                    fallback: /*#__PURE__*/ _jsxDEV(_Fragment, {
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            id: "load",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "G"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 79,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "N"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 80,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "I"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 81,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "D"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 82,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "A"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 83,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "O"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 84,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "L"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 85,
+                                    columnNumber: 19
+                                }, void 0)
+                            ]
+                        }, void 0, true, {
+                            fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                            lineNumber: 78,
+                            columnNumber: 17
+                        }, void 0)
+                    }, void 0, false),
+                    children: /*#__PURE__*/ _jsxDEV(TopicPage, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 90,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 75,
+                    columnNumber: 11
+                }, this)
+            },
+            {
+                path: "/topic/:topicId",
+                element: /*#__PURE__*/ _jsxDEV(Suspense, {
+                    fallback: /*#__PURE__*/ _jsxDEV(_Fragment, {
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            id: "load",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "G"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 101,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "N"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 102,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "I"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 103,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "D"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 104,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "A"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 105,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "O"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 106,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "L"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 107,
+                                    columnNumber: 19
+                                }, void 0)
+                            ]
+                        }, void 0, true, {
+                            fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                            lineNumber: 100,
+                            columnNumber: 17
+                        }, void 0)
+                    }, void 0, false),
+                    children: /*#__PURE__*/ _jsxDEV(ListTopicPage, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 112,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 97,
+                    columnNumber: 11
+                }, this)
+            },
+            {
+                path: "/topic/:topicId/:title",
+                element: /*#__PURE__*/ _jsxDEV(Suspense, {
+                    fallback: /*#__PURE__*/ _jsxDEV(_Fragment, {
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            id: "load",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "G"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 123,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "N"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 124,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "I"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 125,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "D"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 126,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "A"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 127,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "O"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 128,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "L"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 129,
+                                    columnNumber: 19
+                                }, void 0)
+                            ]
+                        }, void 0, true, {
+                            fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                            lineNumber: 122,
+                            columnNumber: 17
+                        }, void 0)
+                    }, void 0, false),
+                    children: /*#__PURE__*/ _jsxDEV(TopicDetailsPage, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 134,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 119,
+                    columnNumber: 11
+                }, this)
+            },
+            {
+                path: "/topic-excercise/:lessonId/",
+                element: /*#__PURE__*/ _jsxDEV(Suspense, {
+                    fallback: /*#__PURE__*/ _jsxDEV(_Fragment, {
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            id: "load",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "G"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 145,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "N"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 146,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "I"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 147,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "D"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 148,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "A"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 149,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "O"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 150,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "L"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 151,
+                                    columnNumber: 19
+                                }, void 0)
+                            ]
+                        }, void 0, true, {
+                            fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                            lineNumber: 144,
+                            columnNumber: 17
+                        }, void 0)
+                    }, void 0, false),
+                    children: /*#__PURE__*/ _jsxDEV(TopicExcercisePage, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 156,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 141,
+                    columnNumber: 11
+                }, this)
+            },
+            {
+                path: "/pronunciation",
+                element: /*#__PURE__*/ _jsxDEV(Suspense, {
+                    fallback: /*#__PURE__*/ _jsxDEV(_Fragment, {
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            id: "load",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "G"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 167,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "N"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 168,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "I"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 169,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "D"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 170,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "A"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 171,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "O"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 172,
+                                    columnNumber: 19
+                                }, void 0),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    children: "L"
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                                    lineNumber: 173,
+                                    columnNumber: 19
+                                }, void 0)
+                            ]
+                        }, void 0, true, {
+                            fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                            lineNumber: 166,
+                            columnNumber: 17
+                        }, void 0)
+                    }, void 0, false),
+                    children: /*#__PURE__*/ _jsxDEV(PronunciationPage, {}, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                        lineNumber: 178,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(User)/Public/route.tsx",
+                    lineNumber: 163,
+                    columnNumber: 11
+                }, this)
+            }
+        ],
+        role: [
+            "student",
+            "teacher"
+        ]
+    }
+];
+export default publicRoutes;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8;
+$RefreshReg$(_c, "HomePage");
+$RefreshReg$(_c1, "LessonPage");
+$RefreshReg$(_c2, "SpeechPage");
+$RefreshReg$(_c3, "PronunciationPage");
+$RefreshReg$(_c4, "VocabularyPage");
+$RefreshReg$(_c5, "TopicPage");
+$RefreshReg$(_c6, "ListTopicPage");
+$RefreshReg$(_c7, "TopicDetailsPage");
+$RefreshReg$(_c8, "TopicExcercisePage");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/(User)/Public/route.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/(User)/Public/route.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBsYXp5LCBTdXNwZW5zZSB9IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQgeyBSb3V0ZU9iamVjdCB9IGZyb20gXCJyZWFjdC1yb3V0ZXItZG9tXCI7XHJcbmltcG9ydCBQdWJsaWNQYWdlV3JhcHBlciBmcm9tIFwiLi93cmFwcGVyXCI7XHJcbmNvbnN0IEhvbWVQYWdlID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuLi9Ib21lL2luZGV4XCIpKTtcclxuY29uc3QgTGVzc29uUGFnZSA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi4vTGVzc29uL2luZGV4XCIpKTtcclxuY29uc3QgU3BlZWNoUGFnZSA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi4vU3BlZWNoL2luZGV4XCIpKTtcclxuY29uc3QgUHJvbnVuY2lhdGlvblBhZ2UgPSBsYXp5KCgpID0+IGltcG9ydChcIi4uL1Byb251bmNpYXRpb24vaW5kZXhcIikpO1xyXG5jb25zdCBWb2NhYnVsYXJ5UGFnZSA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi4vVm9jYWJ1bGFyeS9pbmRleFwiKSk7XHJcbmNvbnN0IFRvcGljUGFnZSA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi4vVG9waWMvaW5kZXhcIikpO1xyXG5jb25zdCBMaXN0VG9waWNQYWdlID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuLi9Ub3BpYy9pbmRleC5jYXJkXCIpKTtcclxuY29uc3QgVG9waWNEZXRhaWxzUGFnZSA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi4vVG9waWMvX2lkXCIpKTtcclxuY29uc3QgVG9waWNFeGNlcmNpc2VQYWdlID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuLi9Ub3BpY0V4Y2VyY2lzZS9pbmRleFwiKSk7XHJcbmltcG9ydCBcIi4vaW5kZXguY3NzXCI7XHJcblxyXG5jb25zdCBwdWJsaWNSb3V0ZXM6IChSb3V0ZU9iamVjdCAmIHsgcm9sZT86IHN0cmluZ1tdIH0pW10gPSBbXHJcbiAge1xyXG4gICAgcGF0aDogXCIvXCIsXHJcbiAgICBlbGVtZW50OiA8UHVibGljUGFnZVdyYXBwZXIgLz4sXHJcbiAgICBjaGlsZHJlbjogW1xyXG4gICAgICB7XHJcbiAgICAgICAgcGF0aDogXCJcIixcclxuICAgICAgICBlbGVtZW50OiA8SG9tZVBhZ2UgLz4sXHJcbiAgICAgICAgaW5kZXg6IHRydWUsXHJcbiAgICAgIH0sXHJcblxyXG4gICAgICB7XHJcbiAgICAgICAgcGF0aDogXCIvbGVzc29uLzpwYXJlbnRUb3BpY0lkXCIsXHJcbiAgICAgICAgZWxlbWVudDogPExlc3NvblBhZ2UgLz4sXHJcbiAgICAgIH0sXHJcbiAgICAgIHtcclxuICAgICAgICBwYXRoOiBcIi9zcGVlY2gvOmxlc3NvbklkXCIsXHJcbiAgICAgICAgZWxlbWVudDogKFxyXG4gICAgICAgICAgPFN1c3BlbnNlXHJcbiAgICAgICAgICAgIGZhbGxiYWNrPXtcclxuICAgICAgICAgICAgICA8ZGl2IGlkPVwibG9hZFwiPlxyXG4gICAgICAgICAgICAgICAgPGRpdj5HPC9kaXY+XHJcbiAgICAgICAgICAgICAgICA8ZGl2Pk48L2Rpdj5cclxuICAgICAgICAgICAgICAgIDxkaXY+STwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPGRpdj5EPC9kaXY+XHJcbiAgICAgICAgICAgICAgICA8ZGl2PkE8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDxkaXY+TzwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPGRpdj5MPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPFNwZWVjaFBhZ2UgLz5cclxuICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgKSxcclxuICAgICAgfSxcclxuICAgICAge1xyXG4gICAgICAgIHBhdGg6IFwiL3ZvY2FidWxhcnkvOmxlc3NvbklkXCIsXHJcbiAgICAgICAgZWxlbWVudDogKFxyXG4gICAgICAgICAgPFN1c3BlbnNlXHJcbiAgICAgICAgICAgIGZhbGxiYWNrPXtcclxuICAgICAgICAgICAgICA8PlxyXG4gICAgICAgICAgICAgICAgPGRpdiBpZD1cImxvYWRcIj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5HPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+TjwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pkk8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5EPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+QTwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pk88L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5MPC9kaXY+XHJcbiAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICA8Lz5cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICA8Vm9jYWJ1bGFyeVBhZ2UgLz5cclxuICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgKSxcclxuICAgICAgfSxcclxuICAgICAge1xyXG4gICAgICAgIHBhdGg6IFwiL3RvcGljL1wiLFxyXG4gICAgICAgIGVsZW1lbnQ6IChcclxuICAgICAgICAgIDxTdXNwZW5zZVxyXG4gICAgICAgICAgICBmYWxsYmFjaz17XHJcbiAgICAgICAgICAgICAgPD5cclxuICAgICAgICAgICAgICAgIDxkaXYgaWQ9XCJsb2FkXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+RzwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pk48L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5JPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+RDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2PkE8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5PPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+TDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC8+XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPFRvcGljUGFnZSAvPlxyXG4gICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICApLFxyXG4gICAgICB9LFxyXG4gICAgICB7XHJcbiAgICAgICAgcGF0aDogXCIvdG9waWMvOnRvcGljSWRcIixcclxuICAgICAgICBlbGVtZW50OiAoXHJcbiAgICAgICAgICA8U3VzcGVuc2VcclxuICAgICAgICAgICAgZmFsbGJhY2s9e1xyXG4gICAgICAgICAgICAgIDw+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IGlkPVwibG9hZFwiPlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pkc8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5OPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+STwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2PkQ8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5BPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+TzwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pkw8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgIDwvPlxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIDxMaXN0VG9waWNQYWdlIC8+XHJcbiAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICksXHJcbiAgICAgIH0sXHJcbiAgICAgIHtcclxuICAgICAgICBwYXRoOiBcIi90b3BpYy86dG9waWNJZC86dGl0bGVcIixcclxuICAgICAgICBlbGVtZW50OiAoXHJcbiAgICAgICAgICA8U3VzcGVuc2VcclxuICAgICAgICAgICAgZmFsbGJhY2s9e1xyXG4gICAgICAgICAgICAgIDw+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IGlkPVwibG9hZFwiPlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pkc8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5OPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+STwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2PkQ8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5BPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+TzwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pkw8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgIDwvPlxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIDxUb3BpY0RldGFpbHNQYWdlIC8+XHJcbiAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICksXHJcbiAgICAgIH0sXHJcbiAgICAgIHtcclxuICAgICAgICBwYXRoOiBcIi90b3BpYy1leGNlcmNpc2UvOmxlc3NvbklkL1wiLFxyXG4gICAgICAgIGVsZW1lbnQ6IChcclxuICAgICAgICAgIDxTdXNwZW5zZVxyXG4gICAgICAgICAgICBmYWxsYmFjaz17XHJcbiAgICAgICAgICAgICAgPD5cclxuICAgICAgICAgICAgICAgIDxkaXYgaWQ9XCJsb2FkXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+RzwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pk48L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5JPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+RDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2PkE8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5PPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+TDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC8+XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPFRvcGljRXhjZXJjaXNlUGFnZSAvPlxyXG4gICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICApLFxyXG4gICAgICB9LFxyXG4gICAgICB7XHJcbiAgICAgICAgcGF0aDogXCIvcHJvbnVuY2lhdGlvblwiLFxyXG4gICAgICAgIGVsZW1lbnQ6IChcclxuICAgICAgICAgIDxTdXNwZW5zZVxyXG4gICAgICAgICAgICBmYWxsYmFjaz17XHJcbiAgICAgICAgICAgICAgPD5cclxuICAgICAgICAgICAgICAgIDxkaXYgaWQ9XCJsb2FkXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+RzwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2Pk48L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5JPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+RDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2PkE8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPGRpdj5PPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXY+TDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPC8+XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPFByb251bmNpYXRpb25QYWdlIC8+XHJcbiAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICksXHJcbiAgICAgIH0sXHJcbiAgICBdLFxyXG4gICAgcm9sZTogW1wic3R1ZGVudFwiLCBcInRlYWNoZXJcIl0sXHJcbiAgfSxcclxuXTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IHB1YmxpY1JvdXRlcztcclxuIl0sIm5hbWVzIjpbImxhenkiLCJTdXNwZW5zZSIsIlB1YmxpY1BhZ2VXcmFwcGVyIiwiSG9tZVBhZ2UiLCJMZXNzb25QYWdlIiwiU3BlZWNoUGFnZSIsIlByb251bmNpYXRpb25QYWdlIiwiVm9jYWJ1bGFyeVBhZ2UiLCJUb3BpY1BhZ2UiLCJMaXN0VG9waWNQYWdlIiwiVG9waWNEZXRhaWxzUGFnZSIsIlRvcGljRXhjZXJjaXNlUGFnZSIsInB1YmxpY1JvdXRlcyIsInBhdGgiLCJlbGVtZW50IiwiY2hpbGRyZW4iLCJpbmRleCIsImZhbGxiYWNrIiwiZGl2IiwiaWQiLCJyb2xlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBQSxTQUFTQSxJQUFJLEVBQUVDLFFBQVEsUUFBUSxRQUFRO0FBRXZDLE9BQU9DLHVCQUF1QixZQUFZO0FBQzFDLE1BQU1DLHlCQUFXSCxLQUFLLElBQU0sTUFBTSxDQUFDO0tBQTdCRztBQUNOLE1BQU1DLDJCQUFhSixLQUFLLElBQU0sTUFBTSxDQUFDO01BQS9CSTtBQUNOLE1BQU1DLDJCQUFhTCxLQUFLLElBQU0sTUFBTSxDQUFDO01BQS9CSztBQUNOLE1BQU1DLGtDQUFvQk4sS0FBSyxJQUFNLE1BQU0sQ0FBQztNQUF0Q007QUFDTixNQUFNQywrQkFBaUJQLEtBQUssSUFBTSxNQUFNLENBQUM7TUFBbkNPO0FBQ04sTUFBTUMsMEJBQVlSLEtBQUssSUFBTSxNQUFNLENBQUM7TUFBOUJRO0FBQ04sTUFBTUMsOEJBQWdCVCxLQUFLLElBQU0sTUFBTSxDQUFDO01BQWxDUztBQUNOLE1BQU1DLGlDQUFtQlYsS0FBSyxJQUFNLE1BQU0sQ0FBQztNQUFyQ1U7QUFDTixNQUFNQyxtQ0FBcUJYLEtBQUssSUFBTSxNQUFNLENBQUM7TUFBdkNXO0FBQ04sT0FBTyxjQUFjO0FBRXJCLE1BQU1DLGVBQXNEO0lBQzFEO1FBQ0VDLE1BQU07UUFDTkMsdUJBQVMsUUFBQ1o7Ozs7O1FBQ1ZhLFVBQVU7WUFDUjtnQkFDRUYsTUFBTTtnQkFDTkMsdUJBQVMsUUFBQ1g7Ozs7O2dCQUNWYSxPQUFPO1lBQ1Q7WUFFQTtnQkFDRUgsTUFBTTtnQkFDTkMsdUJBQVMsUUFBQ1Y7Ozs7O1lBQ1o7WUFDQTtnQkFDRVMsTUFBTTtnQkFDTkMsdUJBQ0UsUUFBQ2I7b0JBQ0NnQix3QkFDRSxRQUFDQzt3QkFBSUMsSUFBRzs7MENBQ04sUUFBQ0Q7MENBQUk7Ozs7OzswQ0FDTCxRQUFDQTswQ0FBSTs7Ozs7OzBDQUNMLFFBQUNBOzBDQUFJOzs7Ozs7MENBQ0wsUUFBQ0E7MENBQUk7Ozs7OzswQ0FDTCxRQUFDQTswQ0FBSTs7Ozs7OzBDQUNMLFFBQUNBOzBDQUFJOzs7Ozs7MENBQ0wsUUFBQ0E7MENBQUk7Ozs7Ozs7Ozs7Ozs4QkFJVCxjQUFBLFFBQUNiOzs7Ozs7Ozs7O1lBR1A7WUFDQTtnQkFDRVEsTUFBTTtnQkFDTkMsdUJBQ0UsUUFBQ2I7b0JBQ0NnQix3QkFDRTtrQ0FDRSxjQUFBLFFBQUNDOzRCQUFJQyxJQUFHOzs4Q0FDTixRQUFDRDs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7Ozs7Ozs7Ozs4QkFLWCxjQUFBLFFBQUNYOzs7Ozs7Ozs7O1lBR1A7WUFDQTtnQkFDRU0sTUFBTTtnQkFDTkMsdUJBQ0UsUUFBQ2I7b0JBQ0NnQix3QkFDRTtrQ0FDRSxjQUFBLFFBQUNDOzRCQUFJQyxJQUFHOzs4Q0FDTixRQUFDRDs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7Ozs7Ozs7Ozs4QkFLWCxjQUFBLFFBQUNWOzs7Ozs7Ozs7O1lBR1A7WUFDQTtnQkFDRUssTUFBTTtnQkFDTkMsdUJBQ0UsUUFBQ2I7b0JBQ0NnQix3QkFDRTtrQ0FDRSxjQUFBLFFBQUNDOzRCQUFJQyxJQUFHOzs4Q0FDTixRQUFDRDs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7Ozs7Ozs7Ozs4QkFLWCxjQUFBLFFBQUNUOzs7Ozs7Ozs7O1lBR1A7WUFDQTtnQkFDRUksTUFBTTtnQkFDTkMsdUJBQ0UsUUFBQ2I7b0JBQ0NnQix3QkFDRTtrQ0FDRSxjQUFBLFFBQUNDOzRCQUFJQyxJQUFHOzs4Q0FDTixRQUFDRDs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7Ozs7Ozs7Ozs4QkFLWCxjQUFBLFFBQUNSOzs7Ozs7Ozs7O1lBR1A7WUFDQTtnQkFDRUcsTUFBTTtnQkFDTkMsdUJBQ0UsUUFBQ2I7b0JBQ0NnQix3QkFDRTtrQ0FDRSxjQUFBLFFBQUNDOzRCQUFJQyxJQUFHOzs4Q0FDTixRQUFDRDs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7Ozs7Ozs7Ozs4QkFLWCxjQUFBLFFBQUNQOzs7Ozs7Ozs7O1lBR1A7WUFDQTtnQkFDRUUsTUFBTTtnQkFDTkMsdUJBQ0UsUUFBQ2I7b0JBQ0NnQix3QkFDRTtrQ0FDRSxjQUFBLFFBQUNDOzRCQUFJQyxJQUFHOzs4Q0FDTixRQUFDRDs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7OzhDQUNMLFFBQUNBOzhDQUFJOzs7Ozs7OENBQ0wsUUFBQ0E7OENBQUk7Ozs7Ozs4Q0FDTCxRQUFDQTs4Q0FBSTs7Ozs7Ozs7Ozs7Ozs4QkFLWCxjQUFBLFFBQUNaOzs7Ozs7Ozs7O1lBR1A7U0FDRDtRQUNEYyxNQUFNO1lBQUM7WUFBVztTQUFVO0lBQzlCO0NBQ0Q7QUFFRCxlQUFlUixhQUFhIn0=

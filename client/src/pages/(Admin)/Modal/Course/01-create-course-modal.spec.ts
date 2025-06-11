@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-test.describe('create course modals', () => {
+test.describe('create topic modals', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5173/auth'); // Đổi lại URL nếu khác
     });
 
-    test('renders cours dashboard ', async ({ page }) => {
+    test('renders topic dashboard ', async ({ page }) => {
         // Đảm bảo đã login và chuyển trang
         await page.fill('input[name="email"]', 'admin@gmail.com');
         await page.fill('input[name="password"]', 'Admin123@');
@@ -16,7 +16,7 @@ test.describe('create course modals', () => {
         await page.getByText(/course/i).click();
         await page.waitForTimeout(3000); // Đợi 3 giây
         await page.getByRole('button', { name: /add new course/i }).click();
-        await page.waitForTimeout(3000); // Đợi 3 giây
+        await page.waitForTimeout(2000); // Đợi 3 giây
 
         // Chờ input ở dashboard xuất hiện rồi mới fill
         const dashboardTitleInput = page.locator('input[name="title"]');
@@ -26,8 +26,8 @@ test.describe('create course modals', () => {
         await page.waitForTimeout(3000); // Đợi 3 giây
         const dashboardDescriptionInput = page.locator('input[name="description"]');
         await expect(dashboardDescriptionInput).toBeVisible();
-        await dashboardDescriptionInput.fill('Suspendisse ut ultrices nunc. Vivamus tempus magna nec ligula imperdiet accumsan. Praesent sollicitudin elit lorem, et blandit ex finibus at. Vestibulum accumsan turpis metus, nec suscipit est aliquam ut. Aenean luctus nunc lectus, nec lobortis elit rhoncus et. Quisque interdum magna ut turpis vehicula gravida. Suspendisse velit elit, dignissim vitae ornare nec, rutrum et lacus. Mauris sed arcu nec eros varius elementum at nec ipsum. Maecenas pretium vel ex eget vehicula. Etiam quis risus nibh. Etiam arcu augue, tempus eu neque a, rhoncus placerat eros. Praesent laoreet mauris eget ante convallis laoreet. Aliquam vel lacinia neque, sed dictum neque. Praesent nec justo euismod, sagittis nisi et, fermentum massa.');
-        await page.waitForTimeout(3000); // Đợi 3 giây
+        await dashboardDescriptionInput.fill('Suspendisse ut ultrices nunc. Vivamus tempus magna nec ligula imperdiet accumsan. Praesent sollicitudin elit lorem, et blandit ex finibus at. Vestibulum accumsan turpis metus, nec suscipit est aliquam ut. Aenean luctus nunc lectus');
+        await page.waitForTimeout(2000); // Đợi 3 giây
 
         // Click mở combobox (nên dùng selector đúng với button mở dropdown)
         await page.getByRole('combobox', { name: /level/i }).click();

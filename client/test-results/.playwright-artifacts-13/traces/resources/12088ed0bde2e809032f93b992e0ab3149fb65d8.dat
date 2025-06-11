@@ -1,0 +1,8 @@
+export var UserType = /*#__PURE__*/ function(UserType) {
+    UserType["STUDENT"] = "student";
+    UserType["TEACHER"] = "teacher";
+    UserType["ADMIN"] = "admin";
+    return UserType;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZXIudHMiXSwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IHR5cGUgVXNlciA9IHtcclxuICAgIF9pZD86IHN0cmluZztcclxuICAgIHVzZXJuYW1lPzogc3RyaW5nO1xyXG4gICAgZW1haWw/OiBzdHJpbmc7XHJcbiAgICByb2xlPzogXCJzdHVkZW50XCIgfCBcInRlYWNoZXJcIiB8IFwiYWRtaW5cIjtcclxuICAgIGxldmVsPzogbnVtYmVyO1xyXG4gICAgZmlyc3RuYW1lPzogc3RyaW5nO1xyXG4gICAgbGFzdG5hbWU/OiBzdHJpbmc7XHJcbiAgICBwYXNzd29yZD86IHN0cmluZztcclxuICAgIGF2YXRhcj86IHN0cmluZztcclxuICAgIGNyZWF0ZWRBdD86IERhdGU7XHJcbiAgICB1cGRhdGVkQXQ/OiBEYXRlO1xyXG4gICAgdG90YWxfc2NvcmU/OiBudW1iZXI7XHJcbn07XHJcbmV4cG9ydCBlbnVtIFVzZXJUeXBlIHtcclxuICAgIFNUVURFTlQgPSBcInN0dWRlbnRcIixcclxuICAgIFRFQUNIRVIgPSBcInRlYWNoZXJcIixcclxuICAgIEFETUlOID0gXCJhZG1pblwiLFxyXG59XHJcblxyXG4iXSwibmFtZXMiOlsiVXNlclR5cGUiXSwibWFwcGluZ3MiOiJBQWNBLE9BQU8sSUFBQSxBQUFLQSxrQ0FBQUE7Ozs7V0FBQUE7TUFJWCJ9

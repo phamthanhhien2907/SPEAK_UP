@@ -43,14 +43,12 @@ interface PronunciationAnalysisResult {
 const Vocabulary = () => {
   const [vocabulary, setVocabulary] = useState<VocabularyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isCorrect, setIsCorrect] = useState<
-    "correct" | "nearly" | "incorrect" | null
-  >(null);
+  const [wordScores, setWordScores] = useState<{ [key: number]: number }>({});
+  const [totalscore, setTotalscore] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
-  const [phonemeScore, setPhonemeScore] = useState(0);
   const [showExtraInfo, setShowExtraInfo] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lettersOfWordAreCorrect, setLettersOfWordAreCorrect] = useState<
@@ -58,6 +56,8 @@ const Vocabulary = () => {
   >([]);
   const [voiceSynthRef, setVoiceSynthRef] =
     useState<SpeechSynthesisVoice | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
@@ -105,6 +105,7 @@ const Vocabulary = () => {
       setError("Failed to load vocabulary. Please try again.");
     }
   };
+
   useEffect(() => {
     if (lessonId) {
       getVocabularyByLessonId(lessonId);
@@ -112,6 +113,28 @@ const Vocabulary = () => {
       setError("Invalid lesson ID.");
     }
   }, [lessonId]);
+
+  const getCorrectLetterCount = (lettersCorrect: string) => {
+    let correctLetterCount = 0;
+    for (
+      let letter_idx = 0;
+      letter_idx < lettersCorrect?.length;
+      letter_idx++
+    ) {
+      if (lettersCorrect[letter_idx] === "1") {
+        correctLetterCount++;
+      }
+    }
+    return correctLetterCount;
+  };
+
+  const currentVocab = vocabulary[currentIndex];
+  const lettersCorrect = lettersOfWordAreCorrect[0];
+  const totalCountIsCorrect = getCorrectLetterCount(lettersCorrect);
+  const score =
+    totalCountIsCorrect > 0
+      ? (totalCountIsCorrect / currentVocab?.word?.length) * 100
+      : 0;
 
   const handlePlayAudio = (audioUrl: string) => {
     const audio = new Audio(audioUrl);
@@ -149,11 +172,15 @@ const Vocabulary = () => {
           type: "audio/webm",
         });
         const base64Audio = await convertAudioToBase64(blob);
+        setIsProcessing(true);
         await evaluateSpeechWithPython(base64Audio);
+        setIsProcessing(false);
       };
+      recorder.start();
     } catch (error) {
       console.error("Media device error:", error);
       setError("Failed to access microphone. Please check permissions.");
+      setIsRecording(false);
     }
   };
 
@@ -216,36 +243,28 @@ const Vocabulary = () => {
       if (data.error) {
         throw new Error(data.error);
       }
-
-      const phonemeScore = data.accuracy || 0;
-      setPhonemeScore(phonemeScore);
-
-      setIsCorrect(
-        phonemeScore > 60
-          ? "correct"
-          : phonemeScore >= 40
-          ? "nearly"
-          : "incorrect"
-      );
       setIsChecked(true);
-      setTotalCount((prev) => prev + 1);
-
-      if (phonemeScore > 60) {
+      const lettersCorrect = data.is_letter_correct_all_words;
+      const correctLetterCount = getCorrectLetterCount(lettersCorrect);
+      const wordScore =
+        correctLetterCount > 0
+          ? (correctLetterCount / currentVocab.word.length) * 100
+          : 0;
+      console.log("wordScore", wordScore);
+      if (wordScore > 70) {
+        setTotalCount((prev) => prev + 1);
         setCorrectCount((prev) => prev + 1);
       }
 
       // Store letter correctness data
-      setLettersOfWordAreCorrect(data.is_letter_correct_all_words.split(" "));
+      setLettersOfWordAreCorrect(lettersCorrect.split(" "));
+      playFeedbackAudio(wordScore);
 
-      playFeedbackAudio(phonemeScore);
-
-      if (userData?._id && lessonId) {
-        await apiUpdateLessonProgressByLessonId(lessonId, {
-          userId: userData._id,
-          score: Math.round(phonemeScore),
-          isCompleted: false,
-        });
-      }
+      // Update word score for current index
+      setWordScores((prev) => ({
+        ...prev,
+        [currentIndex]: wordScore,
+      }));
     } catch (error: any) {
       console.error("Error sending audio to Python server:", error);
       setError(
@@ -253,6 +272,14 @@ const Vocabulary = () => {
       );
     }
   };
+  // Update total score whenever wordScores changes
+  useEffect(() => {
+    const total = Object.values(wordScores).reduce(
+      (sum, score) => sum + score,
+      0
+    );
+    setTotalscore(total);
+  }, [wordScores]);
 
   const handleStartSpeaking = async () => {
     if (!vocabulary[currentIndex]) {
@@ -262,41 +289,41 @@ const Vocabulary = () => {
     if (
       browserSupportsSpeechRecognition &&
       isMicrophoneAvailable &&
-      !listening
+      !isProcessing
     ) {
-      resetTranscript();
-      setIsChecked(false);
-      setIsCorrect(null);
-      setPhonemeScore(0);
-      setError(null);
-      setLettersOfWordAreCorrect([]);
-      await startMediaRecorder();
-      mediaRecorderRef.current?.start();
-      SpeechRecognition.startListening({
-        continuous: false,
-        language: "en-US",
-      });
-      setTimeout(() => {
+      if (!isRecording) {
+        resetTranscript();
+        setIsChecked(false);
+        setError(null);
+        setLettersOfWordAreCorrect([]);
+        await startMediaRecorder();
+        setIsRecording(true);
+        SpeechRecognition.startListening({
+          continuous: false,
+          language: "en-US",
+        });
+      } else {
+        setIsRecording(false);
         mediaRecorderRef.current?.stop();
         SpeechRecognition.stopListening();
-      }, 3000); // Record for 3 seconds
+      }
     } else {
       setError("Microphone or speech recognition not available.");
     }
   };
 
   useEffect(() => {
-    if (!listening && mediaRecorderRef.current) {
+    if (!listening && mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
+      setIsRecording(false);
     }
-  }, [listening]);
+  }, [listening, isRecording]);
+  const totalScoreFinal = (totalscore / (vocabulary?.length * 100)) * 100;
 
   const handleNext = async () => {
     if (currentIndex < vocabulary.length - 1) {
       setCurrentIndex(currentIndex + 1);
-      setIsCorrect(null);
       setIsChecked(false);
-      setPhonemeScore(0);
       setError(null);
       setLettersOfWordAreCorrect([]);
       resetTranscript();
@@ -305,9 +332,7 @@ const Vocabulary = () => {
       if (userData?._id && lessonId) {
         await apiUpdateLessonProgressByLessonId(lessonId, {
           userId: userData._id,
-          score: Math.round(
-            totalCount > 0 ? (correctCount / totalCount) * 100 : 0
-          ),
+          score: Math.round(totalScoreFinal),
           isCompleted: true,
         });
       }
@@ -315,9 +340,7 @@ const Vocabulary = () => {
   };
 
   const handleRetry = () => {
-    setIsCorrect(null);
     setIsChecked(false);
-    setPhonemeScore(0);
     setError(null);
     setLettersOfWordAreCorrect([]);
     resetTranscript();
@@ -326,13 +349,13 @@ const Vocabulary = () => {
   const handleRetryLesson = () => {
     setIsCompleted(false);
     setCurrentIndex(0);
-    setIsCorrect(null);
     setIsChecked(false);
-    setPhonemeScore(0);
     setCorrectCount(0);
     setTotalCount(0);
     setError(null);
     setLettersOfWordAreCorrect([]);
+    setWordScores({});
+    setTotalscore(0);
     resetTranscript();
   };
 
@@ -356,9 +379,8 @@ const Vocabulary = () => {
     }
 
     const word = currentVocab.word;
-    const lettersCorrect = lettersOfWordAreCorrect[0]; // Single word, so take first element
+    const lettersCorrect = lettersOfWordAreCorrect[0];
     const coloredLetters: JSX.Element[] = [];
-
     for (let letter_idx = 0; letter_idx < word.length; letter_idx++) {
       const letterIsCorrect = lettersCorrect?.[letter_idx] === "1";
       const colorClass = letterIsCorrect ? "text-green-600" : "text-red-600";
@@ -389,7 +411,7 @@ const Vocabulary = () => {
 
   if (vocabulary.length === 0) {
     return (
-      <div className="text-center mt-20 text-lg text-gray-500">
+      <div className="text-center mt-20 text-lg text-gray-600">
         Đang tải dữ liệu...
       </div>
     );
@@ -404,18 +426,15 @@ const Vocabulary = () => {
     );
   }
 
-  const currentVocab = vocabulary[currentIndex];
-
   if (isCompleted) {
-    const score = totalCount > 0 ? (correctCount / totalCount) * 100 : 0;
     return (
-      <div className="w that-full h-full p-4 flex flex-col items-center justify-center">
-        {score >= 60 ? (
+      <div className="w-full h-full p-4 flex flex-col items-center justify-center">
+        {totalScoreFinal >= 70 ? (
           <>
             <h2 className="text-3xl font-bold text-green-600">Hoàn thành!</h2>
             <p className="text-lg mt-4">
               Bạn đã hoàn thành tất cả từ vựng trong bài học với{" "}
-              {Math.round(score)}% đúng.
+              {Math.round(totalScoreFinal)}% đúng.
             </p>
             <button
               onClick={handleBack}
@@ -430,8 +449,8 @@ const Vocabulary = () => {
               Bài tập chưa hoàn thành
             </h2>
             <p className="text-lg mt-4">
-              Bạn chỉ đạt {Math.round(score)}% đúng. Điểm tối thiểu để hoàn
-              thành là 60%.
+              Bạn chỉ đạt {Math.round(totalScoreFinal)}% đúng. Điểm tối thiểu để
+              hoàn thành là 70%.
             </p>
             <div className="flex items-center justify-center gap-4">
               <button
@@ -454,7 +473,7 @@ const Vocabulary = () => {
   }
 
   return (
-    <div className="w-full h-full flex justify-center  items-start p-6 bg-gray-100">
+    <div className="w-full h-full flex justify-center items-start p-6 bg-gray-100">
       <div className="w-full max-w-5xl space-y-6 flex items-center flex-col">
         <div className="flex justify-end items-center w-full">
           <button
@@ -496,14 +515,14 @@ const Vocabulary = () => {
             <button
               onClick={handleStartSpeaking}
               className={`flex items-center gap-2 px-6 py-3 rounded-full shadow ${
-                listening
+                isRecording
                   ? "bg-red-600 hover:bg-red-700"
                   : "bg-blue-600 hover:bg-blue-700"
               } text-white`}
-              disabled={listening}
+              disabled={isProcessing}
             >
               <FaMicrophone />
-              {listening ? "Đang nghe..." : "Nói"}
+              {isRecording ? "Dừng" : "Nói"}
             </button>
           </div>
         )}
@@ -512,19 +531,19 @@ const Vocabulary = () => {
           <div className="w-full max-w-3xl flex flex-col items-center gap-4">
             <div className="flex items-center gap-4">
               <span className="text-4xl">
-                {phonemeScore > 60 ? "😊" : phonemeScore >= 40 ? "😐" : "😞"}
+                {score > 70 ? "😊" : score >= 40 ? "😐" : "😞"}
               </span>
               <div>
                 <p className="text-xl font-semibold text-gray-800">
-                  {phonemeScore > 60
+                  {score > 60
                     ? "Excellent!"
-                    : phonemeScore >= 40
+                    : score >= 40
                     ? "Good!"
                     : "Try Again!"}
                 </p>
                 <p className="text-lg text-gray-600">
-                  You sound {Math.max(0, Math.round(phonemeScore))}% like a
-                  native speaker!
+                  You sound {Math.max(0, Math.round(score))}% like a native
+                  speaker!
                 </p>
               </div>
               <div className="relative w-16 h-16">
@@ -542,12 +561,12 @@ const Vocabulary = () => {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="4"
-                    strokeDasharray={`${phonemeScore}, 100`}
+                    strokeDasharray={`${score}, 100`}
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-lg font-semibold text-gray-800">
-                    {Math.round(phonemeScore)}%
+                    {Math.round(score)}%
                   </span>
                 </div>
               </div>
@@ -559,12 +578,14 @@ const Vocabulary = () => {
               >
                 Làm lại
               </button>
-              <button
-                onClick={handleNext}
-                className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700"
-              >
-                Tiếp tục
-              </button>
+              {score >= 70 && (
+                <button
+                  onClick={handleNext}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700"
+                >
+                  Tiếp tục
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -581,7 +602,7 @@ const Vocabulary = () => {
         {showExtraInfo && (
           <div className="bg-white shadow-md border opacity-80 border-gray-200 rounded-xl p-6 w-full max-w-3xl text-center space-y-2">
             <p className="text-gray-700 italic">{currentVocab.meaning}</p>
-            <p className=" text-gray-500 italic">
+            <p className="text-gray-500 italic">
               {currentVocab.exampleSentence}
             </p>
           </div>

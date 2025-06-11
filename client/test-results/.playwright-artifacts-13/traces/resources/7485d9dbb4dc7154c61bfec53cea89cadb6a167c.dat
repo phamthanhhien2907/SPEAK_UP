@@ -1,0 +1,35 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/hooks/use-context.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/hooks/use-context.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+var _s = $RefreshSig$();
+import __vite__cjsImport1_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const createContext = __vite__cjsImport1_react["createContext"]; const useContext = __vite__cjsImport1_react["useContext"];
+export const SelectedPageContext = /*#__PURE__*/ createContext(undefined);
+export const useSelectedPageContext = ()=>{
+    _s();
+    const context = useContext(SelectedPageContext);
+    if (!context) {
+        throw new Error("useSelectedPageContext must be used within a SelectedPageProvider");
+    }
+    return context;
+};
+_s(useSelectedPageContext, "b9L3QQ+jgeyIrH0NfHrJ8nn7VMU=");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/hooks/use-context.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/hooks/use-context.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZS1jb250ZXh0LnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBjcmVhdGVDb250ZXh0LCB1c2VDb250ZXh0IH0gZnJvbSBcInJlYWN0XCI7XHJcbmV4cG9ydCB0eXBlIFNlbGVjdGVkUGFnZVByb3BzID0ge1xyXG4gIHNlbGVjdGVkUGFnZTogc3RyaW5nO1xyXG4gIHNldFNlbGVjdGVkUGFnZTogKGM6IHN0cmluZykgPT4gdm9pZDtcclxufTtcclxuZXhwb3J0IGNvbnN0IFNlbGVjdGVkUGFnZUNvbnRleHQgPSBjcmVhdGVDb250ZXh0PFNlbGVjdGVkUGFnZVByb3BzIHwgdW5kZWZpbmVkPihcclxuICB1bmRlZmluZWRcclxuKTtcclxuXHJcbmV4cG9ydCBjb25zdCB1c2VTZWxlY3RlZFBhZ2VDb250ZXh0ID0gKCkgPT4ge1xyXG4gIGNvbnN0IGNvbnRleHQgPSB1c2VDb250ZXh0KFNlbGVjdGVkUGFnZUNvbnRleHQpO1xyXG4gIGlmICghY29udGV4dCkge1xyXG4gICAgdGhyb3cgbmV3IEVycm9yKFxyXG4gICAgICBcInVzZVNlbGVjdGVkUGFnZUNvbnRleHQgbXVzdCBiZSB1c2VkIHdpdGhpbiBhIFNlbGVjdGVkUGFnZVByb3ZpZGVyXCJcclxuICAgICk7XHJcbiAgfVxyXG4gIHJldHVybiBjb250ZXh0O1xyXG59O1xyXG4iXSwibmFtZXMiOlsiY3JlYXRlQ29udGV4dCIsInVzZUNvbnRleHQiLCJTZWxlY3RlZFBhZ2VDb250ZXh0IiwidW5kZWZpbmVkIiwidXNlU2VsZWN0ZWRQYWdlQ29udGV4dCIsImNvbnRleHQiLCJFcnJvciJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUEsU0FBU0EsYUFBYSxFQUFFQyxVQUFVLFFBQVEsUUFBUTtBQUtsRCxPQUFPLE1BQU1DLG9DQUFzQkYsY0FDakNHLFdBQ0E7QUFFRixPQUFPLE1BQU1DLHlCQUF5Qjs7SUFDcEMsTUFBTUMsVUFBVUosV0FBV0M7SUFDM0IsSUFBSSxDQUFDRyxTQUFTO1FBQ1osTUFBTSxJQUFJQyxNQUNSO0lBRUo7SUFDQSxPQUFPRDtBQUNULEVBQUU7R0FSV0QifQ==

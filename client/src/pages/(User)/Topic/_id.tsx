@@ -107,7 +107,6 @@ const TopicDetails = () => {
       });
     }
   };
-
   if (!lessons.length) {
     return (
       <div id="load">
@@ -182,6 +181,7 @@ const TopicDetails = () => {
                 const isLocked = index > 0 && lessons[index - 1]?.score < 60;
                 return (
                   <ScrollInfinite
+                    lessonTopicData={lessons}
                     key={lesson.lessonId}
                     lesson={lesson}
                     index={index}

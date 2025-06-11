@@ -1,0 +1,30 @@
+export var CompletedLessonsType = /*#__PURE__*/ function(CompletedLessonsType) {
+    CompletedLessonsType[CompletedLessonsType["ZERO"] = 0] = "ZERO";
+    CompletedLessonsType[CompletedLessonsType["TEN"] = 10] = "TEN";
+    CompletedLessonsType[CompletedLessonsType["TWENTY"] = 20] = "TWENTY";
+    CompletedLessonsType[CompletedLessonsType["THIRTY"] = 30] = "THIRTY";
+    CompletedLessonsType[CompletedLessonsType["FORTY"] = 40] = "FORTY";
+    CompletedLessonsType[CompletedLessonsType["FIFTY"] = 50] = "FIFTY";
+    CompletedLessonsType[CompletedLessonsType["SIXTY"] = 60] = "SIXTY";
+    CompletedLessonsType[CompletedLessonsType["SEVENTY"] = 70] = "SEVENTY";
+    CompletedLessonsType[CompletedLessonsType["EIGHTY"] = 80] = "EIGHTY";
+    CompletedLessonsType[CompletedLessonsType["NINETY"] = 90] = "NINETY";
+    CompletedLessonsType[CompletedLessonsType["HUNDRED"] = 100] = "HUNDRED";
+    return CompletedLessonsType;
+}({});
+export var TotalScoreType = /*#__PURE__*/ function(TotalScoreType) {
+    TotalScoreType[TotalScoreType["ZERO"] = 0] = "ZERO";
+    TotalScoreType[TotalScoreType["TEN"] = 10] = "TEN";
+    TotalScoreType[TotalScoreType["TWENTY"] = 20] = "TWENTY";
+    TotalScoreType[TotalScoreType["THIRTY"] = 30] = "THIRTY";
+    TotalScoreType[TotalScoreType["FORTY"] = 40] = "FORTY";
+    TotalScoreType[TotalScoreType["FIFTY"] = 50] = "FIFTY";
+    TotalScoreType[TotalScoreType["SIXTY"] = 60] = "SIXTY";
+    TotalScoreType[TotalScoreType["SEVENTY"] = 70] = "SEVENTY";
+    TotalScoreType[TotalScoreType["EIGHTY"] = 80] = "EIGHTY";
+    TotalScoreType[TotalScoreType["NINETY"] = 90] = "NINETY";
+    TotalScoreType[TotalScoreType["HUNDRED"] = 100] = "HUNDRED";
+    return TotalScoreType;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2dyZXNzLXRyYWNraW5nLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IFVzZXIgfSBmcm9tIFwiLi91c2VyXCI7XHJcblxyXG5leHBvcnQgdHlwZSBQcm9ncmVzc1RyYWNraW5nID0ge1xyXG4gICAgX2lkPzogc3RyaW5nO1xyXG4gICAgdXNlcklkPzogVXNlcjtcclxuICAgIGNvbXBsZXRlZExlc3NvbnM/OiBudW1iZXI7XHJcbiAgICB0b3RhbFNjb3JlPzogbnVtYmVyO1xyXG59O1xyXG5cclxuZXhwb3J0IGVudW0gQ29tcGxldGVkTGVzc29uc1R5cGUge1xyXG4gICAgWkVSTyA9IDAsXHJcbiAgICBURU4gPSAxMCxcclxuICAgIFRXRU5UWSA9IDIwLFxyXG4gICAgVEhJUlRZID0gMzAsXHJcbiAgICBGT1JUWSA9IDQwLFxyXG4gICAgRklGVFkgPSA1MCxcclxuICAgIFNJWFRZID0gNjAsXHJcbiAgICBTRVZFTlRZID0gNzAsXHJcbiAgICBFSUdIVFkgPSA4MCxcclxuICAgIE5JTkVUWSA9IDkwLFxyXG4gICAgSFVORFJFRCA9IDEwMCxcclxufVxyXG5leHBvcnQgZW51bSBUb3RhbFNjb3JlVHlwZSB7XHJcbiAgICBaRVJPID0gMCxcclxuICAgIFRFTiA9IDEwLFxyXG4gICAgVFdFTlRZID0gMjAsXHJcbiAgICBUSElSVFkgPSAzMCxcclxuICAgIEZPUlRZID0gNDAsXHJcbiAgICBGSUZUWSA9IDUwLFxyXG4gICAgU0lYVFkgPSA2MCxcclxuICAgIFNFVkVOVFkgPSA3MCxcclxuICAgIEVJR0hUWSA9IDgwLFxyXG4gICAgTklORVRZID0gOTAsXHJcbiAgICBIVU5EUkVEID0gMTAwLFxyXG59Il0sIm5hbWVzIjpbIkNvbXBsZXRlZExlc3NvbnNUeXBlIiwiVG90YWxTY29yZVR5cGUiXSwibWFwcGluZ3MiOiJBQVNBLE9BQU8sSUFBQSxBQUFLQSw4Q0FBQUE7Ozs7Ozs7Ozs7OztXQUFBQTtNQVlYO0FBQ0QsT0FBTyxJQUFBLEFBQUtDLHdDQUFBQTs7Ozs7Ozs7Ozs7O1dBQUFBO01BWVgifQ==

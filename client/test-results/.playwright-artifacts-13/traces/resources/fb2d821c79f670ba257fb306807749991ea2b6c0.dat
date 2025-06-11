@@ -1,0 +1,285 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/navigation/project-navigation.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/navigation/project-navigation.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import { AdjustmentsHorizontalIcon, ArrowTrendingUpIcon, BoltIcon, CursorArrowRaysIcon, PencilIcon, UserGroupIcon, UserIcon, XMarkIcon } from "/node_modules/.vite/deps/@heroicons_react_24_outline.js?v=b33e0536";
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=392dd645";
+import NavigationLink from "/src/components/navigation/navigation-link.tsx";
+const variants = {
+    close: {
+        x: -300,
+        opacity: 0
+    },
+    open: {
+        x: 0,
+        opacity: 100
+    }
+};
+const ProjectNavigation = ({ selectedProject, isOpen, setSelectedProject })=>{
+    return /*#__PURE__*/ _jsxDEV(motion.nav, {
+        variants: variants,
+        initial: "close",
+        animate: "open",
+        exit: "close",
+        transition: {
+            duration: 0.25,
+            ease: "easeInOut"
+        },
+        className: `h-full flex flex-col gap-8 w-64 absolute bg-slate-300/20 shadow-sm ml-0 ${isOpen ? "left-64" : "left-20"} border-r border-neutral-800 p-5`,
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex flex-row w-full justify-between place-items-center",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("h1", {
+                        className: "tracking-wide text-neutral-100 text-lg",
+                        children: selectedProject
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 51,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("button", {
+                        onClick: ()=>setSelectedProject(null),
+                        children: /*#__PURE__*/ _jsxDEV(XMarkIcon, {
+                            className: "w-8 stroke-neutral-400"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                            lineNumber: 55,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 54,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                lineNumber: 50,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("input", {
+                placeholder: "Search",
+                type: "text",
+                className: "px-3 py-2 tracking-wide rounded-lg bg-neutral-600/40 text-neutral-100"
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                lineNumber: 58,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex flex-col gap-3",
+                children: [
+                    /*#__PURE__*/ _jsxDEV(NavigationLink, {
+                        name: "Progress",
+                        children: /*#__PURE__*/ _jsxDEV(ArrowTrendingUpIcon, {
+                            className: "stroke-1 stroke-gray-800/70 min-w-8 w-8"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                            lineNumber: 65,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 64,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(NavigationLink, {
+                        name: "Team Members",
+                        children: /*#__PURE__*/ _jsxDEV(UserGroupIcon, {
+                            className: "stroke-1 stroke-gray-800/70 min-w-8 w-8"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                            lineNumber: 68,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 67,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(NavigationLink, {
+                        name: "In Review",
+                        children: /*#__PURE__*/ _jsxDEV(PencilIcon, {
+                            className: "stroke-1 stroke-gray-800/70 min-w-8 w-8"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                            lineNumber: 71,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 70,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(NavigationLink, {
+                        name: "In Progress",
+                        children: /*#__PURE__*/ _jsxDEV(BoltIcon, {
+                            className: "stroke-1 stroke-gray-800/70 min-w-8 w-8"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                            lineNumber: 74,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 73,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(NavigationLink, {
+                        name: "Up Next",
+                        children: /*#__PURE__*/ _jsxDEV(CursorArrowRaysIcon, {
+                            className: "stroke-1 stroke-gray-800/70 min-w-8 w-8"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                            lineNumber: 77,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 76,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(NavigationLink, {
+                        name: "Project Settings",
+                        children: /*#__PURE__*/ _jsxDEV(AdjustmentsHorizontalIcon, {
+                            className: "stroke-1 stroke-gray-800/70 min-w-8 w-8"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                            lineNumber: 80,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 79,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                lineNumber: 63,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex flex-col gap-5",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("h1", {
+                        className: "tracking-wide text-neutral-300",
+                        children: "Team Members"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 84,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("a", {
+                        href: "#",
+                        className: "flex flex-row gap-3 place-items-center",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(UserIcon, {
+                                className: "w-8 p-1 rounded-full stroke-2 stroke-rose-800 bg-rose-200/70"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                                lineNumber: 86,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("p", {
+                                className: "tracking-wide text-neutral-400",
+                                children: "Steve Jobs"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                                lineNumber: 87,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 85,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("a", {
+                        href: "#",
+                        className: "flex flex-row gap-3 place-items-center",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(UserIcon, {
+                                className: "w-8 p-1 rounded-full stroke-2 stroke-emerald-800 bg-emerald-200/70"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                                lineNumber: 90,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("p", {
+                                className: "tracking-wide text-neutral-400",
+                                children: "Bill Gates"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                                lineNumber: 91,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 89,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("a", {
+                        href: "#",
+                        className: "flex flex-row gap-3 place-items-center",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(UserIcon, {
+                                className: "w-8 p-1 rounded-full stroke-2 stroke-indigo-800 bg-indigo-200/70"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                                lineNumber: 94,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("p", {
+                                className: "tracking-wide text-neutral-400",
+                                children: "Jeff Bezos"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                                lineNumber: 95,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                        lineNumber: 93,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+                lineNumber: 83,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "D:/DATN/client/src/components/navigation/project-navigation.tsx",
+        lineNumber: 37,
+        columnNumber: 5
+    }, this);
+};
+_c = ProjectNavigation;
+export default ProjectNavigation;
+var _c;
+$RefreshReg$(_c, "ProjectNavigation");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/navigation/project-navigation.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/navigation/project-navigation.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb2plY3QtbmF2aWdhdGlvbi50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtcclxuICBBZGp1c3RtZW50c0hvcml6b250YWxJY29uLFxyXG4gIEFycm93VHJlbmRpbmdVcEljb24sXHJcbiAgQm9sdEljb24sXHJcbiAgQ3Vyc29yQXJyb3dSYXlzSWNvbixcclxuICBQZW5jaWxJY29uLFxyXG4gIFVzZXJHcm91cEljb24sXHJcbiAgVXNlckljb24sXHJcbiAgWE1hcmtJY29uLFxyXG59IGZyb20gXCJAaGVyb2ljb25zL3JlYWN0LzI0L291dGxpbmVcIjtcclxuaW1wb3J0IHsgbW90aW9uIH0gZnJvbSBcImZyYW1lci1tb3Rpb25cIjtcclxuaW1wb3J0IE5hdmlnYXRpb25MaW5rIGZyb20gXCIuL25hdmlnYXRpb24tbGlua1wiO1xyXG5cclxuY29uc3QgdmFyaWFudHMgPSB7XHJcbiAgY2xvc2U6IHtcclxuICAgIHg6IC0zMDAsXHJcbiAgICBvcGFjaXR5OiAwLFxyXG4gIH0sXHJcbiAgb3Blbjoge1xyXG4gICAgeDogMCxcclxuICAgIG9wYWNpdHk6IDEwMCxcclxuICB9LFxyXG59O1xyXG5cclxuaW50ZXJmYWNlIFByb3BzIHtcclxuICBzZWxlY3RlZFByb2plY3Q6IHN0cmluZztcclxuICBpc09wZW46IGJvb2xlYW47XHJcbiAgc2V0U2VsZWN0ZWRQcm9qZWN0OiAocHJvamVjdDogc3RyaW5nIHwgbnVsbCkgPT4gdm9pZDtcclxufVxyXG5cclxuY29uc3QgUHJvamVjdE5hdmlnYXRpb24gPSAoe1xyXG4gIHNlbGVjdGVkUHJvamVjdCxcclxuICBpc09wZW4sXHJcbiAgc2V0U2VsZWN0ZWRQcm9qZWN0LFxyXG59OiBQcm9wcykgPT4ge1xyXG4gIHJldHVybiAoXHJcbiAgICA8bW90aW9uLm5hdlxyXG4gICAgICB2YXJpYW50cz17dmFyaWFudHN9XHJcbiAgICAgIGluaXRpYWw9XCJjbG9zZVwiXHJcbiAgICAgIGFuaW1hdGU9XCJvcGVuXCJcclxuICAgICAgZXhpdD1cImNsb3NlXCJcclxuICAgICAgdHJhbnNpdGlvbj17e1xyXG4gICAgICAgIGR1cmF0aW9uOiAwLjI1LFxyXG4gICAgICAgIGVhc2U6IFwiZWFzZUluT3V0XCIsXHJcbiAgICAgIH19XHJcbiAgICAgIGNsYXNzTmFtZT17YGgtZnVsbCBmbGV4IGZsZXgtY29sIGdhcC04IHctNjQgYWJzb2x1dGUgYmctc2xhdGUtMzAwLzIwIHNoYWRvdy1zbSBtbC0wICR7XHJcbiAgICAgICAgaXNPcGVuID8gXCJsZWZ0LTY0XCIgOiBcImxlZnQtMjBcIlxyXG4gICAgICB9IGJvcmRlci1yIGJvcmRlci1uZXV0cmFsLTgwMCBwLTVgfVxyXG4gICAgPlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggZmxleC1yb3cgdy1mdWxsIGp1c3RpZnktYmV0d2VlbiBwbGFjZS1pdGVtcy1jZW50ZXJcIj5cclxuICAgICAgICA8aDEgY2xhc3NOYW1lPVwidHJhY2tpbmctd2lkZSB0ZXh0LW5ldXRyYWwtMTAwIHRleHQtbGdcIj5cclxuICAgICAgICAgIHtzZWxlY3RlZFByb2plY3R9XHJcbiAgICAgICAgPC9oMT5cclxuICAgICAgICA8YnV0dG9uIG9uQ2xpY2s9eygpID0+IHNldFNlbGVjdGVkUHJvamVjdChudWxsKX0+XHJcbiAgICAgICAgICA8WE1hcmtJY29uIGNsYXNzTmFtZT1cInctOCBzdHJva2UtbmV1dHJhbC00MDBcIiAvPlxyXG4gICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICA8L2Rpdj5cclxuICAgICAgPGlucHV0XHJcbiAgICAgICAgcGxhY2Vob2xkZXI9XCJTZWFyY2hcIlxyXG4gICAgICAgIHR5cGU9XCJ0ZXh0XCJcclxuICAgICAgICBjbGFzc05hbWU9XCJweC0zIHB5LTIgdHJhY2tpbmctd2lkZSByb3VuZGVkLWxnIGJnLW5ldXRyYWwtNjAwLzQwIHRleHQtbmV1dHJhbC0xMDBcIlxyXG4gICAgICAvPlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggZmxleC1jb2wgZ2FwLTNcIj5cclxuICAgICAgICA8TmF2aWdhdGlvbkxpbmsgbmFtZT1cIlByb2dyZXNzXCI+XHJcbiAgICAgICAgICA8QXJyb3dUcmVuZGluZ1VwSWNvbiBjbGFzc05hbWU9XCJzdHJva2UtMSBzdHJva2UtZ3JheS04MDAvNzAgbWluLXctOCB3LThcIiAvPlxyXG4gICAgICAgIDwvTmF2aWdhdGlvbkxpbms+XHJcbiAgICAgICAgPE5hdmlnYXRpb25MaW5rIG5hbWU9XCJUZWFtIE1lbWJlcnNcIj5cclxuICAgICAgICAgIDxVc2VyR3JvdXBJY29uIGNsYXNzTmFtZT1cInN0cm9rZS0xIHN0cm9rZS1ncmF5LTgwMC83MCBtaW4tdy04IHctOFwiIC8+XHJcbiAgICAgICAgPC9OYXZpZ2F0aW9uTGluaz5cclxuICAgICAgICA8TmF2aWdhdGlvbkxpbmsgbmFtZT1cIkluIFJldmlld1wiPlxyXG4gICAgICAgICAgPFBlbmNpbEljb24gY2xhc3NOYW1lPVwic3Ryb2tlLTEgc3Ryb2tlLWdyYXktODAwLzcwIG1pbi13LTggdy04XCIgLz5cclxuICAgICAgICA8L05hdmlnYXRpb25MaW5rPlxyXG4gICAgICAgIDxOYXZpZ2F0aW9uTGluayBuYW1lPVwiSW4gUHJvZ3Jlc3NcIj5cclxuICAgICAgICAgIDxCb2x0SWNvbiBjbGFzc05hbWU9XCJzdHJva2UtMSBzdHJva2UtZ3JheS04MDAvNzAgbWluLXctOCB3LThcIiAvPlxyXG4gICAgICAgIDwvTmF2aWdhdGlvbkxpbms+XHJcbiAgICAgICAgPE5hdmlnYXRpb25MaW5rIG5hbWU9XCJVcCBOZXh0XCI+XHJcbiAgICAgICAgICA8Q3Vyc29yQXJyb3dSYXlzSWNvbiBjbGFzc05hbWU9XCJzdHJva2UtMSBzdHJva2UtZ3JheS04MDAvNzAgbWluLXctOCB3LThcIiAvPlxyXG4gICAgICAgIDwvTmF2aWdhdGlvbkxpbms+XHJcbiAgICAgICAgPE5hdmlnYXRpb25MaW5rIG5hbWU9XCJQcm9qZWN0IFNldHRpbmdzXCI+XHJcbiAgICAgICAgICA8QWRqdXN0bWVudHNIb3Jpem9udGFsSWNvbiBjbGFzc05hbWU9XCJzdHJva2UtMSBzdHJva2UtZ3JheS04MDAvNzAgbWluLXctOCB3LThcIiAvPlxyXG4gICAgICAgIDwvTmF2aWdhdGlvbkxpbms+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggZmxleC1jb2wgZ2FwLTVcIj5cclxuICAgICAgICA8aDEgY2xhc3NOYW1lPVwidHJhY2tpbmctd2lkZSB0ZXh0LW5ldXRyYWwtMzAwXCI+VGVhbSBNZW1iZXJzPC9oMT5cclxuICAgICAgICA8YSBocmVmPVwiI1wiIGNsYXNzTmFtZT1cImZsZXggZmxleC1yb3cgZ2FwLTMgcGxhY2UtaXRlbXMtY2VudGVyXCI+XHJcbiAgICAgICAgICA8VXNlckljb24gY2xhc3NOYW1lPVwidy04IHAtMSByb3VuZGVkLWZ1bGwgc3Ryb2tlLTIgc3Ryb2tlLXJvc2UtODAwIGJnLXJvc2UtMjAwLzcwXCIgLz5cclxuICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRyYWNraW5nLXdpZGUgdGV4dC1uZXV0cmFsLTQwMFwiPlN0ZXZlIEpvYnM8L3A+XHJcbiAgICAgICAgPC9hPlxyXG4gICAgICAgIDxhIGhyZWY9XCIjXCIgY2xhc3NOYW1lPVwiZmxleCBmbGV4LXJvdyBnYXAtMyBwbGFjZS1pdGVtcy1jZW50ZXJcIj5cclxuICAgICAgICAgIDxVc2VySWNvbiBjbGFzc05hbWU9XCJ3LTggcC0xIHJvdW5kZWQtZnVsbCBzdHJva2UtMiBzdHJva2UtZW1lcmFsZC04MDAgYmctZW1lcmFsZC0yMDAvNzBcIiAvPlxyXG4gICAgICAgICAgPHAgY2xhc3NOYW1lPVwidHJhY2tpbmctd2lkZSB0ZXh0LW5ldXRyYWwtNDAwXCI+QmlsbCBHYXRlczwvcD5cclxuICAgICAgICA8L2E+XHJcbiAgICAgICAgPGEgaHJlZj1cIiNcIiBjbGFzc05hbWU9XCJmbGV4IGZsZXgtcm93IGdhcC0zIHBsYWNlLWl0ZW1zLWNlbnRlclwiPlxyXG4gICAgICAgICAgPFVzZXJJY29uIGNsYXNzTmFtZT1cInctOCBwLTEgcm91bmRlZC1mdWxsIHN0cm9rZS0yIHN0cm9rZS1pbmRpZ28tODAwIGJnLWluZGlnby0yMDAvNzBcIiAvPlxyXG4gICAgICAgICAgPHAgY2xhc3NOYW1lPVwidHJhY2tpbmctd2lkZSB0ZXh0LW5ldXRyYWwtNDAwXCI+SmVmZiBCZXpvczwvcD5cclxuICAgICAgICA8L2E+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9tb3Rpb24ubmF2PlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBQcm9qZWN0TmF2aWdhdGlvbjtcclxuIl0sIm5hbWVzIjpbIkFkanVzdG1lbnRzSG9yaXpvbnRhbEljb24iLCJBcnJvd1RyZW5kaW5nVXBJY29uIiwiQm9sdEljb24iLCJDdXJzb3JBcnJvd1JheXNJY29uIiwiUGVuY2lsSWNvbiIsIlVzZXJHcm91cEljb24iLCJVc2VySWNvbiIsIlhNYXJrSWNvbiIsIm1vdGlvbiIsIk5hdmlnYXRpb25MaW5rIiwidmFyaWFudHMiLCJjbG9zZSIsIngiLCJvcGFjaXR5Iiwib3BlbiIsIlByb2plY3ROYXZpZ2F0aW9uIiwic2VsZWN0ZWRQcm9qZWN0IiwiaXNPcGVuIiwic2V0U2VsZWN0ZWRQcm9qZWN0IiwibmF2IiwiaW5pdGlhbCIsImFuaW1hdGUiLCJleGl0IiwidHJhbnNpdGlvbiIsImR1cmF0aW9uIiwiZWFzZSIsImNsYXNzTmFtZSIsImRpdiIsImgxIiwiYnV0dG9uIiwib25DbGljayIsImlucHV0IiwicGxhY2Vob2xkZXIiLCJ0eXBlIiwibmFtZSIsImEiLCJocmVmIiwicCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUEsU0FDRUEseUJBQXlCLEVBQ3pCQyxtQkFBbUIsRUFDbkJDLFFBQVEsRUFDUkMsbUJBQW1CLEVBQ25CQyxVQUFVLEVBQ1ZDLGFBQWEsRUFDYkMsUUFBUSxFQUNSQyxTQUFTLFFBQ0osOEJBQThCO0FBQ3JDLFNBQVNDLE1BQU0sUUFBUSxnQkFBZ0I7QUFDdkMsT0FBT0Msb0JBQW9CLG9CQUFvQjtBQUUvQyxNQUFNQyxXQUFXO0lBQ2ZDLE9BQU87UUFDTEMsR0FBRyxDQUFDO1FBQ0pDLFNBQVM7SUFDWDtJQUNBQyxNQUFNO1FBQ0pGLEdBQUc7UUFDSEMsU0FBUztJQUNYO0FBQ0Y7QUFRQSxNQUFNRSxvQkFBb0IsQ0FBQyxFQUN6QkMsZUFBZSxFQUNmQyxNQUFNLEVBQ05DLGtCQUFrQixFQUNaO0lBQ04scUJBQ0UsUUFBQ1YsT0FBT1csR0FBRztRQUNUVCxVQUFVQTtRQUNWVSxTQUFRO1FBQ1JDLFNBQVE7UUFDUkMsTUFBSztRQUNMQyxZQUFZO1lBQ1ZDLFVBQVU7WUFDVkMsTUFBTTtRQUNSO1FBQ0FDLFdBQVcsQ0FBQyx3RUFBd0UsRUFDbEZULFNBQVMsWUFBWSxVQUN0QixnQ0FBZ0MsQ0FBQzs7MEJBRWxDLFFBQUNVO2dCQUFJRCxXQUFVOztrQ0FDYixRQUFDRTt3QkFBR0YsV0FBVTtrQ0FDWFY7Ozs7OztrQ0FFSCxRQUFDYTt3QkFBT0MsU0FBUyxJQUFNWixtQkFBbUI7a0NBQ3hDLGNBQUEsUUFBQ1g7NEJBQVVtQixXQUFVOzs7Ozs7Ozs7Ozs7Ozs7OzswQkFHekIsUUFBQ0s7Z0JBQ0NDLGFBQVk7Z0JBQ1pDLE1BQUs7Z0JBQ0xQLFdBQVU7Ozs7OzswQkFFWixRQUFDQztnQkFBSUQsV0FBVTs7a0NBQ2IsUUFBQ2pCO3dCQUFleUIsTUFBSztrQ0FDbkIsY0FBQSxRQUFDakM7NEJBQW9CeUIsV0FBVTs7Ozs7Ozs7Ozs7a0NBRWpDLFFBQUNqQjt3QkFBZXlCLE1BQUs7a0NBQ25CLGNBQUEsUUFBQzdCOzRCQUFjcUIsV0FBVTs7Ozs7Ozs7Ozs7a0NBRTNCLFFBQUNqQjt3QkFBZXlCLE1BQUs7a0NBQ25CLGNBQUEsUUFBQzlCOzRCQUFXc0IsV0FBVTs7Ozs7Ozs7Ozs7a0NBRXhCLFFBQUNqQjt3QkFBZXlCLE1BQUs7a0NBQ25CLGNBQUEsUUFBQ2hDOzRCQUFTd0IsV0FBVTs7Ozs7Ozs7Ozs7a0NBRXRCLFFBQUNqQjt3QkFBZXlCLE1BQUs7a0NBQ25CLGNBQUEsUUFBQy9COzRCQUFvQnVCLFdBQVU7Ozs7Ozs7Ozs7O2tDQUVqQyxRQUFDakI7d0JBQWV5QixNQUFLO2tDQUNuQixjQUFBLFFBQUNsQzs0QkFBMEIwQixXQUFVOzs7Ozs7Ozs7Ozs7Ozs7OzswQkFHekMsUUFBQ0M7Z0JBQUlELFdBQVU7O2tDQUNiLFFBQUNFO3dCQUFHRixXQUFVO2tDQUFpQzs7Ozs7O2tDQUMvQyxRQUFDUzt3QkFBRUMsTUFBSzt3QkFBSVYsV0FBVTs7MENBQ3BCLFFBQUNwQjtnQ0FBU29CLFdBQVU7Ozs7OzswQ0FDcEIsUUFBQ1c7Z0NBQUVYLFdBQVU7MENBQWlDOzs7Ozs7Ozs7Ozs7a0NBRWhELFFBQUNTO3dCQUFFQyxNQUFLO3dCQUFJVixXQUFVOzswQ0FDcEIsUUFBQ3BCO2dDQUFTb0IsV0FBVTs7Ozs7OzBDQUNwQixRQUFDVztnQ0FBRVgsV0FBVTswQ0FBaUM7Ozs7Ozs7Ozs7OztrQ0FFaEQsUUFBQ1M7d0JBQUVDLE1BQUs7d0JBQUlWLFdBQVU7OzBDQUNwQixRQUFDcEI7Z0NBQVNvQixXQUFVOzs7Ozs7MENBQ3BCLFFBQUNXO2dDQUFFWCxXQUFVOzBDQUFpQzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBS3hEO0tBckVNWDtBQXVFTixlQUFlQSxrQkFBa0IifQ==

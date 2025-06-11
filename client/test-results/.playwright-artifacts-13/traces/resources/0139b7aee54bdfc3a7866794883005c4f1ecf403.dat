@@ -1,0 +1,115 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/Auth/index.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/Auth/index.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const useState = __vite__cjsImport2_react["useState"];
+import "/src/pages/Auth/index.css";
+import Login from "/src/pages/Login/index.tsx";
+import Register from "/src/pages/Register/index.tsx";
+import Reset from "/src/pages/Reset/index.tsx";
+const Auth = ()=>{
+    _s();
+    const [auth, setAuth] = useState({
+        login: true,
+        register: false,
+        reset: false
+    });
+    const [showPassword, setShowPassword] = useState(false);
+    const handleTogglePassword = ()=>{
+        setShowPassword(!showPassword);
+    };
+    const handleLogin = ()=>{
+        setAuth({
+            reset: false,
+            register: false,
+            login: true
+        });
+    };
+    const handleRegister = ()=>{
+        setAuth({
+            ...auth,
+            login: false,
+            register: true
+        });
+    };
+    const handleReset = ()=>{
+        setAuth({
+            ...auth,
+            login: false,
+            reset: true
+        });
+    };
+    const handleClickTypeLogin = (type)=>{
+        window.open(`http://localhost:8080/api/auth/${type}`, "_self");
+    };
+    return /*#__PURE__*/ _jsxDEV("section", {
+        className: "--flex-center --100vh bg-white",
+        children: /*#__PURE__*/ _jsxDEV("div", {
+            className: "container box",
+            children: [
+                auth.login && /*#__PURE__*/ _jsxDEV(Login, {
+                    onRegister: handleRegister,
+                    onReset: handleReset,
+                    onShowPassword: showPassword,
+                    onTogglePassword: handleTogglePassword,
+                    onClickTypeLogin: handleClickTypeLogin
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/Auth/index.tsx",
+                    lineNumber: 38,
+                    columnNumber: 11
+                }, this),
+                auth.register && /*#__PURE__*/ _jsxDEV(Register, {
+                    onLogin: handleLogin,
+                    onShowPassword: showPassword,
+                    onTogglePassword: handleTogglePassword,
+                    onClickTypeLogin: handleClickTypeLogin
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/Auth/index.tsx",
+                    lineNumber: 47,
+                    columnNumber: 11
+                }, this),
+                auth.reset && /*#__PURE__*/ _jsxDEV(Reset, {
+                    onLogin: handleLogin
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/Auth/index.tsx",
+                    lineNumber: 54,
+                    columnNumber: 24
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "D:/DATN/client/src/pages/Auth/index.tsx",
+            lineNumber: 36,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/pages/Auth/index.tsx",
+        lineNumber: 35,
+        columnNumber: 5
+    }, this);
+};
+_s(Auth, "gQC59JrJ4hEGuvx5ZNvciFd/MZc=");
+_c = Auth;
+export default Auth;
+var _c;
+$RefreshReg$(_c, "Auth");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/Auth/index.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/Auth/index.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQgXCIuL2luZGV4LmNzc1wiO1xyXG5pbXBvcnQgTG9naW4gZnJvbSBcIi4uL0xvZ2luXCI7XHJcbmltcG9ydCBSZWdpc3RlciBmcm9tIFwiLi4vUmVnaXN0ZXJcIjtcclxuaW1wb3J0IFJlc2V0IGZyb20gXCIuLi9SZXNldFwiO1xyXG5cclxuY29uc3QgQXV0aCA9ICgpID0+IHtcclxuICBjb25zdCBbYXV0aCwgc2V0QXV0aF0gPSB1c2VTdGF0ZSh7XHJcbiAgICBsb2dpbjogdHJ1ZSxcclxuICAgIHJlZ2lzdGVyOiBmYWxzZSxcclxuICAgIHJlc2V0OiBmYWxzZSxcclxuICB9KTtcclxuXHJcbiAgY29uc3QgW3Nob3dQYXNzd29yZCwgc2V0U2hvd1Bhc3N3b3JkXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuXHJcbiAgY29uc3QgaGFuZGxlVG9nZ2xlUGFzc3dvcmQgPSAoKSA9PiB7XHJcbiAgICBzZXRTaG93UGFzc3dvcmQoIXNob3dQYXNzd29yZCk7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgaGFuZGxlTG9naW4gPSAoKSA9PiB7XHJcbiAgICBzZXRBdXRoKHsgcmVzZXQ6IGZhbHNlLCByZWdpc3RlcjogZmFsc2UsIGxvZ2luOiB0cnVlIH0pO1xyXG4gIH07XHJcblxyXG4gIGNvbnN0IGhhbmRsZVJlZ2lzdGVyID0gKCkgPT4ge1xyXG4gICAgc2V0QXV0aCh7IC4uLmF1dGgsIGxvZ2luOiBmYWxzZSwgcmVnaXN0ZXI6IHRydWUgfSk7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgaGFuZGxlUmVzZXQgPSAoKSA9PiB7XHJcbiAgICBzZXRBdXRoKHsgLi4uYXV0aCwgbG9naW46IGZhbHNlLCByZXNldDogdHJ1ZSB9KTtcclxuICB9O1xyXG4gIGNvbnN0IGhhbmRsZUNsaWNrVHlwZUxvZ2luID0gKHR5cGU6IHN0cmluZykgPT4ge1xyXG4gICAgd2luZG93Lm9wZW4oYGh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9hcGkvYXV0aC8ke3R5cGV9YCwgXCJfc2VsZlwiKTtcclxuICB9O1xyXG4gIHJldHVybiAoXHJcbiAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCItLWZsZXgtY2VudGVyIC0tMTAwdmggYmctd2hpdGVcIj5cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJjb250YWluZXIgYm94XCI+XHJcbiAgICAgICAge2F1dGgubG9naW4gJiYgKFxyXG4gICAgICAgICAgPExvZ2luXHJcbiAgICAgICAgICAgIG9uUmVnaXN0ZXI9e2hhbmRsZVJlZ2lzdGVyfVxyXG4gICAgICAgICAgICBvblJlc2V0PXtoYW5kbGVSZXNldH1cclxuICAgICAgICAgICAgb25TaG93UGFzc3dvcmQ9e3Nob3dQYXNzd29yZH1cclxuICAgICAgICAgICAgb25Ub2dnbGVQYXNzd29yZD17aGFuZGxlVG9nZ2xlUGFzc3dvcmR9XHJcbiAgICAgICAgICAgIG9uQ2xpY2tUeXBlTG9naW49e2hhbmRsZUNsaWNrVHlwZUxvZ2lufVxyXG4gICAgICAgICAgLz5cclxuICAgICAgICApfVxyXG4gICAgICAgIHthdXRoLnJlZ2lzdGVyICYmIChcclxuICAgICAgICAgIDxSZWdpc3RlclxyXG4gICAgICAgICAgICBvbkxvZ2luPXtoYW5kbGVMb2dpbn1cclxuICAgICAgICAgICAgb25TaG93UGFzc3dvcmQ9e3Nob3dQYXNzd29yZH1cclxuICAgICAgICAgICAgb25Ub2dnbGVQYXNzd29yZD17aGFuZGxlVG9nZ2xlUGFzc3dvcmR9XHJcbiAgICAgICAgICAgIG9uQ2xpY2tUeXBlTG9naW49e2hhbmRsZUNsaWNrVHlwZUxvZ2lufVxyXG4gICAgICAgICAgLz5cclxuICAgICAgICApfVxyXG4gICAgICAgIHthdXRoLnJlc2V0ICYmIDxSZXNldCBvbkxvZ2luPXtoYW5kbGVMb2dpbn0gLz59XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9zZWN0aW9uPlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBBdXRoO1xyXG4iXSwibmFtZXMiOlsidXNlU3RhdGUiLCJMb2dpbiIsIlJlZ2lzdGVyIiwiUmVzZXQiLCJBdXRoIiwiYXV0aCIsInNldEF1dGgiLCJsb2dpbiIsInJlZ2lzdGVyIiwicmVzZXQiLCJzaG93UGFzc3dvcmQiLCJzZXRTaG93UGFzc3dvcmQiLCJoYW5kbGVUb2dnbGVQYXNzd29yZCIsImhhbmRsZUxvZ2luIiwiaGFuZGxlUmVnaXN0ZXIiLCJoYW5kbGVSZXNldCIsImhhbmRsZUNsaWNrVHlwZUxvZ2luIiwidHlwZSIsIndpbmRvdyIsIm9wZW4iLCJzZWN0aW9uIiwiY2xhc3NOYW1lIiwiZGl2Iiwib25SZWdpc3RlciIsIm9uUmVzZXQiLCJvblNob3dQYXNzd29yZCIsIm9uVG9nZ2xlUGFzc3dvcmQiLCJvbkNsaWNrVHlwZUxvZ2luIiwib25Mb2dpbiJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLFNBQVNBLFFBQVEsUUFBUSxRQUFRO0FBQ2pDLE9BQU8sY0FBYztBQUNyQixPQUFPQyxXQUFXLFdBQVc7QUFDN0IsT0FBT0MsY0FBYyxjQUFjO0FBQ25DLE9BQU9DLFdBQVcsV0FBVztBQUU3QixNQUFNQyxPQUFPOztJQUNYLE1BQU0sQ0FBQ0MsTUFBTUMsUUFBUSxHQUFHTixTQUFTO1FBQy9CTyxPQUFPO1FBQ1BDLFVBQVU7UUFDVkMsT0FBTztJQUNUO0lBRUEsTUFBTSxDQUFDQyxjQUFjQyxnQkFBZ0IsR0FBR1gsU0FBUztJQUVqRCxNQUFNWSx1QkFBdUI7UUFDM0JELGdCQUFnQixDQUFDRDtJQUNuQjtJQUVBLE1BQU1HLGNBQWM7UUFDbEJQLFFBQVE7WUFBRUcsT0FBTztZQUFPRCxVQUFVO1lBQU9ELE9BQU87UUFBSztJQUN2RDtJQUVBLE1BQU1PLGlCQUFpQjtRQUNyQlIsUUFBUTtZQUFFLEdBQUdELElBQUk7WUFBRUUsT0FBTztZQUFPQyxVQUFVO1FBQUs7SUFDbEQ7SUFFQSxNQUFNTyxjQUFjO1FBQ2xCVCxRQUFRO1lBQUUsR0FBR0QsSUFBSTtZQUFFRSxPQUFPO1lBQU9FLE9BQU87UUFBSztJQUMvQztJQUNBLE1BQU1PLHVCQUF1QixDQUFDQztRQUM1QkMsT0FBT0MsSUFBSSxDQUFDLENBQUMsK0JBQStCLEVBQUVGLE1BQU0sRUFBRTtJQUN4RDtJQUNBLHFCQUNFLFFBQUNHO1FBQVFDLFdBQVU7a0JBQ2pCLGNBQUEsUUFBQ0M7WUFBSUQsV0FBVTs7Z0JBQ1poQixLQUFLRSxLQUFLLGtCQUNULFFBQUNOO29CQUNDc0IsWUFBWVQ7b0JBQ1pVLFNBQVNUO29CQUNUVSxnQkFBZ0JmO29CQUNoQmdCLGtCQUFrQmQ7b0JBQ2xCZSxrQkFBa0JYOzs7Ozs7Z0JBR3JCWCxLQUFLRyxRQUFRLGtCQUNaLFFBQUNOO29CQUNDMEIsU0FBU2Y7b0JBQ1RZLGdCQUFnQmY7b0JBQ2hCZ0Isa0JBQWtCZDtvQkFDbEJlLGtCQUFrQlg7Ozs7OztnQkFHckJYLEtBQUtJLEtBQUssa0JBQUksUUFBQ047b0JBQU15QixTQUFTZjs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFJdkM7R0FuRE1UO0tBQUFBO0FBcUROLGVBQWVBLEtBQUsifQ==

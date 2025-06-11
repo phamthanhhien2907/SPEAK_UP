@@ -1,0 +1,147 @@
+import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import { ArrowUpDown, Edit, Trash } from "/node_modules/.vite/deps/lucide-react.js?v=e8ebe34d";
+import { Button } from "/src/components/ui/button.tsx";
+import { Checkbox } from "/src/components/ui/checkbox.tsx";
+export const getColumns = (onOpen)=>[
+        {
+            id: "select",
+            header: ({ table })=>/*#__PURE__*/ _jsxDEV(Checkbox, {
+                    checked: table.getIsAllPageRowsSelected() ? true : table.getIsSomePageRowsSelected() ? "indeterminate" : false,
+                    onCheckedChange: (value)=>table.toggleAllPageRowsSelected(!!value),
+                    "aria-label": "Select all"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 14,
+                    columnNumber: 7
+                }, this),
+            cell: ({ row })=>/*#__PURE__*/ _jsxDEV(Checkbox, {
+                    checked: row.getIsSelected(),
+                    onCheckedChange: (value)=>row.toggleSelected(!!value),
+                    "aria-label": "Select row"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 27,
+                    columnNumber: 7
+                }, this),
+            enableSorting: false,
+            enableHiding: false
+        },
+        {
+            accessorKey: "lessonId.title",
+            id: "lessonId.title",
+            header: "Lesson Title",
+            cell: ({ row })=>{
+                const lesson = row.original.lessonId;
+                return /*#__PURE__*/ _jsxDEV("div", {
+                    className: "capitalize",
+                    children: lesson?.title || "N/A"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 42,
+                    columnNumber: 14
+                }, this);
+            }
+        },
+        {
+            accessorKey: "type",
+            header: ({ column })=>{
+                return /*#__PURE__*/ _jsxDEV(Button, {
+                    variant: "ghost",
+                    onClick: ()=>column.toggleSorting(column.getIsSorted() === "asc"),
+                    children: [
+                        "Type",
+                        /*#__PURE__*/ _jsxDEV(ArrowUpDown, {}, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                            lineNumber: 54,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 49,
+                    columnNumber: 9
+                }, this);
+            },
+            cell: ({ row })=>/*#__PURE__*/ _jsxDEV("div", {
+                    className: "lowercase",
+                    children: row.getValue("type")
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 58,
+                    columnNumber: 24
+                }, this)
+        },
+        {
+            accessorKey: "prompt",
+            header: "Prompt",
+            cell: ({ row })=>/*#__PURE__*/ _jsxDEV("div", {
+                    className: "capitalize",
+                    children: row.getValue("prompt")
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 65,
+                    columnNumber: 7
+                }, this)
+        },
+        {
+            accessorKey: "difficultyLevel",
+            header: "Difficulty Level",
+            cell: ({ row })=>/*#__PURE__*/ _jsxDEV("div", {
+                    className: "capitalize",
+                    children: row.getValue("difficultyLevel")
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 72,
+                    columnNumber: 7
+                }, this)
+        },
+        {
+            id: "actions",
+            header: "Actions",
+            enableHiding: false,
+            cell: ({ row })=>{
+                const exercise = row.original;
+                return /*#__PURE__*/ _jsxDEV("div", {
+                    className: "flex items-center gap-2",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV(Button, {
+                            onClick: ()=>onOpen("editExercise", {
+                                    exercise
+                                }),
+                            className: "bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]",
+                            children: /*#__PURE__*/ _jsxDEV(Edit, {}, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                                lineNumber: 89,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                            lineNumber: 85,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV(Button, {
+                            onClick: ()=>onOpen("deleteExercise", {
+                                    exercise
+                                }),
+                            className: "bg-red-500 hover:bg-red-700 text-white rounded-[4px]",
+                            children: /*#__PURE__*/ _jsxDEV(Trash, {}, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                                lineNumber: 95,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                            lineNumber: 91,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/columns.tsx",
+                    lineNumber: 84,
+                    columnNumber: 9
+                }, this);
+            }
+        }
+    ];
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbHVtbnMudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbHVtbkRlZiB9IGZyb20gXCJAdGFuc3RhY2svcmVhY3QtdGFibGVcIjtcclxuaW1wb3J0IHsgQXJyb3dVcERvd24sIEVkaXQsIFRyYXNoIH0gZnJvbSBcImx1Y2lkZS1yZWFjdFwiO1xyXG5pbXBvcnQgeyBCdXR0b24gfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2J1dHRvblwiO1xyXG5pbXBvcnQgeyBDaGVja2JveCB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvY2hlY2tib3hcIjtcclxuaW1wb3J0IHsgTW9kYWxEYXRhLCBNb2RhbFR5cGUgfSBmcm9tIFwiQC9ob29rcy91c2UtbW9kZWwtc3RvcmVcIjtcclxuaW1wb3J0IHsgRXhjZXJjaXNlIH0gZnJvbSBcIkAvdHlwZXMvZXhjZXJjaXNlXCI7XHJcbmltcG9ydCB7IExlc3NvbiB9IGZyb20gXCJAL3R5cGVzL2xlc3NvblwiO1xyXG5leHBvcnQgY29uc3QgZ2V0Q29sdW1ucyA9IChcclxuICBvbk9wZW46ICh0eXBlOiBNb2RhbFR5cGUsIGRhdGE/OiBNb2RhbERhdGEpID0+IHZvaWRcclxuKTogQ29sdW1uRGVmPEV4Y2VyY2lzZT5bXSA9PiBbXHJcbiAge1xyXG4gICAgaWQ6IFwic2VsZWN0XCIsXHJcbiAgICBoZWFkZXI6ICh7IHRhYmxlIH0pID0+IChcclxuICAgICAgPENoZWNrYm94XHJcbiAgICAgICAgY2hlY2tlZD17XHJcbiAgICAgICAgICB0YWJsZS5nZXRJc0FsbFBhZ2VSb3dzU2VsZWN0ZWQoKVxyXG4gICAgICAgICAgICA/IHRydWVcclxuICAgICAgICAgICAgOiB0YWJsZS5nZXRJc1NvbWVQYWdlUm93c1NlbGVjdGVkKClcclxuICAgICAgICAgICAgPyBcImluZGV0ZXJtaW5hdGVcIlxyXG4gICAgICAgICAgICA6IGZhbHNlXHJcbiAgICAgICAgfVxyXG4gICAgICAgIG9uQ2hlY2tlZENoYW5nZT17KHZhbHVlKSA9PiB0YWJsZS50b2dnbGVBbGxQYWdlUm93c1NlbGVjdGVkKCEhdmFsdWUpfVxyXG4gICAgICAgIGFyaWEtbGFiZWw9XCJTZWxlY3QgYWxsXCJcclxuICAgICAgLz5cclxuICAgICksXHJcbiAgICBjZWxsOiAoeyByb3cgfSkgPT4gKFxyXG4gICAgICA8Q2hlY2tib3hcclxuICAgICAgICBjaGVja2VkPXtyb3cuZ2V0SXNTZWxlY3RlZCgpfVxyXG4gICAgICAgIG9uQ2hlY2tlZENoYW5nZT17KHZhbHVlKSA9PiByb3cudG9nZ2xlU2VsZWN0ZWQoISF2YWx1ZSl9XHJcbiAgICAgICAgYXJpYS1sYWJlbD1cIlNlbGVjdCByb3dcIlxyXG4gICAgICAvPlxyXG4gICAgKSxcclxuICAgIGVuYWJsZVNvcnRpbmc6IGZhbHNlLFxyXG4gICAgZW5hYmxlSGlkaW5nOiBmYWxzZSxcclxuICB9LFxyXG4gIHtcclxuICAgIGFjY2Vzc29yS2V5OiBcImxlc3NvbklkLnRpdGxlXCIsIC8vIEFkZCB0aGlzIGFjY2Vzc29yS2V5IGZvciBjb3Vyc2VJZC50aXRsZVxyXG4gICAgaWQ6IFwibGVzc29uSWQudGl0bGVcIixcclxuICAgIGhlYWRlcjogXCJMZXNzb24gVGl0bGVcIixcclxuICAgIGNlbGw6ICh7IHJvdyB9KSA9PiB7XHJcbiAgICAgIGNvbnN0IGxlc3NvbiA9IHJvdy5vcmlnaW5hbC5sZXNzb25JZCBhcyBMZXNzb247XHJcbiAgICAgIHJldHVybiA8ZGl2IGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIj57bGVzc29uPy50aXRsZSB8fCBcIk4vQVwifTwvZGl2PjtcclxuICAgIH0sXHJcbiAgfSxcclxuICB7XHJcbiAgICBhY2Nlc3NvcktleTogXCJ0eXBlXCIsXHJcbiAgICBoZWFkZXI6ICh7IGNvbHVtbiB9KSA9PiB7XHJcbiAgICAgIHJldHVybiAoXHJcbiAgICAgICAgPEJ1dHRvblxyXG4gICAgICAgICAgdmFyaWFudD1cImdob3N0XCJcclxuICAgICAgICAgIG9uQ2xpY2s9eygpID0+IGNvbHVtbi50b2dnbGVTb3J0aW5nKGNvbHVtbi5nZXRJc1NvcnRlZCgpID09PSBcImFzY1wiKX1cclxuICAgICAgICA+XHJcbiAgICAgICAgICBUeXBlXHJcbiAgICAgICAgICA8QXJyb3dVcERvd24gLz5cclxuICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgKTtcclxuICAgIH0sXHJcbiAgICBjZWxsOiAoeyByb3cgfSkgPT4gPGRpdiBjbGFzc05hbWU9XCJsb3dlcmNhc2VcIj57cm93LmdldFZhbHVlKFwidHlwZVwiKX08L2Rpdj4sXHJcbiAgfSxcclxuXHJcbiAge1xyXG4gICAgYWNjZXNzb3JLZXk6IFwicHJvbXB0XCIsXHJcbiAgICBoZWFkZXI6IFwiUHJvbXB0XCIsXHJcbiAgICBjZWxsOiAoeyByb3cgfSkgPT4gKFxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIj57cm93LmdldFZhbHVlKFwicHJvbXB0XCIpfTwvZGl2PlxyXG4gICAgKSxcclxuICB9LFxyXG4gIHtcclxuICAgIGFjY2Vzc29yS2V5OiBcImRpZmZpY3VsdHlMZXZlbFwiLFxyXG4gICAgaGVhZGVyOiBcIkRpZmZpY3VsdHkgTGV2ZWxcIixcclxuICAgIGNlbGw6ICh7IHJvdyB9KSA9PiAoXHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2FwaXRhbGl6ZVwiPntyb3cuZ2V0VmFsdWUoXCJkaWZmaWN1bHR5TGV2ZWxcIil9PC9kaXY+XHJcbiAgICApLFxyXG4gIH0sXHJcblxyXG4gIHtcclxuICAgIGlkOiBcImFjdGlvbnNcIixcclxuICAgIGhlYWRlcjogXCJBY3Rpb25zXCIsXHJcbiAgICBlbmFibGVIaWRpbmc6IGZhbHNlLFxyXG4gICAgY2VsbDogKHsgcm93IH0pID0+IHtcclxuICAgICAgY29uc3QgZXhlcmNpc2UgPSByb3cub3JpZ2luYWw7XHJcblxyXG4gICAgICByZXR1cm4gKFxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25PcGVuKFwiZWRpdEV4ZXJjaXNlXCIsIHsgZXhlcmNpc2UgfSl9XHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLWJsdWUtNjAwIGhvdmVyOmJnLWJsdWUtNzAwIHRleHQtd2hpdGUgcm91bmRlZC1bNHB4XVwiXHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIDxFZGl0IC8+XHJcbiAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25PcGVuKFwiZGVsZXRlRXhlcmNpc2VcIiwgeyBleGVyY2lzZSB9KX1cclxuICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctcmVkLTUwMCBob3ZlcjpiZy1yZWQtNzAwIHRleHQtd2hpdGUgcm91bmRlZC1bNHB4XVwiXHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIDxUcmFzaCAvPlxyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgICk7XHJcbiAgICB9LFxyXG4gIH0sXHJcbl07XHJcbiJdLCJuYW1lcyI6WyJBcnJvd1VwRG93biIsIkVkaXQiLCJUcmFzaCIsIkJ1dHRvbiIsIkNoZWNrYm94IiwiZ2V0Q29sdW1ucyIsIm9uT3BlbiIsImlkIiwiaGVhZGVyIiwidGFibGUiLCJjaGVja2VkIiwiZ2V0SXNBbGxQYWdlUm93c1NlbGVjdGVkIiwiZ2V0SXNTb21lUGFnZVJvd3NTZWxlY3RlZCIsIm9uQ2hlY2tlZENoYW5nZSIsInZhbHVlIiwidG9nZ2xlQWxsUGFnZVJvd3NTZWxlY3RlZCIsImFyaWEtbGFiZWwiLCJjZWxsIiwicm93IiwiZ2V0SXNTZWxlY3RlZCIsInRvZ2dsZVNlbGVjdGVkIiwiZW5hYmxlU29ydGluZyIsImVuYWJsZUhpZGluZyIsImFjY2Vzc29yS2V5IiwibGVzc29uIiwib3JpZ2luYWwiLCJsZXNzb25JZCIsImRpdiIsImNsYXNzTmFtZSIsInRpdGxlIiwiY29sdW1uIiwidmFyaWFudCIsIm9uQ2xpY2siLCJ0b2dnbGVTb3J0aW5nIiwiZ2V0SXNTb3J0ZWQiLCJnZXRWYWx1ZSIsImV4ZXJjaXNlIl0sIm1hcHBpbmdzIjoiO0FBQ0EsU0FBU0EsV0FBVyxFQUFFQyxJQUFJLEVBQUVDLEtBQUssUUFBUSxlQUFlO0FBQ3hELFNBQVNDLE1BQU0sUUFBUSx5QkFBeUI7QUFDaEQsU0FBU0MsUUFBUSxRQUFRLDJCQUEyQjtBQUlwRCxPQUFPLE1BQU1DLGFBQWEsQ0FDeEJDLFNBQzJCO1FBQzNCO1lBQ0VDLElBQUk7WUFDSkMsUUFBUSxDQUFDLEVBQUVDLEtBQUssRUFBRSxpQkFDaEIsUUFBQ0w7b0JBQ0NNLFNBQ0VELE1BQU1FLHdCQUF3QixLQUMxQixPQUNBRixNQUFNRyx5QkFBeUIsS0FDL0Isa0JBQ0E7b0JBRU5DLGlCQUFpQixDQUFDQyxRQUFVTCxNQUFNTSx5QkFBeUIsQ0FBQyxDQUFDLENBQUNEO29CQUM5REUsY0FBVzs7Ozs7O1lBR2ZDLE1BQU0sQ0FBQyxFQUFFQyxHQUFHLEVBQUUsaUJBQ1osUUFBQ2Q7b0JBQ0NNLFNBQVNRLElBQUlDLGFBQWE7b0JBQzFCTixpQkFBaUIsQ0FBQ0MsUUFBVUksSUFBSUUsY0FBYyxDQUFDLENBQUMsQ0FBQ047b0JBQ2pERSxjQUFXOzs7Ozs7WUFHZkssZUFBZTtZQUNmQyxjQUFjO1FBQ2hCO1FBQ0E7WUFDRUMsYUFBYTtZQUNiaEIsSUFBSTtZQUNKQyxRQUFRO1lBQ1JTLE1BQU0sQ0FBQyxFQUFFQyxHQUFHLEVBQUU7Z0JBQ1osTUFBTU0sU0FBU04sSUFBSU8sUUFBUSxDQUFDQyxRQUFRO2dCQUNwQyxxQkFBTyxRQUFDQztvQkFBSUMsV0FBVTs4QkFBY0osUUFBUUssU0FBUzs7Ozs7O1lBQ3ZEO1FBQ0Y7UUFDQTtZQUNFTixhQUFhO1lBQ2JmLFFBQVEsQ0FBQyxFQUFFc0IsTUFBTSxFQUFFO2dCQUNqQixxQkFDRSxRQUFDM0I7b0JBQ0M0QixTQUFRO29CQUNSQyxTQUFTLElBQU1GLE9BQU9HLGFBQWEsQ0FBQ0gsT0FBT0ksV0FBVyxPQUFPOzt3QkFDOUQ7c0NBRUMsUUFBQ2xDOzs7Ozs7Ozs7OztZQUdQO1lBQ0FpQixNQUFNLENBQUMsRUFBRUMsR0FBRyxFQUFFLGlCQUFLLFFBQUNTO29CQUFJQyxXQUFVOzhCQUFhVixJQUFJaUIsUUFBUSxDQUFDOzs7Ozs7UUFDOUQ7UUFFQTtZQUNFWixhQUFhO1lBQ2JmLFFBQVE7WUFDUlMsTUFBTSxDQUFDLEVBQUVDLEdBQUcsRUFBRSxpQkFDWixRQUFDUztvQkFBSUMsV0FBVTs4QkFBY1YsSUFBSWlCLFFBQVEsQ0FBQzs7Ozs7O1FBRTlDO1FBQ0E7WUFDRVosYUFBYTtZQUNiZixRQUFRO1lBQ1JTLE1BQU0sQ0FBQyxFQUFFQyxHQUFHLEVBQUUsaUJBQ1osUUFBQ1M7b0JBQUlDLFdBQVU7OEJBQWNWLElBQUlpQixRQUFRLENBQUM7Ozs7OztRQUU5QztRQUVBO1lBQ0U1QixJQUFJO1lBQ0pDLFFBQVE7WUFDUmMsY0FBYztZQUNkTCxNQUFNLENBQUMsRUFBRUMsR0FBRyxFQUFFO2dCQUNaLE1BQU1rQixXQUFXbEIsSUFBSU8sUUFBUTtnQkFFN0IscUJBQ0UsUUFBQ0U7b0JBQUlDLFdBQVU7O3NDQUNiLFFBQUN6Qjs0QkFDQzZCLFNBQVMsSUFBTTFCLE9BQU8sZ0JBQWdCO29DQUFFOEI7Z0NBQVM7NEJBQ2pEUixXQUFVO3NDQUVWLGNBQUEsUUFBQzNCOzs7Ozs7Ozs7O3NDQUVILFFBQUNFOzRCQUNDNkIsU0FBUyxJQUFNMUIsT0FBTyxrQkFBa0I7b0NBQUU4QjtnQ0FBUzs0QkFDbkRSLFdBQVU7c0NBRVYsY0FBQSxRQUFDMUI7Ozs7Ozs7Ozs7Ozs7Ozs7WUFJVDtRQUNGO0tBQ0QsQ0FBQyJ9

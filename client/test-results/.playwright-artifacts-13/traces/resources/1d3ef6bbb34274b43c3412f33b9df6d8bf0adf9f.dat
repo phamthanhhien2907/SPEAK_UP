@@ -1,0 +1,16 @@
+export var LessonProgressScore = /*#__PURE__*/ function(LessonProgressScore) {
+    LessonProgressScore[LessonProgressScore["ZERO"] = 0] = "ZERO";
+    LessonProgressScore[LessonProgressScore["TEN"] = 10] = "TEN";
+    LessonProgressScore[LessonProgressScore["TWENTY"] = 20] = "TWENTY";
+    LessonProgressScore[LessonProgressScore["THIRTY"] = 30] = "THIRTY";
+    LessonProgressScore[LessonProgressScore["FORTY"] = 40] = "FORTY";
+    LessonProgressScore[LessonProgressScore["FIFTY"] = 50] = "FIFTY";
+    LessonProgressScore[LessonProgressScore["SIXTY"] = 60] = "SIXTY";
+    LessonProgressScore[LessonProgressScore["SEVENTY"] = 70] = "SEVENTY";
+    LessonProgressScore[LessonProgressScore["EIGHTY"] = 80] = "EIGHTY";
+    LessonProgressScore[LessonProgressScore["NINETY"] = 90] = "NINETY";
+    LessonProgressScore[LessonProgressScore["HUNDRED"] = 100] = "HUNDRED";
+    return LessonProgressScore;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxlc3Nvbi1wcm9ncmVzcy50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBMZXNzb24gfSBmcm9tIFwiLi9sZXNzb25cIjtcclxuaW1wb3J0IHsgVXNlciB9IGZyb20gXCIuL3VzZXJcIjtcclxuXHJcbmV4cG9ydCB0eXBlIExlc3NvblByb2dyZXNzID0ge1xyXG4gICAgX2lkPzogc3RyaW5nO1xyXG4gICAgbGVzc29uSWQ/OiBMZXNzb247XHJcbiAgICB1c2VySWQ/OiBVc2VyO1xyXG4gICAgc2NvcmU/OiBudW1iZXI7XHJcbiAgICBpc0NvbXBsZXRlZD86IGJvb2xlYW47XHJcbn07XHJcblxyXG5leHBvcnQgZW51bSBMZXNzb25Qcm9ncmVzc1Njb3JlIHtcclxuICAgIFpFUk8gPSAwLFxyXG4gICAgVEVOID0gMTAsXHJcbiAgICBUV0VOVFkgPSAyMCxcclxuICAgIFRISVJUWSA9IDMwLFxyXG4gICAgRk9SVFkgPSA0MCxcclxuICAgIEZJRlRZID0gNTAsXHJcbiAgICBTSVhUWSA9IDYwLFxyXG4gICAgU0VWRU5UWSA9IDcwLFxyXG4gICAgRUlHSFRZID0gODAsXHJcbiAgICBOSU5FVFkgPSA5MCxcclxuICAgIEhVTkRSRUQgPSAxMDAsXHJcbn0iXSwibmFtZXMiOlsiTGVzc29uUHJvZ3Jlc3NTY29yZSJdLCJtYXBwaW5ncyI6IkFBV0EsT0FBTyxJQUFBLEFBQUtBLDZDQUFBQTs7Ozs7Ozs7Ozs7O1dBQUFBO01BWVgifQ==

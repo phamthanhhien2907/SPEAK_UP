@@ -8,7 +8,16 @@ body {
   background: #249d98;
   overflow: hidden;
 }
+button:disabled {
+  color: #a3bffa; /* Màu xám nhạt khi disabled */
+  cursor: not-allowed;
+  background-color: #e0e7ff; /* Nền xám nhạt */
+}
 
+button:disabled:hover {
+  color: #a3bffa; /* Loại bỏ hiệu ứng hover khi disabled */
+  background-color: #e0e7ff;
+}
 #load {
   position: absolute;
   width: 600px;

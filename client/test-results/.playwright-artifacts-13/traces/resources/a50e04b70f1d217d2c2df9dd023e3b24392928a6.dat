@@ -1,0 +1,362 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+"use client";
+import * as z from "/node_modules/.vite/deps/zod.js?v=54733448";
+import { zodResolver } from "/node_modules/.vite/deps/@hookform_resolvers_zod.js?v=c50193e4";
+import { useForm } from "/node_modules/.vite/deps/react-hook-form.js?v=bc8c4e1e";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "/src/components/ui/dialog.tsx";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "/src/components/ui/form.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "/src/components/ui/select.tsx";
+import __vite__cjsImport10_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const useEffect = __vite__cjsImport10_react["useEffect"]; const useState = __vite__cjsImport10_react["useState"];
+import { apiGetAllExercise } from "/src/services/exercise.services.ts";
+import { apiGetAllVocabulary } from "/src/services/vocabulary.services.ts";
+import { apiUpdateExerciseVocabulary } from "/src/services/excercise-vocabulary.services.ts";
+const formSchema = z.object({
+    exerciseId: z.string().min(1, {
+        message: "Exercise Id is required"
+    }),
+    vocabularyId: z.string().min(6, {
+        message: "Vocabulary Id required"
+    })
+});
+export const EditExerciseVocabularyModal = ()=>{
+    _s();
+    const [exerciseData, setExerciseData] = useState([]);
+    const [vocabularyData, setVocabularyData] = useState([]);
+    const { isOpen, onClose, type, data } = useModal();
+    const { exerciseVocabulary } = data;
+    const isModalOpen = isOpen && type === "editExerciseVocabulary";
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            exerciseId: "",
+            vocabularyId: ""
+        }
+    });
+    const isLoading = form.formState.isSubmitting;
+    const onSubmit = async (values)=>{
+        console.log(values);
+        const res = await apiUpdateExerciseVocabulary(exerciseVocabulary?._id, {
+            ...values,
+            exerciseId: {
+                _id: values.exerciseId
+            },
+            vocabularyId: {
+                _id: values.vocabularyId
+            }
+        });
+        if (res) {
+            onClose();
+        }
+        form.reset();
+    };
+    const handleClose = ()=>{
+        form.reset();
+        onClose();
+    };
+    const getAllExercise = async ()=>{
+        const exercise = await apiGetAllExercise();
+        if (exercise.data.success) {
+            setExerciseData(exercise.data.rs);
+        } else {
+            console.log("Failed to fetch users");
+        }
+    };
+    const getAllVocabulary = async ()=>{
+        const vocabulary = await apiGetAllVocabulary();
+        if (vocabulary.data.success) {
+            setVocabularyData(vocabulary.data.rs);
+        } else {
+            console.log("Failed to fetch users");
+        }
+    };
+    useEffect(()=>{
+        if (exerciseVocabulary) {
+            form.setValue("exerciseId", exerciseVocabulary.exerciseId?._id);
+            form.setValue("vocabularyId", exerciseVocabulary.vocabularyId?._id);
+        }
+    }, [
+        form,
+        exerciseVocabulary
+    ]);
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            await Promise.all([
+                getAllExercise(),
+                getAllVocabulary()
+            ]);
+        };
+        fetchData();
+    }, []);
+    return /*#__PURE__*/ _jsxDEV(Dialog, {
+        open: isModalOpen,
+        onOpenChange: handleClose,
+        children: /*#__PURE__*/ _jsxDEV(DialogContent, {
+            className: "bg-white text-black p-0 overflow-hidden",
+            children: [
+                /*#__PURE__*/ _jsxDEV(DialogHeader, {
+                    className: "pt-8 px-6",
+                    children: /*#__PURE__*/ _jsxDEV(DialogTitle, {
+                        className: "text-2xl text-center font-bold",
+                        children: "Edit Exercise Vocabulary"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                        lineNumber: 104,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                    lineNumber: 103,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDEV(Form, {
+                    ...form,
+                    children: /*#__PURE__*/ _jsxDEV("form", {
+                        className: "space-y-8",
+                        onSubmit: form.handleSubmit(onSubmit),
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                className: "space-y-8 px-6",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "exerciseId",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Course Id"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                        lineNumber: 116,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a channel type"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                        lineNumber: 126,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                    lineNumber: 125,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                lineNumber: 124,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(exerciseData)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type?._id,
+                                                                        className: "capitalize",
+                                                                        children: type?.prompt?.toLocaleLowerCase()
+                                                                    }, type?._id, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                        lineNumber: 131,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                lineNumber: 129,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                        lineNumber: 119,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                        lineNumber: 141,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                lineNumber: 115,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                        lineNumber: 111,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "vocabularyId",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "User Id"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                        lineNumber: 150,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a user id"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                        lineNumber: 160,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                    lineNumber: 159,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                lineNumber: 158,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(vocabularyData)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type?._id,
+                                                                        className: "capitalize cursor-pointer",
+                                                                        children: type?.word?.toLocaleLowerCase()
+                                                                    }, type?._id, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                        lineNumber: 165,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                                lineNumber: 163,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                        lineNumber: 153,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                        lineNumber: 175,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                                lineNumber: 149,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                        lineNumber: 145,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                lineNumber: 110,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DialogFooter, {
+                                className: "bg-gray-100 px-6 py-4",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        onClick: ()=>onClose(),
+                                        className: "text-black rounded-[4px]",
+                                        children: "No, cancel"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                        lineNumber: 181,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        disabled: isLoading,
+                                        variant: "ghost",
+                                        children: "Edit"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                        lineNumber: 187,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                                lineNumber: 180,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                        lineNumber: 109,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+                    lineNumber: 108,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+            lineNumber: 102,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx",
+        lineNumber: 101,
+        columnNumber: 5
+    }, this);
+};
+_s(EditExerciseVocabularyModal, "KTf/IaTlNPWixjA4wbaQWjSJXoM=", false, function() {
+    return [
+        useModal,
+        useForm
+    ];
+});
+_c = EditExerciseVocabularyModal;
+var _c;
+$RefreshReg$(_c, "EditExerciseVocabularyModal");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/modals/excercise-vocabulary-modal/edit-exercise-vocabulary-modal.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtZXhlcmNpc2Utdm9jYWJ1bGFyeS1tb2RhbC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiXCJ1c2UgY2xpZW50XCI7XHJcbmltcG9ydCAqIGFzIHogZnJvbSBcInpvZFwiO1xyXG5pbXBvcnQgeyB6b2RSZXNvbHZlciB9IGZyb20gXCJAaG9va2Zvcm0vcmVzb2x2ZXJzL3pvZFwiO1xyXG5pbXBvcnQgeyB1c2VGb3JtIH0gZnJvbSBcInJlYWN0LWhvb2stZm9ybVwiO1xyXG5pbXBvcnQge1xyXG4gIERpYWxvZyxcclxuICBEaWFsb2dDb250ZW50LFxyXG4gIERpYWxvZ0Zvb3RlcixcclxuICBEaWFsb2dIZWFkZXIsXHJcbiAgRGlhbG9nVGl0bGUsXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9kaWFsb2dcIjtcclxuaW1wb3J0IHtcclxuICBGb3JtLFxyXG4gIEZvcm1Db250cm9sLFxyXG4gIEZvcm1GaWVsZCxcclxuICBGb3JtSXRlbSxcclxuICBGb3JtTGFiZWwsXHJcbiAgRm9ybU1lc3NhZ2UsXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9mb3JtXCI7XHJcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvYnV0dG9uXCI7XHJcbmltcG9ydCB7IHVzZU1vZGFsIH0gZnJvbSBcIkAvaG9va3MvdXNlLW1vZGVsLXN0b3JlXCI7XHJcbmltcG9ydCB7XHJcbiAgU2VsZWN0LFxyXG4gIFNlbGVjdENvbnRlbnQsXHJcbiAgU2VsZWN0SXRlbSxcclxuICBTZWxlY3RUcmlnZ2VyLFxyXG4gIFNlbGVjdFZhbHVlLFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvc2VsZWN0XCI7XHJcbmltcG9ydCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUgfSBmcm9tIFwicmVhY3RcIjtcclxuaW1wb3J0IHsgYXBpR2V0QWxsRXhlcmNpc2UgfSBmcm9tIFwiQC9zZXJ2aWNlcy9leGVyY2lzZS5zZXJ2aWNlc1wiO1xyXG5pbXBvcnQgeyBhcGlHZXRBbGxWb2NhYnVsYXJ5IH0gZnJvbSBcIkAvc2VydmljZXMvdm9jYWJ1bGFyeS5zZXJ2aWNlc1wiO1xyXG5pbXBvcnQgeyBhcGlVcGRhdGVFeGVyY2lzZVZvY2FidWxhcnkgfSBmcm9tIFwiQC9zZXJ2aWNlcy9leGNlcmNpc2Utdm9jYWJ1bGFyeS5zZXJ2aWNlc1wiO1xyXG5jb25zdCBmb3JtU2NoZW1hID0gei5vYmplY3Qoe1xyXG4gIGV4ZXJjaXNlSWQ6IHouc3RyaW5nKCkubWluKDEsIHtcclxuICAgIG1lc3NhZ2U6IFwiRXhlcmNpc2UgSWQgaXMgcmVxdWlyZWRcIixcclxuICB9KSxcclxuICB2b2NhYnVsYXJ5SWQ6IHouc3RyaW5nKCkubWluKDYsIHtcclxuICAgIG1lc3NhZ2U6IFwiVm9jYWJ1bGFyeSBJZCByZXF1aXJlZFwiLFxyXG4gIH0pLFxyXG59KTtcclxuZXhwb3J0IGNvbnN0IEVkaXRFeGVyY2lzZVZvY2FidWxhcnlNb2RhbCA9ICgpID0+IHtcclxuICBjb25zdCBbZXhlcmNpc2VEYXRhLCBzZXRFeGVyY2lzZURhdGFdID0gdXNlU3RhdGUoW10pO1xyXG4gIGNvbnN0IFt2b2NhYnVsYXJ5RGF0YSwgc2V0Vm9jYWJ1bGFyeURhdGFdID0gdXNlU3RhdGUoW10pO1xyXG4gIGNvbnN0IHsgaXNPcGVuLCBvbkNsb3NlLCB0eXBlLCBkYXRhIH0gPSB1c2VNb2RhbCgpO1xyXG4gIGNvbnN0IHsgZXhlcmNpc2VWb2NhYnVsYXJ5IH0gPSBkYXRhO1xyXG4gIGNvbnN0IGlzTW9kYWxPcGVuID0gaXNPcGVuICYmIHR5cGUgPT09IFwiZWRpdEV4ZXJjaXNlVm9jYWJ1bGFyeVwiO1xyXG4gIGNvbnN0IGZvcm0gPSB1c2VGb3JtKHtcclxuICAgIHJlc29sdmVyOiB6b2RSZXNvbHZlcihmb3JtU2NoZW1hKSxcclxuICAgIGRlZmF1bHRWYWx1ZXM6IHtcclxuICAgICAgZXhlcmNpc2VJZDogXCJcIixcclxuICAgICAgdm9jYWJ1bGFyeUlkOiBcIlwiLFxyXG4gICAgfSxcclxuICB9KTtcclxuICBjb25zdCBpc0xvYWRpbmcgPSBmb3JtLmZvcm1TdGF0ZS5pc1N1Ym1pdHRpbmc7XHJcbiAgY29uc3Qgb25TdWJtaXQgPSBhc3luYyAodmFsdWVzOiB6LmluZmVyPHR5cGVvZiBmb3JtU2NoZW1hPikgPT4ge1xyXG4gICAgY29uc29sZS5sb2codmFsdWVzKTtcclxuICAgIGNvbnN0IHJlcyA9IGF3YWl0IGFwaVVwZGF0ZUV4ZXJjaXNlVm9jYWJ1bGFyeShleGVyY2lzZVZvY2FidWxhcnk/Ll9pZCwge1xyXG4gICAgICAuLi52YWx1ZXMsXHJcbiAgICAgIGV4ZXJjaXNlSWQ6IHsgX2lkOiB2YWx1ZXMuZXhlcmNpc2VJZCB9LFxyXG4gICAgICB2b2NhYnVsYXJ5SWQ6IHsgX2lkOiB2YWx1ZXMudm9jYWJ1bGFyeUlkIH0sXHJcbiAgICB9KTtcclxuICAgIGlmIChyZXMpIHtcclxuICAgICAgb25DbG9zZSgpO1xyXG4gICAgfVxyXG4gICAgZm9ybS5yZXNldCgpO1xyXG4gIH07XHJcbiAgY29uc3QgaGFuZGxlQ2xvc2UgPSAoKSA9PiB7XHJcbiAgICBmb3JtLnJlc2V0KCk7XHJcbiAgICBvbkNsb3NlKCk7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgZ2V0QWxsRXhlcmNpc2UgPSBhc3luYyAoKSA9PiB7XHJcbiAgICBjb25zdCBleGVyY2lzZSA9IGF3YWl0IGFwaUdldEFsbEV4ZXJjaXNlKCk7XHJcbiAgICBpZiAoZXhlcmNpc2UuZGF0YS5zdWNjZXNzKSB7XHJcbiAgICAgIHNldEV4ZXJjaXNlRGF0YShleGVyY2lzZS5kYXRhLnJzKTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIGNvbnNvbGUubG9nKFwiRmFpbGVkIHRvIGZldGNoIHVzZXJzXCIpO1xyXG4gICAgfVxyXG4gIH07XHJcbiAgY29uc3QgZ2V0QWxsVm9jYWJ1bGFyeSA9IGFzeW5jICgpID0+IHtcclxuICAgIGNvbnN0IHZvY2FidWxhcnkgPSBhd2FpdCBhcGlHZXRBbGxWb2NhYnVsYXJ5KCk7XHJcbiAgICBpZiAodm9jYWJ1bGFyeS5kYXRhLnN1Y2Nlc3MpIHtcclxuICAgICAgc2V0Vm9jYWJ1bGFyeURhdGEodm9jYWJ1bGFyeS5kYXRhLnJzKTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIGNvbnNvbGUubG9nKFwiRmFpbGVkIHRvIGZldGNoIHVzZXJzXCIpO1xyXG4gICAgfVxyXG4gIH07XHJcbiAgdXNlRWZmZWN0KCgpID0+IHtcclxuICAgIGlmIChleGVyY2lzZVZvY2FidWxhcnkpIHtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcImV4ZXJjaXNlSWRcIiwgZXhlcmNpc2VWb2NhYnVsYXJ5LmV4ZXJjaXNlSWQ/Ll9pZCk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJ2b2NhYnVsYXJ5SWRcIiwgZXhlcmNpc2VWb2NhYnVsYXJ5LnZvY2FidWxhcnlJZD8uX2lkKTtcclxuICAgIH1cclxuICB9LCBbZm9ybSwgZXhlcmNpc2VWb2NhYnVsYXJ5XSk7XHJcbiAgdXNlRWZmZWN0KCgpID0+IHtcclxuICAgIGNvbnN0IGZldGNoRGF0YSA9IGFzeW5jICgpID0+IHtcclxuICAgICAgYXdhaXQgUHJvbWlzZS5hbGwoW2dldEFsbEV4ZXJjaXNlKCksIGdldEFsbFZvY2FidWxhcnkoKV0pO1xyXG4gICAgfTtcclxuICAgIGZldGNoRGF0YSgpO1xyXG4gIH0sIFtdKTtcclxuICByZXR1cm4gKFxyXG4gICAgPERpYWxvZyBvcGVuPXtpc01vZGFsT3Blbn0gb25PcGVuQ2hhbmdlPXtoYW5kbGVDbG9zZX0+XHJcbiAgICAgIDxEaWFsb2dDb250ZW50IGNsYXNzTmFtZT1cImJnLXdoaXRlIHRleHQtYmxhY2sgcC0wIG92ZXJmbG93LWhpZGRlblwiPlxyXG4gICAgICAgIDxEaWFsb2dIZWFkZXIgY2xhc3NOYW1lPVwicHQtOCBweC02XCI+XHJcbiAgICAgICAgICA8RGlhbG9nVGl0bGUgY2xhc3NOYW1lPVwidGV4dC0yeGwgdGV4dC1jZW50ZXIgZm9udC1ib2xkXCI+XHJcbiAgICAgICAgICAgIEVkaXQgRXhlcmNpc2UgVm9jYWJ1bGFyeVxyXG4gICAgICAgICAgPC9EaWFsb2dUaXRsZT5cclxuICAgICAgICA8L0RpYWxvZ0hlYWRlcj5cclxuICAgICAgICA8Rm9ybSB7Li4uZm9ybX0+XHJcbiAgICAgICAgICA8Zm9ybSBjbGFzc05hbWU9XCJzcGFjZS15LThcIiBvblN1Ym1pdD17Zm9ybS5oYW5kbGVTdWJtaXQob25TdWJtaXQpfT5cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTggcHgtNlwiPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJleGVyY2lzZUlkXCJcclxuICAgICAgICAgICAgICAgIHJlbmRlcj17KHsgZmllbGQgfSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8Rm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1MYWJlbCBjbGFzc05hbWU9XCJ1cHBlcmNhc2UgdGV4dC14cyBmb250LWJvbGQgdGV4dC16aW5jLTUwMCBkYXJrOnRleHQtc2Vjb25kYXJ5LzcwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICBDb3Vyc2UgSWRcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25WYWx1ZUNoYW5nZT17ZmllbGQub25DaGFuZ2V9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXM6cmluZy0wIHRleHQtYmxhY2sgcmluZy1vZmZzZXQtMCBmb2N1czpyaW5nLW9mZnNldC0wIGNhcGl0YWxpemUgb3V0bGluZS1ub25lXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IGEgY2hhbm5lbCB0eXBlXCIgLz5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RUcmlnZ2VyPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxTZWxlY3RDb250ZW50IGNsYXNzTmFtZT1cImJnLXdoaXRlIHNoYWRvdy1sZyBib3JkZXIgYm9yZGVyLWdyYXktMzAwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHtPYmplY3Q/LnZhbHVlcyhleGVyY2lzZURhdGEpPy5tYXAoKHR5cGUpID0+IChcclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0SXRlbVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAga2V5PXt0eXBlPy5faWR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZT17dHlwZT8uX2lkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiY2FwaXRhbGl6ZVwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAge3R5cGU/LnByb21wdD8udG9Mb2NhbGVMb3dlckNhc2UoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJ2b2NhYnVsYXJ5SWRcIlxyXG4gICAgICAgICAgICAgICAgcmVuZGVyPXsoeyBmaWVsZCB9KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxGb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUxhYmVsIGNsYXNzTmFtZT1cInVwcGVyY2FzZSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LXppbmMtNTAwIGRhcms6dGV4dC1zZWNvbmRhcnkvNzBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIFVzZXIgSWRcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25WYWx1ZUNoYW5nZT17ZmllbGQub25DaGFuZ2V9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXM6cmluZy0wIHRleHQtYmxhY2sgcmluZy1vZmZzZXQtMCBmb2N1czpyaW5nLW9mZnNldC0wIGNhcGl0YWxpemUgb3V0bGluZS1ub25lXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IGEgdXNlciBpZFwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0VHJpZ2dlcj5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0Q29udGVudCBjbGFzc05hbWU9XCJiZy13aGl0ZSBzaGFkb3ctbGcgYm9yZGVyIGJvcmRlci1ncmF5LTMwMFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7T2JqZWN0Py52YWx1ZXModm9jYWJ1bGFyeURhdGEpPy5tYXAoKHR5cGUpID0+IChcclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0SXRlbVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAga2V5PXt0eXBlPy5faWR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZT17dHlwZT8uX2lkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiY2FwaXRhbGl6ZSBjdXJzb3ItcG9pbnRlclwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAge3R5cGU/LndvcmQ/LnRvTG9jYWxlTG93ZXJDYXNlKCl9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RJdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICApKX1cclxuICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0Q29udGVudD5cclxuICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybU1lc3NhZ2UgLz5cclxuICAgICAgICAgICAgICAgICAgPC9Gb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDxEaWFsb2dGb290ZXIgY2xhc3NOYW1lPVwiYmctZ3JheS0xMDAgcHgtNiBweS00XCI+XHJcbiAgICAgICAgICAgICAgPEJ1dHRvblxyXG4gICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25DbG9zZSgpfVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidGV4dC1ibGFjayByb3VuZGVkLVs0cHhdXCJcclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICBObywgY2FuY2VsXHJcbiAgICAgICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICAgICAgPEJ1dHRvbiBkaXNhYmxlZD17aXNMb2FkaW5nfSB2YXJpYW50PVwiZ2hvc3RcIj5cclxuICAgICAgICAgICAgICAgIEVkaXRcclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgPC9EaWFsb2dGb290ZXI+XHJcbiAgICAgICAgICA8L2Zvcm0+XHJcbiAgICAgICAgPC9Gb3JtPlxyXG4gICAgICA8L0RpYWxvZ0NvbnRlbnQ+XHJcbiAgICA8L0RpYWxvZz5cclxuICApO1xyXG59O1xyXG4iXSwibmFtZXMiOlsieiIsInpvZFJlc29sdmVyIiwidXNlRm9ybSIsIkRpYWxvZyIsIkRpYWxvZ0NvbnRlbnQiLCJEaWFsb2dGb290ZXIiLCJEaWFsb2dIZWFkZXIiLCJEaWFsb2dUaXRsZSIsIkZvcm0iLCJGb3JtQ29udHJvbCIsIkZvcm1GaWVsZCIsIkZvcm1JdGVtIiwiRm9ybUxhYmVsIiwiRm9ybU1lc3NhZ2UiLCJCdXR0b24iLCJ1c2VNb2RhbCIsIlNlbGVjdCIsIlNlbGVjdENvbnRlbnQiLCJTZWxlY3RJdGVtIiwiU2VsZWN0VHJpZ2dlciIsIlNlbGVjdFZhbHVlIiwidXNlRWZmZWN0IiwidXNlU3RhdGUiLCJhcGlHZXRBbGxFeGVyY2lzZSIsImFwaUdldEFsbFZvY2FidWxhcnkiLCJhcGlVcGRhdGVFeGVyY2lzZVZvY2FidWxhcnkiLCJmb3JtU2NoZW1hIiwib2JqZWN0IiwiZXhlcmNpc2VJZCIsInN0cmluZyIsIm1pbiIsIm1lc3NhZ2UiLCJ2b2NhYnVsYXJ5SWQiLCJFZGl0RXhlcmNpc2VWb2NhYnVsYXJ5TW9kYWwiLCJleGVyY2lzZURhdGEiLCJzZXRFeGVyY2lzZURhdGEiLCJ2b2NhYnVsYXJ5RGF0YSIsInNldFZvY2FidWxhcnlEYXRhIiwiaXNPcGVuIiwib25DbG9zZSIsInR5cGUiLCJkYXRhIiwiZXhlcmNpc2VWb2NhYnVsYXJ5IiwiaXNNb2RhbE9wZW4iLCJmb3JtIiwicmVzb2x2ZXIiLCJkZWZhdWx0VmFsdWVzIiwiaXNMb2FkaW5nIiwiZm9ybVN0YXRlIiwiaXNTdWJtaXR0aW5nIiwib25TdWJtaXQiLCJ2YWx1ZXMiLCJjb25zb2xlIiwibG9nIiwicmVzIiwiX2lkIiwicmVzZXQiLCJoYW5kbGVDbG9zZSIsImdldEFsbEV4ZXJjaXNlIiwiZXhlcmNpc2UiLCJzdWNjZXNzIiwicnMiLCJnZXRBbGxWb2NhYnVsYXJ5Iiwidm9jYWJ1bGFyeSIsInNldFZhbHVlIiwiZmV0Y2hEYXRhIiwiUHJvbWlzZSIsImFsbCIsIm9wZW4iLCJvbk9wZW5DaGFuZ2UiLCJjbGFzc05hbWUiLCJoYW5kbGVTdWJtaXQiLCJkaXYiLCJjb250cm9sIiwibmFtZSIsInJlbmRlciIsImZpZWxkIiwiZGlzYWJsZWQiLCJvblZhbHVlQ2hhbmdlIiwib25DaGFuZ2UiLCJkZWZhdWx0VmFsdWUiLCJ2YWx1ZSIsInBsYWNlaG9sZGVyIiwiT2JqZWN0IiwibWFwIiwicHJvbXB0IiwidG9Mb2NhbGVMb3dlckNhc2UiLCJ3b3JkIiwib25DbGljayIsInZhcmlhbnQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQTtBQUNBLFlBQVlBLE9BQU8sTUFBTTtBQUN6QixTQUFTQyxXQUFXLFFBQVEsMEJBQTBCO0FBQ3RELFNBQVNDLE9BQU8sUUFBUSxrQkFBa0I7QUFDMUMsU0FDRUMsTUFBTSxFQUNOQyxhQUFhLEVBQ2JDLFlBQVksRUFDWkMsWUFBWSxFQUNaQyxXQUFXLFFBQ04seUJBQXlCO0FBQ2hDLFNBQ0VDLElBQUksRUFDSkMs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

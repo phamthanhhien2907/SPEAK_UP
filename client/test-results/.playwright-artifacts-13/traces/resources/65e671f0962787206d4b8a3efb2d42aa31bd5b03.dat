@@ -1,0 +1,311 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/tables/vocabularies/vocabulary-table.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport2_react);
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "/node_modules/.vite/deps/@tanstack_react-table.js?v=be52afe0";
+import { ChevronDown } from "/node_modules/.vite/deps/lucide-react.js?v=e8ebe34d";
+import { Button } from "/src/components/ui/button.tsx";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "/src/components/ui/dropdown-menu.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "/src/components/ui/table.tsx";
+import { getColumns } from "/src/components/tables/vocabularies/columns.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import { apiGetAllVocabulary } from "/src/services/vocabulary.services.ts";
+export function VocabularyTable() {
+    _s();
+    const { onOpen } = useModal();
+    const columns = React.useMemo(()=>getColumns(onOpen), [
+        onOpen
+    ]);
+    const [vocabularyData, setVocabularyData] = React.useState([]);
+    const [sorting, setSorting] = React.useState([]);
+    const [columnFilters, setColumnFilters] = React.useState([]);
+    const [columnVisibility, setColumnVisibility] = React.useState({});
+    const [rowSelection, setRowSelection] = React.useState({});
+    const table = useReactTable({
+        data: vocabularyData,
+        columns,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection
+        },
+        initialState: {
+            pagination: {
+                pageSize: 5
+            }
+        }
+    });
+    const getAllVocabulary = async ()=>{
+        const vocabulary = await apiGetAllVocabulary();
+        if (vocabulary.data.success) {
+            setVocabularyData(vocabulary.data.rs);
+        } else {
+            console.log("Failed to fetch vocabulary");
+        }
+    };
+    React.useEffect(()=>{
+        getAllVocabulary();
+    }, []);
+    return /*#__PURE__*/ _jsxDEV("div", {
+        className: "w-full shadow-lg drop-shadow-lg ",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center py-4 justify-between",
+                children: [
+                    /*#__PURE__*/ _jsxDEV(Input, {
+                        placeholder: "Filter by word...",
+                        value: table.getColumn("word")?.getFilterValue() ?? "",
+                        onChange: (event)=>table.getColumn("word")?.setFilterValue(event.target.value),
+                        className: "max-w-sm"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                        lineNumber: 85,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        onClick: ()=>onOpen("createVocabulary"),
+                        className: "flex items-center space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                className: "bg-blue-500 hover:bg-blue-700 text-white rounded-[4px]",
+                                children: "Add new vocabulary"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                lineNumber: 97,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DropdownMenu, {
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuTrigger, {
+                                        asChild: true,
+                                        children: /*#__PURE__*/ _jsxDEV(Button, {
+                                            variant: "outline",
+                                            className: "ml-auto",
+                                            children: [
+                                                "Columns ",
+                                                /*#__PURE__*/ _jsxDEV(ChevronDown, {}, void 0, false, {
+                                                    fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                                    lineNumber: 103,
+                                                    columnNumber: 25
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                            lineNumber: 102,
+                                            columnNumber: 15
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                        lineNumber: 101,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuContent, {
+                                        align: "end",
+                                        children: table.getAllColumns().filter((column)=>column.getCanHide()).map((column)=>{
+                                            return /*#__PURE__*/ _jsxDEV(DropdownMenuCheckboxItem, {
+                                                className: "capitalize",
+                                                checked: column.getIsVisible(),
+                                                onCheckedChange: (value)=>column.toggleVisibility(!!value),
+                                                children: column.id
+                                            }, column.id, false, {
+                                                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                                lineNumber: 112,
+                                                columnNumber: 21
+                                            }, this);
+                                        })
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                        lineNumber: 106,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                lineNumber: 100,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                        lineNumber: 93,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                lineNumber: 84,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "rounded-md border",
+                children: /*#__PURE__*/ _jsxDEV(Table, {
+                    className: "equal-widths",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV(TableHeader, {
+                            children: table.getHeaderGroups().map((headerGroup)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    children: headerGroup.headers.map((header)=>{
+                                        return /*#__PURE__*/ _jsxDEV(TableHead, {
+                                            children: header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())
+                                        }, header.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                            lineNumber: 135,
+                                            columnNumber: 21
+                                        }, this);
+                                    })
+                                }, headerGroup.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                    lineNumber: 132,
+                                    columnNumber: 15
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                            lineNumber: 130,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV(TableBody, {
+                            children: table.getRowModel().rows?.length ? table.getRowModel().rows.map((row)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    "data-state": row.getIsSelected() && "selected",
+                                    children: row.getVisibleCells().map((cell)=>/*#__PURE__*/ _jsxDEV(TableCell, {
+                                            children: flexRender(cell.column.columnDef.cell, cell.getContext())
+                                        }, cell.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                            lineNumber: 156,
+                                            columnNumber: 21
+                                        }, this))
+                                }, row.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                    lineNumber: 151,
+                                    columnNumber: 17
+                                }, this)) : /*#__PURE__*/ _jsxDEV(TableRow, {
+                                children: /*#__PURE__*/ _jsxDEV(TableCell, {
+                                    colSpan: columns.length,
+                                    className: "h-24 text-center",
+                                    children: "No results."
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                    lineNumber: 167,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                lineNumber: 166,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                            lineNumber: 148,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                    lineNumber: 129,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                lineNumber: 128,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center justify-end space-x-2 py-4",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "flex-1 text-sm text-muted-foreground",
+                        children: [
+                            table.getFilteredSelectedRowModel().rows.length,
+                            " of",
+                            " ",
+                            table.getFilteredRowModel().rows.length,
+                            " row(s) selected."
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                        lineNumber: 179,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.previousPage(),
+                                disabled: !table.getCanPreviousPage(),
+                                children: "Previous"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                lineNumber: 184,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.nextPage(),
+                                disabled: !table.getCanNextPage(),
+                                children: "Next"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                                lineNumber: 192,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                        lineNumber: 183,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+                lineNumber: 178,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx",
+        lineNumber: 83,
+        columnNumber: 5
+    }, this);
+}
+_s(VocabularyTable, "Vj/Uew+j5DyNXrgBy8DzDP2/76Y=", false, function() {
+    return [
+        useModal,
+        useReactTable
+    ];
+});
+_c = VocabularyTable;
+var _c;
+$RefreshReg$(_c, "VocabularyTable");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/tables/vocabularies/vocabulary-table.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZvY2FidWxhcnktdGFibGUudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIFJlYWN0IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQge1xyXG4gIENvbHVtbkZpbHRlcnNTdGF0ZSxcclxuICBTb3J0aW5nU3RhdGUsXHJcbiAgVmlzaWJpbGl0eVN0YXRlLFxyXG4gIGZsZXhSZW5kZXIsXHJcbiAgZ2V0Q29yZVJvd01vZGVsLFxyXG4gIGdldEZpbHRlcmVkUm93TW9kZWwsXHJcbiAgZ2V0UGFnaW5hdGlvblJvd01vZGVsLFxyXG4gIGdldFNvcnRlZFJvd01vZGVsLFxyXG4gIHVzZVJlYWN0VGFibGUsXHJcbn0gZnJvbSBcIkB0YW5zdGFjay9yZWFjdC10YWJsZVwiO1xyXG5pbXBvcnQgeyBDaGV2cm9uRG93biB9IGZyb20gXCJsdWNpZGUtcmVhY3RcIjtcclxuXHJcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvYnV0dG9uXCI7XHJcbmltcG9ydCB7XHJcbiAgRHJvcGRvd25NZW51LFxyXG4gIERyb3Bkb3duTWVudUNoZWNrYm94SXRlbSxcclxuICBEcm9wZG93bk1lbnVDb250ZW50LFxyXG4gIERyb3Bkb3duTWVudVRyaWdnZXIsXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9kcm9wZG93bi1tZW51XCI7XHJcbmltcG9ydCB7IElucHV0IH0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9pbnB1dFwiO1xyXG5pbXBvcnQge1xyXG4gIFRhYmxlLFxyXG4gIFRhYmxlQm9keSxcclxuICBUYWJsZUNlbGwsXHJcbiAgVGFibGVIZWFkLFxyXG4gIFRhYmxlSGVhZGVyLFxyXG4gIFRhYmxlUm93LFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvdGFibGVcIjtcclxuaW1wb3J0IHsgZ2V0Q29sdW1ucyB9IGZyb20gXCIuL2NvbHVtbnNcIjtcclxuaW1wb3J0IHsgdXNlTW9kYWwgfSBmcm9tIFwiQC9ob29rcy91c2UtbW9kZWwtc3RvcmVcIjtcclxuaW1wb3J0IHsgVm9jYWJ1bGFyeSB9IGZyb20gXCJAL3R5cGVzL3ZvY2FidWxhcnlcIjtcclxuaW1wb3J0IHsgYXBpR2V0QWxsVm9jYWJ1bGFyeSB9IGZyb20gXCJAL3NlcnZpY2VzL3ZvY2FidWxhcnkuc2VydmljZXNcIjtcclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBWb2NhYnVsYXJ5VGFibGUoKSB7XHJcbiAgY29uc3QgeyBvbk9wZW4gfSA9IHVzZU1vZGFsKCk7XHJcbiAgY29uc3QgY29sdW1ucyA9IFJlYWN0LnVzZU1lbW8oKCkgPT4gZ2V0Q29sdW1ucyhvbk9wZW4pLCBbb25PcGVuXSk7XHJcbiAgY29uc3QgW3ZvY2FidWxhcnlEYXRhLCBzZXRWb2NhYnVsYXJ5RGF0YV0gPSBSZWFjdC51c2VTdGF0ZTxWb2NhYnVsYXJ5W10+KFtdKTtcclxuICBjb25zdCBbc29ydGluZywgc2V0U29ydGluZ10gPSBSZWFjdC51c2VTdGF0ZTxTb3J0aW5nU3RhdGU+KFtdKTtcclxuICBjb25zdCBbY29sdW1uRmlsdGVycywgc2V0Q29sdW1uRmlsdGVyc10gPSBSZWFjdC51c2VTdGF0ZTxDb2x1bW5GaWx0ZXJzU3RhdGU+KFxyXG4gICAgW11cclxuICApO1xyXG4gIGNvbnN0IFtjb2x1bW5WaXNpYmlsaXR5LCBzZXRDb2x1bW5WaXNpYmlsaXR5XSA9XHJcbiAgICBSZWFjdC51c2VTdGF0ZTxWaXNpYmlsaXR5U3RhdGU+KHt9KTtcclxuICBjb25zdCBbcm93U2VsZWN0aW9uLCBzZXRSb3dTZWxlY3Rpb25dID0gUmVhY3QudXNlU3RhdGUoe30pO1xyXG4gIGNvbnN0IHRhYmxlID0gdXNlUmVhY3RUYWJsZSh7XHJcbiAgICBkYXRhOiB2b2NhYnVsYXJ5RGF0YSxcclxuICAgIGNvbHVtbnMsXHJcbiAgICBvblNvcnRpbmdDaGFuZ2U6IHNldFNvcnRpbmcsXHJcbiAgICBvbkNvbHVtbkZpbHRlcnNDaGFuZ2U6IHNldENvbHVtbkZpbHRlcnMsXHJcbiAgICBnZXRDb3JlUm93TW9kZWw6IGdldENvcmVSb3dNb2RlbCgpLFxyXG4gICAgZ2V0UGFnaW5hdGlvblJvd01vZGVsOiBnZXRQYWdpbmF0aW9uUm93TW9kZWwoKSxcclxuICAgIGdldFNvcnRlZFJvd01vZGVsOiBnZXRTb3J0ZWRSb3dNb2RlbCgpLFxyXG4gICAgZ2V0RmlsdGVyZWRSb3dNb2RlbDogZ2V0RmlsdGVyZWRSb3dNb2RlbCgpLFxyXG4gICAgb25Db2x1bW5WaXNpYmlsaXR5Q2hhbmdlOiBzZXRDb2x1bW5WaXNpYmlsaXR5LFxyXG4gICAgb25Sb3dTZWxlY3Rpb25DaGFuZ2U6IHNldFJvd1NlbGVjdGlvbixcclxuICAgIHN0YXRlOiB7XHJcbiAgICAgIHNvcnRpbmcsXHJcbiAgICAgIGNvbHVtbkZpbHRlcnMsXHJcbiAgICAgIGNvbHVtblZpc2liaWxpdHksXHJcbiAgICAgIHJvd1NlbGVjdGlvbixcclxuICAgIH0sXHJcblxyXG4gICAgaW5pdGlhbFN0YXRlOiB7XHJcbiAgICAgIHBhZ2luYXRpb246IHtcclxuICAgICAgICBwYWdlU2l6ZTogNSxcclxuICAgICAgfSxcclxuICAgIH0sXHJcbiAgfSk7XHJcbiAgY29uc3QgZ2V0QWxsVm9jYWJ1bGFyeSA9IGFzeW5jICgpID0+IHtcclxuICAgIGNvbnN0IHZvY2FidWxhcnkgPSBhd2FpdCBhcGlHZXRBbGxWb2NhYnVsYXJ5KCk7XHJcbiAgICBpZiAodm9jYWJ1bGFyeS5kYXRhLnN1Y2Nlc3MpIHtcclxuICAgICAgc2V0Vm9jYWJ1bGFyeURhdGEodm9jYWJ1bGFyeS5kYXRhLnJzKTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIGNvbnNvbGUubG9nKFwiRmFpbGVkIHRvIGZldGNoIHZvY2FidWxhcnlcIik7XHJcbiAgICB9XHJcbiAgfTtcclxuICBSZWFjdC51c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgZ2V0QWxsVm9jYWJ1bGFyeSgpO1xyXG4gIH0sIFtdKTtcclxuICByZXR1cm4gKFxyXG4gICAgPGRpdiBjbGFzc05hbWU9XCJ3LWZ1bGwgc2hhZG93LWxnIGRyb3Atc2hhZG93LWxnIFwiPlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIHB5LTQganVzdGlmeS1iZXR3ZWVuXCI+XHJcbiAgICAgICAgPElucHV0XHJcbiAgICAgICAgICBwbGFjZWhvbGRlcj1cIkZpbHRlciBieSB3b3JkLi4uXCJcclxuICAgICAgICAgIHZhbHVlPXsodGFibGUuZ2V0Q29sdW1uKFwid29yZFwiKT8uZ2V0RmlsdGVyVmFsdWUoKSBhcyBzdHJpbmcpID8/IFwiXCJ9XHJcbiAgICAgICAgICBvbkNoYW5nZT17KGV2ZW50KSA9PlxyXG4gICAgICAgICAgICB0YWJsZS5nZXRDb2x1bW4oXCJ3b3JkXCIpPy5zZXRGaWx0ZXJWYWx1ZShldmVudC50YXJnZXQudmFsdWUpXHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJtYXgtdy1zbVwiXHJcbiAgICAgICAgLz5cclxuICAgICAgICA8ZGl2XHJcbiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBvbk9wZW4oXCJjcmVhdGVWb2NhYnVsYXJ5XCIpfVxyXG4gICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0yXCJcclxuICAgICAgICA+XHJcbiAgICAgICAgICA8QnV0dG9uIGNsYXNzTmFtZT1cImJnLWJsdWUtNTAwIGhvdmVyOmJnLWJsdWUtNzAwIHRleHQtd2hpdGUgcm91bmRlZC1bNHB4XVwiPlxyXG4gICAgICAgICAgICBBZGQgbmV3IHZvY2FidWxhcnlcclxuICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgPERyb3Bkb3duTWVudT5cclxuICAgICAgICAgICAgPERyb3Bkb3duTWVudVRyaWdnZXIgYXNDaGlsZD5cclxuICAgICAgICAgICAgICA8QnV0dG9uIHZhcmlhbnQ9XCJvdXRsaW5lXCIgY2xhc3NOYW1lPVwibWwtYXV0b1wiPlxyXG4gICAgICAgICAgICAgICAgQ29sdW1ucyA8Q2hldnJvbkRvd24gLz5cclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgPC9Ecm9wZG93bk1lbnVUcmlnZ2VyPlxyXG4gICAgICAgICAgICA8RHJvcGRvd25NZW51Q29udGVudCBhbGlnbj1cImVuZFwiPlxyXG4gICAgICAgICAgICAgIHt0YWJsZVxyXG4gICAgICAgICAgICAgICAgLmdldEFsbENvbHVtbnMoKVxyXG4gICAgICAgICAgICAgICAgLmZpbHRlcigoY29sdW1uKSA9PiBjb2x1bW4uZ2V0Q2FuSGlkZSgpKVxyXG4gICAgICAgICAgICAgICAgLm1hcCgoY29sdW1uKSA9PiB7XHJcbiAgICAgICAgICAgICAgICAgIHJldHVybiAoXHJcbiAgICAgICAgICAgICAgICAgICAgPERyb3Bkb3duTWVudUNoZWNrYm94SXRlbVxyXG4gICAgICAgICAgICAgICAgICAgICAga2V5PXtjb2x1bW4uaWR9XHJcbiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJjYXBpdGFsaXplXCJcclxuICAgICAgICAgICAgICAgICAgICAgIGNoZWNrZWQ9e2NvbHVtbi5nZXRJc1Zpc2libGUoKX1cclxuICAgICAgICAgICAgICAgICAgICAgIG9uQ2hlY2tlZENoYW5nZT17KHZhbHVlKSA9PlxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW4udG9nZ2xlVmlzaWJpbGl0eSghIXZhbHVlKVxyXG4gICAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIHtjb2x1bW4uaWR9XHJcbiAgICAgICAgICAgICAgICAgICAgPC9Ecm9wZG93bk1lbnVDaGVja2JveEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICk7XHJcbiAgICAgICAgICAgICAgICB9KX1cclxuICAgICAgICAgICAgPC9Ecm9wZG93bk1lbnVDb250ZW50PlxyXG4gICAgICAgICAgPC9Ecm9wZG93bk1lbnU+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cInJvdW5kZWQtbWQgYm9yZGVyXCI+XHJcbiAgICAgICAgPFRhYmxlIGNsYXNzTmFtZT1cImVxdWFsLXdpZHRoc1wiPlxyXG4gICAgICAgICAgPFRhYmxlSGVhZGVyPlxyXG4gICAgICAgICAgICB7dGFibGUuZ2V0SGVhZGVyR3JvdXBzKCkubWFwKChoZWFkZXJHcm91cCkgPT4gKFxyXG4gICAgICAgICAgICAgIDxUYWJsZVJvdyBrZXk9e2hlYWRlckdyb3VwLmlkfT5cclxuICAgICAgICAgICAgICAgIHtoZWFkZXJHcm91cC5oZWFkZXJzLm1hcCgoaGVhZGVyKSA9PiB7XHJcbiAgICAgICAgICAgICAgICAgIHJldHVybiAoXHJcbiAgICAgICAgICAgICAgICAgICAgPFRhYmxlSGVhZCBrZXk9e2hlYWRlci5pZH0+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7aGVhZGVyLmlzUGxhY2Vob2xkZXJcclxuICAgICAgICAgICAgICAgICAgICAgICAgPyBudWxsXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDogZmxleFJlbmRlcihcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGhlYWRlci5jb2x1bW4uY29sdW1uRGVmLmhlYWRlcixcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGhlYWRlci5nZXRDb250ZXh0KClcclxuICAgICAgICAgICAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgICAgICAgIDwvVGFibGVIZWFkPlxyXG4gICAgICAgICAgICAgICAgICApO1xyXG4gICAgICAgICAgICAgICAgfSl9XHJcbiAgICAgICAgICAgICAgPC9UYWJsZVJvdz5cclxuICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICA8L1RhYmxlSGVhZGVyPlxyXG4gICAgICAgICAgPFRhYmxlQm9keT5cclxuICAgICAgICAgICAge3RhYmxlLmdldFJvd01vZGVsKCkucm93cz8ubGVuZ3RoID8gKFxyXG4gICAgICAgICAgICAgIHRhYmxlLmdldFJvd01vZGVsKCkucm93cy5tYXAoKHJvdykgPT4gKFxyXG4gICAgICAgICAgICAgICAgPFRhYmxlUm93XHJcbiAgICAgICAgICAgICAgICAgIGtleT17cm93LmlkfVxyXG4gICAgICAgICAgICAgICAgICBkYXRhLXN0YXRlPXtyb3cuZ2V0SXNTZWxlY3RlZCgpICYmIFwic2VsZWN0ZWRcIn1cclxuICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAge3Jvdy5nZXRWaXNpYmxlQ2VsbHMoKS5tYXAoKGNlbGwpID0+IChcclxuICAgICAgICAgICAgICAgICAgICA8VGFibGVDZWxsIGtleT17Y2VsbC5pZH0+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7ZmxleFJlbmRlcihcclxuICAgICAgICAgICAgICAgICAgICAgICAgY2VsbC5jb2x1bW4uY29sdW1uRGVmLmNlbGwsXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNlbGwuZ2V0Q29udGV4dCgpXHJcbiAgICAgICAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgICAgICAgIDwvVGFibGVDZWxsPlxyXG4gICAgICAgICAgICAgICAgICApKX1cclxuICAgICAgICAgICAgICAgIDwvVGFibGVSb3c+XHJcbiAgICAgICAgICAgICAgKSlcclxuICAgICAgICAgICAgKSA6IChcclxuICAgICAgICAgICAgICA8VGFibGVSb3c+XHJcbiAgICAgICAgICAgICAgICA8VGFibGVDZWxsXHJcbiAgICAgICAgICAgICAgICAgIGNvbFNwYW49e2NvbHVtbnMubGVuZ3RofVxyXG4gICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJoLTI0IHRleHQtY2VudGVyXCJcclxuICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgTm8gcmVzdWx0cy5cclxuICAgICAgICAgICAgICAgIDwvVGFibGVDZWxsPlxyXG4gICAgICAgICAgICAgIDwvVGFibGVSb3c+XHJcbiAgICAgICAgICAgICl9XHJcbiAgICAgICAgICA8L1RhYmxlQm9keT5cclxuICAgICAgICA8L1RhYmxlPlxyXG4gICAgICA8L2Rpdj5cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWVuZCBzcGFjZS14LTIgcHktNFwiPlxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleC0xIHRleHQtc20gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+XHJcbiAgICAgICAgICB7dGFibGUuZ2V0RmlsdGVyZWRTZWxlY3RlZFJvd01vZGVsKCkucm93cy5sZW5ndGh9IG9me1wiIFwifVxyXG4gICAgICAgICAge3RhYmxlLmdldEZpbHRlcmVkUm93TW9kZWwoKS5yb3dzLmxlbmd0aH0gcm93KHMpIHNlbGVjdGVkLlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteC0yXCI+XHJcbiAgICAgICAgICA8QnV0dG9uXHJcbiAgICAgICAgICAgIHZhcmlhbnQ9XCJvdXRsaW5lXCJcclxuICAgICAgICAgICAgc2l6ZT1cInNtXCJcclxuICAgICAgICAgICAgb25DbGljaz17KCkgPT4gdGFibGUucHJldmlvdXNQYWdlKCl9XHJcbiAgICAgICAgICAgIGRpc2FibGVkPXshdGFibGUuZ2V0Q2FuUHJldmlvdXNQYWdlKCl9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIFByZXZpb3VzXHJcbiAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgdmFyaWFudD1cIm91dGxpbmVcIlxyXG4gICAgICAgICAgICBzaXplPVwic21cIlxyXG4gICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB0YWJsZS5uZXh0UGFnZSgpfVxyXG4gICAgICAgICAgICBkaXNhYmxlZD17IXRhYmxlLmdldENhbk5leHRQYWdlKCl9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIE5leHRcclxuICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICA8L2Rpdj5cclxuICAgIDwvZGl2PlxyXG4gICk7XHJcbn1cclxuIl0sIm5hbWVzIjpbIlJlYWN0IiwiZmxleFJlbmRlciIsImdldENvcmVSb3dNb2RlbCIsImdldEZpbHRlcmVkUm93TW9kZWwiLCJnZXRQYWdpbmF0aW9uUm93TW9kZWwiLCJnZXRTb3J0ZWRSb3dNb2RlbCIsInVzZVJlYWN0VGFibGUiLCJDaGV2cm9uRG93biIsIkJ1dHRvbiIsIkRyb3Bkb3duTWVudSIsIkRyb3Bkb3duTWVudUNoZWNrYm94SXRlbSIsIkRyb3Bkb3duTWVudUNvbnRlbnQiLCJEcm9wZG93bk1lbnVUcmlnZ2VyIiwiSW5wdXQiLCJUYWJsZSIsIlRhYmxlQm9keSIsIlRhYmxlQ2VsbCIsIlRhYmxlSGVhZCIsIlRhYmxlSGVhZGVyIiwiVGFibGVSb3ciLCJnZXRDb2x1bW5zIiwidXNlTW9kYWwiLCJhcGlHZXRBbGxWb2NhYnVsYXJ5IiwiVm9jYWJ1bGFyeVRhYmxlIiwib25PcGVuIiwiY29sdW1ucyIsInVzZU1lbW8iLCJ2b2NhYnVsYXJ5RGF0YSIsInNldFZvY2FidWxhcnlEYXRhIiwidXNlU3RhdGUiLCJzb3J0aW5nIiwic2V0U29ydGluZyIsImNvbHVtbkZpbHRlcnMiLCJzZXRDb2x1bW5GaWx0ZXJzIiwiY29sdW1uVmlzaWJpbGl0eSIsInNldENvbHVtblZpc2liaWxpdHkiLCJyb3dTZWxlY3Rpb24iLCJzZXRSb3dTZWxlY3Rpb24iLCJ0YWJsZSIsImRhdGEiLCJvblNvcnRpbmdDaGFuZ2UiLCJvbkNvbHVtbkZpbHRlcnNDaGFuZ2UiLCJvbkNvbHVtblZpc2liaWxpdHlDaGFuZ2UiLCJvblJvd1NlbGVjdGlvbkNoYW5nZSIsInN0YXRlIiwiaW5pdGlhbFN0YXRlIiwicGFnaW5hdGlvbiIsInBhZ2VTaXplIiwiZ2V0QWxsVm9jYWJ1bGFyeSIsInZvY2FidWxhcnkiLCJzdWNjZXNzIiwicnMiLCJjb25zb2xlIiwibG9nIiwidXNlRWZmZWN0IiwiZGl2IiwiY2xhc3NOYW1lIiwicGxhY2Vob2xkZXIiLCJ2YWx1ZSIsImdldENvbHVtbiIsImdldEZpbHRlclZhbHVlIiwib25DaGFuZ2UiLCJldmVudCIsInNldEZpbHRlclZhbHVlIiwidGFyZ2V0Iiwib25DbGljayIsImFzQ2hpbGQiLCJ2YXJpYW50IiwiYWxpZ24iLCJnZXRBbGxDb2x1bW5zIiwiZmlsdGVyIiwiY29sdW1uIiwiZ2V0Q2FuSGlkZSIsIm1hcCIsImNoZWNrZWQiLCJnZXRJc1Zpc2libGUiLCJvbkNoZWNrZWRDaGFuZ2UiLCJ0b2dnbGVWaXNpYmlsaXR5IiwiaWQiLCJnZXRIZWFkZXJHcm91cHMiLCJoZWFkZXJHcm91cCIsImhlYWRlcnMiLCJoZWFkZXIiLCJpc1BsYWNlaG9sZGVyIiwiY29sdW1uRGVmIiwiZ2V0Q29udGV4dCIsImdldFJvd01vZGVsIiwicm93cyIsImxlbmd0aCIsInJvdyIsImRhdGEtc3RhdGUiLCJnZXRJc1NlbGVjdGVkIiwiZ2V0VmlzaWJsZUNlbGxzIiwiY2VsbCIsImNvbFNwYW4iLCJnZXRGaWx0ZXJlZFNlbGVjdGVkUm93TW9kZWwiLCJzaXplIiwicHJldmlvdXNQYWdlIiwiZGlzYWJsZWQiLCJnZXRDYW5QcmV2aW91c1BhZ2UiLCJuZXh0UGFnZSIsImdldENhbk5leHRQYWdlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O0FBQUEsWUFBWUEsV0FBVyxRQUFRO0FBQy9CLFNBSUVDLFVBQVUsRUFDVkMsZUFBZSxFQUNmQyxtQkFBbUIsRUFDbkJDLHFCQUFxQixFQUNyQkMsaUJBQWlCLEVBQ2pCQyxhQUFhLFFBQ1Isd0JBQXdCO0FBQy9CLFNBQVNDLFdBQVcsUUFBUSxlQUFlO0FBRTNDLFNBQVNDLE1BQU0sUUFBUSx5QkFBeUI7QUFDaEQsU0FDRUMsWUFBWSxFQUNaQyx3QkFBd0IsRUFDeEJDLG1CQUFtQixFQUNuQkMsbUJBQW1CLFFBQ2QsZ0NBQWdDO0FBQ3ZDLFNBQVNDLEtBQUssUUFBUSx3QkFBd0I7QUFDOUMsU0FDRUMsS0FBSyxFQUNMQyxTQUFTLEVBQ1RDLFNBQVMsRUFDVEMsU0FBUyxFQUNUQyxXQUFXLEVBQ1hDLFFBQVEsUUFDSCx3QkFBd0I7QUFDL0IsU0FBU0MsVUFBVSxRQUFRLFlBQVk7QUFDdkMsU0FBU0MsUUFBUSxRQUFRLDBCQUEwQjtBQUVuRCxTQUFTQyxtQkFBbUIsUUFBUSxpQ0FBaUM7QUFFckUsT0FBTyxTQUFTQzs7SUFDZCxNQUFNLEVBQUVDLE1BQU0sRUFBRSxHQUFHSDtJQUNuQixNQUFNSSxVQUFVekIsTUFBTTBCLE9BQU8sQ0FBQyxJQUFNTixXQUFXSSxTQUFTO1FBQUNBO0tBQU87SUFDaEUsTUFBTSxDQUFDRyxnQkFBZ0JDLGtCQUFrQixHQUFHNUIsTUFBTTZCLFFBQVEsQ0FBZSxFQUFFO0lBQzNFLE1BQU0sQ0FBQ0MsU0FBU0MsV0FBVyxHQUFHL0IsTUFBTTZCLFFBQVEsQ0FBZSxFQUFFO0lBQzdELE1BQU0sQ0FBQ0csZUFBZUMsaUJBQWlCLEdBQUdqQyxNQUFNNkIsUUFBUSxDQUN0RCxFQUFFO0lBRUosTUFBTSxDQUFDSyxrQkFBa0JDLG9CQUFvQixHQUMzQ25DLE1BQU02QixRQUFRLENBQWtCLENBQUM7SUFDbkMsTUFBTSxDQUFDTyxjQUFjQyxnQkFBZ0IsR0FBR3JDLE1BQU02QixRQUFRLENBQUMsQ0FBQztJQUN4RCxNQUFNUyxRQUFRaEMsY0FBYztRQUMxQmlDLE1BQU1aO1FBQ05GO1FBQ0FlLGlCQUFpQlQ7UUFDakJVLHVCQUF1QlI7UUFDdkIvQixpQkFBaUJBO1FBQ2pCRSx1QkFBdUJBO1FBQ3ZCQyxtQkFBbUJBO1FBQ25CRixxQkFBcUJBO1FBQ3JCdUMsMEJBQTBCUDtRQUMxQlEsc0JBQXNCTjtRQUN0Qk8sT0FBTztZQUNMZDtZQUNBRTtZQUNBRTtZQUNBRTtRQUNGO1FBRUFTLGNBQWM7WUFDWkMsWUFBWTtnQkFDVkMsVUFBVTtZQUNaO1FBQ0Y7SUFDRjtJQUNBLE1BQU1DLG1CQUFtQjtRQUN2QixNQUFNQyxhQUFhLE1BQU0zQjtRQUN6QixJQUFJMkIsV0FBV1YsSUFBSSxDQUFDVyxPQUFPLEVBQUU7WUFDM0J0QixrQkFBa0JxQixXQUFXVixJQUFJLENBQUNZLEVBQUU7UUFDdEMsT0FBTztZQUNMQyxRQUFRQyxHQUFHLENBQUM7UUFDZDtJQUNGO0lBQ0FyRCxNQUFNc0QsU0FBUyxDQUFDO1FBQ2ROO0lBQ0YsR0FBRyxFQUFFO0lBQ0wscUJBQ0UsUUFBQ087UUFBSUMsV0FBVTs7MEJBQ2IsUUFBQ0Q7Z0JBQUlDLFdBQVU7O2tDQUNiLFFBQUMzQzt3QkFDQzRDLGFBQVk7d0JBQ1pDLE9BQU8sQUFBQ3BCLE1BQU1xQixTQUFTLENBQUMsU0FBU0Msb0JBQStCO3dCQUNoRUMsVUFBVSxDQUFDQyxRQUNUeEIsTUFBTXFCLFNBQVMsQ0FBQyxTQUFTSSxlQUFlRCxNQUFNRSxNQUFNLENBQUNOLEtBQUs7d0JBRTVERixXQUFVOzs7Ozs7a0NBRVosUUFBQ0Q7d0JBQ0NVLFNBQVMsSUFBTXpDLE9BQU87d0JBQ3RCZ0MsV0FBVTs7MENBRVYsUUFBQ2hEO2dDQUFPZ0QsV0FBVTswQ0FBeUQ7Ozs7OzswQ0FHM0UsUUFBQy9DOztrREFDQyxRQUFDRzt3Q0FBb0JzRCxPQUFPO2tEQUMxQixjQUFBLFFBQUMxRDs0Q0FBTzJELFNBQVE7NENBQVVYLFdBQVU7O2dEQUFVOzhEQUNwQyxRQUFDakQ7Ozs7Ozs7Ozs7Ozs7Ozs7a0RBR2IsUUFBQ0k7d0NBQW9CeUQsT0FBTTtrREFDeEI5QixNQUNFK0IsYUFBYSxHQUNiQyxNQUFNLENBQUMsQ0FBQ0MsU0FBV0EsT0FBT0MsVUFBVSxJQUNwQ0MsR0FBRyxDQUFDLENBQUNGOzRDQUNKLHFCQUNFLFFBQUM3RDtnREFFQzhDLFdBQVU7Z0RBQ1ZrQixTQUFTSCxPQUFPSSxZQUFZO2dEQUM1QkMsaUJBQWlCLENBQUNsQixRQUNoQmEsT0FBT00sZ0JBQWdCLENBQUMsQ0FBQyxDQUFDbkI7MERBRzNCYSxPQUFPTyxFQUFFOytDQVBMUCxPQUFPTyxFQUFFOzs7Ozt3Q0FVcEI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzswQkFLVixRQUFDdkI7Z0JBQUlDLFdBQVU7MEJBQ2IsY0FBQSxRQUFDMUM7b0JBQU0wQyxXQUFVOztzQ0FDZixRQUFDdEM7c0NBQ0VvQixNQUFNeUMsZUFBZSxHQUFHTixHQUFHLENBQUMsQ0FBQ08sNEJBQzVCLFFBQUM3RDs4Q0FDRTZELFlBQVlDLE9BQU8sQ0FBQ1IsR0FBRyxDQUFDLENBQUNTO3dDQUN4QixxQkFDRSxRQUFDakU7c0RBQ0VpRSxPQUFPQyxhQUFhLEdBQ2pCLE9BQ0FsRixXQUNFaUYsT0FBT1gsTUFBTSxDQUFDYSxTQUFTLENBQUNGLE1BQU0sRUFDOUJBLE9BQU9HLFVBQVU7MkNBTFRILE9BQU9KLEVBQUU7Ozs7O29DQVM3QjttQ0FaYUUsWUFBWUYsRUFBRTs7Ozs7Ozs7OztzQ0FnQmpDLFFBQUMvRDtzQ0FDRXVCLE1BQU1nRCxXQUFXLEdBQUdDLElBQUksRUFBRUMsU0FDekJsRCxNQUFNZ0QsV0FBVyxHQUFHQyxJQUFJLENBQUNkLEdBQUcsQ0FBQyxDQUFDZ0Isb0JBQzVCLFFBQUN0RTtvQ0FFQ3VFLGNBQVlELElBQUlFLGFBQWEsTUFBTTs4Q0FFbENGLElBQUlHLGVBQWUsR0FBR25CLEdBQUcsQ0FBQyxDQUFDb0IscUJBQzFCLFFBQUM3RTtzREFDRWYsV0FDQzRGLEtBQUt0QixNQUFNLENBQUNhLFNBQVMsQ0FBQ1MsSUFBSSxFQUMxQkEsS0FBS1IsVUFBVTsyQ0FISFEsS0FBS2YsRUFBRTs7Ozs7bUNBSnBCVyxJQUFJWCxFQUFFOzs7OzBEQWNmLFFBQUMzRDswQ0FDQyxjQUFBLFFBQUNIO29DQUNDOEUsU0FBU3JFLFFBQVErRCxNQUFNO29DQUN2QmhDLFdBQVU7OENBQ1g7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OzswQkFRWCxRQUFDRDtnQkFBSUMsV0FBVTs7a0NBQ2IsUUFBQ0Q7d0JBQUlDLFdBQVU7OzRCQUNabEIsTUFBTXlELDJCQUEyQixHQUFHUixJQUFJLENBQUNDLE1BQU07NEJBQUM7NEJBQUk7NEJBQ3BEbEQsTUFBTW5DLG1CQUFtQixHQUFHb0YsSUFBSSxDQUFDQyxNQUFNOzRCQUFDOzs7Ozs7O2tDQUUzQyxRQUFDakM7d0JBQUlDLFdBQVU7OzBDQUNiLFFBQUNoRDtnQ0FDQzJELFNBQVE7Z0NBQ1I2QixNQUFLO2dDQUNML0IsU0FBUyxJQUFNM0IsTUFBTTJELFlBQVk7Z0NBQ2pDQyxVQUFVLENBQUM1RCxNQUFNNkQsa0JBQWtCOzBDQUNwQzs7Ozs7OzBDQUdELFFBQUMzRjtnQ0FDQzJELFNBQVE7Z0NBQ1I2QixNQUFLO2dDQUNML0IsU0FBUyxJQUFNM0IsTUFBTThELFFBQVE7Z0NBQzdCRixVQUFVLENBQUM1RCxNQUFNK0QsY0FBYzswQ0FDaEM7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQU9YO0dBeEtnQjlFOztRQUNLRjtRQVVMZjs7O0tBWEFpQiJ9

@@ -1,0 +1,16 @@
+export var PronunciationScoreType = /*#__PURE__*/ function(PronunciationScoreType) {
+    PronunciationScoreType[PronunciationScoreType["ZERO"] = 0] = "ZERO";
+    PronunciationScoreType[PronunciationScoreType["TEN"] = 10] = "TEN";
+    PronunciationScoreType[PronunciationScoreType["TWENTY"] = 20] = "TWENTY";
+    PronunciationScoreType[PronunciationScoreType["THIRTY"] = 30] = "THIRTY";
+    PronunciationScoreType[PronunciationScoreType["FORTY"] = 40] = "FORTY";
+    PronunciationScoreType[PronunciationScoreType["FIFTY"] = 50] = "FIFTY";
+    PronunciationScoreType[PronunciationScoreType["SIXTY"] = 60] = "SIXTY";
+    PronunciationScoreType[PronunciationScoreType["SEVENTY"] = 70] = "SEVENTY";
+    PronunciationScoreType[PronunciationScoreType["EIGHTY"] = 80] = "EIGHTY";
+    PronunciationScoreType[PronunciationScoreType["NINETY"] = 90] = "NINETY";
+    PronunciationScoreType[PronunciationScoreType["HUNDRED"] = 100] = "HUNDRED";
+    return PronunciationScoreType;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb251bmNpYXRpb24tc2NvcmUudHMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgRXhjZXJjaXNlIH0gZnJvbSBcIi4vZXhjZXJjaXNlXCI7XHJcbmltcG9ydCB7IFVzZXIgfSBmcm9tIFwiLi91c2VyXCI7XHJcblxyXG5leHBvcnQgdHlwZSBQcm9udW5jaWF0aW9uU2NvcmUgPSB7XHJcbiAgICBfaWQ/OiBzdHJpbmc7XHJcbiAgICB1c2VySWQ/OiBVc2VyO1xyXG4gICAgZXhlcmNpc2VJZD86IEV4Y2VyY2lzZTtcclxuICAgIHBob25ldGljPzogc3RyaW5nXHJcbiAgICB1c2VyQXVkaW9Vcmw/OiBzdHJpbmc7XHJcbiAgICBzY29yZT86IG51bWJlcjtcclxufTtcclxuZXhwb3J0IGVudW0gUHJvbnVuY2lhdGlvblNjb3JlVHlwZSB7XHJcbiAgICBaRVJPID0gMCxcclxuICAgIFRFTiA9IDEwLFxyXG4gICAgVFdFTlRZID0gMjAsXHJcbiAgICBUSElSVFkgPSAzMCxcclxuICAgIEZPUlRZID0gNDAsXHJcbiAgICBGSUZUWSA9IDUwLFxyXG4gICAgU0lYVFkgPSA2MCxcclxuICAgIFNFVkVOVFkgPSA3MCxcclxuICAgIEVJR0hUWSA9IDgwLFxyXG4gICAgTklORVRZID0gOTAsXHJcbiAgICBIVU5EUkVEID0gMTAwLFxyXG59Il0sIm5hbWVzIjpbIlByb251bmNpYXRpb25TY29yZVR5cGUiXSwibWFwcGluZ3MiOiJBQVdBLE9BQU8sSUFBQSxBQUFLQSxnREFBQUE7Ozs7Ozs7Ozs7OztXQUFBQTtNQVlYIn0=

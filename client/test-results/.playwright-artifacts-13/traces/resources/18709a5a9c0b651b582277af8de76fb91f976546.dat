@@ -1,0 +1,50 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/Auth/route.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/Auth/route.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const lazy = __vite__cjsImport2_react["lazy"];
+const AuthPage = /*#__PURE__*/ lazy(()=>import("/src/pages/Auth/index.tsx"));
+_c = AuthPage;
+const authRoutes = [
+    {
+        path: "/admin/auth",
+        element: /*#__PURE__*/ _jsxDEV(AuthPage, {}, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/Auth/route.tsx",
+            lineNumber: 7,
+            columnNumber: 14
+        }, this),
+        index: true
+    },
+    {
+        path: "/auth",
+        element: /*#__PURE__*/ _jsxDEV(AuthPage, {}, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/Auth/route.tsx",
+            lineNumber: 12,
+            columnNumber: 14
+        }, this),
+        index: true
+    }
+];
+export default authRoutes;
+var _c;
+$RefreshReg$(_c, "AuthPage");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/Auth/route.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/Auth/route.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBsYXp5IH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IFJvdXRlT2JqZWN0IH0gZnJvbSBcInJlYWN0LXJvdXRlci1kb21cIjtcclxuY29uc3QgQXV0aFBhZ2UgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vaW5kZXhcIikpO1xyXG5jb25zdCBhdXRoUm91dGVzOiAoUm91dGVPYmplY3QgJiB7IHJvbGU/OiBzdHJpbmdbXSB9KVtdID0gW1xyXG4gIHtcclxuICAgIHBhdGg6IFwiL2FkbWluL2F1dGhcIixcclxuICAgIGVsZW1lbnQ6IDxBdXRoUGFnZSAvPiwgLy8gZMO5bmcgY2h1bmcgQXV0aFBhZ2VcclxuICAgIGluZGV4OiB0cnVlLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgcGF0aDogXCIvYXV0aFwiLFxyXG4gICAgZWxlbWVudDogPEF1dGhQYWdlIC8+LCAvLyBkw7luZyBjaHVuZyBuaMawbmcgcGjDom4gYmnhu4d0IGLhurFuZyBwYXRobmFtZVxyXG4gICAgaW5kZXg6IHRydWUsXHJcbiAgfSxcclxuXTtcclxuZXhwb3J0IGRlZmF1bHQgYXV0aFJvdXRlcztcclxuIl0sIm5hbWVzIjpbImxhenkiLCJBdXRoUGFnZSIsImF1dGhSb3V0ZXMiLCJwYXRoIiwiZWxlbWVudCIsImluZGV4Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBQSxTQUFTQSxJQUFJLFFBQVEsUUFBUTtBQUU3QixNQUFNQyx5QkFBV0QsS0FBSyxJQUFNLE1BQU0sQ0FBQztLQUE3QkM7QUFDTixNQUFNQyxhQUFvRDtJQUN4RDtRQUNFQyxNQUFNO1FBQ05DLHVCQUFTLFFBQUNIOzs7OztRQUNWSSxPQUFPO0lBQ1Q7SUFDQTtRQUNFRixNQUFNO1FBQ05DLHVCQUFTLFFBQUNIOzs7OztRQUNWSSxPQUFPO0lBQ1Q7Q0FDRDtBQUNELGVBQWVILFdBQVcifQ==

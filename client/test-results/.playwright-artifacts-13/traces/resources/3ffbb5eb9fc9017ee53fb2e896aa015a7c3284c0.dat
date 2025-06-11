@@ -1,0 +1,16 @@
+export var AttemptsType = /*#__PURE__*/ function(AttemptsType) {
+    AttemptsType[AttemptsType["ZERO"] = 1] = "ZERO";
+    AttemptsType[AttemptsType["TEN"] = 10] = "TEN";
+    AttemptsType[AttemptsType["TWENTY"] = 20] = "TWENTY";
+    AttemptsType[AttemptsType["THIRTY"] = 30] = "THIRTY";
+    AttemptsType[AttemptsType["FORTY"] = 40] = "FORTY";
+    AttemptsType[AttemptsType["FIFTY"] = 50] = "FIFTY";
+    AttemptsType[AttemptsType["SIXTY"] = 60] = "SIXTY";
+    AttemptsType[AttemptsType["SEVENTY"] = 70] = "SEVENTY";
+    AttemptsType[AttemptsType["EIGHTY"] = 80] = "EIGHTY";
+    AttemptsType[AttemptsType["NINETY"] = 90] = "NINETY";
+    AttemptsType[AttemptsType["HUNDRED"] = 100] = "HUNDRED";
+    return AttemptsType;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImhpc3RvcnkudHMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgRXhjZXJjaXNlIH0gZnJvbSBcIi4vZXhjZXJjaXNlXCI7XHJcbmltcG9ydCB7IExlc3NvbiB9IGZyb20gXCIuL2xlc3NvblwiO1xyXG5pbXBvcnQgeyBVc2VyIH0gZnJvbSBcIi4vdXNlclwiO1xyXG5cclxuZXhwb3J0IHR5cGUgSGlzdG9yeSA9IHtcclxuICAgIF9pZD86IHN0cmluZztcclxuICAgIHVzZXJJZD86IFVzZXI7XHJcbiAgICBsZXNzb25JZD86IExlc3NvbjtcclxuICAgIGV4ZXJjaXNlSWQ/OiBFeGNlcmNpc2U7XHJcbiAgICBhdHRlbXB0cz86IG51bWJlcjtcclxuICAgIGxhc3RBdHRlbXB0QXQ/OiBEYXRlO1xyXG59O1xyXG5leHBvcnQgZW51bSBBdHRlbXB0c1R5cGUge1xyXG4gICAgWkVSTyA9IDEsXHJcbiAgICBURU4gPSAxMCxcclxuICAgIFRXRU5UWSA9IDIwLFxyXG4gICAgVEhJUlRZID0gMzAsXHJcbiAgICBGT1JUWSA9IDQwLFxyXG4gICAgRklGVFkgPSA1MCxcclxuICAgIFNJWFRZID0gNjAsXHJcbiAgICBTRVZFTlRZID0gNzAsXHJcbiAgICBFSUdIVFkgPSA4MCxcclxuICAgIE5JTkVUWSA9IDkwLFxyXG4gICAgSFVORFJFRCA9IDEwMCxcclxufSJdLCJuYW1lcyI6WyJBdHRlbXB0c1R5cGUiXSwibWFwcGluZ3MiOiJBQVlBLE9BQU8sSUFBQSxBQUFLQSxzQ0FBQUE7Ozs7Ozs7Ozs7OztXQUFBQTtNQVlYIn0=
