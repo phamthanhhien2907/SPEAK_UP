@@ -1,0 +1,170 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/Reset/index.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/Reset/index.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const useState = __vite__cjsImport2_react["useState"];
+import resetImg from "/src/assets/admin/forgot.svg?import";
+import { AiOutlineClose } from "/node_modules/.vite/deps/react-icons_ai.js?v=2a90fa7e";
+import { apiForgotPassword } from "/src/services/user.services.ts";
+const Reset = ({ onLogin })=>{
+    _s();
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        if (!email) {
+            setError("Please enter your email.");
+            return;
+        }
+        try {
+            setLoading(true);
+            setMessage(null);
+            setError(null);
+            await apiForgotPassword({
+                email
+            });
+            setMessage("Reset link has been sent to your email.");
+        } catch (err) {
+            const msg = err?.response?.data?.message || "Failed to send reset link.";
+            setError(msg);
+        } finally{
+            setLoading(false);
+        }
+    };
+    return /*#__PURE__*/ _jsxDEV("div", {
+        className: "main-container --flex-center",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "form-container reset",
+                children: /*#__PURE__*/ _jsxDEV("form", {
+                    className: "--form-control",
+                    onSubmit: handleSubmit,
+                    children: [
+                        /*#__PURE__*/ _jsxDEV("h2", {
+                            className: "--color-danger --text-center",
+                            children: "Reset"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                            lineNumber: 43,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("input", {
+                            type: "email",
+                            className: "--width-100",
+                            placeholder: "Email",
+                            value: email,
+                            onChange: (e)=>setEmail(e.target.value)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                            lineNumber: 45,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("button", {
+                            className: "--btn --btn-primary --btn-block",
+                            disabled: loading,
+                            children: loading ? "Sending..." : "Reset Password"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                            lineNumber: 53,
+                            columnNumber: 11
+                        }, this),
+                        message && /*#__PURE__*/ _jsxDEV("span", {
+                            className: "--text-sm --block --text-center --color-success",
+                            children: message
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                            lineNumber: 61,
+                            columnNumber: 13
+                        }, this),
+                        error && /*#__PURE__*/ _jsxDEV("span", {
+                            className: "--text-sm --block --text-center --color-danger",
+                            children: error
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                            lineNumber: 66,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("span", {
+                            className: "--text-sm --block --text-center",
+                            children: "We will send you a reset link!"
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                            lineNumber: 71,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            className: "close",
+                            onClick: onLogin,
+                            children: /*#__PURE__*/ _jsxDEV(AiOutlineClose, {
+                                color: "red"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                                lineNumber: 76,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                            lineNumber: 75,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                    lineNumber: 42,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                lineNumber: 41,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "img-container",
+                children: /*#__PURE__*/ _jsxDEV("img", {
+                    src: resetImg,
+                    alt: "reset"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                    lineNumber: 81,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+                lineNumber: 80,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "D:/DATN/client/src/pages/Reset/index.tsx",
+        lineNumber: 40,
+        columnNumber: 5
+    }, this);
+};
+_s(Reset, "nfFARABnqfooaTpjtmveDEWrFPQ=");
+_c = Reset;
+export default Reset;
+var _c;
+$RefreshReg$(_c, "Reset");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/Reset/index.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/Reset/index.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQgcmVzZXRJbWcgZnJvbSBcIkAvYXNzZXRzL2FkbWluL2ZvcmdvdC5zdmdcIjtcclxuaW1wb3J0IHsgQWlPdXRsaW5lQ2xvc2UgfSBmcm9tIFwicmVhY3QtaWNvbnMvYWlcIjtcclxuaW1wb3J0IHsgYXBpRm9yZ290UGFzc3dvcmQgfSBmcm9tIFwiQC9zZXJ2aWNlcy91c2VyLnNlcnZpY2VzXCI7XHJcblxyXG50eXBlIFJlc2V0UHJvcHMgPSB7XHJcbiAgb25Mb2dpbj86ICgpID0+IHZvaWQ7XHJcbn07XHJcblxyXG5jb25zdCBSZXNldCA9ICh7IG9uTG9naW4gfTogUmVzZXRQcm9wcykgPT4ge1xyXG4gIGNvbnN0IFtlbWFpbCwgc2V0RW1haWxdID0gdXNlU3RhdGUoXCJcIik7XHJcbiAgY29uc3QgW21lc3NhZ2UsIHNldE1lc3NhZ2VdID0gdXNlU3RhdGU8c3RyaW5nIHwgbnVsbD4obnVsbCk7XHJcbiAgY29uc3QgW2Vycm9yLCBzZXRFcnJvcl0gPSB1c2VTdGF0ZTxzdHJpbmcgfCBudWxsPihudWxsKTtcclxuICBjb25zdCBbbG9hZGluZywgc2V0TG9hZGluZ10gPSB1c2VTdGF0ZShmYWxzZSk7XHJcblxyXG4gIGNvbnN0IGhhbmRsZVN1Ym1pdCA9IGFzeW5jIChlOiBSZWFjdC5Gb3JtRXZlbnQpID0+IHtcclxuICAgIGUucHJldmVudERlZmF1bHQoKTtcclxuXHJcbiAgICBpZiAoIWVtYWlsKSB7XHJcbiAgICAgIHNldEVycm9yKFwiUGxlYXNlIGVudGVyIHlvdXIgZW1haWwuXCIpO1xyXG4gICAgICByZXR1cm47XHJcbiAgICB9XHJcblxyXG4gICAgdHJ5IHtcclxuICAgICAgc2V0TG9hZGluZyh0cnVlKTtcclxuICAgICAgc2V0TWVzc2FnZShudWxsKTtcclxuICAgICAgc2V0RXJyb3IobnVsbCk7XHJcblxyXG4gICAgICBhd2FpdCBhcGlGb3Jnb3RQYXNzd29yZCh7IGVtYWlsIH0pO1xyXG4gICAgICBzZXRNZXNzYWdlKFwiUmVzZXQgbGluayBoYXMgYmVlbiBzZW50IHRvIHlvdXIgZW1haWwuXCIpO1xyXG4gICAgfSBjYXRjaCAoZXJyOiBhbnkpIHtcclxuICAgICAgY29uc3QgbXNnID0gZXJyPy5yZXNwb25zZT8uZGF0YT8ubWVzc2FnZSB8fCBcIkZhaWxlZCB0byBzZW5kIHJlc2V0IGxpbmsuXCI7XHJcbiAgICAgIHNldEVycm9yKG1zZyk7XHJcbiAgICB9IGZpbmFsbHkge1xyXG4gICAgICBzZXRMb2FkaW5nKGZhbHNlKTtcclxuICAgIH1cclxuICB9O1xyXG5cclxuICByZXR1cm4gKFxyXG4gICAgPGRpdiBjbGFzc05hbWU9XCJtYWluLWNvbnRhaW5lciAtLWZsZXgtY2VudGVyXCI+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZm9ybS1jb250YWluZXIgcmVzZXRcIj5cclxuICAgICAgICA8Zm9ybSBjbGFzc05hbWU9XCItLWZvcm0tY29udHJvbFwiIG9uU3VibWl0PXtoYW5kbGVTdWJtaXR9PlxyXG4gICAgICAgICAgPGgyIGNsYXNzTmFtZT1cIi0tY29sb3ItZGFuZ2VyIC0tdGV4dC1jZW50ZXJcIj5SZXNldDwvaDI+XHJcblxyXG4gICAgICAgICAgPGlucHV0XHJcbiAgICAgICAgICAgIHR5cGU9XCJlbWFpbFwiXHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT1cIi0td2lkdGgtMTAwXCJcclxuICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJFbWFpbFwiXHJcbiAgICAgICAgICAgIHZhbHVlPXtlbWFpbH1cclxuICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRFbWFpbChlLnRhcmdldC52YWx1ZSl9XHJcbiAgICAgICAgICAvPlxyXG5cclxuICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgY2xhc3NOYW1lPVwiLS1idG4gLS1idG4tcHJpbWFyeSAtLWJ0bi1ibG9ja1wiXHJcbiAgICAgICAgICAgIGRpc2FibGVkPXtsb2FkaW5nfVxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICB7bG9hZGluZyA/IFwiU2VuZGluZy4uLlwiIDogXCJSZXNldCBQYXNzd29yZFwifVxyXG4gICAgICAgICAgPC9idXR0b24+XHJcblxyXG4gICAgICAgICAge21lc3NhZ2UgJiYgKFxyXG4gICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCItLXRleHQtc20gLS1ibG9jayAtLXRleHQtY2VudGVyIC0tY29sb3Itc3VjY2Vzc1wiPlxyXG4gICAgICAgICAgICAgIHttZXNzYWdlfVxyXG4gICAgICAgICAgICA8L3NwYW4+XHJcbiAgICAgICAgICApfVxyXG4gICAgICAgICAge2Vycm9yICYmIChcclxuICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwiLS10ZXh0LXNtIC0tYmxvY2sgLS10ZXh0LWNlbnRlciAtLWNvbG9yLWRhbmdlclwiPlxyXG4gICAgICAgICAgICAgIHtlcnJvcn1cclxuICAgICAgICAgICAgPC9zcGFuPlxyXG4gICAgICAgICAgKX1cclxuXHJcbiAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCItLXRleHQtc20gLS1ibG9jayAtLXRleHQtY2VudGVyXCI+XHJcbiAgICAgICAgICAgIFdlIHdpbGwgc2VuZCB5b3UgYSByZXNldCBsaW5rIVxyXG4gICAgICAgICAgPC9zcGFuPlxyXG5cclxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY2xvc2VcIiBvbkNsaWNrPXtvbkxvZ2lufT5cclxuICAgICAgICAgICAgPEFpT3V0bGluZUNsb3NlIGNvbG9yPVwicmVkXCIgLz5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvZm9ybT5cclxuICAgICAgPC9kaXY+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiaW1nLWNvbnRhaW5lclwiPlxyXG4gICAgICAgIDxpbWcgc3JjPXtyZXNldEltZ30gYWx0PVwicmVzZXRcIiAvPlxyXG4gICAgICA8L2Rpdj5cclxuICAgIDwvZGl2PlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBSZXNldDtcclxuIl0sIm5hbWVzIjpbInVzZVN0YXRlIiwicmVzZXRJbWciLCJBaU91dGxpbmVDbG9zZSIsImFwaUZvcmdvdFBhc3N3b3JkIiwiUmVzZXQiLCJvbkxvZ2luIiwiZW1haWwiLCJzZXRFbWFpbCIsIm1lc3NhZ2UiLCJzZXRNZXNzYWdlIiwiZXJyb3IiLCJzZXRFcnJvciIsImxvYWRpbmciLCJzZXRMb2FkaW5nIiwiaGFuZGxlU3VibWl0IiwiZSIsInByZXZlbnREZWZhdWx0IiwiZXJyIiwibXNnIiwicmVzcG9uc2UiLCJkYXRhIiwiZGl2IiwiY2xhc3NOYW1lIiwiZm9ybSIsIm9uU3VibWl0IiwiaDIiLCJpbnB1dCIsInR5cGUiLCJwbGFjZWhvbGRlciIsInZhbHVlIiwib25DaGFuZ2UiLCJ0YXJnZXQiLCJidXR0b24iLCJkaXNhYmxlZCIsInNwYW4iLCJvbkNsaWNrIiwiY29sb3IiLCJpbWciLCJzcmMiLCJhbHQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxTQUFTQSxRQUFRLFFBQVEsUUFBUTtBQUNqQyxPQUFPQyxjQUFjLDRCQUE0QjtBQUNqRCxTQUFTQyxjQUFjLFFBQVEsaUJBQWlCO0FBQ2hELFNBQVNDLGlCQUFpQixRQUFRLDJCQUEyQjtBQU03RCxNQUFNQyxRQUFRLENBQUMsRUFBRUMsT0FBTyxFQUFjOztJQUNwQyxNQUFNLENBQUNDLE9BQU9DLFNBQVMsR0FBR1AsU0FBUztJQUNuQyxNQUFNLENBQUNRLFNBQVNDLFdBQVcsR0FBR1QsU0FBd0I7SUFDdEQsTUFBTSxDQUFDVSxPQUFPQyxTQUFTLEdBQUdYLFNBQXdCO0lBQ2xELE1BQU0sQ0FBQ1ksU0FBU0MsV0FBVyxHQUFHYixTQUFTO0lBRXZDLE1BQU1jLGVBQWUsT0FBT0M7UUFDMUJBLEVBQUVDLGNBQWM7UUFFaEIsSUFBSSxDQUFDVixPQUFPO1lBQ1ZLLFNBQVM7WUFDVDtRQUNGO1FBRUEsSUFBSTtZQUNGRSxXQUFXO1lBQ1hKLFdBQVc7WUFDWEUsU0FBUztZQUVULE1BQU1SLGtCQUFrQjtnQkFBRUc7WUFBTTtZQUNoQ0csV0FBVztRQUNiLEVBQUUsT0FBT1EsS0FBVTtZQUNqQixNQUFNQyxNQUFNRCxLQUFLRSxVQUFVQyxNQUFNWixXQUFXO1lBQzVDRyxTQUFTTztRQUNYLFNBQVU7WUFDUkwsV0FBVztRQUNiO0lBQ0Y7SUFFQSxxQkFDRSxRQUFDUTtRQUFJQyxXQUFVOzswQkFDYixRQUFDRDtnQkFBSUMsV0FBVTswQkFDYixjQUFBLFFBQUNDO29CQUFLRCxXQUFVO29CQUFpQkUsVUFBVVY7O3NDQUN6QyxRQUFDVzs0QkFBR0gsV0FBVTtzQ0FBK0I7Ozs7OztzQ0FFN0MsUUFBQ0k7NEJBQ0NDLE1BQUs7NEJBQ0xMLFdBQVU7NEJBQ1ZNLGFBQVk7NEJBQ1pDLE9BQU92Qjs0QkFDUHdCLFVBQVUsQ0FBQ2YsSUFBTVIsU0FBU1EsRUFBRWdCLE1BQU0sQ0FBQ0YsS0FBSzs7Ozs7O3NDQUcxQyxRQUFDRzs0QkFDQ1YsV0FBVTs0QkFDVlcsVUFBVXJCO3NDQUVUQSxVQUFVLGVBQWU7Ozs7Ozt3QkFHM0JKLHlCQUNDLFFBQUMwQjs0QkFBS1osV0FBVTtzQ0FDYmQ7Ozs7Ozt3QkFHSkUsdUJBQ0MsUUFBQ3dCOzRCQUFLWixXQUFVO3NDQUNiWjs7Ozs7O3NDQUlMLFFBQUN3Qjs0QkFBS1osV0FBVTtzQ0FBa0M7Ozs7OztzQ0FJbEQsUUFBQ0Q7NEJBQUlDLFdBQVU7NEJBQVFhLFNBQVM5QjtzQ0FDOUIsY0FBQSxRQUFDSDtnQ0FBZWtDLE9BQU07Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7MEJBSTVCLFFBQUNmO2dCQUFJQyxXQUFVOzBCQUNiLGNBQUEsUUFBQ2U7b0JBQUlDLEtBQUtyQztvQkFBVXNDLEtBQUk7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBSWhDO0dBM0VNbkM7S0FBQUE7QUE2RU4sZUFBZUEsTUFBTSJ9

@@ -1,0 +1,311 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/tables/pronunciation-score/pronunciation-score-table.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport2_react);
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "/node_modules/.vite/deps/@tanstack_react-table.js?v=be52afe0";
+import { ChevronDown } from "/node_modules/.vite/deps/lucide-react.js?v=e8ebe34d";
+import { Button } from "/src/components/ui/button.tsx";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "/src/components/ui/dropdown-menu.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "/src/components/ui/table.tsx";
+import { getColumns } from "/src/components/tables/pronunciation-score/columns.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import { apiGetAllPronunciationScore } from "/src/services/pronunciation-score.services.ts";
+export function PronunciationScoreTable() {
+    _s();
+    const { onOpen } = useModal();
+    const columns = React.useMemo(()=>getColumns(onOpen), [
+        onOpen
+    ]);
+    const [pronunciationScoreData, setPronunciationScoreData] = React.useState([]);
+    const [sorting, setSorting] = React.useState([]);
+    const [columnFilters, setColumnFilters] = React.useState([]);
+    const [columnVisibility, setColumnVisibility] = React.useState({});
+    const [rowSelection, setRowSelection] = React.useState({});
+    const table = useReactTable({
+        data: pronunciationScoreData,
+        columns,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection
+        },
+        initialState: {
+            pagination: {
+                pageSize: 5
+            }
+        }
+    });
+    const getAllPronunciationScore = async ()=>{
+        const pronunciationScore = await apiGetAllPronunciationScore();
+        if (pronunciationScore.data.success) {
+            setPronunciationScoreData(pronunciationScore.data.rs);
+        } else {
+            console.log("Failed to fetch pronunciationScore");
+        }
+    };
+    React.useEffect(()=>{
+        getAllPronunciationScore();
+    }, []);
+    return /*#__PURE__*/ _jsxDEV("div", {
+        className: "w-full shadow-lg drop-shadow-lg ",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center py-4 justify-between",
+                children: [
+                    /*#__PURE__*/ _jsxDEV(Input, {
+                        placeholder: "Filter by email...",
+                        value: table.getColumn("userId.email")?.getFilterValue() ?? "",
+                        onChange: (event)=>table.getColumn("userId.email")?.setFilterValue(event.target.value),
+                        className: "max-w-sm"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                        lineNumber: 87,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        onClick: ()=>onOpen("createPronunciationScore"),
+                        className: "flex items-center space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                className: "bg-blue-500 hover:bg-blue-700 text-white rounded-[4px]",
+                                children: "Add new pronunciation score"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                lineNumber: 101,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DropdownMenu, {
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuTrigger, {
+                                        asChild: true,
+                                        children: /*#__PURE__*/ _jsxDEV(Button, {
+                                            variant: "outline",
+                                            className: "ml-auto",
+                                            children: [
+                                                "Columns ",
+                                                /*#__PURE__*/ _jsxDEV(ChevronDown, {}, void 0, false, {
+                                                    fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                                    lineNumber: 107,
+                                                    columnNumber: 25
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                            lineNumber: 106,
+                                            columnNumber: 15
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                        lineNumber: 105,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuContent, {
+                                        align: "end",
+                                        children: table.getAllColumns().filter((column)=>column.getCanHide()).map((column)=>{
+                                            return /*#__PURE__*/ _jsxDEV(DropdownMenuCheckboxItem, {
+                                                className: "capitalize",
+                                                checked: column.getIsVisible(),
+                                                onCheckedChange: (value)=>column.toggleVisibility(!!value),
+                                                children: column.id
+                                            }, column.id, false, {
+                                                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                                lineNumber: 116,
+                                                columnNumber: 21
+                                            }, this);
+                                        })
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                        lineNumber: 110,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                lineNumber: 104,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                        lineNumber: 97,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                lineNumber: 86,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "rounded-md border",
+                children: /*#__PURE__*/ _jsxDEV(Table, {
+                    className: "equal-widths",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV(TableHeader, {
+                            children: table.getHeaderGroups().map((headerGroup)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    children: headerGroup.headers.map((header)=>{
+                                        return /*#__PURE__*/ _jsxDEV(TableHead, {
+                                            children: header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())
+                                        }, header.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                            lineNumber: 139,
+                                            columnNumber: 21
+                                        }, this);
+                                    })
+                                }, headerGroup.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                    lineNumber: 136,
+                                    columnNumber: 15
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                            lineNumber: 134,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV(TableBody, {
+                            children: table.getRowModel().rows?.length ? table.getRowModel().rows.map((row)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    "data-state": row.getIsSelected() && "selected",
+                                    children: row.getVisibleCells().map((cell)=>/*#__PURE__*/ _jsxDEV(TableCell, {
+                                            children: flexRender(cell.column.columnDef.cell, cell.getContext())
+                                        }, cell.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                            lineNumber: 160,
+                                            columnNumber: 21
+                                        }, this))
+                                }, row.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                    lineNumber: 155,
+                                    columnNumber: 17
+                                }, this)) : /*#__PURE__*/ _jsxDEV(TableRow, {
+                                children: /*#__PURE__*/ _jsxDEV(TableCell, {
+                                    colSpan: columns.length,
+                                    className: "h-24 text-center",
+                                    children: "No results."
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                    lineNumber: 171,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                lineNumber: 170,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                            lineNumber: 152,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                    lineNumber: 133,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                lineNumber: 132,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center justify-end space-x-2 py-4",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "flex-1 text-sm text-muted-foreground",
+                        children: [
+                            table.getFilteredSelectedRowModel().rows.length,
+                            " of",
+                            " ",
+                            table.getFilteredRowModel().rows.length,
+                            " row(s) selected."
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                        lineNumber: 183,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.previousPage(),
+                                disabled: !table.getCanPreviousPage(),
+                                children: "Previous"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                lineNumber: 188,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.nextPage(),
+                                disabled: !table.getCanNextPage(),
+                                children: "Next"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                                lineNumber: 196,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                        lineNumber: 187,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+                lineNumber: 182,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx",
+        lineNumber: 85,
+        columnNumber: 5
+    }, this);
+}
+_s(PronunciationScoreTable, "eOhhYAOrq8PNNAXtodneJLlWWX4=", false, function() {
+    return [
+        useModal,
+        useReactTable
+    ];
+});
+_c = PronunciationScoreTable;
+var _c;
+$RefreshReg$(_c, "PronunciationScoreTable");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/tables/pronunciation-score/pronunciation-score-table.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb251bmNpYXRpb24tc2NvcmUtdGFibGUudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIFJlYWN0IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQge1xyXG4gIENvbHVtbkZpbHRlcnNTdGF0ZSxcclxuICBTb3J0aW5nU3RhdGUsXHJcbiAgVmlzaWJpbGl0eVN0YXRlLFxyXG4gIGZsZXhSZW5kZXIsXHJcbiAgZ2V0Q29yZVJvd01vZGVsLFxyXG4gIGdldEZpbHRlcmVkUm93TW9kZWwsXHJcbiAgZ2V0UGFnaW5hdGlvblJvd01vZGVsLFxyXG4gIGdldFNvcnRlZFJvd01vZGVsLFxyXG4gIHVzZVJlYWN0VGFibGUsXHJcbn0gZnJvbSBcIkB0YW5zdGFjay9yZWFjdC10YWJsZVwiO1xyXG5pbXBvcnQgeyBDaGV2cm9uRG93biB9IGZyb20gXCJsdWNpZGUtcmVhY3RcIjtcclxuXHJcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvYnV0dG9uXCI7XHJcbmltcG9ydCB7XHJcbiAgRHJvcGRvd25NZW51LFxyXG4gIERyb3Bkb3duTWVudUNoZWNrYm94SXRlbSxcclxuICBEcm9wZG93bk1lbnVDb250ZW50LFxyXG4gIERyb3Bkb3duTWVudVRyaWdnZXIsXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9kcm9wZG93bi1tZW51XCI7XHJcbmltcG9ydCB7IElucHV0IH0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9pbnB1dFwiO1xyXG5pbXBvcnQge1xyXG4gIFRhYmxlLFxyXG4gIFRhYmxlQm9keSxcclxuICBUYWJsZUNlbGwsXHJcbiAgVGFibGVIZWFkLFxyXG4gIFRhYmxlSGVhZGVyLFxyXG4gIFRhYmxlUm93LFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvdGFibGVcIjtcclxuaW1wb3J0IHsgZ2V0Q29sdW1ucyB9IGZyb20gXCIuL2NvbHVtbnNcIjtcclxuaW1wb3J0IHsgdXNlTW9kYWwgfSBmcm9tIFwiQC9ob29rcy91c2UtbW9kZWwtc3RvcmVcIjtcclxuaW1wb3J0IHsgUHJvbnVuY2lhdGlvblNjb3JlIH0gZnJvbSBcIkAvdHlwZXMvcHJvbnVuY2lhdGlvbi1zY29yZVwiO1xyXG5pbXBvcnQgeyBhcGlHZXRBbGxQcm9udW5jaWF0aW9uU2NvcmUgfSBmcm9tIFwiQC9zZXJ2aWNlcy9wcm9udW5jaWF0aW9uLXNjb3JlLnNlcnZpY2VzXCI7XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gUHJvbnVuY2lhdGlvblNjb3JlVGFibGUoKSB7XHJcbiAgY29uc3QgeyBvbk9wZW4gfSA9IHVzZU1vZGFsKCk7XHJcbiAgY29uc3QgY29sdW1ucyA9IFJlYWN0LnVzZU1lbW8oKCkgPT4gZ2V0Q29sdW1ucyhvbk9wZW4pLCBbb25PcGVuXSk7XHJcbiAgY29uc3QgW3Byb251bmNpYXRpb25TY29yZURhdGEsIHNldFByb251bmNpYXRpb25TY29yZURhdGFdID0gUmVhY3QudXNlU3RhdGU8XHJcbiAgICBQcm9udW5jaWF0aW9uU2NvcmVbXVxyXG4gID4oW10pO1xyXG4gIGNvbnN0IFtzb3J0aW5nLCBzZXRTb3J0aW5nXSA9IFJlYWN0LnVzZVN0YXRlPFNvcnRpbmdTdGF0ZT4oW10pO1xyXG4gIGNvbnN0IFtjb2x1bW5GaWx0ZXJzLCBzZXRDb2x1bW5GaWx0ZXJzXSA9IFJlYWN0LnVzZVN0YXRlPENvbHVtbkZpbHRlcnNTdGF0ZT4oXHJcbiAgICBbXVxyXG4gICk7XHJcbiAgY29uc3QgW2NvbHVtblZpc2liaWxpdHksIHNldENvbHVtblZpc2liaWxpdHldID1cclxuICAgIFJlYWN0LnVzZVN0YXRlPFZpc2liaWxpdHlTdGF0ZT4oe30pO1xyXG4gIGNvbnN0IFtyb3dTZWxlY3Rpb24sIHNldFJvd1NlbGVjdGlvbl0gPSBSZWFjdC51c2VTdGF0ZSh7fSk7XHJcbiAgY29uc3QgdGFibGUgPSB1c2VSZWFjdFRhYmxlKHtcclxuICAgIGRhdGE6IHByb251bmNpYXRpb25TY29yZURhdGEsXHJcbiAgICBjb2x1bW5zLFxyXG4gICAgb25Tb3J0aW5nQ2hhbmdlOiBzZXRTb3J0aW5nLFxyXG4gICAgb25Db2x1bW5GaWx0ZXJzQ2hhbmdlOiBzZXRDb2x1bW5GaWx0ZXJzLFxyXG4gICAgZ2V0Q29yZVJvd01vZGVsOiBnZXRDb3JlUm93TW9kZWwoKSxcclxuICAgIGdldFBhZ2luYXRpb25Sb3dNb2RlbDogZ2V0UGFnaW5hdGlvblJvd01vZGVsKCksXHJcbiAgICBnZXRTb3J0ZWRSb3dNb2RlbDogZ2V0U29ydGVkUm93TW9kZWwoKSxcclxuICAgIGdldEZpbHRlcmVkUm93TW9kZWw6IGdldEZpbHRlcmVkUm93TW9kZWwoKSxcclxuICAgIG9uQ29sdW1uVmlzaWJpbGl0eUNoYW5nZTogc2V0Q29sdW1uVmlzaWJpbGl0eSxcclxuICAgIG9uUm93U2VsZWN0aW9uQ2hhbmdlOiBzZXRSb3dTZWxlY3Rpb24sXHJcbiAgICBzdGF0ZToge1xyXG4gICAgICBzb3J0aW5nLFxyXG4gICAgICBjb2x1bW5GaWx0ZXJzLFxyXG4gICAgICBjb2x1bW5WaXNpYmlsaXR5LFxyXG4gICAgICByb3dTZWxlY3Rpb24sXHJcbiAgICB9LFxyXG5cclxuICAgIGluaXRpYWxTdGF0ZToge1xyXG4gICAgICBwYWdpbmF0aW9uOiB7XHJcbiAgICAgICAgcGFnZVNpemU6IDUsXHJcbiAgICAgIH0sXHJcbiAgICB9LFxyXG4gIH0pO1xyXG4gIGNvbnN0IGdldEFsbFByb251bmNpYXRpb25TY29yZSA9IGFzeW5jICgpID0+IHtcclxuICAgIGNvbnN0IHByb251bmNpYXRpb25TY29yZSA9IGF3YWl0IGFwaUdldEFsbFByb251bmNpYXRpb25TY29yZSgpO1xyXG4gICAgaWYgKHByb251bmNpYXRpb25TY29yZS5kYXRhLnN1Y2Nlc3MpIHtcclxuICAgICAgc2V0UHJvbnVuY2lhdGlvblNjb3JlRGF0YShwcm9udW5jaWF0aW9uU2NvcmUuZGF0YS5ycyk7XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICBjb25zb2xlLmxvZyhcIkZhaWxlZCB0byBmZXRjaCBwcm9udW5jaWF0aW9uU2NvcmVcIik7XHJcbiAgICB9XHJcbiAgfTtcclxuICBSZWFjdC51c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgZ2V0QWxsUHJvbnVuY2lhdGlvblNjb3JlKCk7XHJcbiAgfSwgW10pO1xyXG4gIHJldHVybiAoXHJcbiAgICA8ZGl2IGNsYXNzTmFtZT1cInctZnVsbCBzaGFkb3ctbGcgZHJvcC1zaGFkb3ctbGcgXCI+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgcHktNCBqdXN0aWZ5LWJldHdlZW5cIj5cclxuICAgICAgICA8SW5wdXRcclxuICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRmlsdGVyIGJ5IGVtYWlsLi4uXCJcclxuICAgICAgICAgIHZhbHVlPXtcclxuICAgICAgICAgICAgKHRhYmxlLmdldENvbHVtbihcInVzZXJJZC5lbWFpbFwiKT8uZ2V0RmlsdGVyVmFsdWUoKSBhcyBzdHJpbmcpID8/IFwiXCJcclxuICAgICAgICAgIH1cclxuICAgICAgICAgIG9uQ2hhbmdlPXsoZXZlbnQpID0+XHJcbiAgICAgICAgICAgIHRhYmxlLmdldENvbHVtbihcInVzZXJJZC5lbWFpbFwiKT8uc2V0RmlsdGVyVmFsdWUoZXZlbnQudGFyZ2V0LnZhbHVlKVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgICAgY2xhc3NOYW1lPVwibWF4LXctc21cIlxyXG4gICAgICAgIC8+XHJcbiAgICAgICAgPGRpdlxyXG4gICAgICAgICAgb25DbGljaz17KCkgPT4gb25PcGVuKFwiY3JlYXRlUHJvbnVuY2lhdGlvblNjb3JlXCIpfVxyXG4gICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgc3BhY2UteC0yXCJcclxuICAgICAgICA+XHJcbiAgICAgICAgICA8QnV0dG9uIGNsYXNzTmFtZT1cImJnLWJsdWUtNTAwIGhvdmVyOmJnLWJsdWUtNzAwIHRleHQtd2hpdGUgcm91bmRlZC1bNHB4XVwiPlxyXG4gICAgICAgICAgICBBZGQgbmV3IHByb251bmNpYXRpb24gc2NvcmVcclxuICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgPERyb3Bkb3duTWVudT5cclxuICAgICAgICAgICAgPERyb3Bkb3duTWVudVRyaWdnZXIgYXNDaGlsZD5cclxuICAgICAgICAgICAgICA8QnV0dG9uIHZhcmlhbnQ9XCJvdXRsaW5lXCIgY2xhc3NOYW1lPVwibWwtYXV0b1wiPlxyXG4gICAgICAgICAgICAgICAgQ29sdW1ucyA8Q2hldnJvbkRvd24gLz5cclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgPC9Ecm9wZG93bk1lbnVUcmlnZ2VyPlxyXG4gICAgICAgICAgICA8RHJvcGRvd25NZW51Q29udGVudCBhbGlnbj1cImVuZFwiPlxyXG4gICAgICAgICAgICAgIHt0YWJsZVxyXG4gICAgICAgICAgICAgICAgLmdldEFsbENvbHVtbnMoKVxyXG4gICAgICAgICAgICAgICAgLmZpbHRlcigoY29sdW1uKSA9PiBjb2x1bW4uZ2V0Q2FuSGlkZSgpKVxyXG4gICAgICAgICAgICAgICAgLm1hcCgoY29sdW1uKSA9PiB7XHJcbiAgICAgICAgICAgICAgICAgIHJldHVybiAoXHJcbiAgICAgICAgICAgICAgICAgICAgPERyb3Bkb3duTWVudUNoZWNrYm94SXRlbVxyXG4gICAgICAgICAgICAgICAgICAgICAga2V5PXtjb2x1bW4uaWR9XHJcbiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJjYXBpdGFsaXplXCJcclxuICAgICAgICAgICAgICAgICAgICAgIGNoZWNrZWQ9e2NvbHVtbi5nZXRJc1Zpc2libGUoKX1cclxuICAgICAgICAgICAgICAgICAgICAgIG9uQ2hlY2tlZENoYW5nZT17KHZhbHVlKSA9PlxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjb2x1bW4udG9nZ2xlVmlzaWJpbGl0eSghIXZhbHVlKVxyXG4gICAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIHtjb2x1bW4uaWR9XHJcbiAgICAgICAgICAgICAgICAgICAgPC9Ecm9wZG93bk1lbnVDaGVja2JveEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICk7XHJcbiAgICAgICAgICAgICAgICB9KX1cclxuICAgICAgICAgICAgPC9Ecm9wZG93bk1lbnVDb250ZW50PlxyXG4gICAgICAgICAgPC9Ecm9wZG93bk1lbnU+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cInJvdW5kZWQtbWQgYm9yZGVyXCI+XHJcbiAgICAgICAgPFRhYmxlIGNsYXNzTmFtZT1cImVxdWFsLXdpZHRoc1wiPlxyXG4gICAgICAgICAgPFRhYmxlSGVhZGVyPlxyXG4gICAgICAgICAgICB7dGFibGUuZ2V0SGVhZGVyR3JvdXBzKCkubWFwKChoZWFkZXJHcm91cCkgPT4gKFxyXG4gICAgICAgICAgICAgIDxUYWJsZVJvdyBrZXk9e2hlYWRlckdyb3VwLmlkfT5cclxuICAgICAgICAgICAgICAgIHtoZWFkZXJHcm91cC5oZWFkZXJzLm1hcCgoaGVhZGVyKSA9PiB7XHJcbiAgICAgICAgICAgICAgICAgIHJldHVybiAoXHJcbiAgICAgICAgICAgICAgICAgICAgPFRhYmxlSGVhZCBrZXk9e2hlYWRlci5pZH0+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7aGVhZGVyLmlzUGxhY2Vob2xkZXJcclxuICAgICAgICAgICAgICAgICAgICAgICAgPyBudWxsXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDogZmxleFJlbmRlcihcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGhlYWRlci5jb2x1bW4uY29sdW1uRGVmLmhlYWRlcixcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGhlYWRlci5nZXRDb250ZXh0KClcclxuICAgICAgICAgICAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgICAgICAgIDwvVGFibGVIZWFkPlxyXG4gICAgICAgICAgICAgICAgICApO1xyXG4gICAgICAgICAgICAgICAgfSl9XHJcbiAgICAgICAgICAgICAgPC9UYWJsZVJvdz5cclxuICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICA8L1RhYmxlSGVhZGVyPlxyXG4gICAgICAgICAgPFRhYmxlQm9keT5cclxuICAgICAgICAgICAge3RhYmxlLmdldFJvd01vZGVsKCkucm93cz8ubGVuZ3RoID8gKFxyXG4gICAgICAgICAgICAgIHRhYmxlLmdldFJvd01vZGVsKCkucm93cy5tYXAoKHJvdykgPT4gKFxyXG4gICAgICAgICAgICAgICAgPFRhYmxlUm93XHJcbiAgICAgICAgICAgICAgICAgIGtleT17cm93LmlkfVxyXG4gICAgICAgICAgICAgICAgICBkYXRhLXN0YXRlPXtyb3cuZ2V0SXNTZWxlY3RlZCgpICYmIFwic2VsZWN0ZWRcIn1cclxuICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAge3Jvdy5nZXRWaXNpYmxlQ2VsbHMoKS5tYXAoKGNlbGwpID0+IChcclxuICAgICAgICAgICAgICAgICAgICA8VGFibGVDZWxsIGtleT17Y2VsbC5pZH0+XHJcbiAgICAgICAgICAgICAgICAgICAgICB7ZmxleFJlbmRlcihcclxuICAgICAgICAgICAgICAgICAgICAgICAgY2VsbC5jb2x1bW4uY29sdW1uRGVmLmNlbGwsXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNlbGwuZ2V0Q29udGV4dCgpXHJcbiAgICAgICAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgICAgICAgIDwvVGFibGVDZWxsPlxyXG4gICAgICAgICAgICAgICAgICApKX1cclxuICAgICAgICAgICAgICAgIDwvVGFibGVSb3c+XHJcbiAgICAgICAgICAgICAgKSlcclxuICAgICAgICAgICAgKSA6IChcclxuICAgICAgICAgICAgICA8VGFibGVSb3c+XHJcbiAgICAgICAgICAgICAgICA8VGFibGVDZWxsXHJcbiAgICAgICAgICAgICAgICAgIGNvbFNwYW49e2NvbHVtbnMubGVuZ3RofVxyXG4gICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJoLTI0IHRleHQtY2VudGVyXCJcclxuICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgTm8gcmVzdWx0cy5cclxuICAgICAgICAgICAgICAgIDwvVGFibGVDZWxsPlxyXG4gICAgICAgICAgICAgIDwvVGFibGVSb3c+XHJcbiAgICAgICAgICAgICl9XHJcbiAgICAgICAgICA8L1RhYmxlQm9keT5cclxuICAgICAgICA8L1RhYmxlPlxyXG4gICAgICA8L2Rpdj5cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWVuZCBzcGFjZS14LTIgcHktNFwiPlxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleC0xIHRleHQtc20gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kXCI+XHJcbiAgICAgICAgICB7dGFibGUuZ2V0RmlsdGVyZWRTZWxlY3RlZFJvd01vZGVsKCkucm93cy5sZW5ndGh9IG9me1wiIFwifVxyXG4gICAgICAgICAge3RhYmxlLmdldEZpbHRlcmVkUm93TW9kZWwoKS5yb3dzLmxlbmd0aH0gcm93KHMpIHNlbGVjdGVkLlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteC0yXCI+XHJcbiAgICAgICAgICA8QnV0dG9uXHJcbiAgICAgICAgICAgIHZhcmlhbnQ9XCJvdXRsaW5lXCJcclxuICAgICAgICAgICAgc2l6ZT1cInNtXCJcclxuICAgICAgICAgICAgb25DbGljaz17KCkgPT4gdGFibGUucHJldmlvdXNQYWdlKCl9XHJcbiAgICAgICAgICAgIGRpc2FibGVkPXshdGFibGUuZ2V0Q2FuUHJldmlvdXNQYWdlKCl9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIFByZXZpb3VzXHJcbiAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgdmFyaWFudD1cIm91dGxpbmVcIlxyXG4gICAgICAgICAgICBzaXplPVwic21cIlxyXG4gICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB0YWJsZS5uZXh0UGFnZSgpfVxyXG4gICAgICAgICAgICBkaXNhYmxlZD17IXRhYmxlLmdldENhbk5leHRQYWdlKCl9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIE5leHRcclxuICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICA8L2Rpdj5cclxuICAgIDwvZGl2PlxyXG4gICk7XHJcbn1cclxuIl0sIm5hbWVzIjpbIlJlYWN0IiwiZmxleFJlbmRlciIsImdldENvcmVSb3dNb2RlbCIsImdldEZpbHRlcmVkUm93TW9kZWwiLCJnZXRQYWdpbmF0aW9uUm93TW9kZWwiLCJnZXRTb3J0ZWRSb3dNb2RlbCIsInVzZVJlYWN0VGFibGUiLCJDaGV2cm9uRG93biIsIkJ1dHRvbiIsIkRyb3Bkb3duTWVudSIsIkRyb3Bkb3duTWVudUNoZWNrYm94SXRlbSIsIkRyb3Bkb3duTWVudUNvbnRlbnQiLCJEcm9wZG93bk1lbnVUcmlnZ2VyIiwiSW5wdXQiLCJUYWJsZSIsIlRhYmxlQm9keSIsIlRhYmxlQ2VsbCIsIlRhYmxlSGVhZCIsIlRhYmxlSGVhZGVyIiwiVGFibGVSb3ciLCJnZXRDb2x1bW5zIiwidXNlTW9kYWwiLCJhcGlHZXRBbGxQcm9udW5jaWF0aW9uU2NvcmUiLCJQcm9udW5jaWF0aW9uU2NvcmVUYWJsZSIsIm9uT3BlbiIsImNvbHVtbnMiLCJ1c2VNZW1vIiwicHJvbnVuY2lhdGlvblNjb3JlRGF0YSIsInNldFByb251bmNpYXRpb25TY29yZURhdGEiLCJ1c2VTdGF0ZSIsInNvcnRpbmciLCJzZXRTb3J0aW5nIiwiY29sdW1uRmlsdGVycyIsInNldENvbHVtbkZpbHRlcnMiLCJjb2x1bW5WaXNpYmlsaXR5Iiwic2V0Q29sdW1uVmlzaWJpbGl0eSIsInJvd1NlbGVjdGlvbiIsInNldFJvd1NlbGVjdGlvbiIsInRhYmxlIiwiZGF0YSIsIm9uU29ydGluZ0NoYW5nZSIsIm9uQ29sdW1uRmlsdGVyc0NoYW5nZSIsIm9uQ29sdW1uVmlzaWJpbGl0eUNoYW5nZSIsIm9uUm93U2VsZWN0aW9uQ2hhbmdlIiwic3RhdGUiLCJpbml0aWFsU3RhdGUiLCJwYWdpbmF0aW9uIiwicGFnZVNpemUiLCJnZXRBbGxQcm9udW5jaWF0aW9uU2NvcmUiLCJwcm9udW5jaWF0aW9uU2NvcmUiLCJzdWNjZXNzIiwicnMiLCJjb25zb2xlIiwibG9nIiwidXNlRWZmZWN0IiwiZGl2IiwiY2xhc3NOYW1lIiwicGxhY2Vob2xkZXIiLCJ2YWx1ZSIsImdldENvbHVtbiIsImdldEZpbHRlclZhbHVlIiwib25DaGFuZ2UiLCJldmVudCIsInNldEZpbHRlclZhbHVlIiwidGFyZ2V0Iiwib25DbGljayIsImFzQ2hpbGQiLCJ2YXJpYW50IiwiYWxpZ24iLCJnZXRBbGxDb2x1bW5zIiwiZmlsdGVyIiwiY29sdW1uIiwiZ2V0Q2FuSGlkZSIsIm1hcCIsImNoZWNrZWQiLCJnZXRJc1Zpc2libGUiLCJvbkNoZWNrZWRDaGFuZ2UiLCJ0b2dnbGVWaXNpYmlsaXR5IiwiaWQiLCJnZXRIZWFkZXJHcm91cHMiLCJoZWFkZXJHcm91cCIsImhlYWRlcnMiLCJoZWFkZXIiLCJpc1BsYWNlaG9sZGVyIiwiY29sdW1uRGVmIiwiZ2V0Q29udGV4dCIsImdldFJvd01vZGVsIiwicm93cyIsImxlbmd0aCIsInJvdyIsImRhdGEtc3RhdGUiLCJnZXRJc1NlbGVjdGVkIiwiZ2V0VmlzaWJsZUNlbGxzIiwiY2VsbCIsImNvbFNwYW4iLCJnZXRGaWx0ZXJlZFNlbGVjdGVkUm93TW9kZWwiLCJzaXplIiwicHJldmlvdXNQYWdlIiwiZGlzYWJsZWQiLCJnZXRDYW5QcmV2aW91c1BhZ2UiLCJuZXh0UGFnZSIsImdldENhbk5leHRQYWdlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O0FBQUEsWUFBWUEsV0FBVyxRQUFRO0FBQy9CLFNBSUVDLFVBQVUsRUFDVkMsZUFBZSxFQUNmQyxtQkFBbUIsRUFDbkJDLHFCQUFxQixFQUNyQkMs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

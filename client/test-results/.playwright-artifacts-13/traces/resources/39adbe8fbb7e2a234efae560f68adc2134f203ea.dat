@@ -1,0 +1,22 @@
+export var EnrollmentStatus = /*#__PURE__*/ function(EnrollmentStatus) {
+    EnrollmentStatus["IN_PROGRESS"] = "in_progress";
+    EnrollmentStatus["COMPLETED"] = "completed";
+    EnrollmentStatus["DROPPED"] = "dropped";
+    return EnrollmentStatus;
+}({});
+export var EnrollmentProgress = /*#__PURE__*/ function(EnrollmentProgress) {
+    EnrollmentProgress[EnrollmentProgress["ZERO"] = 0] = "ZERO";
+    EnrollmentProgress[EnrollmentProgress["TEN"] = 10] = "TEN";
+    EnrollmentProgress[EnrollmentProgress["TWENTY"] = 20] = "TWENTY";
+    EnrollmentProgress[EnrollmentProgress["THIRTY"] = 30] = "THIRTY";
+    EnrollmentProgress[EnrollmentProgress["FORTY"] = 40] = "FORTY";
+    EnrollmentProgress[EnrollmentProgress["FIFTY"] = 50] = "FIFTY";
+    EnrollmentProgress[EnrollmentProgress["SIXTY"] = 60] = "SIXTY";
+    EnrollmentProgress[EnrollmentProgress["SEVENTY"] = 70] = "SEVENTY";
+    EnrollmentProgress[EnrollmentProgress["EIGHTY"] = 80] = "EIGHTY";
+    EnrollmentProgress[EnrollmentProgress["NINETY"] = 90] = "NINETY";
+    EnrollmentProgress[EnrollmentProgress["HUNDRED"] = 100] = "HUNDRED";
+    return EnrollmentProgress;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVucm9sbG1lbnQudHMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ291cnNlIH0gZnJvbSBcIi4vY291cnNlXCI7XHJcbmltcG9ydCB7IFVzZXIgfSBmcm9tIFwiLi91c2VyXCI7XHJcblxyXG5leHBvcnQgdHlwZSBFbnJvbGxtZW50ID0ge1xyXG4gICAgX2lkPzogc3RyaW5nO1xyXG4gICAgY291cnNlSWQ/OiBDb3Vyc2U7XHJcbiAgICB1c2VySWQ/OiBVc2VyO1xyXG4gICAgcHJvZ3Jlc3M/OiBudW1iZXI7XHJcbiAgICBzdGF0dXM/OiBcImluX3Byb2dyZXNzXCIgfCBcImNvbXBsZXRlZFwiIHwgXCJkcm9wcGVkXCI7XHJcbn07XHJcbmV4cG9ydCBlbnVtIEVucm9sbG1lbnRTdGF0dXMge1xyXG4gICAgSU5fUFJPR1JFU1MgPSBcImluX3Byb2dyZXNzXCIsXHJcbiAgICBDT01QTEVURUQgPSBcImNvbXBsZXRlZFwiLFxyXG4gICAgRFJPUFBFRCA9IFwiZHJvcHBlZFwiLFxyXG59XHJcbmV4cG9ydCBlbnVtIEVucm9sbG1lbnRQcm9ncmVzcyB7XHJcbiAgICBaRVJPID0gMCxcclxuICAgIFRFTiA9IDEwLFxyXG4gICAgVFdFTlRZID0gMjAsXHJcbiAgICBUSElSVFkgPSAzMCxcclxuICAgIEZPUlRZID0gNDAsXHJcbiAgICBGSUZUWSA9IDUwLFxyXG4gICAgU0lYVFkgPSA2MCxcclxuICAgIFNFVkVOVFkgPSA3MCxcclxuICAgIEVJR0hUWSA9IDgwLFxyXG4gICAgTklORVRZID0gOTAsXHJcbiAgICBIVU5EUkVEID0gMTAwLFxyXG59Il0sIm5hbWVzIjpbIkVucm9sbG1lbnRTdGF0dXMiLCJFbnJvbGxtZW50UHJvZ3Jlc3MiXSwibWFwcGluZ3MiOiJBQVVBLE9BQU8sSUFBQSxBQUFLQSwwQ0FBQUE7Ozs7V0FBQUE7TUFJWDtBQUNELE9BQU8sSUFBQSxBQUFLQyw0Q0FBQUE7Ozs7Ozs7Ozs7OztXQUFBQTtNQVlYIn0=

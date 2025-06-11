@@ -1,0 +1,10 @@
+export var FeedbackRating = /*#__PURE__*/ function(FeedbackRating) {
+    FeedbackRating[FeedbackRating["ONE"] = 1] = "ONE";
+    FeedbackRating[FeedbackRating["TWO"] = 2] = "TWO";
+    FeedbackRating[FeedbackRating["THREE"] = 3] = "THREE";
+    FeedbackRating[FeedbackRating["FOUR"] = 4] = "FOUR";
+    FeedbackRating[FeedbackRating["FIVE"] = 5] = "FIVE";
+    return FeedbackRating;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZlZWRiYWNrLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IExlc3NvbiB9IGZyb20gXCIuL2xlc3NvblwiO1xyXG5pbXBvcnQgeyBVc2VyIH0gZnJvbSBcIi4vdXNlclwiO1xyXG5cclxuZXhwb3J0IHR5cGUgRmVlZGJhY2sgPSB7XHJcbiAgICBfaWQ/OiBzdHJpbmc7XHJcbiAgICB1c2VySWQ/OiBVc2VyO1xyXG4gICAgbGVzc29uSWQ/OiBMZXNzb247XHJcbiAgICBjb21tZW50Pzogc3RyaW5nO1xyXG4gICAgcmF0aW5nPzogbnVtYmVyO1xyXG59O1xyXG5cclxuZXhwb3J0IGVudW0gRmVlZGJhY2tSYXRpbmcge1xyXG4gICAgT05FID0gMSxcclxuICAgIFRXTyA9IDIsXHJcbiAgICBUSFJFRSA9IDMsXHJcbiAgICBGT1VSID0gNCxcclxuICAgIEZJVkUgPSA1LFxyXG59Il0sIm5hbWVzIjpbIkZlZWRiYWNrUmF0aW5nIl0sIm1hcHBpbmdzIjoiQUFXQSxPQUFPLElBQUEsQUFBS0Esd0NBQUFBOzs7Ozs7V0FBQUE7TUFNWCJ9

@@ -63,11 +63,12 @@ interface ApiResponse {
   ai_response: string;
   audio_url?: string;
   error?: string;
+  hint?: string;
 }
 
 interface SuggestResponse {
-  ai_response: string; // Cập nhật để phù hợp với backend
-  suggested_response: string; // Thay đổi từ ai_response thành suggested_response
+  ai_response: string;
+  suggested_response: string;
   language: string;
   error?: string;
 }
@@ -108,7 +109,7 @@ const Chat: React.FC = () => {
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  console.log(conversations);
+
   const getVoiceByGender = (gender: "male" | "female", language: string) => {
     const voices = window.speechSynthesis.getVoices();
     const langVoices = voices.filter((v) =>
@@ -388,6 +389,7 @@ const Chat: React.FC = () => {
           user_text: text,
           topic: DEFAULT_TOPIC,
           language: selectedLanguage,
+          chat_mode: "general", // Thêm chat_mode
         }),
       });
 
@@ -405,10 +407,12 @@ const Chat: React.FC = () => {
           index === lastIndex
             ? {
                 ...conv,
-                aiResponse: data.ai_response,
+                aiResponse:
+                  data.ai_response || data.error || "Something went wrong",
                 audioUrl: data.audio_url,
                 isLoading: false,
                 isAudioLoading: !!data.audio_url,
+                suggestion: data.hint, // Add hint to suggestion if available
               }
             : conv
         );
@@ -480,7 +484,7 @@ const Chat: React.FC = () => {
           index === lastIndex
             ? {
                 ...conv,
-                aiResponse: `Something was wrong: ${err.message}`,
+                aiResponse: `${err.message}`,
                 isLoading: false,
                 error: err.message,
               }
@@ -499,10 +503,11 @@ const Chat: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ai_response: aiResponse, // Sử dụng ai_response thay vì user_text
+          ai_response: aiResponse,
           topic: DEFAULT_TOPIC,
           language: selectedLanguage,
           suggest_for: "user",
+          chat_mode: "general", // Thêm chat_mode
         }),
       });
 
@@ -520,6 +525,7 @@ const Chat: React.FC = () => {
           userText: "",
           aiResponse: `Gợi ý: ${data.suggested_response}`,
           isLoading: false,
+          error: data.error, // Lưu lỗi từ backend nếu có
         },
       ]);
     } catch (err: any) {
@@ -527,9 +533,9 @@ const Chat: React.FC = () => {
         ...prev,
         {
           userText: "",
-          aiResponse: `Không thể gợi ý: ${err.message}`,
+          aiResponse: `No network connection, please check again!`,
           isLoading: false,
-          error: err.message,
+          // error: err.message,
         },
       ]);
       setErrorMessage(`Lỗi gợi ý: ${err.message}`);
@@ -550,6 +556,7 @@ const Chat: React.FC = () => {
           user_text: type,
           topic: DEFAULT_TOPIC,
           language: selectedLanguage,
+          chat_mode: "general", // Thêm chat_mode
         }),
       });
 
@@ -571,6 +578,7 @@ const Chat: React.FC = () => {
                 audioUrl: data.audio_url,
                 isLoading: false,
                 isAudioLoading: !!data.audio_url,
+                error: data.error, // Lưu lỗi từ backend nếu có
               }
             : conv
         );
@@ -642,9 +650,9 @@ const Chat: React.FC = () => {
           index === lastIndex
             ? {
                 ...conv,
-                aiResponse: `Something was wrong: ${err.message}`,
+                aiResponse: `No network connection, please check again!`,
                 isLoading: false,
-                error: err.message,
+                // error: err.message,
               }
             : conv
         );
@@ -698,7 +706,21 @@ const Chat: React.FC = () => {
               {conv.userText && (
                 <div className="flex justify-end gap-3">
                   <div className="bg-blue-100 px-4 py-3 rounded-xl shadow-lg max-w-md">
-                    <p className="text-gray-800 text-xl font-medium font-iBMPlexSans">
+                    <p
+                      className="text-gray-800 text-xl font-medium font-iBMPlexSans"
+                      style={
+                        /[\u00C0-\u1EF9]/.test(conv.userText) ||
+                        conv.userText.split(/\s+/).filter(Boolean).length > 40
+                          ? {
+                              display: "-webkit-box",
+                              WebkitLineClamp: 1,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }
+                          : {}
+                      }
+                    >
                       {conv.userText}
                     </p>
                   </div>
@@ -735,6 +757,11 @@ const Chat: React.FC = () => {
                         <p className="text-gray-900 text-lg font-medium font-iBMPlexSans">
                           {conv.aiResponse}
                         </p>
+                        {/* {conv.error && (
+                          <p className="text-red-600 text-sm mt-1">
+                            Lỗi: {conv.error}
+                          </p>
+                        )} */}
                         <div className="mt-2 flex gap-3 text-sm text-blue-600">
                           <button
                             className="hover:underline"
@@ -790,20 +817,26 @@ const Chat: React.FC = () => {
           {showTopicButtons && (
             <div className="flex justify-end items-center gap-4 mt-4">
               <button
-                className="text-blue-600 hover:underline text-sm font-medium"
-                onClick={() => handleSuggestTopic("Fun")}
+                className="text-blue-600 text-sm font-medium px-2 py-2 rounded-full border-blue-500 border hover:bg-blue-100 "
+                onClick={() =>
+                  handleSuggestTopic("Hey Emma, Ask me a fun question")
+                }
               >
                 Fun
               </button>
               <button
-                className="text-blue-600 hover:underline text-sm font-medium"
-                onClick={() => handleSuggestTopic("Interesting")}
+                className="text-blue-600 hover:bg-blue-100 text-sm font-medium px-2 py-2 rounded-full border-blue-500 border"
+                onClick={() =>
+                  handleSuggestTopic("Hey Emma, Ask me a interesting question")
+                }
               >
                 Interesting
               </button>
               <button
-                className="text-blue-600 hover:underline text-sm font-medium"
-                onClick={() => handleSuggestTopic("Decide")}
+                className="text-blue-600 hover:bg-blue-100 text-sm font-medium px-2 py-2 rounded-full border-blue-500 border"
+                onClick={() =>
+                  handleSuggestTopic("Hey Emma! Ask me a question")
+                }
               >
                 You Decide
               </button>
@@ -821,7 +854,11 @@ const Chat: React.FC = () => {
               value={currentUserText}
               onChange={(e) => setCurrentUserText(e.target.value)}
               onKeyPress={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (
+                  e.key === "Enter" &&
+                  !e.shiftKey &&
+                  currentUserText !== ""
+                ) {
                   e.preventDefault();
                   handleSend();
                   setCurrentUserText("");
@@ -839,14 +876,17 @@ const Chat: React.FC = () => {
             >
               <MdMicNone size={24} />
             </button>
+            {conversations[1]?.userText && (
+              <button
+                className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+                onClick={handleSuggestResponse}
+              >
+                <FaLightbulb size={24} />
+              </button>
+            )}
             <button
               className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
-              onClick={handleSuggestResponse}
-            >
-              <FaLightbulb size={24} />
-            </button>
-            <button
-              className="text-blue-500 p-2 hover:text-blue-700 rounded-full"
+              disabled={currentUserText === ""}
               onClick={handleSend}
             >
               <FaPaperPlane size={20} />
@@ -892,8 +932,18 @@ const Chat: React.FC = () => {
             Skip
           </button>
         )}
+        {/* {errorMessage && (
+          <div className="mt-2 text-center text-red-600 text-sm">
+            {errorMessage}
+            <button
+              className="ml-2 text-blue-600 hover:underline"
+              onClick={() => setErrorMessage(null)}
+            >
+              Đóng
+            </button>
+          </div>
+        )} */}
       </div>
-
       <div
         className={`fixed top-0 right-0 h-full w-[400px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
           showSidebar ? "translate-x-0" : "translate-x-full"

@@ -1,0 +1,417 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+"use client";
+import * as z from "/node_modules/.vite/deps/zod.js?v=54733448";
+import { zodResolver } from "/node_modules/.vite/deps/@hookform_resolvers_zod.js?v=c50193e4";
+import { useForm } from "/node_modules/.vite/deps/react-hook-form.js?v=bc8c4e1e";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "/src/components/ui/dialog.tsx";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "/src/components/ui/form.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import __vite__cjsImport10_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const useEffect = __vite__cjsImport10_react["useEffect"];
+import { apiUpdateVocabulary } from "/src/services/vocabulary.services.ts";
+const formSchema = z.object({
+    word: z.string().min(1, {
+        message: "Word is required"
+    }),
+    phonetic: z.string().min(1, {
+        message: "Phonetic is required"
+    }),
+    meaning: z.string().min(1, {
+        message: "Meaning is required"
+    }),
+    exampleSentence: z.string().min(1, {
+        message: "ExampleSentence is required"
+    }),
+    audioUrl: z.string().min(1, {
+        message: "AudioUrl is required"
+    })
+});
+export const EditVocabularyModal = ()=>{
+    _s();
+    const { isOpen, onClose, type, data } = useModal();
+    const isModalOpen = isOpen && type === "editVocabulary";
+    const { vocabulary } = data;
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            word: "",
+            phonetic: "",
+            meaning: "",
+            exampleSentence: "",
+            audioUrl: ""
+        }
+    });
+    const isLoading = form.formState.isSubmitting;
+    const onSubmit = async (values)=>{
+        console.log(values);
+        const res = await apiUpdateVocabulary(vocabulary?._id, values);
+        if (res) {
+            onClose();
+        }
+        form.reset();
+    };
+    const handleClose = ()=>{
+        form.reset();
+        onClose();
+    };
+    useEffect(()=>{
+        if (vocabulary) {
+            form.setValue("word", vocabulary.word);
+            form.setValue("exampleSentence", vocabulary.exampleSentence);
+            form.setValue("meaning", vocabulary.meaning);
+            form.setValue("phonetic", vocabulary.phonetic);
+            form.setValue("audioUrl", vocabulary.audioUrl);
+        }
+    }, [
+        form,
+        vocabulary
+    ]);
+    return /*#__PURE__*/ _jsxDEV(Dialog, {
+        open: isModalOpen,
+        onOpenChange: handleClose,
+        children: /*#__PURE__*/ _jsxDEV(DialogContent, {
+            className: "bg-white text-black p-0 overflow-hidden",
+            children: [
+                /*#__PURE__*/ _jsxDEV(DialogHeader, {
+                    className: "pt-8 px-6",
+                    children: /*#__PURE__*/ _jsxDEV(DialogTitle, {
+                        className: "text-2xl text-center font-bold",
+                        children: "Edit Vocabulary"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                        lineNumber: 83,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                    lineNumber: 82,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDEV(Form, {
+                    ...form,
+                    children: /*#__PURE__*/ _jsxDEV("form", {
+                        className: "space-y-8",
+                        onSubmit: form.handleSubmit(onSubmit),
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                className: "space-y-8 px-6",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "word",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Word"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 95,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter word",
+                                                            ...field
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                            lineNumber: 99,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 98,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 106,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                lineNumber: 94,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                        lineNumber: 90,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "phonetic",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Phonetic"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 115,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter phonetic",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                            lineNumber: 119,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 118,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 127,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                lineNumber: 114,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                        lineNumber: 110,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "meaning",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Meaning"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 136,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter meaning",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                            lineNumber: 140,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 139,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 148,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                lineNumber: 135,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                        lineNumber: 131,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "exampleSentence",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Example Sentence"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 157,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter example sentence",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                            lineNumber: 161,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 160,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 169,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                lineNumber: 156,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                        lineNumber: 152,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "audioUrl",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Audio URL"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 178,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter audio URL",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                            lineNumber: 182,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 181,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                        lineNumber: 190,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                                lineNumber: 177,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                        lineNumber: 173,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                lineNumber: 89,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DialogFooter, {
+                                className: "bg-gray-100 px-6 py-4",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        onClick: ()=>onClose(),
+                                        className: "text-black rounded-[4px]",
+                                        children: "No, cancel"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                        lineNumber: 196,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        disabled: isLoading,
+                                        variant: "ghost",
+                                        children: "Edit"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                        lineNumber: 202,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                                lineNumber: 195,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                        lineNumber: 88,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+                    lineNumber: 87,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+            lineNumber: 81,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx",
+        lineNumber: 80,
+        columnNumber: 5
+    }, this);
+};
+_s(EditVocabularyModal, "Zbcebs1gvbKQMgouKNxZLAUQgeo=", false, function() {
+    return [
+        useModal,
+        useForm
+    ];
+});
+_c = EditVocabularyModal;
+var _c;
+$RefreshReg$(_c, "EditVocabularyModal");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/modals/vocabulary-modal/edit-vocabulary-modal.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtdm9jYWJ1bGFyeS1tb2RhbC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiXCJ1c2UgY2xpZW50XCI7XHJcbmltcG9ydCAqIGFzIHogZnJvbSBcInpvZFwiO1xyXG5pbXBvcnQgeyB6b2RSZXNvbHZlciB9IGZyb20gXCJAaG9va2Zvcm0vcmVzb2x2ZXJzL3pvZFwiO1xyXG5pbXBvcnQgeyB1c2VGb3JtIH0gZnJvbSBcInJlYWN0LWhvb2stZm9ybVwiO1xyXG5pbXBvcnQge1xyXG4gIERpYWxvZyxcclxuICBEaWFsb2dDb250ZW50LFxyXG4gIERpYWxvZ0Zvb3RlcixcclxuICBEaWFsb2dIZWFkZXIsXHJcbiAgRGlhbG9nVGl0bGUsXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9kaWFsb2dcIjtcclxuaW1wb3J0IHtcclxuICBGb3JtLFxyXG4gIEZvcm1Db250cm9sLFxyXG4gIEZvcm1GaWVsZCxcclxuICBGb3JtSXRlbSxcclxuICBGb3JtTGFiZWwsXHJcbiAgRm9ybU1lc3NhZ2UsXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9mb3JtXCI7XHJcbmltcG9ydCB7IElucHV0IH0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9pbnB1dFwiO1xyXG5pbXBvcnQgeyBCdXR0b24gfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2J1dHRvblwiO1xyXG5pbXBvcnQgeyB1c2VNb2RhbCB9IGZyb20gXCJAL2hvb2tzL3VzZS1tb2RlbC1zdG9yZVwiO1xyXG5cclxuaW1wb3J0IHsgdXNlRWZmZWN0IH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IGFwaVVwZGF0ZVZvY2FidWxhcnkgfSBmcm9tIFwiQC9zZXJ2aWNlcy92b2NhYnVsYXJ5LnNlcnZpY2VzXCI7XHJcbmNvbnN0IGZvcm1TY2hlbWEgPSB6Lm9iamVjdCh7XHJcbiAgd29yZDogei5zdHJpbmcoKS5taW4oMSwge1xyXG4gICAgbWVzc2FnZTogXCJXb3JkIGlzIHJlcXVpcmVkXCIsXHJcbiAgfSksXHJcbiAgcGhvbmV0aWM6IHouc3RyaW5nKCkubWluKDEsIHtcclxuICAgIG1lc3NhZ2U6IFwiUGhvbmV0aWMgaXMgcmVxdWlyZWRcIixcclxuICB9KSxcclxuICBtZWFuaW5nOiB6LnN0cmluZygpLm1pbigxLCB7XHJcbiAgICBtZXNzYWdlOiBcIk1lYW5pbmcgaXMgcmVxdWlyZWRcIixcclxuICB9KSxcclxuICBleGFtcGxlU2VudGVuY2U6IHouc3RyaW5nKCkubWluKDEsIHtcclxuICAgIG1lc3NhZ2U6IFwiRXhhbXBsZVNlbnRlbmNlIGlzIHJlcXVpcmVkXCIsXHJcbiAgfSksXHJcbiAgYXVkaW9Vcmw6IHouc3RyaW5nKCkubWluKDEsIHtcclxuICAgIG1lc3NhZ2U6IFwiQXVkaW9VcmwgaXMgcmVxdWlyZWRcIixcclxuICB9KSxcclxufSk7XHJcbmV4cG9ydCBjb25zdCBFZGl0Vm9jYWJ1bGFyeU1vZGFsID0gKCkgPT4ge1xyXG4gIGNvbnN0IHsgaXNPcGVuLCBvbkNsb3NlLCB0eXBlLCBkYXRhIH0gPSB1c2VNb2RhbCgpO1xyXG4gIGNvbnN0IGlzTW9kYWxPcGVuID0gaXNPcGVuICYmIHR5cGUgPT09IFwiZWRpdFZvY2FidWxhcnlcIjtcclxuICBjb25zdCB7IHZvY2FidWxhcnkgfSA9IGRhdGE7XHJcbiAgY29uc3QgZm9ybSA9IHVzZUZvcm0oe1xyXG4gICAgcmVzb2x2ZXI6IHpvZFJlc29sdmVyKGZvcm1TY2hlbWEpLFxyXG4gICAgZGVmYXVsdFZhbHVlczoge1xyXG4gICAgICB3b3JkOiBcIlwiLFxyXG4gICAgICBwaG9uZXRpYzogXCJcIixcclxuICAgICAgbWVhbmluZzogXCJcIixcclxuICAgICAgZXhhbXBsZVNlbnRlbmNlOiBcIlwiLFxyXG4gICAgICBhdWRpb1VybDogXCJcIixcclxuICAgIH0sXHJcbiAgfSk7XHJcbiAgY29uc3QgaXNMb2FkaW5nID0gZm9ybS5mb3JtU3RhdGUuaXNTdWJtaXR0aW5nO1xyXG4gIGNvbnN0IG9uU3VibWl0ID0gYXN5bmMgKHZhbHVlczogei5pbmZlcjx0eXBlb2YgZm9ybVNjaGVtYT4pID0+IHtcclxuICAgIGNvbnNvbGUubG9nKHZhbHVlcyk7XHJcbiAgICBjb25zdCByZXMgPSBhd2FpdCBhcGlVcGRhdGVWb2NhYnVsYXJ5KHZvY2FidWxhcnk/Ll9pZCwgdmFsdWVzKTtcclxuICAgIGlmIChyZXMpIHtcclxuICAgICAgb25DbG9zZSgpO1xyXG4gICAgfVxyXG4gICAgZm9ybS5yZXNldCgpO1xyXG4gIH07XHJcbiAgY29uc3QgaGFuZGxlQ2xvc2UgPSAoKSA9PiB7XHJcbiAgICBmb3JtLnJlc2V0KCk7XHJcbiAgICBvbkNsb3NlKCk7XHJcbiAgfTtcclxuICB1c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgaWYgKHZvY2FidWxhcnkpIHtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcIndvcmRcIiwgdm9jYWJ1bGFyeS53b3JkKTtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcImV4YW1wbGVTZW50ZW5jZVwiLCB2b2NhYnVsYXJ5LmV4YW1wbGVTZW50ZW5jZSk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJtZWFuaW5nXCIsIHZvY2FidWxhcnkubWVhbmluZyk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJwaG9uZXRpY1wiLCB2b2NhYnVsYXJ5LnBob25ldGljKTtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcImF1ZGlvVXJsXCIsIHZvY2FidWxhcnkuYXVkaW9VcmwpO1xyXG4gICAgfVxyXG4gIH0sIFtmb3JtLCB2b2NhYnVsYXJ5XSk7XHJcbiAgcmV0dXJuIChcclxuICAgIDxEaWFsb2cgb3Blbj17aXNNb2RhbE9wZW59IG9uT3BlbkNoYW5nZT17aGFuZGxlQ2xvc2V9PlxyXG4gICAgICA8RGlhbG9nQ29udGVudCBjbGFzc05hbWU9XCJiZy13aGl0ZSB0ZXh0LWJsYWNrIHAtMCBvdmVyZmxvdy1oaWRkZW5cIj5cclxuICAgICAgICA8RGlhbG9nSGVhZGVyIGNsYXNzTmFtZT1cInB0LTggcHgtNlwiPlxyXG4gICAgICAgICAgPERpYWxvZ1RpdGxlIGNsYXNzTmFtZT1cInRleHQtMnhsIHRleHQtY2VudGVyIGZvbnQtYm9sZFwiPlxyXG4gICAgICAgICAgICBFZGl0IFZvY2FidWxhcnlcclxuICAgICAgICAgIDwvRGlhbG9nVGl0bGU+XHJcbiAgICAgICAgPC9EaWFsb2dIZWFkZXI+XHJcbiAgICAgICAgPEZvcm0gey4uLmZvcm19PlxyXG4gICAgICAgICAgPGZvcm0gY2xhc3NOYW1lPVwic3BhY2UteS04XCIgb25TdWJtaXQ9e2Zvcm0uaGFuZGxlU3VibWl0KG9uU3VibWl0KX0+XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS04IHB4LTZcIj5cclxuICAgICAgICAgICAgICA8Rm9ybUZpZWxkXHJcbiAgICAgICAgICAgICAgICBjb250cm9sPXtmb3JtLmNvbnRyb2x9XHJcbiAgICAgICAgICAgICAgICBuYW1lPVwid29yZFwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgV29yZFxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxJbnB1dFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1cy12aXNpYmxlOnJpbmctMCB0ZXh0LWJsYWNrIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRW50ZXIgd29yZFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHsuLi5maWVsZH1cclxuICAgICAgICAgICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybU1lc3NhZ2UgLz5cclxuICAgICAgICAgICAgICAgICAgPC9Gb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICA8Rm9ybUZpZWxkXHJcbiAgICAgICAgICAgICAgICBjb250cm9sPXtmb3JtLmNvbnRyb2x9XHJcbiAgICAgICAgICAgICAgICBuYW1lPVwicGhvbmV0aWNcIlxyXG4gICAgICAgICAgICAgICAgcmVuZGVyPXsoeyBmaWVsZCB9KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxGb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUxhYmVsIGNsYXNzTmFtZT1cInVwcGVyY2FzZSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LXppbmMtNTAwIGRhcms6dGV4dC1zZWNvbmRhcnkvNzBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIFBob25ldGljXHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtTGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPElucHV0XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpc0xvYWRpbmd9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLXppbmMtMzAwLzUwIGJvcmRlci0wIGZvY3VzLXZpc2libGU6cmluZy0wIHRleHQtYmxhY2sgZm9jdXMtdmlzaWJsZTpyaW5nLW9mZnNldC0wXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJFbnRlciBwaG9uZXRpY1wiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHsuLi5maWVsZH1cclxuICAgICAgICAgICAgICAgICAgICAgICAgdHlwZT1cInRleHRcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJtZWFuaW5nXCJcclxuICAgICAgICAgICAgICAgIHJlbmRlcj17KHsgZmllbGQgfSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8Rm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1MYWJlbCBjbGFzc05hbWU9XCJ1cHBlcmNhc2UgdGV4dC14cyBmb250LWJvbGQgdGV4dC16aW5jLTUwMCBkYXJrOnRleHQtc2Vjb25kYXJ5LzcwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICBNZWFuaW5nXHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtTGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPElucHV0XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpc0xvYWRpbmd9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLXppbmMtMzAwLzUwIGJvcmRlci0wIGZvY3VzLXZpc2libGU6cmluZy0wIHRleHQtYmxhY2sgZm9jdXMtdmlzaWJsZTpyaW5nLW9mZnNldC0wXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJFbnRlciBtZWFuaW5nXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgey4uLmZpZWxkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICB0eXBlPVwidGV4dFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1NZXNzYWdlIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cImV4YW1wbGVTZW50ZW5jZVwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgRXhhbXBsZSBTZW50ZW5jZVxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxJbnB1dFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1cy12aXNpYmxlOnJpbmctMCB0ZXh0LWJsYWNrIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRW50ZXIgZXhhbXBsZSBzZW50ZW5jZVwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHsuLi5maWVsZH1cclxuICAgICAgICAgICAgICAgICAgICAgICAgdHlwZT1cInRleHRcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJhdWRpb1VybFwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgQXVkaW8gVVJMXHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtTGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPElucHV0XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpc0xvYWRpbmd9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLXppbmMtMzAwLzUwIGJvcmRlci0wIGZvY3VzLXZpc2libGU6cmluZy0wIHRleHQtYmxhY2sgZm9jdXMtdmlzaWJsZTpyaW5nLW9mZnNldC0wXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJFbnRlciBhdWRpbyBVUkxcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7Li4uZmllbGR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU9XCJ0ZXh0XCJcclxuICAgICAgICAgICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybU1lc3NhZ2UgLz5cclxuICAgICAgICAgICAgICAgICAgPC9Gb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDxEaWFsb2dGb290ZXIgY2xhc3NOYW1lPVwiYmctZ3JheS0xMDAgcHgtNiBweS00XCI+XHJcbiAgICAgICAgICAgICAgPEJ1dHRvblxyXG4gICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25DbG9zZSgpfVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidGV4dC1ibGFjayByb3VuZGVkLVs0cHhdXCJcclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICBObywgY2FuY2VsXHJcbiAgICAgICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICAgICAgPEJ1dHRvbiBkaXNhYmxlZD17aXNMb2FkaW5nfSB2YXJpYW50PVwiZ2hvc3RcIj5cclxuICAgICAgICAgICAgICAgIEVkaXRcclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgPC9EaWFsb2dGb290ZXI+XHJcbiAgICAgICAgICA8L2Zvcm0+XHJcbiAgICAgICAgPC9Gb3JtPlxyXG4gICAgICA8L0RpYWxvZ0NvbnRlbnQ+XHJcbiAgICA8L0RpYWxvZz5cclxuICApO1xyXG59O1xyXG4iXSwibmFtZXMiOlsieiIsInpvZFJlc29sdmVyIiwidXNlRm9ybSIsIkRpYWxvZyIsIkRpYWxvZ0NvbnRlbnQiLCJEaWFsb2dGb290ZXIiLCJEaWFsb2dIZWFkZXIiLCJEaWFsb2dUaXRsZSIsIkZvcm0iLCJGb3JtQ29udHJvbCIsIkZvcm1GaWVsZCIsIkZvcm1JdGVtIiwiRm9ybUxhYmVsIiwiRm9ybU1lc3NhZ2UiLCJJbnB1dCIsIkJ1dHRvbiIsInVzZU1vZGFsIiwidXNlRWZmZWN0IiwiYXBpVXBkYXRlVm9jYWJ1bGFyeSIsImZvcm1TY2hlbWEiLCJvYmplY3QiLCJ3b3JkIiwic3RyaW5nIiwibWluIiwibWVzc2FnZSIsInBob25ldGljIiwibWVhbmluZyIsImV4YW1wbGVTZW50ZW5jZSIsImF1ZGlvVXJsIiwiRWRpdFZvY2FidWxhcnlNb2RhbCIsImlzT3BlbiIsIm9uQ2xvc2UiLCJ0eXBlIiwiZGF0YSIsImlzTW9kYWxPcGVuIiwidm9jYWJ1bGFyeSIsImZvcm0iLCJyZXNvbHZlciIsImRlZmF1bHRWYWx1ZXMiLCJpc0xvYWRpbmciLCJmb3JtU3RhdGUiLCJpc1N1Ym1pdHRpbmciLCJvblN1Ym1pdCIsInZhbHVlcyIsImNvbnNvbGUiLCJsb2ciLCJyZXMiLCJfaWQiLCJyZXNldCIsImhhbmRsZUNsb3NlIiwic2V0VmFsdWUiLCJvcGVuIiwib25PcGVuQ2hhbmdlIiwiY2xhc3NOYW1lIiwiaGFuZGxlU3VibWl0IiwiZGl2IiwiY29udHJvbCIsIm5hbWUiLCJyZW5kZXIiLCJmaWVsZCIsImRpc2FibGVkIiwicGxhY2Vob2xkZXIiLCJvbkNsaWNrIiwidmFyaWFudCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBO0FBQ0EsWUFBWUEsT0FBTyxNQUFNO0FBQ3pCLFNBQVNDLFdBQVcsUUFBUSwwQkFBMEI7QUFDdEQsU0FBU0MsT0FBTyxRQUFRLGtCQUFrQjtBQUMxQyxTQUNFQyxNQUFNLEVBQ05DLGFBQWEsRUFDYkMsWUFBWSxFQUNaQyxZQUFZ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

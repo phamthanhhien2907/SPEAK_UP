@@ -1,0 +1,102 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/(Admin)/wrapper.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/(Admin)/wrapper.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const Suspense = __vite__cjsImport2_react["Suspense"]; const lazy = __vite__cjsImport2_react["lazy"];
+const HomePage = /*#__PURE__*/ lazy(()=>import("/src/pages/(Admin)/index.tsx"));
+_c = HomePage;
+export default function HomePageWrapper() {
+    return /*#__PURE__*/ _jsxDEV(Suspense, {
+        fallback: /*#__PURE__*/ _jsxDEV("div", {
+            id: "load",
+            children: [
+                /*#__PURE__*/ _jsxDEV("div", {
+                    children: "G"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+                    lineNumber: 10,
+                    columnNumber: 11
+                }, void 0),
+                /*#__PURE__*/ _jsxDEV("div", {
+                    children: "N"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+                    lineNumber: 11,
+                    columnNumber: 11
+                }, void 0),
+                /*#__PURE__*/ _jsxDEV("div", {
+                    children: "I"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+                    lineNumber: 12,
+                    columnNumber: 11
+                }, void 0),
+                /*#__PURE__*/ _jsxDEV("div", {
+                    children: "D"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+                    lineNumber: 13,
+                    columnNumber: 11
+                }, void 0),
+                /*#__PURE__*/ _jsxDEV("div", {
+                    children: "A"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+                    lineNumber: 14,
+                    columnNumber: 11
+                }, void 0),
+                /*#__PURE__*/ _jsxDEV("div", {
+                    children: "O"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+                    lineNumber: 15,
+                    columnNumber: 11
+                }, void 0),
+                /*#__PURE__*/ _jsxDEV("div", {
+                    children: "L"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+                    lineNumber: 16,
+                    columnNumber: 11
+                }, void 0)
+            ]
+        }, void 0, true, {
+            fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+            lineNumber: 9,
+            columnNumber: 9
+        }, void 0),
+        children: /*#__PURE__*/ _jsxDEV(HomePage, {}, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+            lineNumber: 20,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/pages/(Admin)/wrapper.tsx",
+        lineNumber: 7,
+        columnNumber: 5
+    }, this);
+}
+_c1 = HomePageWrapper;
+var _c, _c1;
+$RefreshReg$(_c, "HomePage");
+$RefreshReg$(_c1, "HomePageWrapper");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/(Admin)/wrapper.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/(Admin)/wrapper.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndyYXBwZXIudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IFN1c3BlbnNlLCBsYXp5IH0gZnJvbSBcInJlYWN0XCI7XHJcblxyXG5jb25zdCBIb21lUGFnZSA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9pbmRleFwiKSk7XHJcblxyXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBIb21lUGFnZVdyYXBwZXIoKSB7XHJcbiAgcmV0dXJuIChcclxuICAgIDxTdXNwZW5zZVxyXG4gICAgICBmYWxsYmFjaz17XHJcbiAgICAgICAgPGRpdiBpZD1cImxvYWRcIj5cclxuICAgICAgICAgIDxkaXY+RzwvZGl2PlxyXG4gICAgICAgICAgPGRpdj5OPC9kaXY+XHJcbiAgICAgICAgICA8ZGl2Pkk8L2Rpdj5cclxuICAgICAgICAgIDxkaXY+RDwvZGl2PlxyXG4gICAgICAgICAgPGRpdj5BPC9kaXY+XHJcbiAgICAgICAgICA8ZGl2Pk88L2Rpdj5cclxuICAgICAgICAgIDxkaXY+TDwvZGl2PlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICB9XHJcbiAgICA+XHJcbiAgICAgIDxIb21lUGFnZSAvPlxyXG4gICAgPC9TdXNwZW5zZT5cclxuICApO1xyXG59XHJcbiJdLCJuYW1lcyI6WyJTdXNwZW5zZSIsImxhenkiLCJIb21lUGFnZSIsIkhvbWVQYWdlV3JhcHBlciIsImZhbGxiYWNrIiwiZGl2IiwiaWQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OztBQUFBLFNBQVNBLFFBQVEsRUFBRUMsSUFBSSxRQUFRLFFBQVE7QUFFdkMsTUFBTUMseUJBQVdELEtBQUssSUFBTSxNQUFNLENBQUM7S0FBN0JDO0FBRU4sZUFBZSxTQUFTQztJQUN0QixxQkFDRSxRQUFDSDtRQUNDSSx3QkFDRSxRQUFDQztZQUFJQyxJQUFHOzs4QkFDTixRQUFDRDs4QkFBSTs7Ozs7OzhCQUNMLFFBQUNBOzhCQUFJOzs7Ozs7OEJBQ0wsUUFBQ0E7OEJBQUk7Ozs7Ozs4QkFDTCxRQUFDQTs4QkFBSTs7Ozs7OzhCQUNMLFFBQUNBOzhCQUFJOzs7Ozs7OEJBQ0wsUUFBQ0E7OEJBQUk7Ozs7Ozs4QkFDTCxRQUFDQTs4QkFBSTs7Ozs7Ozs7Ozs7O2tCQUlULGNBQUEsUUFBQ0g7Ozs7Ozs7Ozs7QUFHUDtNQWxCd0JDIn0=

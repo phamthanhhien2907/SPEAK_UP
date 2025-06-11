@@ -1,0 +1,104 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/LoginSuccess/route.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/LoginSuccess/route.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const lazy = __vite__cjsImport2_react["lazy"]; const Suspense = __vite__cjsImport2_react["Suspense"];
+const LoginSuccessPage = /*#__PURE__*/ lazy(()=>import("/src/pages/LoginSuccess/index.tsx"));
+_c = LoginSuccessPage;
+const loginSuccessRoutes = [
+    {
+        path: "/login-success/:userId/:tokenLogin",
+        element: /*#__PURE__*/ _jsxDEV(Suspense, {
+            fallback: /*#__PURE__*/ _jsxDEV("div", {
+                id: "load",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "G"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                        lineNumber: 11,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "N"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                        lineNumber: 12,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "I"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                        lineNumber: 13,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "D"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                        lineNumber: 14,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "A"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                        lineNumber: 15,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "O"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                        lineNumber: 16,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "L"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                        lineNumber: 17,
+                        columnNumber: 13
+                    }, void 0)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                lineNumber: 10,
+                columnNumber: 11
+            }, void 0),
+            children: /*#__PURE__*/ _jsxDEV(LoginSuccessPage, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+                lineNumber: 21,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/LoginSuccess/route.tsx",
+            lineNumber: 8,
+            columnNumber: 7
+        }, this)
+    }
+];
+export default loginSuccessRoutes;
+var _c;
+$RefreshReg$(_c, "LoginSuccessPage");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/LoginSuccess/route.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/LoginSuccess/route.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBsYXp5LCBTdXNwZW5zZSB9IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQgeyBSb3V0ZU9iamVjdCB9IGZyb20gXCJyZWFjdC1yb3V0ZXItZG9tXCI7XHJcbmNvbnN0IExvZ2luU3VjY2Vzc1BhZ2UgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vaW5kZXhcIikpO1xyXG5jb25zdCBsb2dpblN1Y2Nlc3NSb3V0ZXM6IChSb3V0ZU9iamVjdCAmIHsgcm9sZT86IHN0cmluZ1tdIH0pW10gPSBbXHJcbiAge1xyXG4gICAgcGF0aDogXCIvbG9naW4tc3VjY2Vzcy86dXNlcklkLzp0b2tlbkxvZ2luXCIsXHJcbiAgICBlbGVtZW50OiAoXHJcbiAgICAgIDxTdXNwZW5zZVxyXG4gICAgICAgIGZhbGxiYWNrPXtcclxuICAgICAgICAgIDxkaXYgaWQ9XCJsb2FkXCI+XHJcbiAgICAgICAgICAgIDxkaXY+RzwvZGl2PlxyXG4gICAgICAgICAgICA8ZGl2Pk48L2Rpdj5cclxuICAgICAgICAgICAgPGRpdj5JPC9kaXY+XHJcbiAgICAgICAgICAgIDxkaXY+RDwvZGl2PlxyXG4gICAgICAgICAgICA8ZGl2PkE8L2Rpdj5cclxuICAgICAgICAgICAgPGRpdj5PPC9kaXY+XHJcbiAgICAgICAgICAgIDxkaXY+TDwvZGl2PlxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgfVxyXG4gICAgICA+XHJcbiAgICAgICAgPExvZ2luU3VjY2Vzc1BhZ2UgLz5cclxuICAgICAgPC9TdXNwZW5zZT5cclxuICAgICksXHJcbiAgfSxcclxuXTtcclxuZXhwb3J0IGRlZmF1bHQgbG9naW5TdWNjZXNzUm91dGVzO1xyXG4iXSwibmFtZXMiOlsibGF6eSIsIlN1c3BlbnNlIiwiTG9naW5TdWNjZXNzUGFnZSIsImxvZ2luU3VjY2Vzc1JvdXRlcyIsInBhdGgiLCJlbGVtZW50IiwiZmFsbGJhY2siLCJkaXYiLCJpZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUEsU0FBU0EsSUFBSSxFQUFFQyxRQUFRLFFBQVEsUUFBUTtBQUV2QyxNQUFNQyxpQ0FBbUJGLEtBQUssSUFBTSxNQUFNLENBQUM7S0FBckNFO0FBQ04sTUFBTUMscUJBQTREO0lBQ2hFO1FBQ0VDLE1BQU07UUFDTkMsdUJBQ0UsUUFBQ0o7WUFDQ0ssd0JBQ0UsUUFBQ0M7Z0JBQUlDLElBQUc7O2tDQUNOLFFBQUNEO2tDQUFJOzs7Ozs7a0NBQ0wsUUFBQ0E7a0NBQUk7Ozs7OztrQ0FDTCxRQUFDQTtrQ0FBSTs7Ozs7O2tDQUNMLFFBQUNBO2tDQUFJOzs7Ozs7a0NBQ0wsUUFBQ0E7a0NBQUk7Ozs7OztrQ0FDTCxRQUFDQTtrQ0FBSTs7Ozs7O2tDQUNMLFFBQUNBO2tDQUFJOzs7Ozs7Ozs7Ozs7c0JBSVQsY0FBQSxRQUFDTDs7Ozs7Ozs7OztJQUdQO0NBQ0Q7QUFDRCxlQUFlQyxtQkFBbUIifQ==

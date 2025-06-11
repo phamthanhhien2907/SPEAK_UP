@@ -19,8 +19,23 @@ app.use(cors(
         credentials: true
     }
 ));
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    next();
+});
+
 app.use(cookieParser())
-app.use('/static', express.static(path.join(__dirname, './assets/images')));
+app.use('/static', (req, res, next) => {
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp'];
+    const ext = path.extname(req.path).toLowerCase();
+
+    if (imageExtensions.includes(ext)) {
+        // Change to 'cross-origin' to allow any origin to load these resources
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    }
+    next();
+}, express.static(path.join(__dirname, './assets/images')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 connectDB();

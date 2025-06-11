@@ -1,0 +1,68 @@
+{"version":7,"type":"context-options","origin":"testRunner","browserName":"","options":{},"platform":"win32","wallTime":1749225488129,"monotonicTime":215486.046,"sdkLanguage":"javascript"}
+{"type":"before","callId":"hook@1","startTime":215493.24,"class":"Test","method":"step","apiName":"Before Hooks","params":{},"stack":[]}
+{"type":"before","callId":"hook@2","parentId":"hook@1","startTime":215494.364,"class":"Test","method":"step","apiName":"beforeEach hook","params":{},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":3,"column":10}]}
+{"type":"before","callId":"fixture@3","parentId":"hook@2","startTime":215504.136,"class":"Test","method":"step","apiName":"fixture: browser","params":{},"stack":[]}
+{"type":"before","callId":"pw:api@4","parentId":"fixture@3","startTime":215507.472,"class":"Test","method":"step","apiName":"browserType.launch","params":{"handleSIGINT":"false","tracesDir":"D:\\DATN\\client\\test-results\\.playwright-artifacts-13\\traces","headless":"true","ignoreDefaultArgs":"undefined","ignoreAllDefaultArgs":"false","env":"undefined"},"stack":[]}
+{"type":"after","callId":"pw:api@4","endTime":215577.135,"annotations":[]}
+{"type":"after","callId":"fixture@3","endTime":215578.042,"annotations":[]}
+{"type":"before","callId":"fixture@5","parentId":"hook@2","startTime":215581.049,"class":"Test","method":"step","apiName":"fixture: context","params":{},"stack":[]}
+{"type":"before","callId":"pw:api@6","parentId":"fixture@5","startTime":215584.886,"class":"Test","method":"step","apiName":"browser.newContext","params":{"acceptDownloads":"accept","bypassCSP":"false","colorScheme":"light","hasTouch":"false","ignoreHTTPSErrors":"false","isMobile":"false","javaScriptEnabled":"true","locale":"en-US","offline":"false","viewport":"Object","serviceWorkers":"allow","noDefaultViewport":"false","extraHTTPHeaders":"undefined","storageState":"undefined","recordHar":"undefined","reducedMotion":"undefined","forcedColors":"undefined","contrast":"undefined","clientCertificates":"undefined"},"stack":[]}
+{"type":"after","callId":"pw:api@6","endTime":215602.269,"annotations":[]}
+{"type":"after","callId":"fixture@5","endTime":215615.368,"annotations":[]}
+{"type":"before","callId":"fixture@7","parentId":"hook@2","startTime":215616.444,"class":"Test","method":"step","apiName":"fixture: page","params":{},"stack":[]}
+{"type":"before","callId":"pw:api@8","parentId":"fixture@7","startTime":215618.898,"class":"Test","method":"step","apiName":"browserContext.newPage","params":{},"stack":[]}
+{"type":"after","callId":"pw:api@8","endTime":215701.19,"annotations":[]}
+{"type":"after","callId":"fixture@7","endTime":215701.493,"annotations":[]}
+{"type":"before","callId":"pw:api@9","parentId":"hook@2","startTime":215704.005,"class":"Test","method":"step","apiName":"page.goto","params":{"url":"http://localhost:5173/auth","waitUntil":"load"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":4,"column":20}]}
+{"type":"after","callId":"pw:api@9","endTime":216153.157,"annotations":[]}
+{"type":"after","callId":"hook@2","endTime":216153.31,"annotations":[]}
+{"type":"after","callId":"hook@1","endTime":216153.578,"annotations":[]}
+{"type":"before","callId":"pw:api@10","startTime":216155.06,"class":"Test","method":"step","apiName":"page.fill","params":{"selector":"input[name=\"email\"]","value":"admin@gmail.com"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":9,"column":20}]}
+{"type":"after","callId":"pw:api@10","endTime":216246.585,"annotations":[]}
+{"type":"before","callId":"pw:api@11","startTime":216249.746,"class":"Test","method":"step","apiName":"page.fill","params":{"selector":"input[name=\"password\"]","value":"Admin123@"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":10,"column":20}]}
+{"type":"after","callId":"pw:api@11","endTime":216291.868,"annotations":[]}
+{"type":"before","callId":"pw:api@12","startTime":216297.748,"class":"Test","method":"step","apiName":"locator.click","params":{"selector":"internal:testid=[data-testid=\"toggle-password-icon\"s]","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":11,"column":56}]}
+{"type":"after","callId":"pw:api@12","endTime":217230.273,"annotations":[]}
+{"type":"before","callId":"pw:api@13","startTime":217232.337,"class":"Test","method":"step","apiName":"locator.click","params":{"selector":"internal:role=button[name=/login/i]","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":12,"column":60}]}
+{"type":"after","callId":"pw:api@13","endTime":217273.227,"annotations":[]}
+{"type":"before","callId":"expect@14","startTime":217275.812,"class":"Test","method":"step","apiName":"expect.toHaveURL","params":{"expected":"http://localhost:5173/"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":13,"column":28}]}
+{"type":"after","callId":"expect@14","endTime":218180.841,"annotations":[]}
+{"type":"before","callId":"pw:api@15","startTime":218182.603,"class":"Test","method":"step","apiName":"locator.click","params":{"selector":"internal:text=/course/i","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":16,"column":41}]}
+{"type":"after","callId":"pw:api@15","endTime":219407.559,"annotations":[]}
+{"type":"before","callId":"pw:api@16","startTime":219409.316,"class":"Test","method":"step","apiName":"page.waitForTimeout","params":{"timeout":"3000"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":17,"column":20}]}
+{"type":"after","callId":"pw:api@16","endTime":222422.401,"annotations":[]}
+{"type":"before","callId":"pw:api@17","startTime":222423.684,"class":"Test","method":"step","apiName":"locator.click","params":{"selector":"button.bg-blue-600:has(svg.lucide-square-pen) >> nth=0","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":19,"column":85}]}
+{"type":"after","callId":"pw:api@17","endTime":222556.784,"annotations":[]}
+{"type":"before","callId":"pw:api@18","startTime":222558.565,"class":"Test","method":"step","apiName":"page.waitForTimeout","params":{"timeout":"2000"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":20,"column":20}]}
+{"type":"after","callId":"pw:api@18","endTime":224569.179,"annotations":[]}
+{"type":"before","callId":"expect@19","startTime":224570.25,"class":"Test","method":"step","apiName":"expect.toBeVisible","params":{},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":23,"column":43}]}
+{"type":"after","callId":"expect@19","endTime":224590.694,"annotations":[]}
+{"type":"before","callId":"pw:api@20","startTime":224592.351,"class":"Test","method":"step","apiName":"locator.fill","params":{"selector":"input[name=\"title\"]","value":"English Speak IPA","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":24,"column":35}]}
+{"type":"after","callId":"pw:api@20","endTime":224624.819,"annotations":[]}
+{"type":"before","callId":"expect@21","startTime":224626.202,"class":"Test","method":"step","apiName":"expect.toBeVisible","params":{},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":28,"column":49}]}
+{"type":"after","callId":"expect@21","endTime":224641.375,"annotations":[]}
+{"type":"before","callId":"pw:api@22","startTime":224643.217,"class":"Test","method":"step","apiName":"locator.fill","params":{"selector":"input[name=\"description\"]","value":"Suspendisse ut ultrices nunc. Vivamus tempus magna nec ligula imperdiet accumsan. Praesent sollicitudin elit lorem, et blandit ex finibus at. Vestibulum accumsan turpis metus","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":29,"column":41}]}
+{"type":"after","callId":"pw:api@22","endTime":224677.216,"annotations":[]}
+{"type":"before","callId":"pw:api@23","startTime":224678.716,"class":"Test","method":"step","apiName":"page.waitForTimeout","params":{"timeout":"1000"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":30,"column":20}]}
+{"type":"after","callId":"pw:api@23","endTime":225694.517,"annotations":[]}
+{"type":"before","callId":"pw:api@24","startTime":225696.271,"class":"Test","method":"step","apiName":"locator.click","params":{"selector":"internal:role=combobox[name=/level/i]","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":33,"column":62}]}
+{"type":"after","callId":"pw:api@24","endTime":225806.995,"annotations":[]}
+{"type":"before","callId":"expect@25","startTime":225808.056,"class":"Test","method":"step","apiName":"expect.toBeVisible","params":{},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":37,"column":36}]}
+{"type":"after","callId":"expect@25","endTime":225820.503,"annotations":[]}
+{"type":"before","callId":"pw:api@26","startTime":225821.722,"class":"Test","method":"step","apiName":"locator.click","params":{"selector":"div[role=\"listbox\"] >> internal:text=\"intermediate\"s","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":40,"column":71}]}
+{"type":"after","callId":"pw:api@26","endTime":226053.318,"annotations":[]}
+{"type":"before","callId":"pw:api@27","startTime":226054.712,"class":"Test","method":"step","apiName":"page.waitForTimeout","params":{"timeout":"3000"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":41,"column":20}]}
+{"type":"after","callId":"pw:api@27","endTime":229074.845,"annotations":[]}
+{"type":"before","callId":"expect@28","startTime":229075.894,"class":"Test","method":"step","apiName":"expect.toBeVisible","params":{},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":44,"column":47}]}
+{"type":"after","callId":"expect@28","endTime":229085.781,"annotations":[]}
+{"type":"before","callId":"pw:api@29","startTime":229086.679,"class":"Test","method":"step","apiName":"locator.fill","params":{"selector":"input[name=\"thumbnail\"]","value":"https://dummyimage.com/600x400/000/fff","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":45,"column":39}]}
+{"type":"after","callId":"pw:api@29","endTime":229104.074,"annotations":[]}
+{"type":"before","callId":"pw:api@30","startTime":229105.25,"class":"Test","method":"step","apiName":"page.waitForTimeout","params":{"timeout":"1000"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":46,"column":20}]}
+{"type":"after","callId":"pw:api@30","endTime":230147.353,"annotations":[]}
+{"type":"before","callId":"pw:api@31","startTime":230150.896,"class":"Test","method":"step","apiName":"locator.click","params":{"selector":"internal:role=button[name=/edit/i]","strict":"true"},"stack":[{"file":"D:\\DATN\\client\\src\\pages\\(Admin)\\Modal\\Course\\02-edit-course-modal.spec.ts","line":47,"column":59}]}
+{"type":"after","callId":"pw:api@31","endTime":230263.437,"annotations":[]}
+{"type":"before","callId":"hook@32","startTime":230264.08,"class":"Test","method":"step","apiName":"After Hooks","params":{},"stack":[]}
+{"type":"before","callId":"fixture@33","parentId":"hook@32","startTime":230265.602,"class":"Test","method":"step","apiName":"fixture: page","params":{},"stack":[]}
+{"type":"after","callId":"fixture@33","endTime":230265.956,"annotations":[]}
+{"type":"before","callId":"fixture@34","parentId":"hook@32","startTime":230266.384,"class":"Test","method":"step","apiName":"fixture: context","params":{},"stack":[]}
+{"type":"after","callId":"fixture@34","endTime":230266.574,"annotations":[]}

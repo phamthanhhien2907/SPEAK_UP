@@ -1,0 +1,57 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/checkbox.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/ui/checkbox.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport2_react);
+import * as CheckboxPrimitive from "/node_modules/.vite/deps/@radix-ui_react-checkbox.js?v=f8bc0f32";
+import { Check } from "/node_modules/.vite/deps/lucide-react.js?v=e8ebe34d";
+import { cn } from "/src/lib/utils.ts";
+const Checkbox = /*#__PURE__*/ React.forwardRef(_c = ({ className, ...props }, ref)=>/*#__PURE__*/ _jsxDEV(CheckboxPrimitive.Root, {
+        ref: ref,
+        className: cn("peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground", className),
+        ...props,
+        children: /*#__PURE__*/ _jsxDEV(CheckboxPrimitive.Indicator, {
+            className: cn("flex items-center justify-center text-current"),
+            children: /*#__PURE__*/ _jsxDEV(Check, {
+                className: "h-4 w-4"
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/components/ui/checkbox.tsx",
+                lineNumber: 22,
+                columnNumber: 7
+            }, this)
+        }, void 0, false, {
+            fileName: "D:/DATN/client/src/components/ui/checkbox.tsx",
+            lineNumber: 19,
+            columnNumber: 5
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/components/ui/checkbox.tsx",
+        lineNumber: 11,
+        columnNumber: 3
+    }, this));
+_c1 = Checkbox;
+Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+export { Checkbox };
+var _c, _c1;
+$RefreshReg$(_c, "Checkbox$React.forwardRef");
+$RefreshReg$(_c1, "Checkbox");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/ui/checkbox.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/ui/checkbox.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNoZWNrYm94LnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyBSZWFjdCBmcm9tIFwicmVhY3RcIlxuaW1wb3J0ICogYXMgQ2hlY2tib3hQcmltaXRpdmUgZnJvbSBcIkByYWRpeC11aS9yZWFjdC1jaGVja2JveFwiXG5pbXBvcnQgeyBDaGVjayB9IGZyb20gXCJsdWNpZGUtcmVhY3RcIlxuXG5pbXBvcnQgeyBjbiB9IGZyb20gXCJAL2xpYi91dGlsc1wiXG5cbmNvbnN0IENoZWNrYm94ID0gUmVhY3QuZm9yd2FyZFJlZjxcbiAgUmVhY3QuRWxlbWVudFJlZjx0eXBlb2YgQ2hlY2tib3hQcmltaXRpdmUuUm9vdD4sXG4gIFJlYWN0LkNvbXBvbmVudFByb3BzV2l0aG91dFJlZjx0eXBlb2YgQ2hlY2tib3hQcmltaXRpdmUuUm9vdD5cbj4oKHsgY2xhc3NOYW1lLCAuLi5wcm9wcyB9LCByZWYpID0+IChcbiAgPENoZWNrYm94UHJpbWl0aXZlLlJvb3RcbiAgICByZWY9e3JlZn1cbiAgICBjbGFzc05hbWU9e2NuKFxuICAgICAgXCJwZWVyIGgtNCB3LTQgc2hyaW5rLTAgcm91bmRlZC1zbSBib3JkZXIgYm9yZGVyLXByaW1hcnkgcmluZy1vZmZzZXQtYmFja2dyb3VuZCBmb2N1cy12aXNpYmxlOm91dGxpbmUtbm9uZSBmb2N1cy12aXNpYmxlOnJpbmctMiBmb2N1cy12aXNpYmxlOnJpbmctcmluZyBmb2N1cy12aXNpYmxlOnJpbmctb2Zmc2V0LTIgZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIGRpc2FibGVkOm9wYWNpdHktNTAgZGF0YS1bc3RhdGU9Y2hlY2tlZF06YmctcHJpbWFyeSBkYXRhLVtzdGF0ZT1jaGVja2VkXTp0ZXh0LXByaW1hcnktZm9yZWdyb3VuZFwiLFxuICAgICAgY2xhc3NOYW1lXG4gICAgKX1cbiAgICB7Li4ucHJvcHN9XG4gID5cbiAgICA8Q2hlY2tib3hQcmltaXRpdmUuSW5kaWNhdG9yXG4gICAgICBjbGFzc05hbWU9e2NuKFwiZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgdGV4dC1jdXJyZW50XCIpfVxuICAgID5cbiAgICAgIDxDaGVjayBjbGFzc05hbWU9XCJoLTQgdy00XCIgLz5cbiAgICA8L0NoZWNrYm94UHJpbWl0aXZlLkluZGljYXRvcj5cbiAgPC9DaGVja2JveFByaW1pdGl2ZS5Sb290PlxuKSlcbkNoZWNrYm94LmRpc3BsYXlOYW1lID0gQ2hlY2tib3hQcmltaXRpdmUuUm9vdC5kaXNwbGF5TmFtZVxuXG5leHBvcnQgeyBDaGVja2JveCB9XG4iXSwibmFtZXMiOlsiUmVhY3QiLCJDaGVja2JveFByaW1pdGl2ZSIsIkNoZWNrIiwiY24iLCJDaGVja2JveCIsImZvcndhcmRSZWYiLCJjbGFzc05hbWUiLCJwcm9wcyIsInJlZiIsIlJvb3QiLCJJbmRpY2F0b3IiLCJkaXNwbGF5TmFtZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUEsWUFBWUEsV0FBVyxRQUFPO0FBQzlCLFlBQVlDLHVCQUF1QiwyQkFBMEI7QUFDN0QsU0FBU0MsS0FBSyxRQUFRLGVBQWM7QUFFcEMsU0FBU0MsRUFBRSxRQUFRLGNBQWE7QUFFaEMsTUFBTUMseUJBQVdKLE1BQU1LLFVBQVUsTUFHL0IsQ0FBQyxFQUFFQyxTQUFTLEVBQUUsR0FBR0MsT0FBTyxFQUFFQyxvQkFDMUIsUUFBQ1Asa0JBQWtCUSxJQUFJO1FBQ3JCRCxLQUFLQTtRQUNMRixXQUFXSCxHQUNULGtUQUNBRztRQUVELEdBQUdDLEtBQUs7a0JBRVQsY0FBQSxRQUFDTixrQkFBa0JTLFNBQVM7WUFDMUJKLFdBQVdILEdBQUc7c0JBRWQsY0FBQSxRQUFDRDtnQkFBTUksV0FBVTs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFJdkJGLFNBQVNPLFdBQVcsR0FBR1Ysa0JBQWtCUSxJQUFJLENBQUNFLFdBQVc7QUFFekQsU0FBU1AsUUFBUSxHQUFFIn0=

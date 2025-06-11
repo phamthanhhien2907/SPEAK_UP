@@ -1,0 +1,1056 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/modals/lesson-modal/edit-lesson-modal.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import * as z from "/node_modules/.vite/deps/zod.js?v=54733448";
+import { zodResolver } from "/node_modules/.vite/deps/@hookform_resolvers_zod.js?v=c50193e4";
+import { useForm } from "/node_modules/.vite/deps/react-hook-form.js?v=bc8c4e1e";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "/src/components/ui/dialog.tsx";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "/src/components/ui/form.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import __vite__cjsImport10_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const useEffect = __vite__cjsImport10_react["useEffect"]; const useState = __vite__cjsImport10_react["useState"];
+import { apiGetAllLesson, apiUpdateLesson } from "/src/services/lesson.services.ts";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "/src/components/ui/select.tsx";
+import { AIConversationEnabledType, CategoryType, LessonType } from "/src/types/lesson.ts";
+import { apiGetAllCourse } from "/src/services/course.services.ts";
+import { apiGetAllTopic } from "/src/services/topic.services.ts";
+const formSchema = z.object({
+    courseId: z.string().min(1, {
+        message: "Course Id is required"
+    }),
+    parentTopicId: z.string(),
+    parentLessonId: z.string(),
+    title: z.string().min(1, {
+        message: "Title is required"
+    }),
+    totalLessons: z.number(),
+    content: z.string().min(1, {
+        message: "Content is required"
+    }),
+    thumbnail: z.string(),
+    aiImg: z.string(),
+    name: z.string(),
+    isAIConversationEnabled: z.enum([
+        "true",
+        "false"
+    ]),
+    type: z.enum([
+        "listening",
+        "speaking",
+        "vocabulary",
+        "pronunciation"
+    ], {
+        message: "Type is required"
+    }),
+    category: z.enum([
+        "basics",
+        "intermediate",
+        "professional"
+    ], {
+        message: "Category is required"
+    }),
+    level: z.number().min(1, {
+        message: "Level Lesson is required"
+    })
+});
+export const EditLessonModal = ()=>{
+    _s();
+    const [courseData, setCourseData] = useState([]);
+    const [topicData, setTopicData] = useState([]);
+    const [lessonParentIdData, setLessonParentIdData] = useState([]);
+    const { isOpen, onClose, type, data } = useModal();
+    const { lesson } = data;
+    const isModalOpen = isOpen && type === "editLesson";
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            courseId: "",
+            title: "",
+            content: "",
+            type: "listening",
+            parentLessonId: "",
+            parentTopicId: "",
+            thumbnail: "",
+            aiImg: "",
+            name: "",
+            isAIConversationEnabled: "false",
+            totalLessons: null,
+            category: "basics",
+            level: 1
+        }
+    });
+    const isLoading = form.formState.isSubmitting;
+    const onSubmit = async (values)=>{
+        const res = await apiUpdateLesson(lesson?._id, {
+            ...values,
+            courseId: {
+                _id: values.courseId
+            },
+            parentLessonId: values.parentLessonId ? {
+                _id: values.parentLessonId
+            } : undefined,
+            parentTopicId: values.parentTopicId || undefined
+        });
+        if (res) {
+            onClose();
+        }
+        form.reset();
+    };
+    const handleClose = ()=>{
+        form.reset();
+        onClose();
+    };
+    const getAllCourse = async ()=>{
+        const courses = await apiGetAllCourse();
+        if (courses.data.success) {
+            setCourseData(courses.data.rs);
+        } else {
+            console.log("Failed to fetch users");
+        }
+    };
+    const getAllTopic = async ()=>{
+        const topic = await apiGetAllTopic();
+        if (topic.data.success) {
+            setTopicData(topic.data.rs);
+        } else {
+            console.log("Failed to fetch users");
+        }
+    };
+    const getLessonByLessonParentId = async ()=>{
+        const lessonParent = await apiGetAllLesson();
+        if (lessonParent.data.success) {
+            const filterLessonByParentId = lessonParent?.data?.rs?.filter((lessonParentId)=>lessonParentId?.parentLessonId);
+            setLessonParentIdData(filterLessonByParentId);
+        } else {
+            console.log("Failed to fetch users");
+        }
+    };
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            await Promise.all([
+                getAllCourse(),
+                getAllTopic(),
+                getLessonByLessonParentId()
+            ]);
+        };
+        fetchData();
+    }, []);
+    useEffect(()=>{
+        if (lesson) {
+            form.setValue("courseId", lesson.courseId?._id);
+            form.setValue("parentLessonId", lesson.courseId?._id);
+            form.setValue("parentTopicId", lesson.courseId?._id);
+            form.setValue("content", lesson.content);
+            form.setValue("title", lesson.title);
+            form.setValue("aiImg", lesson.aiImg);
+            form.setValue("thumbnail", lesson.thumbnail);
+            form.setValue("name", lesson.name);
+            form.setValue("category", lesson.category);
+            form.setValue("level", lesson.level);
+            form.setValue("type", lesson.type);
+            form.setValue("isAIConversationEnabled", lesson.isAIConversationEnabled);
+            form.setValue("totalLessons", lesson.totalLessons);
+        }
+    }, [
+        form,
+        lesson
+    ]);
+    useEffect(()=>{
+        getAllCourse();
+    }, []);
+    return /*#__PURE__*/ _jsxDEV(Dialog, {
+        open: isModalOpen,
+        onOpenChange: handleClose,
+        children: /*#__PURE__*/ _jsxDEV(DialogContent, {
+            className: "bg-white text-black p-0 overflow-y-auto h-screen",
+            children: [
+                /*#__PURE__*/ _jsxDEV(DialogHeader, {
+                    className: "pt-8 px-6",
+                    children: /*#__PURE__*/ _jsxDEV(DialogTitle, {
+                        className: "text-2xl text-center font-bold",
+                        children: "Editt Lesson"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                        lineNumber: 171,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                    lineNumber: 170,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDEV(Form, {
+                    ...form,
+                    children: /*#__PURE__*/ _jsxDEV("form", {
+                        className: "space-y-8",
+                        onSubmit: form.handleSubmit(onSubmit),
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                className: "space-y-8 px-6",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "courseId",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Course Id"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 183,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a channel type"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 193,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                    lineNumber: 192,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 191,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(courseData)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type?._id,
+                                                                        className: "capitalize",
+                                                                        children: type?.title?.toLocaleLowerCase()
+                                                                    }, type?._id, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 198,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 196,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 186,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 208,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 182,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 178,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "parentTopicId",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Parent Topic Id"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 217,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a channel topic"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 227,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                    lineNumber: 226,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 225,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(topicData)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type?._id,
+                                                                        className: "capitalize",
+                                                                        children: type?.title?.toLocaleLowerCase()
+                                                                    }, type?._id, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 232,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 230,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 220,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 242,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 216,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 212,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "parentLessonId",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Parent Lesson Id"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 251,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a channel lesson"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 261,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                    lineNumber: 260,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 259,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(lessonParentIdData)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type?._id,
+                                                                        className: "capitalize",
+                                                                        children: type?.title?.toLocaleLowerCase()
+                                                                    }, type?._id, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 266,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 264,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 254,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 276,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 250,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 246,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "title",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Title"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 285,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter title",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                            lineNumber: 289,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 288,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 297,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 284,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 280,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "content",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Content"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 306,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter content",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                            lineNumber: 310,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 309,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 318,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 305,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 301,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "type",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Type"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 327,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a lesson"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 337,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                    lineNumber: 336,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 335,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(LessonType)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type,
+                                                                        className: "capitalize",
+                                                                        children: type?.toLocaleLowerCase()
+                                                                    }, type, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 342,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 340,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 330,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 352,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 326,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 322,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "category",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Category"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 361,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a category"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 371,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                    lineNumber: 370,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 369,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(CategoryType)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type,
+                                                                        className: "capitalize",
+                                                                        children: type?.toLocaleLowerCase()
+                                                                    }, type, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 376,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 374,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 364,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 386,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 360,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 356,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "totalLessons",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Total Lesson"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 395,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter total lesson",
+                                                            ...field,
+                                                            type: "number"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                            lineNumber: 399,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 398,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 407,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 394,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 390,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "thumbnail",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Thumbnail"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 416,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter thumbnail",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                            lineNumber: 420,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 419,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 428,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 415,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 411,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "aiImg",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "AI Image"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 437,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter AI Image",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                            lineNumber: 441,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 440,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 449,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 436,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 432,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "name",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Name"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 458,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter name",
+                                                            ...field,
+                                                            type: "text"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                            lineNumber: 462,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 461,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 470,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 457,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 453,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "isAIConversationEnabled",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "AI Conversation Enabled"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 479,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a AI Conversation Enabled"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 489,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                    lineNumber: 488,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 487,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(AIConversationEnabledType)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type,
+                                                                        className: "capitalize",
+                                                                        children: type?.toLocaleLowerCase()
+                                                                    }, type, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                        lineNumber: 495,
+                                                                        columnNumber: 29
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                                lineNumber: 492,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 482,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 506,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 478,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 474,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "level",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Level"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 515,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                        children: /*#__PURE__*/ _jsxDEV(Input, {
+                                                            disabled: isLoading,
+                                                            className: "bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0",
+                                                            placeholder: "Enter level",
+                                                            ...field,
+                                                            type: "number"
+                                                        }, void 0, false, {
+                                                            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                            lineNumber: 519,
+                                                            columnNumber: 23
+                                                        }, void 0)
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 518,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                        lineNumber: 527,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                                lineNumber: 514,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 510,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                lineNumber: 177,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DialogFooter, {
+                                className: "bg-gray-100 px-6 py-4",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        onClick: ()=>onClose(),
+                                        className: "text-black rounded-[4px]",
+                                        children: "No, cancel"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 533,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        disabled: isLoading,
+                                        variant: "ghost",
+                                        children: "Edit"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                        lineNumber: 539,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                                lineNumber: 532,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                        lineNumber: 176,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+                    lineNumber: 175,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+            lineNumber: 169,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx",
+        lineNumber: 168,
+        columnNumber: 5
+    }, this);
+};
+_s(EditLessonModal, "Q12Pu9wD45k/2f0uR7YBmylJ2Rs=", false, function() {
+    return [
+        useModal,
+        useForm
+    ];
+});
+_c = EditLessonModal;
+var _c;
+$RefreshReg$(_c, "EditLessonModal");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/modals/lesson-modal/edit-lesson-modal.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtbGVzc29uLW1vZGFsLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyB6IGZyb20gXCJ6b2RcIjtcclxuaW1wb3J0IHsgem9kUmVzb2x2ZXIgfSBmcm9tIFwiQGhvb2tmb3JtL3Jlc29sdmVycy96b2RcIjtcclxuaW1wb3J0IHsgdXNlRm9ybSB9IGZyb20gXCJyZWFjdC1ob29rLWZvcm1cIjtcclxuaW1wb3J0IHtcclxuICBEaWFsb2csXHJcbiAgRGlhbG9nQ29udGVudCxcclxuICBEaWFsb2dGb290ZXIsXHJcbiAgRGlhbG9nSGVhZGVyLFxyXG4gIERpYWxvZ1RpdGxlLFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvZGlhbG9nXCI7XHJcbmltcG9ydCB7XHJcbiAgRm9ybSxcclxuICBGb3JtQ29udHJvbCxcclxuICBGb3JtRmllbGQsXHJcbiAgRm9ybUl0ZW0sXHJcbiAgRm9ybUxhYmVsLFxyXG4gIEZvcm1NZXNzYWdlLFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvZm9ybVwiO1xyXG5pbXBvcnQgeyBJbnB1dCB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvaW5wdXRcIjtcclxuaW1wb3J0IHsgQnV0dG9uIH0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9idXR0b25cIjtcclxuaW1wb3J0IHsgdXNlTW9kYWwgfSBmcm9tIFwiQC9ob29rcy91c2UtbW9kZWwtc3RvcmVcIjtcclxuXHJcbmltcG9ydCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUgfSBmcm9tIFwicmVhY3RcIjtcclxuaW1wb3J0IHsgYXBpR2V0QWxsTGVzc29uLCBhcGlVcGRhdGVMZXNzb24gfSBmcm9tIFwiQC9zZXJ2aWNlcy9sZXNzb24uc2VydmljZXNcIjtcclxuaW1wb3J0IHtcclxuICBTZWxlY3QsXHJcbiAgU2VsZWN0Q29udGVudCxcclxuICBTZWxlY3RJdGVtLFxyXG4gIFNlbGVjdFRyaWdnZXIsXHJcbiAgU2VsZWN0VmFsdWUsXHJcbn0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9zZWxlY3RcIjtcclxuaW1wb3J0IHtcclxuICBBSUNvbnZlcnNhdGlvbkVuYWJsZWRUeXBlLFxyXG4gIENhdGVnb3J5VHlwZSxcclxuICBMZXNzb25UeXBlLFxyXG59IGZyb20gXCJAL3R5cGVzL2xlc3NvblwiO1xyXG5pbXBvcnQgeyBhcGlHZXRBbGxDb3Vyc2UgfSBmcm9tIFwiQC9zZXJ2aWNlcy9jb3Vyc2Uuc2VydmljZXNcIjtcclxuaW1wb3J0IHsgYXBpR2V0QWxsVG9waWMgfSBmcm9tIFwiQC9zZXJ2aWNlcy90b3BpYy5zZXJ2aWNlc1wiO1xyXG5jb25zdCBmb3JtU2NoZW1hID0gei5vYmplY3Qoe1xyXG4gIGNvdXJzZUlkOiB6LnN0cmluZygpLm1pbigxLCB7XHJcbiAgICBtZXNzYWdlOiBcIkNvdXJzZSBJZCBpcyByZXF1aXJlZFwiLFxyXG4gIH0pLFxyXG4gIHBhcmVudFRvcGljSWQ6IHouc3RyaW5nKCksXHJcbiAgcGFyZW50TGVzc29uSWQ6IHouc3RyaW5nKCksXHJcbiAgdGl0bGU6IHouc3RyaW5nKCkubWluKDEsIHtcclxuICAgIG1lc3NhZ2U6IFwiVGl0bGUgaXMgcmVxdWlyZWRcIixcclxuICB9KSxcclxuICB0b3RhbExlc3NvbnM6IHoubnVtYmVyKCksXHJcbiAgY29udGVudDogei5zdHJpbmcoKS5taW4oMSwge1xyXG4gICAgbWVzc2FnZTogXCJDb250ZW50IGlzIHJlcXVpcmVkXCIsXHJcbiAgfSksXHJcbiAgdGh1bWJuYWlsOiB6LnN0cmluZygpLFxyXG4gIGFpSW1nOiB6LnN0cmluZygpLFxyXG4gIG5hbWU6IHouc3RyaW5nKCksXHJcbiAgaXNBSUNvbnZlcnNhdGlvbkVuYWJsZWQ6IHouZW51bShbXCJ0cnVlXCIsIFwiZmFsc2VcIl0pLFxyXG4gIHR5cGU6IHouZW51bShbXCJsaXN0ZW5pbmdcIiwgXCJzcGVha2luZ1wiLCBcInZvY2FidWxhcnlcIiwgXCJwcm9udW5jaWF0aW9uXCJdLCB7XHJcbiAgICBtZXNzYWdlOiBcIlR5cGUgaXMgcmVxdWlyZWRcIixcclxuICB9KSxcclxuICBjYXRlZ29yeTogei5lbnVtKFtcImJhc2ljc1wiLCBcImludGVybWVkaWF0ZVwiLCBcInByb2Zlc3Npb25hbFwiXSwge1xyXG4gICAgbWVzc2FnZTogXCJDYXRlZ29yeSBpcyByZXF1aXJlZFwiLFxyXG4gIH0pLFxyXG4gIGxldmVsOiB6Lm51bWJlcigpLm1pbigxLCB7XHJcbiAgICBtZXNzYWdlOiBcIkxldmVsIExlc3NvbiBpcyByZXF1aXJlZFwiLFxyXG4gIH0pLFxyXG59KTtcclxuZXhwb3J0IGNvbnN0IEVkaXRMZXNzb25Nb2RhbCA9ICgpID0+IHtcclxuICBjb25zdCBbY291cnNlRGF0YSwgc2V0Q291cnNlRGF0YV0gPSB1c2VTdGF0ZShbXSk7XHJcbiAgY29uc3QgW3RvcGljRGF0YSwgc2V0VG9waWNEYXRhXSA9IHVzZVN0YXRlKFtdKTtcclxuICBjb25zdCBbbGVzc29uUGFyZW50SWREYXRhLCBzZXRMZXNzb25QYXJlbnRJZERhdGFdID0gdXNlU3RhdGUoW10pO1xyXG4gIGNvbnN0IHsgaXNPcGVuLCBvbkNsb3NlLCB0eXBlLCBkYXRhIH0gPSB1c2VNb2RhbCgpO1xyXG4gIGNvbnN0IHsgbGVzc29uIH0gPSBkYXRhO1xyXG4gIGNvbnN0IGlzTW9kYWxPcGVuID0gaXNPcGVuICYmIHR5cGUgPT09IFwiZWRpdExlc3NvblwiO1xyXG4gIGNvbnN0IGZvcm0gPSB1c2VGb3JtKHtcclxuICAgIHJlc29sdmVyOiB6b2RSZXNvbHZlcihmb3JtU2NoZW1hKSxcclxuICAgIGRlZmF1bHRWYWx1ZXM6IHtcclxuICAgICAgY291cnNlSWQ6IFwiXCIsXHJcbiAgICAgIHRpdGxlOiBcIlwiLFxyXG4gICAgICBjb250ZW50OiBcIlwiLFxyXG4gICAgICB0eXBlOiBcImxpc3RlbmluZ1wiLFxyXG4gICAgICBwYXJlbnRMZXNzb25JZDogXCJcIixcclxuICAgICAgcGFyZW50VG9waWNJZDogXCJcIixcclxuICAgICAgdGh1bWJuYWlsOiBcIlwiLFxyXG4gICAgICBhaUltZzogXCJcIixcclxuICAgICAgbmFtZTogXCJcIixcclxuICAgICAgaXNBSUNvbnZlcnNhdGlvbkVuYWJsZWQ6IFwiZmFsc2VcIixcclxuICAgICAgdG90YWxMZXNzb25zOiBudWxsLFxyXG4gICAgICBjYXRlZ29yeTogXCJiYXNpY3NcIixcclxuICAgICAgbGV2ZWw6IDEsXHJcbiAgICB9LFxyXG4gIH0pO1xyXG4gIGNvbnN0IGlzTG9hZGluZyA9IGZvcm0uZm9ybVN0YXRlLmlzU3VibWl0dGluZztcclxuICBjb25zdCBvblN1Ym1pdCA9IGFzeW5jICh2YWx1ZXM6IHouaW5mZXI8dHlwZW9mIGZvcm1TY2hlbWE+KSA9PiB7XHJcbiAgICBjb25zdCByZXMgPSBhd2FpdCBhcGlVcGRhdGVMZXNzb24obGVzc29uPy5faWQsIHtcclxuICAgICAgLi4udmFsdWVzLFxyXG4gICAgICBjb3Vyc2VJZDogeyBfaWQ6IHZhbHVlcy5jb3Vyc2VJZCB9LFxyXG4gICAgICBwYXJlbnRMZXNzb25JZDogdmFsdWVzLnBhcmVudExlc3NvbklkXHJcbiAgICAgICAgPyB7IF9pZDogdmFsdWVzLnBhcmVudExlc3NvbklkIH1cclxuICAgICAgICA6IHVuZGVmaW5lZCxcclxuICAgICAgcGFyZW50VG9waWNJZDogdmFsdWVzLnBhcmVudFRvcGljSWQgfHwgdW5kZWZpbmVkLFxyXG4gICAgfSk7XHJcbiAgICBpZiAocmVzKSB7XHJcbiAgICAgIG9uQ2xvc2UoKTtcclxuICAgIH1cclxuICAgIGZvcm0ucmVzZXQoKTtcclxuICB9O1xyXG4gIGNvbnN0IGhhbmRsZUNsb3NlID0gKCkgPT4ge1xyXG4gICAgZm9ybS5yZXNldCgpO1xyXG4gICAgb25DbG9zZSgpO1xyXG4gIH07XHJcbiAgY29uc3QgZ2V0QWxsQ291cnNlID0gYXN5bmMgKCkgPT4ge1xyXG4gICAgY29uc3QgY291cnNlcyA9IGF3YWl0IGFwaUdldEFsbENvdXJzZSgpO1xyXG4gICAgaWYgKGNvdXJzZXMuZGF0YS5zdWNjZXNzKSB7XHJcbiAgICAgIHNldENvdXJzZURhdGEoY291cnNlcy5kYXRhLnJzKTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIGNvbnNvbGUubG9nKFwiRmFpbGVkIHRvIGZldGNoIHVzZXJzXCIpO1xyXG4gICAgfVxyXG4gIH07XHJcbiAgY29uc3QgZ2V0QWxsVG9waWMgPSBhc3luYyAoKSA9PiB7XHJcbiAgICBjb25zdCB0b3BpYyA9IGF3YWl0IGFwaUdldEFsbFRvcGljKCk7XHJcbiAgICBpZiAodG9waWMuZGF0YS5zdWNjZXNzKSB7XHJcbiAgICAgIHNldFRvcGljRGF0YSh0b3BpYy5kYXRhLnJzKTtcclxuICAgIH0gZWxzZSB7XHJcbiAgICAgIGNvbnNvbGUubG9nKFwiRmFpbGVkIHRvIGZldGNoIHVzZXJzXCIpO1xyXG4gICAgfVxyXG4gIH07XHJcbiAgY29uc3QgZ2V0TGVzc29uQnlMZXNzb25QYXJlbnRJZCA9IGFzeW5jICgpID0+IHtcclxuICAgIGNvbnN0IGxlc3NvblBhcmVudCA9IGF3YWl0IGFwaUdldEFsbExlc3NvbigpO1xyXG4gICAgaWYgKGxlc3NvblBhcmVudC5kYXRhLnN1Y2Nlc3MpIHtcclxuICAgICAgY29uc3QgZmlsdGVyTGVzc29uQnlQYXJlbnRJZCA9IGxlc3NvblBhcmVudD8uZGF0YT8ucnM/LmZpbHRlcihcclxuICAgICAgICAobGVzc29uUGFyZW50SWQpID0+IGxlc3NvblBhcmVudElkPy5wYXJlbnRMZXNzb25JZFxyXG4gICAgICApO1xyXG4gICAgICBzZXRMZXNzb25QYXJlbnRJZERhdGEoZmlsdGVyTGVzc29uQnlQYXJlbnRJZCk7XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICBjb25zb2xlLmxvZyhcIkZhaWxlZCB0byBmZXRjaCB1c2Vyc1wiKTtcclxuICAgIH1cclxuICB9O1xyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBjb25zdCBmZXRjaERhdGEgPSBhc3luYyAoKSA9PiB7XHJcbiAgICAgIGF3YWl0IFByb21pc2UuYWxsKFtcclxuICAgICAgICBnZXRBbGxDb3Vyc2UoKSxcclxuICAgICAgICBnZXRBbGxUb3BpYygpLFxyXG4gICAgICAgIGdldExlc3NvbkJ5TGVzc29uUGFyZW50SWQoKSxcclxuICAgICAgXSk7XHJcbiAgICB9O1xyXG4gICAgZmV0Y2hEYXRhKCk7XHJcbiAgfSwgW10pO1xyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBpZiAobGVzc29uKSB7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJjb3Vyc2VJZFwiLCBsZXNzb24uY291cnNlSWQ/Ll9pZCk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJwYXJlbnRMZXNzb25JZFwiLCBsZXNzb24uY291cnNlSWQ/Ll9pZCk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJwYXJlbnRUb3BpY0lkXCIsIGxlc3Nvbi5jb3Vyc2VJZD8uX2lkKTtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcImNvbnRlbnRcIiwgbGVzc29uLmNvbnRlbnQpO1xyXG4gICAgICBmb3JtLnNldFZhbHVlKFwidGl0bGVcIiwgbGVzc29uLnRpdGxlKTtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcImFpSW1nXCIsIGxlc3Nvbi5haUltZyk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJ0aHVtYm5haWxcIiwgbGVzc29uLnRodW1ibmFpbCk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJuYW1lXCIsIGxlc3Nvbi5uYW1lKTtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcImNhdGVnb3J5XCIsIGxlc3Nvbi5jYXRlZ29yeSk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJsZXZlbFwiLCBsZXNzb24ubGV2ZWwpO1xyXG4gICAgICBmb3JtLnNldFZhbHVlKFwidHlwZVwiLCBsZXNzb24udHlwZSk7XHJcbiAgICAgIGZvcm0uc2V0VmFsdWUoXCJpc0FJQ29udmVyc2F0aW9uRW5hYmxlZFwiLCBsZXNzb24uaXNBSUNvbnZlcnNhdGlvbkVuYWJsZWQpO1xyXG4gICAgICBmb3JtLnNldFZhbHVlKFwidG90YWxMZXNzb25zXCIsIGxlc3Nvbi50b3RhbExlc3NvbnMpO1xyXG4gICAgfVxyXG4gIH0sIFtmb3JtLCBsZXNzb25dKTtcclxuICB1c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgZ2V0QWxsQ291cnNlKCk7XHJcbiAgfSwgW10pO1xyXG4gIHJldHVybiAoXHJcbiAgICA8RGlhbG9nIG9wZW49e2lzTW9kYWxPcGVufSBvbk9wZW5DaGFuZ2U9e2hhbmRsZUNsb3NlfT5cclxuICAgICAgPERpYWxvZ0NvbnRlbnQgY2xhc3NOYW1lPVwiYmctd2hpdGUgdGV4dC1ibGFjayBwLTAgb3ZlcmZsb3cteS1hdXRvIGgtc2NyZWVuXCI+XHJcbiAgICAgICAgPERpYWxvZ0hlYWRlciBjbGFzc05hbWU9XCJwdC04IHB4LTZcIj5cclxuICAgICAgICAgIDxEaWFsb2dUaXRsZSBjbGFzc05hbWU9XCJ0ZXh0LTJ4bCB0ZXh0LWNlbnRlciBmb250LWJvbGRcIj5cclxuICAgICAgICAgICAgRWRpdHQgTGVzc29uXHJcbiAgICAgICAgICA8L0RpYWxvZ1RpdGxlPlxyXG4gICAgICAgIDwvRGlhbG9nSGVhZGVyPlxyXG4gICAgICAgIDxGb3JtIHsuLi5mb3JtfT5cclxuICAgICAgICAgIDxmb3JtIGNsYXNzTmFtZT1cInNwYWNlLXktOFwiIG9uU3VibWl0PXtmb3JtLmhhbmRsZVN1Ym1pdChvblN1Ym1pdCl9PlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInNwYWNlLXktOCBweC02XCI+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cImNvdXJzZUlkXCJcclxuICAgICAgICAgICAgICAgIHJlbmRlcj17KHsgZmllbGQgfSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8Rm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1MYWJlbCBjbGFzc05hbWU9XCJ1cHBlcmNhc2UgdGV4dC14cyBmb250LWJvbGQgdGV4dC16aW5jLTUwMCBkYXJrOnRleHQtc2Vjb25kYXJ5LzcwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICBDb3Vyc2UgSWRcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25WYWx1ZUNoYW5nZT17ZmllbGQub25DaGFuZ2V9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXM6cmluZy0wIHRleHQtYmxhY2sgcmluZy1vZmZzZXQtMCBmb2N1czpyaW5nLW9mZnNldC0wIGNhcGl0YWxpemUgb3V0bGluZS1ub25lXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IGEgY2hhbm5lbCB0eXBlXCIgLz5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RUcmlnZ2VyPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxTZWxlY3RDb250ZW50IGNsYXNzTmFtZT1cImJnLXdoaXRlIHNoYWRvdy1sZyBib3JkZXIgYm9yZGVyLWdyYXktMzAwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHtPYmplY3Q/LnZhbHVlcyhjb3Vyc2VEYXRhKT8ubWFwKCh0eXBlKSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdEl0ZW1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGtleT17dHlwZT8uX2lkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e3R5cGU/Ll9pZH1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHt0eXBlPy50aXRsZT8udG9Mb2NhbGVMb3dlckNhc2UoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJwYXJlbnRUb3BpY0lkXCJcclxuICAgICAgICAgICAgICAgIHJlbmRlcj17KHsgZmllbGQgfSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8Rm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1MYWJlbCBjbGFzc05hbWU9XCJ1cHBlcmNhc2UgdGV4dC14cyBmb250LWJvbGQgdGV4dC16aW5jLTUwMCBkYXJrOnRleHQtc2Vjb25kYXJ5LzcwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICBQYXJlbnQgVG9waWMgSWRcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25WYWx1ZUNoYW5nZT17ZmllbGQub25DaGFuZ2V9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXM6cmluZy0wIHRleHQtYmxhY2sgcmluZy1vZmZzZXQtMCBmb2N1czpyaW5nLW9mZnNldC0wIGNhcGl0YWxpemUgb3V0bGluZS1ub25lXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IGEgY2hhbm5lbCB0b3BpY1wiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0VHJpZ2dlcj5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0Q29udGVudCBjbGFzc05hbWU9XCJiZy13aGl0ZSBzaGFkb3ctbGcgYm9yZGVyIGJvcmRlci1ncmF5LTMwMFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7T2JqZWN0Py52YWx1ZXModG9waWNEYXRhKT8ubWFwKCh0eXBlKSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdEl0ZW1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGtleT17dHlwZT8uX2lkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e3R5cGU/Ll9pZH1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHt0eXBlPy50aXRsZT8udG9Mb2NhbGVMb3dlckNhc2UoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJwYXJlbnRMZXNzb25JZFwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgUGFyZW50IExlc3NvbiBJZFxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxTZWxlY3RcclxuICAgICAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpc0xvYWRpbmd9XHJcbiAgICAgICAgICAgICAgICAgICAgICBvblZhbHVlQ2hhbmdlPXtmaWVsZC5vbkNoYW5nZX1cclxuICAgICAgICAgICAgICAgICAgICAgIGRlZmF1bHRWYWx1ZT17ZmllbGQudmFsdWV9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VHJpZ2dlciBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1czpyaW5nLTAgdGV4dC1ibGFjayByaW5nLW9mZnNldC0wIGZvY3VzOnJpbmctb2Zmc2V0LTAgY2FwaXRhbGl6ZSBvdXRsaW5lLW5vbmVcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VmFsdWUgcGxhY2Vob2xkZXI9XCJTZWxlY3QgYSBjaGFubmVsIGxlc3NvblwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0VHJpZ2dlcj5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0Q29udGVudCBjbGFzc05hbWU9XCJiZy13aGl0ZSBzaGFkb3ctbGcgYm9yZGVyIGJvcmRlci1ncmF5LTMwMFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7T2JqZWN0Py52YWx1ZXMobGVzc29uUGFyZW50SWREYXRhKT8ubWFwKCh0eXBlKSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdEl0ZW1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGtleT17dHlwZT8uX2lkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e3R5cGU/Ll9pZH1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHt0eXBlPy50aXRsZT8udG9Mb2NhbGVMb3dlckNhc2UoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJ0aXRsZVwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgVGl0bGVcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8SW5wdXRcclxuICAgICAgICAgICAgICAgICAgICAgICAgZGlzYWJsZWQ9e2lzTG9hZGluZ31cclxuICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXMtdmlzaWJsZTpyaW5nLTAgdGV4dC1ibGFjayBmb2N1cy12aXNpYmxlOnJpbmctb2Zmc2V0LTBcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIkVudGVyIHRpdGxlXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgey4uLmZpZWxkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICB0eXBlPVwidGV4dFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1NZXNzYWdlIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cImNvbnRlbnRcIlxyXG4gICAgICAgICAgICAgICAgcmVuZGVyPXsoeyBmaWVsZCB9KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxGb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUxhYmVsIGNsYXNzTmFtZT1cInVwcGVyY2FzZSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LXppbmMtNTAwIGRhcms6dGV4dC1zZWNvbmRhcnkvNzBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIENvbnRlbnRcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8SW5wdXRcclxuICAgICAgICAgICAgICAgICAgICAgICAgZGlzYWJsZWQ9e2lzTG9hZGluZ31cclxuICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXMtdmlzaWJsZTpyaW5nLTAgdGV4dC1ibGFjayBmb2N1cy12aXNpYmxlOnJpbmctb2Zmc2V0LTBcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIkVudGVyIGNvbnRlbnRcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7Li4uZmllbGR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU9XCJ0ZXh0XCJcclxuICAgICAgICAgICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybU1lc3NhZ2UgLz5cclxuICAgICAgICAgICAgICAgICAgPC9Gb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICA8Rm9ybUZpZWxkXHJcbiAgICAgICAgICAgICAgICBjb250cm9sPXtmb3JtLmNvbnRyb2x9XHJcbiAgICAgICAgICAgICAgICBuYW1lPVwidHlwZVwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgVHlwZVxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxTZWxlY3RcclxuICAgICAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpc0xvYWRpbmd9XHJcbiAgICAgICAgICAgICAgICAgICAgICBvblZhbHVlQ2hhbmdlPXtmaWVsZC5vbkNoYW5nZX1cclxuICAgICAgICAgICAgICAgICAgICAgIGRlZmF1bHRWYWx1ZT17ZmllbGQudmFsdWV9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VHJpZ2dlciBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1czpyaW5nLTAgdGV4dC1ibGFjayByaW5nLW9mZnNldC0wIGZvY3VzOnJpbmctb2Zmc2V0LTAgY2FwaXRhbGl6ZSBvdXRsaW5lLW5vbmVcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VmFsdWUgcGxhY2Vob2xkZXI9XCJTZWxlY3QgYSBsZXNzb25cIiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdFRyaWdnZXI+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdENvbnRlbnQgY2xhc3NOYW1lPVwiYmctd2hpdGUgc2hhZG93LWxnIGJvcmRlciBib3JkZXItZ3JheS0zMDBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAge09iamVjdD8udmFsdWVzKExlc3NvblR5cGUpPy5tYXAoKHR5cGUpID0+IChcclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0SXRlbVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAga2V5PXt0eXBlfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e3R5cGV9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJjYXBpdGFsaXplXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICB7dHlwZT8udG9Mb2NhbGVMb3dlckNhc2UoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RDb250ZW50PlxyXG4gICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJjYXRlZ29yeVwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgQ2F0ZWdvcnlcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25WYWx1ZUNoYW5nZT17ZmllbGQub25DaGFuZ2V9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXM6cmluZy0wIHRleHQtYmxhY2sgcmluZy1vZmZzZXQtMCBmb2N1czpyaW5nLW9mZnNldC0wIGNhcGl0YWxpemUgb3V0bGluZS1ub25lXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IGEgY2F0ZWdvcnlcIiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdFRyaWdnZXI+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdENvbnRlbnQgY2xhc3NOYW1lPVwiYmctd2hpdGUgc2hhZG93LWxnIGJvcmRlciBib3JkZXItZ3JheS0zMDBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAge09iamVjdD8udmFsdWVzKENhdGVnb3J5VHlwZSk/Lm1hcCgodHlwZSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIDxTZWxlY3RJdGVtXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBrZXk9e3R5cGV9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZT17dHlwZX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHt0eXBlPy50b0xvY2FsZUxvd2VyQ2FzZSgpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0SXRlbT5cclxuICAgICAgICAgICAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3Q+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1NZXNzYWdlIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cInRvdGFsTGVzc29uc1wiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgVG90YWwgTGVzc29uXHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtTGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPElucHV0XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGRpc2FibGVkPXtpc0xvYWRpbmd9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLXppbmMtMzAwLzUwIGJvcmRlci0wIGZvY3VzLXZpc2libGU6cmluZy0wIHRleHQtYmxhY2sgZm9jdXMtdmlzaWJsZTpyaW5nLW9mZnNldC0wXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJFbnRlciB0b3RhbCBsZXNzb25cIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7Li4uZmllbGR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU9XCJudW1iZXJcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJ0aHVtYm5haWxcIlxyXG4gICAgICAgICAgICAgICAgcmVuZGVyPXsoeyBmaWVsZCB9KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxGb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUxhYmVsIGNsYXNzTmFtZT1cInVwcGVyY2FzZSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LXppbmMtNTAwIGRhcms6dGV4dC1zZWNvbmRhcnkvNzBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIFRodW1ibmFpbFxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxJbnB1dFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1cy12aXNpYmxlOnJpbmctMCB0ZXh0LWJsYWNrIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRW50ZXIgdGh1bWJuYWlsXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgey4uLmZpZWxkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICB0eXBlPVwidGV4dFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1NZXNzYWdlIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cImFpSW1nXCJcclxuICAgICAgICAgICAgICAgIHJlbmRlcj17KHsgZmllbGQgfSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8Rm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1MYWJlbCBjbGFzc05hbWU9XCJ1cHBlcmNhc2UgdGV4dC14cyBmb250LWJvbGQgdGV4dC16aW5jLTUwMCBkYXJrOnRleHQtc2Vjb25kYXJ5LzcwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICBBSSBJbWFnZVxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxJbnB1dFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1cy12aXNpYmxlOnJpbmctMCB0ZXh0LWJsYWNrIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRW50ZXIgQUkgSW1hZ2VcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7Li4uZmllbGR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU9XCJ0ZXh0XCJcclxuICAgICAgICAgICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybU1lc3NhZ2UgLz5cclxuICAgICAgICAgICAgICAgICAgPC9Gb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICA8Rm9ybUZpZWxkXHJcbiAgICAgICAgICAgICAgICBjb250cm9sPXtmb3JtLmNvbnRyb2x9XHJcbiAgICAgICAgICAgICAgICBuYW1lPVwibmFtZVwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgTmFtZVxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxJbnB1dFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1cy12aXNpYmxlOnJpbmctMCB0ZXh0LWJsYWNrIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRW50ZXIgbmFtZVwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHsuLi5maWVsZH1cclxuICAgICAgICAgICAgICAgICAgICAgICAgdHlwZT1cInRleHRcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJpc0FJQ29udmVyc2F0aW9uRW5hYmxlZFwiXHJcbiAgICAgICAgICAgICAgICByZW5kZXI9eyh7IGZpZWxkIH0pID0+IChcclxuICAgICAgICAgICAgICAgICAgPEZvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTGFiZWwgY2xhc3NOYW1lPVwidXBwZXJjYXNlIHRleHQteHMgZm9udC1ib2xkIHRleHQtemluYy01MDAgZGFyazp0ZXh0LXNlY29uZGFyeS83MFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgQUkgQ29udmVyc2F0aW9uIEVuYWJsZWRcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25WYWx1ZUNoYW5nZT17ZmllbGQub25DaGFuZ2V9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXM6cmluZy0wIHRleHQtYmxhY2sgcmluZy1vZmZzZXQtMCBmb2N1czpyaW5nLW9mZnNldC0wIGNhcGl0YWxpemUgb3V0bGluZS1ub25lXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IGEgQUkgQ29udmVyc2F0aW9uIEVuYWJsZWRcIiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdFRyaWdnZXI+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdENvbnRlbnQgY2xhc3NOYW1lPVwiYmctd2hpdGUgc2hhZG93LWxnIGJvcmRlciBib3JkZXItZ3JheS0zMDBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAge09iamVjdD8udmFsdWVzKEFJQ29udmVyc2F0aW9uRW5hYmxlZFR5cGUpPy5tYXAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgKHR5cGUpID0+IChcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxTZWxlY3RJdGVtXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGtleT17dHlwZX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e3R5cGV9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7dHlwZT8udG9Mb2NhbGVMb3dlckNhc2UoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0SXRlbT5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICApXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3Q+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1NZXNzYWdlIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cImxldmVsXCJcclxuICAgICAgICAgICAgICAgIHJlbmRlcj17KHsgZmllbGQgfSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8Rm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1MYWJlbCBjbGFzc05hbWU9XCJ1cHBlcmNhc2UgdGV4dC14cyBmb250LWJvbGQgdGV4dC16aW5jLTUwMCBkYXJrOnRleHQtc2Vjb25kYXJ5LzcwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICBMZXZlbFxyXG4gICAgICAgICAgICAgICAgICAgIDwvRm9ybUxhYmVsPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxJbnB1dFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1cy12aXNpYmxlOnJpbmctMCB0ZXh0LWJsYWNrIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRW50ZXIgbGV2ZWxcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7Li4uZmllbGR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU9XCJudW1iZXJcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgIDxGb3JtTWVzc2FnZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Zvcm1JdGVtPlxyXG4gICAgICAgICAgICAgICAgKX1cclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPERpYWxvZ0Zvb3RlciBjbGFzc05hbWU9XCJiZy1ncmF5LTEwMCBweC02IHB5LTRcIj5cclxuICAgICAgICAgICAgICA8QnV0dG9uXHJcbiAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBvbkNsb3NlKCl9XHJcbiAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJ0ZXh0LWJsYWNrIHJvdW5kZWQtWzRweF1cIlxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIE5vLCBjYW5jZWxcclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgICA8QnV0dG9uIGRpc2FibGVkPXtpc0xvYWRpbmd9IHZhcmlhbnQ9XCJnaG9zdFwiPlxyXG4gICAgICAgICAgICAgICAgRWRpdFxyXG4gICAgICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgICA8L0RpYWxvZ0Zvb3Rlcj5cclxuICAgICAgICAgIDwvZm9ybT5cclxuICAgICAgICA8L0Zvcm0+XHJcbiAgICAgIDwvRGlhbG9nQ29udGVudD5cclxuICAgIDwvRGlhbG9nPlxyXG4gICk7XHJcbn07XHJcbiJdLCJuYW1lcyI6WyJ6Iiwiem9kUmVzb2x2ZXIiLCJ1c2VGb3JtIiwiRGlhbG9nIiwiRGlhbG9nQ29udGVudCIsIkRpYWxvZ0Zvb3RlciIsIkRpYWxvZ0hlYWRlciIsIkRpYWxvZ1RpdGxlIiwiRm9ybSIsIkZvcm1Db250cm9sIiwiRm9ybUZpZWxkIiwiRm9ybUl0ZW0iLCJGb3JtTGFiZWwiLCJGb3JtTWVzc2FnZSIsIklucHV0IiwiQnV0dG9uIiwidXNlTW9kYWwiLCJ1c2VFZmZlY3QiLCJ1c2VTdGF0ZSIsImFwaUdldEFsbExlc3NvbiIsImFwaVVwZGF0ZUxlc3NvbiIsIlNlbGVjdCIsIlNlbGVjdENvbnRlbnQiLCJTZWxlY3RJdGVtIiwiU2VsZWN0VHJpZ2dlciIsIlNlbGVjdFZhbHVlIiwiQUlDb252ZXJzYXRpb25FbmFibGVkVHlwZSIsIkNhdGVnb3J5VHlwZSIsIkxlc3NvblR5cGUiLCJhcGlHZXRBbGxDb3Vyc2UiLCJhcGlHZXRBbGxUb3BpYyIsImZvcm1TY2hlbWEiLCJvYmplY3QiLCJjb3Vyc2VJZCIsInN0cmluZyIsIm1pbiIsIm1lc3NhZ2UiLCJwYXJlbnRUb3BpY0lkIiwicGFyZW50TGVzc29uSWQiLCJ0aXRsZSIsInRvdGFsTGVzc29ucyIsIm51bWJlciIsImNvbnRlbnQiLCJ0aHVtYm5haWwiLCJhaUltZyIsIm5hbWUiLCJpc0FJQ29udmVyc2F0aW9uRW5hYmxlZCIsImVudW0iLCJ0eXBlIiwiY2F0ZWdvcnkiLCJsZXZlbCIsIkVkaXRMZXNzb25Nb2RhbCIsImNvdXJzZURhdGEiLCJzZXRDb3Vyc2VEYXRhIiwidG9waWNEYXRhIiwic2V0VG9waWNEYXRhIiwibGVzc29uUGFyZW50SWREYXRhIiwic2V0TGVzc29uUGFyZW50SWREYXRhIiwiaXNPcGVuIiwib25DbG9zZSIsImRhdGEiLCJsZXNzb24iLCJpc01vZGFsT3BlbiIsImZvcm0iLCJyZXNvbHZlciIsImRlZmF1bHRWYWx1ZXMiLCJpc0xvYWRpbmciLCJmb3JtU3RhdGUiLCJpc1N1Ym1pdHRpbmciLCJvblN1Ym1pdCIsInZhbHVlcyIsInJlcyIsIl9pZCIsInVuZGVmaW5lZCIsInJlc2V0IiwiaGFuZGxlQ2xvc2UiLCJnZXRBbGxDb3Vyc2UiLCJjb3Vyc2VzIiwic3VjY2VzcyIsInJzIiwiY29uc29sZSIsImxvZyIsImdldEFsbFRvcGljIiwidG9waWMiLCJnZXRMZXNzb25CeUxlc3NvblBhcmVudElkIiwibGVzc29uUGFyZW50IiwiZmlsdGVyTGVzc29uQnlQYXJlbnRJZCIsImZpbHRlciIsImxlc3NvblBhcmVudElkIiwiZmV0Y2hEYXRhIiwiUHJvbWlzZSIsImFsbCIsInNldFZhbHVlIiwib3BlbiIsIm9uT3BlbkNoYW5nZSIsImNsYXNzTmFtZSIsImhhbmRsZVN1Ym1pdCIsImRpdiIsImNvbnRyb2wiLCJyZW5kZXIiLCJmaWVsZCIsImRpc2FibGVkIiwib25WYWx1ZUNoYW5nZSIsIm9uQ2hhbmdlIiwiZGVmYXVsdFZhbHVlIiwidmFsdWUiLCJwbGFjZWhvbGRlciIsIk9iamVjdCIsIm1hcCIsInRvTG9jYWxlTG93ZXJDYXNlIiwib25DbGljayIsInZhcmlhbnQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxZQUFZQSxPQUFPLE1BQU07QUFDekIsU0FBU0MsV0FBVyxRQUFRLDBCQUEwQjtBQUN0RCxTQUFTQyxPQUFPLFFBQVEsa0JBQWtCO0FBQzFDLFNBQ0VDLE1BQU0sRUFDTkMsYUFBYSxFQUNiQyxZQUFZLEVBQ1pDLFlBQVksRUFDWkMsV0FBVyxRQUNOLHlCQUF5QjtBQUNoQyxTQUNFQyxJQUFJLEVBQ0pDLFdBQVcsRUFDWEMsU0FBUyxFQUNUQyxRQUFRLEVBQ1JDLFNBQVMsRUFDVEMsV0FBVyxRQUNOLHVCQUF1QjtBQUM5QixTQUFTQyxLQUFLLFFBQVEsd0JBQXdCO0FBQzlDLFNBQVNDLE1BQU0sUUFBUSx5QkFBeUI7QUFDaEQsU0FBU0MsUUFBUSxRQUFRLDBCQUEwQjtBQUVuRCxTQUFTQyxTQUFTLEVBQUVDLFFBQVEsUUFBUSxRQUFRO0FBQzVDLFNBQVNDLGVBQWUsRUFBRUMsZUFBZSxRQUFRLDZCQUE2QjtBQUM5RSxTQUNFQyxNQUFNLEVBQ05DLGFBQWEsRUFDYkMsVUFBVSxFQUNWQyxhQUFhLEVBQ2JDLFdBQVcsUUFDTix5QkFBeUI7QUFDaEMsU0FDRUMseUJBQXlCLEVBQ3pCQyxZQUFZLEVBQ1pDLFVBQVUsUUFDTCxpQkFBaUI7QUFDeEIsU0FBU0MsZUFBZSxRQUFRLDZCQUE2QjtBQUM3RCxTQUFTQyxjQUFjLFFBQVEsNEJBQTRCO0FBQzNELE1BQU1DLGFBQWEvQixFQUFFZ0MsTUFBTSxDQUFDO0lBQzFCQyxVQUFVakMsRUFBRWtDLE1BQU0sR0FBR0MsR0FBRyxDQUFDLEdBQUc7UUFD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

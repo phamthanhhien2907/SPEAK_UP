@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-
 test.describe('Register Page', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('http://localhost:5173/auth'); // Đổi lại URL nếu khác
@@ -17,20 +16,11 @@ test.describe('Register Page', () => {
         await expect(page.getByAltText(/facebook/i)).toBeVisible();
         await expect(page.getByAltText(/google/i)).toBeVisible();
     });
-
-
-
     test('can toggle password visibility', async ({ page }) => {
         await page.getByText(/register/i).click();
-        // Giả sử có data-testid="toggle-password-icon" trên icon
         await page.getByTestId('toggle-password-icon').click();
-        // Có thể kiểm tra type input đổi từ password sang text nếu có
-        // expect(await page.getByPlaceholder('Password').getAttribute('type')).toBe('text');
+
     });
-
-
-
-    // Thêm test đăng nhập thành công/thất bại nếu có API mock hoặc test account
     test('register with valid credentials', async ({ page }) => {
         await page.getByText(/register/i).click();
         await page.fill('input[name="email"]', 'phamthanhhien2410@gmail.com');

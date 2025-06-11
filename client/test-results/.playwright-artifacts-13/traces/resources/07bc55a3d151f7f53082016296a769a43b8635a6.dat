@@ -1,0 +1,15 @@
+export var SectionType = /*#__PURE__*/ function(SectionType) {
+    SectionType["LESSON"] = "lesson";
+    SectionType["TOPIC"] = "topic";
+    SectionType["AI_CONVERSATION"] = "ai-conversation";
+    return SectionType;
+}({});
+export var TopicType = /*#__PURE__*/ function(TopicType) {
+    TopicType["SPEAKING"] = "speaking";
+    TopicType["PRONUNCIATION"] = "pronunciation";
+    TopicType["VOCABULARY"] = "vocabulary";
+    TopicType["LISTENING"] = "listening";
+    return TopicType;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRvcGljLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvdXJzZSB9IGZyb20gXCIuL2NvdXJzZVwiO1xyXG5cclxuZXhwb3J0IHR5cGUgVG9waWMgPSB7XHJcbiAgICBfaWQ/OiBzdHJpbmc7XHJcbiAgICB0aXRsZT86IHN0cmluZztcclxuICAgIGxldmVsPzogbnVtYmVyO1xyXG4gICAgdGh1bWJuYWlsPzogc3RyaW5nO1xyXG4gICAgY291cnNlSWQ/OiBDb3Vyc2U7XHJcbiAgICBjb250ZW50Pzogc3RyaW5nO1xyXG4gICAgdHlwZT86IFwic3BlYWtpbmdcIiB8IFwicHJvbnVuY2lhdGlvblwiIHwgXCJ2b2NhYnVsYXJ5XCIgfCBcImxpc3RlbmluZ1wiXHJcbiAgICBzZWN0aW9uPzogXCJsZXNzb25cIiB8IFwidG9waWNcIiB8IFwiYWktY29udmVyc2F0aW9uXCJcclxuICAgIHRvdGFsTGVzc29ucz86IG51bWJlcjtcclxufTtcclxuZXhwb3J0IGVudW0gU2VjdGlvblR5cGUge1xyXG4gICAgTEVTU09OID0gXCJsZXNzb25cIixcclxuICAgIFRPUElDID0gXCJ0b3BpY1wiLFxyXG4gICAgQUlfQ09OVkVSU0FUSU9OID0gXCJhaS1jb252ZXJzYXRpb25cIlxyXG59XHJcbmV4cG9ydCBlbnVtIFRvcGljVHlwZSB7XHJcbiAgICBTUEVBS0lORyA9IFwic3BlYWtpbmdcIixcclxuICAgIFBST05VTkNJQVRJT04gPSBcInByb251bmNpYXRpb25cIixcclxuICAgIFZPQ0FCVUxBUlkgPSBcInZvY2FidWxhcnlcIixcclxuICAgIExJU1RFTklORyA9IFwibGlzdGVuaW5nXCJcclxufSJdLCJuYW1lcyI6WyJTZWN0aW9uVHlwZSIsIlRvcGljVHlwZSJdLCJtYXBwaW5ncyI6IkFBYUEsT0FBTyxJQUFBLEFBQUtBLHFDQUFBQTs7OztXQUFBQTtNQUlYO0FBQ0QsT0FBTyxJQUFBLEFBQUtDLG1DQUFBQTs7Ozs7V0FBQUE7TUFLWCJ9

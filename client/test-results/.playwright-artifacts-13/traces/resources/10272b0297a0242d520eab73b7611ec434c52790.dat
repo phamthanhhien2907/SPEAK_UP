@@ -1,0 +1,20 @@
+import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import HomePageWrapper from "/src/pages/(Admin)/wrapper.tsx";
+import "/src/pages/(Admin)/index.css";
+const homeRoutes = [
+    {
+        path: "/",
+        element: /*#__PURE__*/ _jsxDEV(HomePageWrapper, {}, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/(Admin)/route.tsx",
+            lineNumber: 7,
+            columnNumber: 14
+        }, this),
+        index: true,
+        role: [
+            "admin"
+        ]
+    }
+];
+export default homeRoutes;
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBSb3V0ZU9iamVjdCB9IGZyb20gXCJyZWFjdC1yb3V0ZXItZG9tXCI7XHJcbmltcG9ydCBIb21lUGFnZVdyYXBwZXIgZnJvbSBcIi4vd3JhcHBlclwiO1xyXG5pbXBvcnQgXCIuL2luZGV4LmNzc1wiO1xyXG5jb25zdCBob21lUm91dGVzOiAoUm91dGVPYmplY3QgJiB7IHJvbGU/OiBzdHJpbmdbXSB9KVtdID0gW1xyXG4gIHtcclxuICAgIHBhdGg6IFwiL1wiLFxyXG4gICAgZWxlbWVudDogPEhvbWVQYWdlV3JhcHBlciAvPixcclxuICAgIGluZGV4OiB0cnVlLFxyXG4gICAgcm9sZTogW1wiYWRtaW5cIl0sXHJcbiAgfSxcclxuXTtcclxuZXhwb3J0IGRlZmF1bHQgaG9tZVJvdXRlcztcclxuIl0sIm5hbWVzIjpbIkhvbWVQYWdlV3JhcHBlciIsImhvbWVSb3V0ZXMiLCJwYXRoIiwiZWxlbWVudCIsImluZGV4Iiwicm9sZSJdLCJtYXBwaW5ncyI6IjtBQUNBLE9BQU9BLHFCQUFxQixZQUFZO0FBQ3hDLE9BQU8sY0FBYztBQUNyQixNQUFNQyxhQUFvRDtJQUN4RDtRQUNFQyxNQUFNO1FBQ05DLHVCQUFTLFFBQUNIOzs7OztRQUNWSSxPQUFPO1FBQ1BDLE1BQU07WUFBQztTQUFRO0lBQ2pCO0NBQ0Q7QUFDRCxlQUFlSixXQUFXIn0=

@@ -1,0 +1,311 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/tables/exercises/exercise-table.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/tables/exercises/exercise-table.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const React = ((m) => m?.__esModule ? m : { ...typeof m === "object" && !Array.isArray(m) || typeof m === "function" ? m : {}, default: m })(__vite__cjsImport2_react);
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "/node_modules/.vite/deps/@tanstack_react-table.js?v=be52afe0";
+import { ChevronDown } from "/node_modules/.vite/deps/lucide-react.js?v=e8ebe34d";
+import { Button } from "/src/components/ui/button.tsx";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "/src/components/ui/dropdown-menu.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "/src/components/ui/table.tsx";
+import { getColumns } from "/src/components/tables/exercises/columns.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import { apiGetAllExercise } from "/src/services/exercise.services.ts";
+export function ExcerciseTable() {
+    _s();
+    const { onOpen } = useModal();
+    const columns = React.useMemo(()=>getColumns(onOpen), [
+        onOpen
+    ]);
+    const [excerciseData, setExcerciseData] = React.useState([]);
+    const [sorting, setSorting] = React.useState([]);
+    const [columnFilters, setColumnFilters] = React.useState([]);
+    const [columnVisibility, setColumnVisibility] = React.useState({});
+    const [rowSelection, setRowSelection] = React.useState({});
+    const table = useReactTable({
+        data: excerciseData,
+        columns,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection
+        },
+        initialState: {
+            pagination: {
+                pageSize: 5
+            }
+        }
+    });
+    const getAllExcercise = async ()=>{
+        const excercise = await apiGetAllExercise();
+        if (excercise.data.success) {
+            setExcerciseData(excercise.data.rs);
+        } else {
+            console.log("Failed to fetch excercise");
+        }
+    };
+    React.useEffect(()=>{
+        getAllExcercise();
+    }, []);
+    return /*#__PURE__*/ _jsxDEV("div", {
+        className: "w-full shadow-lg drop-shadow-lg ",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center py-4 justify-between",
+                children: [
+                    /*#__PURE__*/ _jsxDEV(Input, {
+                        placeholder: "Filter by lesson...",
+                        value: table.getColumn("lessonId.title")?.getFilterValue() ?? "",
+                        onChange: (event)=>table.getColumn("lessonId.title")?.setFilterValue(event.target.value),
+                        className: "max-w-sm"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                        lineNumber: 85,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        onClick: ()=>onOpen("createExercise"),
+                        className: "flex items-center space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                className: "bg-blue-500 hover:bg-blue-700 text-white rounded-[4px]",
+                                children: "Add new exercise"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                lineNumber: 102,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DropdownMenu, {
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuTrigger, {
+                                        asChild: true,
+                                        children: /*#__PURE__*/ _jsxDEV(Button, {
+                                            variant: "outline",
+                                            className: "ml-auto",
+                                            children: [
+                                                "Columns ",
+                                                /*#__PURE__*/ _jsxDEV(ChevronDown, {}, void 0, false, {
+                                                    fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                                    lineNumber: 108,
+                                                    columnNumber: 25
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                            lineNumber: 107,
+                                            columnNumber: 15
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                        lineNumber: 106,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(DropdownMenuContent, {
+                                        align: "end",
+                                        children: table.getAllColumns().filter((column)=>column.getCanHide()).map((column)=>{
+                                            return /*#__PURE__*/ _jsxDEV(DropdownMenuCheckboxItem, {
+                                                className: "capitalize",
+                                                checked: column.getIsVisible(),
+                                                onCheckedChange: (value)=>column.toggleVisibility(!!value),
+                                                children: column.id
+                                            }, column.id, false, {
+                                                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                                lineNumber: 117,
+                                                columnNumber: 21
+                                            }, this);
+                                        })
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                        lineNumber: 111,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                lineNumber: 105,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                        lineNumber: 98,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                lineNumber: 84,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "rounded-md border",
+                children: /*#__PURE__*/ _jsxDEV(Table, {
+                    className: "equal-widths",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV(TableHeader, {
+                            children: table.getHeaderGroups().map((headerGroup)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    children: headerGroup.headers.map((header)=>{
+                                        return /*#__PURE__*/ _jsxDEV(TableHead, {
+                                            children: header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())
+                                        }, header.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                            lineNumber: 140,
+                                            columnNumber: 21
+                                        }, this);
+                                    })
+                                }, headerGroup.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                    lineNumber: 137,
+                                    columnNumber: 15
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                            lineNumber: 135,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV(TableBody, {
+                            children: table.getRowModel().rows?.length ? table.getRowModel().rows.map((row)=>/*#__PURE__*/ _jsxDEV(TableRow, {
+                                    "data-state": row.getIsSelected() && "selected",
+                                    children: row.getVisibleCells().map((cell)=>/*#__PURE__*/ _jsxDEV(TableCell, {
+                                            children: flexRender(cell.column.columnDef.cell, cell.getContext())
+                                        }, cell.id, false, {
+                                            fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                            lineNumber: 161,
+                                            columnNumber: 21
+                                        }, this))
+                                }, row.id, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                    lineNumber: 156,
+                                    columnNumber: 17
+                                }, this)) : /*#__PURE__*/ _jsxDEV(TableRow, {
+                                children: /*#__PURE__*/ _jsxDEV(TableCell, {
+                                    colSpan: columns.length,
+                                    className: "h-24 text-center",
+                                    children: "No results."
+                                }, void 0, false, {
+                                    fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                    lineNumber: 172,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                lineNumber: 171,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                            lineNumber: 153,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                    lineNumber: 134,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                lineNumber: 133,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "flex items-center justify-end space-x-2 py-4",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "flex-1 text-sm text-muted-foreground",
+                        children: [
+                            table.getFilteredSelectedRowModel().rows.length,
+                            " of",
+                            " ",
+                            table.getFilteredRowModel().rows.length,
+                            " row(s) selected."
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                        lineNumber: 184,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "space-x-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.previousPage(),
+                                disabled: !table.getCanPreviousPage(),
+                                children: "Previous"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                lineNumber: 189,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(Button, {
+                                variant: "outline",
+                                size: "sm",
+                                onClick: ()=>table.nextPage(),
+                                disabled: !table.getCanNextPage(),
+                                children: "Next"
+                            }, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                                lineNumber: 197,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                        lineNumber: 188,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+                lineNumber: 183,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "D:/DATN/client/src/components/tables/exercises/exercise-table.tsx",
+        lineNumber: 83,
+        columnNumber: 5
+    }, this);
+}
+_s(ExcerciseTable, "5WU1kvoEgDlotKUAUOKxnNuLPPI=", false, function() {
+    return [
+        useModal,
+        useReactTable
+    ];
+});
+_c = ExcerciseTable;
+var _c;
+$RefreshReg$(_c, "ExcerciseTable");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/tables/exercises/exercise-table.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/tables/exercises/exercise-table.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV4ZXJjaXNlLXRhYmxlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyBSZWFjdCBmcm9tIFwicmVhY3RcIjtcclxuaW1wb3J0IHtcclxuICBDb2x1bW5GaWx0ZXJzU3RhdGUsXHJcbiAgU29ydGluZ1N0YXRlLFxyXG4gIFZpc2liaWxpdHlTdGF0ZSxcclxuICBmbGV4UmVuZGVyLFxyXG4gIGdldENvcmVSb3dNb2RlbCxcclxuICBnZXRGaWx0ZXJlZFJvd01vZGVsLFxyXG4gIGdldFBhZ2luYXRpb25Sb3dNb2RlbCxcclxuICBnZXRTb3J0ZWRSb3dNb2RlbCxcclxuICB1c2VSZWFjdFRhYmxlLFxyXG59IGZyb20gXCJAdGFuc3RhY2svcmVhY3QtdGFibGVcIjtcclxuaW1wb3J0IHsgQ2hldnJvbkRvd24gfSBmcm9tIFwibHVjaWRlLXJlYWN0XCI7XHJcblxyXG5pbXBvcnQgeyBCdXR0b24gfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2J1dHRvblwiO1xyXG5pbXBvcnQge1xyXG4gIERyb3Bkb3duTWVudSxcclxuICBEcm9wZG93bk1lbnVDaGVja2JveEl0ZW0sXHJcbiAgRHJvcGRvd25NZW51Q29udGVudCxcclxuICBEcm9wZG93bk1lbnVUcmlnZ2VyLFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvZHJvcGRvd24tbWVudVwiO1xyXG5pbXBvcnQgeyBJbnB1dCB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvaW5wdXRcIjtcclxuaW1wb3J0IHtcclxuICBUYWJsZSxcclxuICBUYWJsZUJvZHksXHJcbiAgVGFibGVDZWxsLFxyXG4gIFRhYmxlSGVhZCxcclxuICBUYWJsZUhlYWRlcixcclxuICBUYWJsZVJvdyxcclxufSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3RhYmxlXCI7XHJcbmltcG9ydCB7IGdldENvbHVtbnMgfSBmcm9tIFwiLi9jb2x1bW5zXCI7XHJcbmltcG9ydCB7IHVzZU1vZGFsIH0gZnJvbSBcIkAvaG9va3MvdXNlLW1vZGVsLXN0b3JlXCI7XHJcbmltcG9ydCB7IEV4Y2VyY2lzZSB9IGZyb20gXCJAL3R5cGVzL2V4Y2VyY2lzZVwiO1xyXG5pbXBvcnQgeyBhcGlHZXRBbGxFeGVyY2lzZSB9IGZyb20gXCJAL3NlcnZpY2VzL2V4ZXJjaXNlLnNlcnZpY2VzXCI7XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gRXhjZXJjaXNlVGFibGUoKSB7XHJcbiAgY29uc3QgeyBvbk9wZW4gfSA9IHVzZU1vZGFsKCk7XHJcbiAgY29uc3QgY29sdW1ucyA9IFJlYWN0LnVzZU1lbW8oKCkgPT4gZ2V0Q29sdW1ucyhvbk9wZW4pLCBbb25PcGVuXSk7XHJcbiAgY29uc3QgW2V4Y2VyY2lzZURhdGEsIHNldEV4Y2VyY2lzZURhdGFdID0gUmVhY3QudXNlU3RhdGU8RXhjZXJjaXNlW10+KFtdKTtcclxuICBjb25zdCBbc29ydGluZywgc2V0U29ydGluZ10gPSBSZWFjdC51c2VTdGF0ZTxTb3J0aW5nU3RhdGU+KFtdKTtcclxuICBjb25zdCBbY29sdW1uRmlsdGVycywgc2V0Q29sdW1uRmlsdGVyc10gPSBSZWFjdC51c2VTdGF0ZTxDb2x1bW5GaWx0ZXJzU3RhdGU+KFxyXG4gICAgW11cclxuICApO1xyXG4gIGNvbnN0IFtjb2x1bW5WaXNpYmlsaXR5LCBzZXRDb2x1bW5WaXNpYmlsaXR5XSA9XHJcbiAgICBSZWFjdC51c2VTdGF0ZTxWaXNpYmlsaXR5U3RhdGU+KHt9KTtcclxuICBjb25zdCBbcm93U2VsZWN0aW9uLCBzZXRSb3dTZWxlY3Rpb25dID0gUmVhY3QudXNlU3RhdGUoe30pO1xyXG4gIGNvbnN0IHRhYmxlID0gdXNlUmVhY3RUYWJsZSh7XHJcbiAgICBkYXRhOiBleGNlcmNpc2VEYXRhLFxyXG4gICAgY29sdW1ucyxcclxuICAgIG9uU29ydGluZ0NoYW5nZTogc2V0U29ydGluZyxcclxuICAgIG9uQ29sdW1uRmlsdGVyc0NoYW5nZTogc2V0Q29sdW1uRmlsdGVycyxcclxuICAgIGdldENvcmVSb3dNb2RlbDogZ2V0Q29yZVJvd01vZGVsKCksXHJcbiAgICBnZXRQYWdpbmF0aW9uUm93TW9kZWw6IGdldFBhZ2luYXRpb25Sb3dNb2RlbCgpLFxyXG4gICAgZ2V0U29ydGVkUm93TW9kZWw6IGdldFNvcnRlZFJvd01vZGVsKCksXHJcbiAgICBnZXRGaWx0ZXJlZFJvd01vZGVsOiBnZXRGaWx0ZXJlZFJvd01vZGVsKCksXHJcbiAgICBvbkNvbHVtblZpc2liaWxpdHlDaGFuZ2U6IHNldENvbHVtblZpc2liaWxpdHksXHJcbiAgICBvblJvd1NlbGVjdGlvbkNoYW5nZTogc2V0Um93U2VsZWN0aW9uLFxyXG4gICAgc3RhdGU6IHtcclxuICAgICAgc29ydGluZyxcclxuICAgICAgY29sdW1uRmlsdGVycyxcclxuICAgICAgY29sdW1uVmlzaWJpbGl0eSxcclxuICAgICAgcm93U2VsZWN0aW9uLFxyXG4gICAgfSxcclxuXHJcbiAgICBpbml0aWFsU3RhdGU6IHtcclxuICAgICAgcGFnaW5hdGlvbjoge1xyXG4gICAgICAgIHBhZ2VTaXplOiA1LFxyXG4gICAgICB9LFxyXG4gICAgfSxcclxuICB9KTtcclxuICBjb25zdCBnZXRBbGxFeGNlcmNpc2UgPSBhc3luYyAoKSA9PiB7XHJcbiAgICBjb25zdCBleGNlcmNpc2UgPSBhd2FpdCBhcGlHZXRBbGxFeGVyY2lzZSgpO1xyXG4gICAgaWYgKGV4Y2VyY2lzZS5kYXRhLnN1Y2Nlc3MpIHtcclxuICAgICAgc2V0RXhjZXJjaXNlRGF0YShleGNlcmNpc2UuZGF0YS5ycyk7XHJcbiAgICB9IGVsc2Uge1xyXG4gICAgICBjb25zb2xlLmxvZyhcIkZhaWxlZCB0byBmZXRjaCBleGNlcmNpc2VcIik7XHJcbiAgICB9XHJcbiAgfTtcclxuICBSZWFjdC51c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgZ2V0QWxsRXhjZXJjaXNlKCk7XHJcbiAgfSwgW10pO1xyXG4gIHJldHVybiAoXHJcbiAgICA8ZGl2IGNsYXNzTmFtZT1cInctZnVsbCBzaGFkb3ctbGcgZHJvcC1zaGFkb3ctbGcgXCI+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgcHktNCBqdXN0aWZ5LWJldHdlZW5cIj5cclxuICAgICAgICA8SW5wdXRcclxuICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRmlsdGVyIGJ5IGxlc3Nvbi4uLlwiXHJcbiAgICAgICAgICB2YWx1ZT17XHJcbiAgICAgICAgICAgICh0YWJsZS5nZXRDb2x1bW4oXCJsZXNzb25JZC50aXRsZVwiKT8uZ2V0RmlsdGVyVmFsdWUoKSBhcyBzdHJpbmcpID8/XHJcbiAgICAgICAgICAgIFwiXCJcclxuICAgICAgICAgIH1cclxuICAgICAgICAgIG9uQ2hhbmdlPXsoZXZlbnQpID0+XHJcbiAgICAgICAgICAgIHRhYmxlXHJcbiAgICAgICAgICAgICAgLmdldENvbHVtbihcImxlc3NvbklkLnRpdGxlXCIpXHJcbiAgICAgICAgICAgICAgPy5zZXRGaWx0ZXJWYWx1ZShldmVudC50YXJnZXQudmFsdWUpXHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJtYXgtdy1zbVwiXHJcbiAgICAgICAgLz5cclxuICAgICAgICA8ZGl2XHJcbiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBvbk9wZW4oXCJjcmVhdGVFeGVyY2lzZVwiKX1cclxuICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIHNwYWNlLXgtMlwiXHJcbiAgICAgICAgPlxyXG4gICAgICAgICAgPEJ1dHRvbiBjbGFzc05hbWU9XCJiZy1ibHVlLTUwMCBob3ZlcjpiZy1ibHVlLTcwMCB0ZXh0LXdoaXRlIHJvdW5kZWQtWzRweF1cIj5cclxuICAgICAgICAgICAgQWRkIG5ldyBleGVyY2lzZVxyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICA8RHJvcGRvd25NZW51PlxyXG4gICAgICAgICAgICA8RHJvcGRvd25NZW51VHJpZ2dlciBhc0NoaWxkPlxyXG4gICAgICAgICAgICAgIDxCdXR0b24gdmFyaWFudD1cIm91dGxpbmVcIiBjbGFzc05hbWU9XCJtbC1hdXRvXCI+XHJcbiAgICAgICAgICAgICAgICBDb2x1bW5zIDxDaGV2cm9uRG93biAvPlxyXG4gICAgICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgICA8L0Ryb3Bkb3duTWVudVRyaWdnZXI+XHJcbiAgICAgICAgICAgIDxEcm9wZG93bk1lbnVDb250ZW50IGFsaWduPVwiZW5kXCI+XHJcbiAgICAgICAgICAgICAge3RhYmxlXHJcbiAgICAgICAgICAgICAgICAuZ2V0QWxsQ29sdW1ucygpXHJcbiAgICAgICAgICAgICAgICAuZmlsdGVyKChjb2x1bW4pID0+IGNvbHVtbi5nZXRDYW5IaWRlKCkpXHJcbiAgICAgICAgICAgICAgICAubWFwKChjb2x1bW4pID0+IHtcclxuICAgICAgICAgICAgICAgICAgcmV0dXJuIChcclxuICAgICAgICAgICAgICAgICAgICA8RHJvcGRvd25NZW51Q2hlY2tib3hJdGVtXHJcbiAgICAgICAgICAgICAgICAgICAgICBrZXk9e2NvbHVtbi5pZH1cclxuICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgY2hlY2tlZD17Y29sdW1uLmdldElzVmlzaWJsZSgpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25DaGVja2VkQ2hhbmdlPXsodmFsdWUpID0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNvbHVtbi50b2dnbGVWaXNpYmlsaXR5KCEhdmFsdWUpXHJcbiAgICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAge2NvbHVtbi5pZH1cclxuICAgICAgICAgICAgICAgICAgICA8L0Ryb3Bkb3duTWVudUNoZWNrYm94SXRlbT5cclxuICAgICAgICAgICAgICAgICAgKTtcclxuICAgICAgICAgICAgICAgIH0pfVxyXG4gICAgICAgICAgICA8L0Ryb3Bkb3duTWVudUNvbnRlbnQ+XHJcbiAgICAgICAgICA8L0Ryb3Bkb3duTWVudT5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgPC9kaXY+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwicm91bmRlZC1tZCBib3JkZXJcIj5cclxuICAgICAgICA8VGFibGUgY2xhc3NOYW1lPVwiZXF1YWwtd2lkdGhzXCI+XHJcbiAgICAgICAgICA8VGFibGVIZWFkZXI+XHJcbiAgICAgICAgICAgIHt0YWJsZS5nZXRIZWFkZXJHcm91cHMoKS5tYXAoKGhlYWRlckdyb3VwKSA9PiAoXHJcbiAgICAgICAgICAgICAgPFRhYmxlUm93IGtleT17aGVhZGVyR3JvdXAuaWR9PlxyXG4gICAgICAgICAgICAgICAge2hlYWRlckdyb3VwLmhlYWRlcnMubWFwKChoZWFkZXIpID0+IHtcclxuICAgICAgICAgICAgICAgICAgcmV0dXJuIChcclxuICAgICAgICAgICAgICAgICAgICA8VGFibGVIZWFkIGtleT17aGVhZGVyLmlkfT5cclxuICAgICAgICAgICAgICAgICAgICAgIHtoZWFkZXIuaXNQbGFjZWhvbGRlclxyXG4gICAgICAgICAgICAgICAgICAgICAgICA/IG51bGxcclxuICAgICAgICAgICAgICAgICAgICAgICAgOiBmbGV4UmVuZGVyKFxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyLmNvbHVtbi5jb2x1bW5EZWYuaGVhZGVyLFxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyLmdldENvbnRleHQoKVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgICAgICAgPC9UYWJsZUhlYWQ+XHJcbiAgICAgICAgICAgICAgICAgICk7XHJcbiAgICAgICAgICAgICAgICB9KX1cclxuICAgICAgICAgICAgICA8L1RhYmxlUm93PlxyXG4gICAgICAgICAgICApKX1cclxuICAgICAgICAgIDwvVGFibGVIZWFkZXI+XHJcbiAgICAgICAgICA8VGFibGVCb2R5PlxyXG4gICAgICAgICAgICB7dGFibGUuZ2V0Um93TW9kZWwoKS5yb3dzPy5sZW5ndGggPyAoXHJcbiAgICAgICAgICAgICAgdGFibGUuZ2V0Um93TW9kZWwoKS5yb3dzLm1hcCgocm93KSA9PiAoXHJcbiAgICAgICAgICAgICAgICA8VGFibGVSb3dcclxuICAgICAgICAgICAgICAgICAga2V5PXtyb3cuaWR9XHJcbiAgICAgICAgICAgICAgICAgIGRhdGEtc3RhdGU9e3Jvdy5nZXRJc1NlbGVjdGVkKCkgJiYgXCJzZWxlY3RlZFwifVxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICB7cm93LmdldFZpc2libGVDZWxscygpLm1hcCgoY2VsbCkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICAgIDxUYWJsZUNlbGwga2V5PXtjZWxsLmlkfT5cclxuICAgICAgICAgICAgICAgICAgICAgIHtmbGV4UmVuZGVyKFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjZWxsLmNvbHVtbi5jb2x1bW5EZWYuY2VsbCxcclxuICAgICAgICAgICAgICAgICAgICAgICAgY2VsbC5nZXRDb250ZXh0KClcclxuICAgICAgICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgICAgICAgPC9UYWJsZUNlbGw+XHJcbiAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgPC9UYWJsZVJvdz5cclxuICAgICAgICAgICAgICApKVxyXG4gICAgICAgICAgICApIDogKFxyXG4gICAgICAgICAgICAgIDxUYWJsZVJvdz5cclxuICAgICAgICAgICAgICAgIDxUYWJsZUNlbGxcclxuICAgICAgICAgICAgICAgICAgY29sU3Bhbj17Y29sdW1ucy5sZW5ndGh9XHJcbiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImgtMjQgdGV4dC1jZW50ZXJcIlxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICBObyByZXN1bHRzLlxyXG4gICAgICAgICAgICAgICAgPC9UYWJsZUNlbGw+XHJcbiAgICAgICAgICAgICAgPC9UYWJsZVJvdz5cclxuICAgICAgICAgICAgKX1cclxuICAgICAgICAgIDwvVGFibGVCb2R5PlxyXG4gICAgICAgIDwvVGFibGU+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktZW5kIHNwYWNlLXgtMiBweS00XCI+XHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4LTEgdGV4dC1zbSB0ZXh0LW11dGVkLWZvcmVncm91bmRcIj5cclxuICAgICAgICAgIHt0YWJsZS5nZXRGaWx0ZXJlZFNlbGVjdGVkUm93TW9kZWwoKS5yb3dzLmxlbmd0aH0gb2Z7XCIgXCJ9XHJcbiAgICAgICAgICB7dGFibGUuZ2V0RmlsdGVyZWRSb3dNb2RlbCgpLnJvd3MubGVuZ3RofSByb3cocykgc2VsZWN0ZWQuXHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS14LTJcIj5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgdmFyaWFudD1cIm91dGxpbmVcIlxyXG4gICAgICAgICAgICBzaXplPVwic21cIlxyXG4gICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB0YWJsZS5wcmV2aW91c1BhZ2UoKX1cclxuICAgICAgICAgICAgZGlzYWJsZWQ9eyF0YWJsZS5nZXRDYW5QcmV2aW91c1BhZ2UoKX1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgUHJldmlvdXNcclxuICAgICAgICAgIDwvQnV0dG9uPlxyXG4gICAgICAgICAgPEJ1dHRvblxyXG4gICAgICAgICAgICB2YXJpYW50PVwib3V0bGluZVwiXHJcbiAgICAgICAgICAgIHNpemU9XCJzbVwiXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHRhYmxlLm5leHRQYWdlKCl9XHJcbiAgICAgICAgICAgIGRpc2FibGVkPXshdGFibGUuZ2V0Q2FuTmV4dFBhZ2UoKX1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgTmV4dFxyXG4gICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufVxyXG4iXSwibmFtZXMiOlsiUmVhY3QiLCJmbGV4UmVuZGVyIiwiZ2V0Q29yZVJvd01vZGVsIiwiZ2V0RmlsdGVyZWRSb3dNb2RlbCIsImdldFBhZ2luYXRpb25Sb3dNb2RlbCIsImdldFNvcnRlZFJvd01vZGVsIiwidXNlUmVhY3RUYWJsZSIsIkNoZXZyb25Eb3duIiwiQnV0dG9uIiwiRHJvcGRvd25NZW51IiwiRHJvcGRvd25NZW51Q2hlY2tib3hJdGVtIiwiRHJvcGRvd25NZW51Q29udGVudCIsIkRyb3Bkb3duTWVudVRyaWdnZXIiLCJJbnB1dCIsIlRhYmxlIiwiVGFibGVCb2R5IiwiVGFibGVDZWxsIiwiVGFibGVIZWFkIiwiVGFibGVIZWFkZXIiLCJUYWJsZVJvdyIsImdldENvbHVtbnMiLCJ1c2VNb2RhbCIsImFwaUdldEFsbEV4ZXJjaXNlIiwiRXhjZXJjaXNlVGFibGUiLCJvbk9wZW4iLCJjb2x1bW5zIiwidXNlTWVtbyIsImV4Y2VyY2lzZURhdGEiLCJzZXRFeGNlcmNpc2VEYXRhIiwidXNlU3RhdGUiLCJzb3J0aW5nIiwic2V0U29ydGluZyIsImNvbHVtbkZpbHRlcnMiLCJzZXRDb2x1bW5GaWx0ZXJzIiwiY29sdW1uVmlzaWJpbGl0eSIsInNldENvbHVtblZpc2liaWxpdHkiLCJyb3dTZWxlY3Rpb24iLCJzZXRSb3dTZWxlY3Rpb24iLCJ0YWJsZSIsImRhdGEiLCJvblNvcnRpbmdDaGFuZ2UiLCJvbkNvbHVtbkZpbHRlcnNDaGFuZ2UiLCJvbkNvbHVtblZpc2liaWxpdHlDaGFuZ2UiLCJvblJvd1NlbGVjdGlvbkNoYW5nZSIsInN0YXRlIiwiaW5pdGlhbFN0YXRlIiwicGFnaW5hdGlvbiIsInBhZ2VTaXplIiwiZ2V0QWxsRXhjZXJjaXNlIiwiZXhjZXJjaXNlIiwic3VjY2VzcyIsInJzIiwiY29uc29sZSIsImxvZyIsInVzZUVmZmVjdCIsImRpdiIsImNsYXNzTmFtZSIsInBsYWNlaG9sZGVyIiwidmFsdWUiLCJnZXRDb2x1bW4iLCJnZXRGaWx0ZXJWYWx1ZSIsIm9uQ2hhbmdlIiwiZXZlbnQiLCJzZXRGaWx0ZXJWYWx1ZSIsInRhcmdldCIsIm9uQ2xpY2siLCJhc0NoaWxkIiwidmFyaWFudCIsImFsaWduIiwiZ2V0QWxsQ29sdW1ucyIsImZpbHRlciIsImNvbHVtbiIsImdldENhbkhpZGUiLCJtYXAiLCJjaGVja2VkIiwiZ2V0SXNWaXNpYmxlIiwib25DaGVja2VkQ2hhbmdlIiwidG9nZ2xlVmlzaWJpbGl0eSIsImlkIiwiZ2V0SGVhZGVyR3JvdXBzIiwiaGVhZGVyR3JvdXAiLCJoZWFkZXJzIiwiaGVhZGVyIiwiaXNQbGFjZWhvbGRlciIsImNvbHVtbkRlZiIsImdldENvbnRleHQiLCJnZXRSb3dNb2RlbCIsInJvd3MiLCJsZW5ndGgiLCJyb3ciLCJkYXRhLXN0YXRlIiwiZ2V0SXNTZWxlY3RlZCIsImdldFZpc2libGVDZWxscyIsImNlbGwiLCJjb2xTcGFuIiwiZ2V0RmlsdGVyZWRTZWxlY3RlZFJvd01vZGVsIiwic2l6ZSIsInByZXZpb3VzUGFnZSIsImRpc2FibGVkIiwiZ2V0Q2FuUHJldmlvdXNQYWdlIiwibmV4dFBhZ2UiLCJnZXRDYW5OZXh0UGFnZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLFlBQVlBLFdBQVcsUUFBUTtBQUMvQixTQUlFQyxVQUFVLEVBQ1ZDLGVBQWUsRUFDZkMsbUJBQW1CLEVBQ25CQyxxQkFBcUIsRUFDckJDLGlCQUFpQixFQUNqQkMsYUFBYSxRQUNSLHdCQUF3QjtBQUMvQixTQUFTQyxXQUFXLFFBQVEsZUFBZTtBQUUzQyxTQUFTQyxNQUFNLFFBQVEseUJBQXlCO0FBQ2hELFNBQ0VDLFlBQVksRUFDWkMsd0JBQXdCLEVBQ3hCQyxtQkFBbUIsRUFDbkJDLG1CQUFtQixRQUNkLGdDQUFnQztBQUN2QyxTQUFTQyxLQUFLLFFBQVEsd0JBQXdCO0FBQzlDLFNBQ0VDLEtBQUss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

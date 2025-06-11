@@ -7,6 +7,7 @@ import { useSelectedPageContext } from "@/hooks/use-context";
 import { LogOut } from "lucide-react";
 import { useAppDispatch } from "@/hooks/use-dispatch";
 import { logout } from "@/stores/actions/authAction";
+import briefcase from "@/assets/user/briefcase.png";
 import logo_v3 from "@/assets/user/logo-v3.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -136,7 +137,7 @@ const NavigationBar = ({ items }: { items: ItemType[] }) => {
 
         <button className="flex items-center justify-start px-3 py-2 gap-3 font-normal cursor-pointer transition-colors duration-150 rounded-lg shadow-sm bg-gray-200 border border-gray-200">
           <img
-            src={userData?.avatar}
+            src={userData?.avatar !== "" ? userData?.avatar : briefcase}
             alt="avatar"
             className="w-10 h-10 rounded-full object-cover"
           />

@@ -1,0 +1,104 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/ResetPassword/route.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/ResetPassword/route.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const lazy = __vite__cjsImport2_react["lazy"]; const Suspense = __vite__cjsImport2_react["Suspense"];
+const ResetPasswordPage = /*#__PURE__*/ lazy(()=>import("/src/pages/ResetPassword/index.tsx"));
+_c = ResetPasswordPage;
+const resetPasswordRoutes = [
+    {
+        path: "/reset-password/:resetToken",
+        element: /*#__PURE__*/ _jsxDEV(Suspense, {
+            fallback: /*#__PURE__*/ _jsxDEV("div", {
+                id: "load",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "G"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                        lineNumber: 11,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "N"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                        lineNumber: 12,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "I"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                        lineNumber: 13,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "D"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                        lineNumber: 14,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "A"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                        lineNumber: 15,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "O"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                        lineNumber: 16,
+                        columnNumber: 13
+                    }, void 0),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        children: "L"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                        lineNumber: 17,
+                        columnNumber: 13
+                    }, void 0)
+                ]
+            }, void 0, true, {
+                fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                lineNumber: 10,
+                columnNumber: 11
+            }, void 0),
+            children: /*#__PURE__*/ _jsxDEV(ResetPasswordPage, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+                lineNumber: 21,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/ResetPassword/route.tsx",
+            lineNumber: 8,
+            columnNumber: 7
+        }, this)
+    }
+];
+export default resetPasswordRoutes;
+var _c;
+$RefreshReg$(_c, "ResetPasswordPage");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/ResetPassword/route.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/ResetPassword/route.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBsYXp5LCBTdXNwZW5zZSB9IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQgeyBSb3V0ZU9iamVjdCB9IGZyb20gXCJyZWFjdC1yb3V0ZXItZG9tXCI7XHJcbmNvbnN0IFJlc2V0UGFzc3dvcmRQYWdlID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL2luZGV4XCIpKTtcclxuY29uc3QgcmVzZXRQYXNzd29yZFJvdXRlczogKFJvdXRlT2JqZWN0ICYgeyByb2xlPzogc3RyaW5nW10gfSlbXSA9IFtcclxuICB7XHJcbiAgICBwYXRoOiBcIi9yZXNldC1wYXNzd29yZC86cmVzZXRUb2tlblwiLFxyXG4gICAgZWxlbWVudDogKFxyXG4gICAgICA8U3VzcGVuc2VcclxuICAgICAgICBmYWxsYmFjaz17XHJcbiAgICAgICAgICA8ZGl2IGlkPVwibG9hZFwiPlxyXG4gICAgICAgICAgICA8ZGl2Pkc8L2Rpdj5cclxuICAgICAgICAgICAgPGRpdj5OPC9kaXY+XHJcbiAgICAgICAgICAgIDxkaXY+STwvZGl2PlxyXG4gICAgICAgICAgICA8ZGl2PkQ8L2Rpdj5cclxuICAgICAgICAgICAgPGRpdj5BPC9kaXY+XHJcbiAgICAgICAgICAgIDxkaXY+TzwvZGl2PlxyXG4gICAgICAgICAgICA8ZGl2Pkw8L2Rpdj5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIH1cclxuICAgICAgPlxyXG4gICAgICAgIDxSZXNldFBhc3N3b3JkUGFnZSAvPlxyXG4gICAgICA8L1N1c3BlbnNlPlxyXG4gICAgKSxcclxuICB9LFxyXG5dO1xyXG5leHBvcnQgZGVmYXVsdCByZXNldFBhc3N3b3JkUm91dGVzO1xyXG4iXSwibmFtZXMiOlsibGF6eSIsIlN1c3BlbnNlIiwiUmVzZXRQYXNzd29yZFBhZ2UiLCJyZXNldFBhc3N3b3JkUm91dGVzIiwicGF0aCIsImVsZW1lbnQiLCJmYWxsYmFjayIsImRpdiIsImlkIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7QUFBQSxTQUFTQSxJQUFJLEVBQUVDLFFBQVEsUUFBUSxRQUFRO0FBRXZDLE1BQU1DLGtDQUFvQkYsS0FBSyxJQUFNLE1BQU0sQ0FBQztLQUF0Q0U7QUFDTixNQUFNQyxzQkFBNkQ7SUFDakU7UUFDRUMsTUFBTTtRQUNOQyx1QkFDRSxRQUFDSjtZQUNDSyx3QkFDRSxRQUFDQztnQkFBSUMsSUFBRzs7a0NBQ04sUUFBQ0Q7a0NBQUk7Ozs7OztrQ0FDTCxRQUFDQTtrQ0FBSTs7Ozs7O2tDQUNMLFFBQUNBO2tDQUFJOzs7Ozs7a0NBQ0wsUUFBQ0E7a0NBQUk7Ozs7OztrQ0FDTCxRQUFDQTtrQ0FBSTs7Ozs7O2tDQUNMLFFBQUNBO2tDQUFJOzs7Ozs7a0NBQ0wsUUFBQ0E7a0NBQUk7Ozs7Ozs7Ozs7OztzQkFJVCxjQUFBLFFBQUNMOzs7Ozs7Ozs7O0lBR1A7Q0FDRDtBQUNELGVBQWVDLG9CQUFvQiJ9

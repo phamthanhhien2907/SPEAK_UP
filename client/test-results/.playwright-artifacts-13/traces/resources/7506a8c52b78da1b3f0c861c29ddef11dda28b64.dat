@@ -1,0 +1,58 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/navigation/navigation-link.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/navigation/navigation-link.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import { useNavigate } from "/node_modules/.vite/deps/react-router-dom.js?v=d7300cd7";
+const NavigationLink = ({ children, name, selectedItem })=>{
+    _s();
+    const navigate = useNavigate();
+    return /*#__PURE__*/ _jsxDEV("a", {
+        onClick: ()=>navigate("/"),
+        className: `${selectedItem === name ? "flex p-1 rounded cursor-pointer stroke-[0.75] stroke-neutral-400  place-items-center gap-3 bg-slate-300/60 transition-colors duration-100" : "flex p-1 rounded cursor-pointer stroke-[0.75] hover:stroke-neutral-100 stroke-neutral-400 place-items-center gap-3 hover:bg-gray-300/50 transition-colors duration-100"}`,
+        children: [
+            children,
+            /*#__PURE__*/ _jsxDEV("p", {
+                className: "text-[15px] font-poppins overflow-clip truncate whitespace-nowrap tracking-wide font-medium",
+                children: name
+            }, void 0, false, {
+                fileName: "D:/DATN/client/src/components/navigation/navigation-link.tsx",
+                lineNumber: 21,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "D:/DATN/client/src/components/navigation/navigation-link.tsx",
+        lineNumber: 12,
+        columnNumber: 5
+    }, this);
+};
+_s(NavigationLink, "CzcTeTziyjMsSrAVmHuCCb6+Bfg=", false, function() {
+    return [
+        useNavigate
+    ];
+});
+_c = NavigationLink;
+export default NavigationLink;
+var _c;
+$RefreshReg$(_c, "NavigationLink");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/navigation/navigation-link.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/navigation/navigation-link.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5hdmlnYXRpb24tbGluay50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlTmF2aWdhdGUgfSBmcm9tIFwicmVhY3Qtcm91dGVyLWRvbVwiO1xyXG5cclxuaW50ZXJmYWNlIFByb3BzIHtcclxuICBjaGlsZHJlbjogUmVhY3QuUmVhY3ROb2RlO1xyXG4gIG5hbWU6IHN0cmluZztcclxuICBzZWxlY3RlZEl0ZW0/OiBzdHJpbmcgfCBudWxsO1xyXG59XHJcblxyXG5jb25zdCBOYXZpZ2F0aW9uTGluayA9ICh7IGNoaWxkcmVuLCBuYW1lLCBzZWxlY3RlZEl0ZW0gfTogUHJvcHMpID0+IHtcclxuICBjb25zdCBuYXZpZ2F0ZSA9IHVzZU5hdmlnYXRlKCk7XHJcbiAgcmV0dXJuIChcclxuICAgIDxhXHJcbiAgICAgIG9uQ2xpY2s9eygpID0+IG5hdmlnYXRlKFwiL1wiKX1cclxuICAgICAgY2xhc3NOYW1lPXtgJHtcclxuICAgICAgICBzZWxlY3RlZEl0ZW0gPT09IG5hbWVcclxuICAgICAgICAgID8gXCJmbGV4IHAtMSByb3VuZGVkIGN1cnNvci1wb2ludGVyIHN0cm9rZS1bMC43NV0gc3Ryb2tlLW5ldXRyYWwtNDAwICBwbGFjZS1pdGVtcy1jZW50ZXIgZ2FwLTMgYmctc2xhdGUtMzAwLzYwIHRyYW5zaXRpb24tY29sb3JzIGR1cmF0aW9uLTEwMFwiXHJcbiAgICAgICAgICA6IFwiZmxleCBwLTEgcm91bmRlZCBjdXJzb3ItcG9pbnRlciBzdHJva2UtWzAuNzVdIGhvdmVyOnN0cm9rZS1uZXV0cmFsLTEwMCBzdHJva2UtbmV1dHJhbC00MDAgcGxhY2UtaXRlbXMtY2VudGVyIGdhcC0zIGhvdmVyOmJnLWdyYXktMzAwLzUwIHRyYW5zaXRpb24tY29sb3JzIGR1cmF0aW9uLTEwMFwiXHJcbiAgICAgIH1gfVxyXG4gICAgPlxyXG4gICAgICB7Y2hpbGRyZW59XHJcbiAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtWzE1cHhdIGZvbnQtcG9wcGlucyBvdmVyZmxvdy1jbGlwIHRydW5jYXRlIHdoaXRlc3BhY2Utbm93cmFwIHRyYWNraW5nLXdpZGUgZm9udC1tZWRpdW1cIj5cclxuICAgICAgICB7bmFtZX1cclxuICAgICAgPC9wPlxyXG4gICAgPC9hPlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBOYXZpZ2F0aW9uTGluaztcclxuIl0sIm5hbWVzIjpbInVzZU5hdmlnYXRlIiwiTmF2aWdhdGlvbkxpbmsiLCJjaGlsZHJlbiIsIm5hbWUiLCJzZWxlY3RlZEl0ZW0iLCJuYXZpZ2F0ZSIsImEiLCJvbkNsaWNrIiwiY2xhc3NOYW1lIiwicCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLFNBQVNBLFdBQVcsUUFBUSxtQkFBbUI7QUFRL0MsTUFBTUMsaUJBQWlCLENBQUMsRUFBRUMsUUFBUSxFQUFFQyxJQUFJLEVBQUVDLFlBQVksRUFBUzs7SUFDN0QsTUFBTUMsV0FBV0w7SUFDakIscUJBQ0UsUUFBQ007UUFDQ0MsU0FBUyxJQUFNRixTQUFTO1FBQ3hCRyxXQUFXLEdBQ1RKLGlCQUFpQkQsT0FDYiw4SUFDQSwwS0FDSjs7WUFFREQ7MEJBQ0QsUUFBQ087Z0JBQUVELFdBQVU7MEJBQ1ZMOzs7Ozs7Ozs7Ozs7QUFJVDtHQWpCTUY7O1FBQ2FEOzs7S0FEYkM7QUFtQk4sZUFBZUEsZUFBZSJ9

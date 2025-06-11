@@ -1,0 +1,121 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/provider/table-provider.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/provider/table-provider.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"]; const _Fragment = __vite__cjsImport1_react_jsxDevRuntime["Fragment"];
+var _s = $RefreshSig$();
+import { useSelectedPageContext } from "/src/hooks/use-context.tsx";
+import { UserTable } from "/src/components/tables/users/user-table.tsx";
+import { LessonTable } from "/src/components/tables/lessons/lesson-table.tsx";
+import { CourseTable } from "/src/components/tables/course/course-table.tsx";
+import { VocabularyTable } from "/src/components/tables/vocabularies/vocabulary-table.tsx";
+import { EnrollmentTable } from "/src/components/tables/enrollments/enrollment-table.tsx";
+import { ProgressTrackingTable } from "/src/components/tables/progress-tracking/progress-tracking-table.tsx";
+import { ExcerciseTable } from "/src/components/tables/exercises/exercise-table.tsx";
+import { HistoryTable } from "/src/components/tables/histories/history-table.tsx";
+import { FeedBackTable } from "/src/components/tables/feedbacks/feedback-table.tsx";
+import { LessonProgressTable } from "/src/components/tables/lesson-progress/lesson-progress-table.tsx";
+import { PronunciationScoreTable } from "/src/components/tables/pronunciation-score/pronunciation-score-table.tsx";
+import { ExcerciseVocabularyTable } from "/src/components/tables/exercise-vocabulary/exercise-vocabulary-table.tsx";
+import { TopicTable } from "/src/components/tables/topic/topic-table.tsx";
+const TableProvider = ()=>{
+    _s();
+    const { selectedPage } = useSelectedPageContext();
+    return /*#__PURE__*/ _jsxDEV(_Fragment, {
+        children: [
+            selectedPage === "Users" && /*#__PURE__*/ _jsxDEV(UserTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 20,
+                columnNumber: 36
+            }, this),
+            selectedPage === "Lessons" && /*#__PURE__*/ _jsxDEV(LessonTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 21,
+                columnNumber: 38
+            }, this),
+            selectedPage === "Courses" && /*#__PURE__*/ _jsxDEV(CourseTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 22,
+                columnNumber: 38
+            }, this),
+            selectedPage === "Vocabularies" && /*#__PURE__*/ _jsxDEV(VocabularyTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 23,
+                columnNumber: 43
+            }, this),
+            selectedPage === "Enrollments" && /*#__PURE__*/ _jsxDEV(EnrollmentTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 24,
+                columnNumber: 42
+            }, this),
+            selectedPage === "Progress Tracking" && /*#__PURE__*/ _jsxDEV(ProgressTrackingTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 25,
+                columnNumber: 48
+            }, this),
+            selectedPage === "Exercise Vocabulary" && /*#__PURE__*/ _jsxDEV(ExcerciseVocabularyTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 26,
+                columnNumber: 50
+            }, this),
+            selectedPage === "Exercise" && /*#__PURE__*/ _jsxDEV(ExcerciseTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 27,
+                columnNumber: 39
+            }, this),
+            selectedPage === "History" && /*#__PURE__*/ _jsxDEV(HistoryTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 28,
+                columnNumber: 38
+            }, this),
+            selectedPage === "FeedBack" && /*#__PURE__*/ _jsxDEV(FeedBackTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 29,
+                columnNumber: 39
+            }, this),
+            selectedPage === "Lesson Progress" && /*#__PURE__*/ _jsxDEV(LessonProgressTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 30,
+                columnNumber: 46
+            }, this),
+            selectedPage === "Pronunciation Score" && /*#__PURE__*/ _jsxDEV(PronunciationScoreTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 31,
+                columnNumber: 50
+            }, this),
+            selectedPage === "Topic" && /*#__PURE__*/ _jsxDEV(TopicTable, {}, void 0, false, {
+                fileName: "D:/DATN/client/src/components/provider/table-provider.tsx",
+                lineNumber: 32,
+                columnNumber: 36
+            }, this)
+        ]
+    }, void 0, true);
+};
+_s(TableProvider, "rSzWduSsshpwYtdi8+M9Qde4Cis=", false, function() {
+    return [
+        useSelectedPageContext
+    ];
+});
+_c = TableProvider;
+export default TableProvider;
+var _c;
+$RefreshReg$(_c, "TableProvider");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/provider/table-provider.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/provider/table-provider.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhYmxlLXByb3ZpZGVyLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VTZWxlY3RlZFBhZ2VDb250ZXh0IH0gZnJvbSBcIkAvaG9va3MvdXNlLWNvbnRleHRcIjtcclxuaW1wb3J0IHsgVXNlclRhYmxlIH0gZnJvbSBcIkAvY29tcG9uZW50cy90YWJsZXMvdXNlcnMvdXNlci10YWJsZVwiO1xyXG5pbXBvcnQgeyBMZXNzb25UYWJsZSB9IGZyb20gXCJAL2NvbXBvbmVudHMvdGFibGVzL2xlc3NvbnMvbGVzc29uLXRhYmxlXCI7XHJcbmltcG9ydCB7IENvdXJzZVRhYmxlIH0gZnJvbSBcIkAvY29tcG9uZW50cy90YWJsZXMvY291cnNlL2NvdXJzZS10YWJsZVwiO1xyXG5pbXBvcnQgeyBWb2NhYnVsYXJ5VGFibGUgfSBmcm9tIFwiQC9jb21wb25lbnRzL3RhYmxlcy92b2NhYnVsYXJpZXMvdm9jYWJ1bGFyeS10YWJsZVwiO1xyXG5pbXBvcnQgeyBFbnJvbGxtZW50VGFibGUgfSBmcm9tIFwiQC9jb21wb25lbnRzL3RhYmxlcy9lbnJvbGxtZW50cy9lbnJvbGxtZW50LXRhYmxlXCI7XHJcbmltcG9ydCB7IFByb2dyZXNzVHJhY2tpbmdUYWJsZSB9IGZyb20gXCJAL2NvbXBvbmVudHMvdGFibGVzL3Byb2dyZXNzLXRyYWNraW5nL3Byb2dyZXNzLXRyYWNraW5nLXRhYmxlXCI7XHJcbmltcG9ydCB7IEV4Y2VyY2lzZVRhYmxlIH0gZnJvbSBcIkAvY29tcG9uZW50cy90YWJsZXMvZXhlcmNpc2VzL2V4ZXJjaXNlLXRhYmxlXCI7XHJcbmltcG9ydCB7IEhpc3RvcnlUYWJsZSB9IGZyb20gXCJAL2NvbXBvbmVudHMvdGFibGVzL2hpc3Rvcmllcy9oaXN0b3J5LXRhYmxlXCI7XHJcbmltcG9ydCB7IEZlZWRCYWNrVGFibGUgfSBmcm9tIFwiQC9jb21wb25lbnRzL3RhYmxlcy9mZWVkYmFja3MvZmVlZGJhY2stdGFibGVcIjtcclxuaW1wb3J0IHsgTGVzc29uUHJvZ3Jlc3NUYWJsZSB9IGZyb20gXCJAL2NvbXBvbmVudHMvdGFibGVzL2xlc3Nvbi1wcm9ncmVzcy9sZXNzb24tcHJvZ3Jlc3MtdGFibGVcIjtcclxuaW1wb3J0IHsgUHJvbnVuY2lhdGlvblNjb3JlVGFibGUgfSBmcm9tIFwiQC9jb21wb25lbnRzL3RhYmxlcy9wcm9udW5jaWF0aW9uLXNjb3JlL3Byb251bmNpYXRpb24tc2NvcmUtdGFibGVcIjtcclxuaW1wb3J0IHsgRXhjZXJjaXNlVm9jYWJ1bGFyeVRhYmxlIH0gZnJvbSBcIkAvY29tcG9uZW50cy90YWJsZXMvZXhlcmNpc2Utdm9jYWJ1bGFyeS9leGVyY2lzZS12b2NhYnVsYXJ5LXRhYmxlXCI7XHJcbmltcG9ydCB7IFRvcGljVGFibGUgfSBmcm9tIFwiQC9jb21wb25lbnRzL3RhYmxlcy90b3BpYy90b3BpYy10YWJsZVwiO1xyXG5jb25zdCBUYWJsZVByb3ZpZGVyID0gKCkgPT4ge1xyXG4gIGNvbnN0IHsgc2VsZWN0ZWRQYWdlIH0gPSB1c2VTZWxlY3RlZFBhZ2VDb250ZXh0KCk7XHJcblxyXG4gIHJldHVybiAoXHJcbiAgICA8PlxyXG4gICAgICB7c2VsZWN0ZWRQYWdlID09PSBcIlVzZXJzXCIgJiYgPFVzZXJUYWJsZSAvPn1cclxuICAgICAge3NlbGVjdGVkUGFnZSA9PT0gXCJMZXNzb25zXCIgJiYgPExlc3NvblRhYmxlIC8+fVxyXG4gICAgICB7c2VsZWN0ZWRQYWdlID09PSBcIkNvdXJzZXNcIiAmJiA8Q291cnNlVGFibGUgLz59XHJcbiAgICAgIHtzZWxlY3RlZFBhZ2UgPT09IFwiVm9jYWJ1bGFyaWVzXCIgJiYgPFZvY2FidWxhcnlUYWJsZSAvPn1cclxuICAgICAge3NlbGVjdGVkUGFnZSA9PT0gXCJFbnJvbGxtZW50c1wiICYmIDxFbnJvbGxtZW50VGFibGUgLz59XHJcbiAgICAgIHtzZWxlY3RlZFBhZ2UgPT09IFwiUHJvZ3Jlc3MgVHJhY2tpbmdcIiAmJiA8UHJvZ3Jlc3NUcmFja2luZ1RhYmxlIC8+fVxyXG4gICAgICB7c2VsZWN0ZWRQYWdlID09PSBcIkV4ZXJjaXNlIFZvY2FidWxhcnlcIiAmJiA8RXhjZXJjaXNlVm9jYWJ1bGFyeVRhYmxlIC8+fVxyXG4gICAgICB7c2VsZWN0ZWRQYWdlID09PSBcIkV4ZXJjaXNlXCIgJiYgPEV4Y2VyY2lzZVRhYmxlIC8+fVxyXG4gICAgICB7c2VsZWN0ZWRQYWdlID09PSBcIkhpc3RvcnlcIiAmJiA8SGlzdG9yeVRhYmxlIC8+fVxyXG4gICAgICB7c2VsZWN0ZWRQYWdlID09PSBcIkZlZWRCYWNrXCIgJiYgPEZlZWRCYWNrVGFibGUgLz59XHJcbiAgICAgIHtzZWxlY3RlZFBhZ2UgPT09IFwiTGVzc29uIFByb2dyZXNzXCIgJiYgPExlc3NvblByb2dyZXNzVGFibGUgLz59XHJcbiAgICAgIHtzZWxlY3RlZFBhZ2UgPT09IFwiUHJvbnVuY2lhdGlvbiBTY29yZVwiICYmIDxQcm9udW5jaWF0aW9uU2NvcmVUYWJsZSAvPn1cclxuICAgICAge3NlbGVjdGVkUGFnZSA9PT0gXCJUb3BpY1wiICYmIDxUb3BpY1RhYmxlIC8+fVxyXG5cclxuICAgICAgey8qIHtzZWxlY3RlZFBhZ2UgPT09IFwiU2V0dGluZ3NcIiAmJiA8Vm9jYWJ1bGFyeVRhYmxlIC8+fSAqL31cclxuICAgIDwvPlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBUYWJsZVByb3ZpZGVyO1xyXG4iXSwibmFtZXMiOlsidXNlU2VsZWN0ZWRQYWdlQ29udGV4dCIsIlVzZXJUYWJsZSIsIkxlc3NvblRhYmxlIiwiQ291cnNlVGFibGUiLCJWb2NhYnVsYXJ5VGFibGUiLCJFbnJvbGxtZW50VGFibGUiLCJQcm9ncmVzc1RyYWNraW5nVGFibGUiLCJFeGNlcmNpc2VUYWJsZSIsIkhpc3RvcnlUYWJsZSIsIkZlZWRCYWNrVGFibGUiLCJMZXNzb25Qcm9ncmVzc1RhYmxlIiwiUHJvbnVuY2lhdGlvblNjb3JlVGFibGUiLCJFeGNlcmNpc2VWb2NhYnVsYXJ5VGFibGUiLCJUb3BpY1RhYmxlIiwiVGFibGVQcm92aWRlciIsInNlbGVjdGVkUGFnZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLFNBQVNBLHNCQUFzQixRQUFRLHNCQUFzQjtBQUM3RCxTQUFTQyxTQUFTLFFBQVEsdUNBQXVDO0FBQ2pFLFNBQVNDLFdBQVcsUUFBUSwyQ0FBMkM7QUFDdkUsU0FBU0MsV0FBVyxRQUFRLDBDQUEwQztBQUN0RSxTQUFTQyxlQUFlLFFBQVEsb0RBQW9EO0FBQ3BGLFNBQVNDLGVBQWUsUUFBUSxtREFBbUQ7QUFDbkYsU0FBU0MscUJBQXFCLFFBQVEsZ0VBQWdFO0FBQ3RHLFNBQVNDLGNBQWMsUUFBUSwrQ0FBK0M7QUFDOUUsU0FBU0MsWUFBWSxRQUFRLDhDQUE4QztBQUMzRSxTQUFTQyxhQUFhLFFBQVEsK0NBQStDO0FBQzdFLFNBQVNDLG1CQUFtQixRQUFRLDREQUE0RDtBQUNoRyxTQUFTQyx1QkFBdUIsUUFBUSxvRUFBb0U7QUFDNUcsU0FBU0Msd0JBQXdCLFFBQVEsb0VBQW9FO0FBQzdHLFNBQVNDLFVBQVUsUUFBUSx3Q0FBd0M7QUFDbkUsTUFBTUMsZ0JBQWdCOztJQUNwQixNQUFNLEVBQUVDLFlBQVksRUFBRSxHQUFHZjtJQUV6QixxQkFDRTs7WUFDR2UsaUJBQWlCLHlCQUFXLFFBQUNkOzs7OztZQUM3QmMsaUJBQWlCLDJCQUFhLFFBQUNiOzs7OztZQUMvQmEsaUJBQWlCLDJCQUFhLFFBQUNaOzs7OztZQUMvQlksaUJBQWlCLGdDQUFrQixRQUFDWDs7Ozs7WUFDcENXLGlCQUFpQiwrQkFBaUIsUUFBQ1Y7Ozs7O1lBQ25DVSxpQkFBaUIscUNBQXVCLFFBQUNUOzs7OztZQUN6Q1MsaUJBQWlCLHVDQUF5QixRQUFDSDs7Ozs7WUFDM0NHLGlCQUFpQiw0QkFBYyxRQUFDUjs7Ozs7WUFDaENRLGlCQUFpQiwyQkFBYSxRQUFDUDs7Ozs7WUFDL0JPLGlCQUFpQiw0QkFBYyxRQUFDTjs7Ozs7WUFDaENNLGlCQUFpQixtQ0FBcUIsUUFBQ0w7Ozs7O1lBQ3ZDSyxpQkFBaUIsdUNBQXlCLFFBQUNKOzs7OztZQUMzQ0ksaUJBQWlCLHlCQUFXLFFBQUNGOzs7Ozs7O0FBS3BDO0dBdEJNQzs7UUFDcUJkOzs7S0FEckJjO0FBd0JOLGVBQWVBLGNBQWMifQ==

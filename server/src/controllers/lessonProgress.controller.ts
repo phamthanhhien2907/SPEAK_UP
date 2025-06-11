@@ -64,9 +64,6 @@ export const updateLessonProgressByLessonId = async (req: Request, res: Response
     try {
         const { lessonId } = req.params;
         const { userId, score, isCompleted } = req.body;
-        console.log(isCompleted);
-        console.log(lessonId);
-        // Kiểm tra các trường bắt buộc
         if (!lessonId) {
             res.status(400).json({ success: false, rs: "Missing lessonId" });
             return;

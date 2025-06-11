@@ -1,0 +1,8 @@
+export var CourseLevel = /*#__PURE__*/ function(CourseLevel) {
+    CourseLevel["BEGINNER"] = "beginner";
+    CourseLevel["INTERMEDIATE"] = "intermediate";
+    CourseLevel["ADVANCED"] = "advanced";
+    return CourseLevel;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvdXJzZS50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJcclxuZXhwb3J0IHR5cGUgQ291cnNlID0ge1xyXG4gICAgX2lkPzogc3RyaW5nO1xyXG4gICAgdGl0bGU/OiBzdHJpbmc7XHJcbiAgICBkZXNjcmlwdGlvbj86IHN0cmluZztcclxuICAgIGxldmVsPzogXCJiZWdpbm5lclwiIHwgXCJpbnRlcm1lZGlhdGVcIiB8IFwiYWR2YW5jZWRcIjtcclxuICAgIHRodW1ibmFpbD86IHN0cmluZztcclxufTtcclxuZXhwb3J0IGVudW0gQ291cnNlTGV2ZWwge1xyXG4gICAgQkVHSU5ORVIgPSBcImJlZ2lubmVyXCIsXHJcbiAgICBJTlRFUk1FRElBVEUgPSBcImludGVybWVkaWF0ZVwiLFxyXG4gICAgQURWQU5DRUQgPSBcImFkdmFuY2VkXCIsXHJcbn0iXSwibmFtZXMiOlsiQ291cnNlTGV2ZWwiXSwibWFwcGluZ3MiOiJBQVFBLE9BQU8sSUFBQSxBQUFLQSxxQ0FBQUE7Ozs7V0FBQUE7TUFJWCJ9

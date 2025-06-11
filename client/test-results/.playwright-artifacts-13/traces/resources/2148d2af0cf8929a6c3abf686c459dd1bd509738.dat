@@ -1,0 +1,424 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+"use client";
+import * as z from "/node_modules/.vite/deps/zod.js?v=54733448";
+import { zodResolver } from "/node_modules/.vite/deps/@hookform_resolvers_zod.js?v=c50193e4";
+import { useForm } from "/node_modules/.vite/deps/react-hook-form.js?v=bc8c4e1e";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "/src/components/ui/dialog.tsx";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "/src/components/ui/form.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { useModal } from "/src/hooks/use-model-store.ts";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "/src/components/ui/select.tsx";
+import __vite__cjsImport10_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const useEffect = __vite__cjsImport10_react["useEffect"]; const useState = __vite__cjsImport10_react["useState"];
+import { apiGetAllUser } from "/src/services/user.services.ts";
+import { CompletedLessonsType, TotalScoreType } from "/src/types/progress-tracking.ts";
+import { apiUpdateProgressTracking } from "/src/services/progress-tracking.services.ts";
+const formSchema = z.object({
+    userId: z.string().min(6, {
+        message: "User Id is required"
+    }),
+    completedLessons: z.number().min(0, {
+        message: "Completed Lessons must be at least 0"
+    }),
+    totalScore: z.number().min(0, {
+        message: "Total Score must be at least 0"
+    })
+});
+export const EditProgressTrackingModal = ()=>{
+    _s();
+    const [userData, setUserData] = useState([]);
+    const { isOpen, onClose, type, data } = useModal();
+    const { progressTracking } = data;
+    const isModalOpen = isOpen && type === "editProgressTracking";
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            userId: "",
+            completedLessons: 0,
+            totalScore: 0
+        }
+    });
+    const isLoading = form.formState.isSubmitting;
+    const onSubmit = async (values)=>{
+        const res = await apiUpdateProgressTracking(progressTracking?._id, {
+            ...values,
+            userId: {
+                _id: values.userId
+            }
+        });
+        if (res) {
+            onClose();
+        }
+        form.reset();
+    };
+    const handleClose = ()=>{
+        form.reset();
+        onClose();
+    };
+    const getAllUser = async ()=>{
+        const user = await apiGetAllUser();
+        if (user.data.success) {
+            setUserData(user.data.rs);
+        } else {
+            console.log("Failed to fetch users");
+        }
+    };
+    useEffect(()=>{
+        if (progressTracking) {
+            form.setValue("totalScore", progressTracking.totalScore);
+            form.setValue("userId", progressTracking.userId?._id);
+            form.setValue("completedLessons", progressTracking.completedLessons);
+        }
+    }, [
+        form,
+        progressTracking
+    ]);
+    useEffect(()=>{
+        getAllUser();
+    }, []);
+    return /*#__PURE__*/ _jsxDEV(Dialog, {
+        open: isModalOpen,
+        onOpenChange: handleClose,
+        children: /*#__PURE__*/ _jsxDEV(DialogContent, {
+            className: "bg-white text-black p-0 overflow-hidden",
+            children: [
+                /*#__PURE__*/ _jsxDEV(DialogHeader, {
+                    className: "pt-8 px-6",
+                    children: /*#__PURE__*/ _jsxDEV(DialogTitle, {
+                        className: "text-2xl text-center font-bold",
+                        children: "Edit Progress Tracking"
+                    }, void 0, false, {
+                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                        lineNumber: 97,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                    lineNumber: 96,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDEV(Form, {
+                    ...form,
+                    children: /*#__PURE__*/ _jsxDEV("form", {
+                        className: "space-y-8",
+                        onSubmit: form.handleSubmit(onSubmit),
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                className: "space-y-8 px-6",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "userId",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "User Id"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 109,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: field.onChange,
+                                                        defaultValue: field.value,
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a user id"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                        lineNumber: 119,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                    lineNumber: 118,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                lineNumber: 117,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object?.values(userData)?.map((type)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: type?._id,
+                                                                        className: "capitalize cursor-pointer",
+                                                                        children: type?.email?.toLocaleLowerCase()
+                                                                    }, type?._id, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                        lineNumber: 124,
+                                                                        columnNumber: 27
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                lineNumber: 122,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 112,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 134,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                lineNumber: 108,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                        lineNumber: 104,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "completedLessons",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Completed Lessons"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 143,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: (value)=>field.onChange(Number(value)),
+                                                        defaultValue: field.value.toString(),
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a completed lesson"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                        lineNumber: 153,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                    lineNumber: 152,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                lineNumber: 151,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object.values(CompletedLessonsType).filter((value)=>typeof value === "number").map((value)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: value.toString(),
+                                                                        className: "capitalize",
+                                                                        children: value.toString() + "%"
+                                                                    }, value.toString(), false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                        lineNumber: 160,
+                                                                        columnNumber: 29
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                lineNumber: 156,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 146,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 170,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                lineNumber: 142,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                        lineNumber: 138,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(FormField, {
+                                        control: form.control,
+                                        name: "totalScore",
+                                        render: ({ field })=>/*#__PURE__*/ _jsxDEV(FormItem, {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(FormLabel, {
+                                                        className: "uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70",
+                                                        children: "Total Score"
+                                                    }, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 179,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(Select, {
+                                                        disabled: isLoading,
+                                                        onValueChange: (value)=>field.onChange(Number(value)),
+                                                        defaultValue: field.value.toString(),
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(FormControl, {
+                                                                children: /*#__PURE__*/ _jsxDEV(SelectTrigger, {
+                                                                    className: "bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none",
+                                                                    children: /*#__PURE__*/ _jsxDEV(SelectValue, {
+                                                                        placeholder: "Select a total score"
+                                                                    }, void 0, false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                        lineNumber: 189,
+                                                                        columnNumber: 27
+                                                                    }, void 0)
+                                                                }, void 0, false, {
+                                                                    fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                    lineNumber: 188,
+                                                                    columnNumber: 25
+                                                                }, void 0)
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                lineNumber: 187,
+                                                                columnNumber: 23
+                                                            }, void 0),
+                                                            /*#__PURE__*/ _jsxDEV(SelectContent, {
+                                                                className: "bg-white shadow-lg border border-gray-300",
+                                                                children: Object.values(TotalScoreType).filter((value)=>typeof value === "number").map((value)=>/*#__PURE__*/ _jsxDEV(SelectItem, {
+                                                                        value: value.toString(),
+                                                                        className: "capitalize",
+                                                                        children: value.toString()
+                                                                    }, value.toString(), false, {
+                                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                        lineNumber: 196,
+                                                                        columnNumber: 29
+                                                                    }, void 0))
+                                                            }, void 0, false, {
+                                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                                lineNumber: 192,
+                                                                columnNumber: 23
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 182,
+                                                        columnNumber: 21
+                                                    }, void 0),
+                                                    /*#__PURE__*/ _jsxDEV(FormMessage, {}, void 0, false, {
+                                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                        lineNumber: 206,
+                                                        columnNumber: 21
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                                lineNumber: 178,
+                                                columnNumber: 19
+                                            }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                        lineNumber: 174,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                lineNumber: 103,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV(DialogFooter, {
+                                className: "bg-gray-100 px-6 py-4",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        onClick: ()=>onClose(),
+                                        className: "text-black rounded-[4px]",
+                                        children: "No, cancel"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                        lineNumber: 212,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        disabled: isLoading,
+                                        variant: "ghost",
+                                        children: "Edit"
+                                    }, void 0, false, {
+                                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                        lineNumber: 218,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                                lineNumber: 211,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                        lineNumber: 102,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+                    lineNumber: 101,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+            lineNumber: 95,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx",
+        lineNumber: 94,
+        columnNumber: 5
+    }, this);
+};
+_s(EditProgressTrackingModal, "Kwc8ruqFgXXy1NufFFVEOeKtQOE=", false, function() {
+    return [
+        useModal,
+        useForm
+    ];
+});
+_c = EditProgressTrackingModal;
+var _c;
+$RefreshReg$(_c, "EditProgressTrackingModal");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/components/modals/progress-tracking-modal/edit-progress-tracking-modal.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXQtcHJvZ3Jlc3MtdHJhY2tpbmctbW9kYWwudHN4Il0sInNvdXJjZXNDb250ZW50IjpbIlwidXNlIGNsaWVudFwiO1xyXG5pbXBvcnQgKiBhcyB6IGZyb20gXCJ6b2RcIjtcclxuaW1wb3J0IHsgem9kUmVzb2x2ZXIgfSBmcm9tIFwiQGhvb2tmb3JtL3Jlc29sdmVycy96b2RcIjtcclxuaW1wb3J0IHsgdXNlRm9ybSB9IGZyb20gXCJyZWFjdC1ob29rLWZvcm1cIjtcclxuaW1wb3J0IHtcclxuICBEaWFsb2csXHJcbiAgRGlhbG9nQ29udGVudCxcclxuICBEaWFsb2dGb290ZXIsXHJcbiAgRGlhbG9nSGVhZGVyLFxyXG4gIERpYWxvZ1RpdGxlLFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvZGlhbG9nXCI7XHJcbmltcG9ydCB7XHJcbiAgRm9ybSxcclxuICBGb3JtQ29udHJvbCxcclxuICBGb3JtRmllbGQsXHJcbiAgRm9ybUl0ZW0sXHJcbiAgRm9ybUxhYmVsLFxyXG4gIEZvcm1NZXNzYWdlLFxyXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvZm9ybVwiO1xyXG5pbXBvcnQgeyBCdXR0b24gfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2J1dHRvblwiO1xyXG5pbXBvcnQgeyB1c2VNb2RhbCB9IGZyb20gXCJAL2hvb2tzL3VzZS1tb2RlbC1zdG9yZVwiO1xyXG5pbXBvcnQge1xyXG4gIFNlbGVjdCxcclxuICBTZWxlY3RDb250ZW50LFxyXG4gIFNlbGVjdEl0ZW0sXHJcbiAgU2VsZWN0VHJpZ2dlcixcclxuICBTZWxlY3RWYWx1ZSxcclxufSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3NlbGVjdFwiO1xyXG5pbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVN0YXRlIH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IGFwaUdldEFsbFVzZXIgfSBmcm9tIFwiQC9zZXJ2aWNlcy91c2VyLnNlcnZpY2VzXCI7XHJcbmltcG9ydCB7XHJcbiAgQ29tcGxldGVkTGVzc29uc1R5cGUsXHJcbiAgVG90YWxTY29yZVR5cGUsXHJcbn0gZnJvbSBcIkAvdHlwZXMvcHJvZ3Jlc3MtdHJhY2tpbmdcIjtcclxuaW1wb3J0IHsgYXBpVXBkYXRlUHJvZ3Jlc3NUcmFja2luZyB9IGZyb20gXCJAL3NlcnZpY2VzL3Byb2dyZXNzLXRyYWNraW5nLnNlcnZpY2VzXCI7XHJcbmNvbnN0IGZvcm1TY2hlbWEgPSB6Lm9iamVjdCh7XHJcbiAgdXNlcklkOiB6LnN0cmluZygpLm1pbig2LCB7XHJcbiAgICBtZXNzYWdlOiBcIlVzZXIgSWQgaXMgcmVxdWlyZWRcIixcclxuICB9KSxcclxuICBjb21wbGV0ZWRMZXNzb25zOiB6Lm51bWJlcigpLm1pbigwLCB7XHJcbiAgICBtZXNzYWdlOiBcIkNvbXBsZXRlZCBMZXNzb25zIG11c3QgYmUgYXQgbGVhc3QgMFwiLFxyXG4gIH0pLFxyXG4gIHRvdGFsU2NvcmU6IHoubnVtYmVyKCkubWluKDAsIHtcclxuICAgIG1lc3NhZ2U6IFwiVG90YWwgU2NvcmUgbXVzdCBiZSBhdCBsZWFzdCAwXCIsXHJcbiAgfSksXHJcbn0pO1xyXG5leHBvcnQgY29uc3QgRWRpdFByb2dyZXNzVHJhY2tpbmdNb2RhbCA9ICgpID0+IHtcclxuICBjb25zdCBbdXNlckRhdGEsIHNldFVzZXJEYXRhXSA9IHVzZVN0YXRlKFtdKTtcclxuICBjb25zdCB7IGlzT3Blbiwgb25DbG9zZSwgdHlwZSwgZGF0YSB9ID0gdXNlTW9kYWwoKTtcclxuICBjb25zdCB7IHByb2dyZXNzVHJhY2tpbmcgfSA9IGRhdGE7XHJcbiAgY29uc3QgaXNNb2RhbE9wZW4gPSBpc09wZW4gJiYgdHlwZSA9PT0gXCJlZGl0UHJvZ3Jlc3NUcmFja2luZ1wiO1xyXG4gIGNvbnN0IGZvcm0gPSB1c2VGb3JtKHtcclxuICAgIHJlc29sdmVyOiB6b2RSZXNvbHZlcihmb3JtU2NoZW1hKSxcclxuICAgIGRlZmF1bHRWYWx1ZXM6IHtcclxuICAgICAgdXNlcklkOiBcIlwiLFxyXG4gICAgICBjb21wbGV0ZWRMZXNzb25zOiAwLFxyXG4gICAgICB0b3RhbFNjb3JlOiAwLFxyXG4gICAgfSxcclxuICB9KTtcclxuICBjb25zdCBpc0xvYWRpbmcgPSBmb3JtLmZvcm1TdGF0ZS5pc1N1Ym1pdHRpbmc7XHJcbiAgY29uc3Qgb25TdWJtaXQgPSBhc3luYyAodmFsdWVzOiB6LmluZmVyPHR5cGVvZiBmb3JtU2NoZW1hPikgPT4ge1xyXG4gICAgY29uc3QgcmVzID0gYXdhaXQgYXBpVXBkYXRlUHJvZ3Jlc3NUcmFja2luZyhwcm9ncmVzc1RyYWNraW5nPy5faWQsIHtcclxuICAgICAgLi4udmFsdWVzLFxyXG4gICAgICB1c2VySWQ6IHsgX2lkOiB2YWx1ZXMudXNlcklkIH0sXHJcbiAgICB9KTtcclxuICAgIGlmIChyZXMpIHtcclxuICAgICAgb25DbG9zZSgpO1xyXG4gICAgfVxyXG4gICAgZm9ybS5yZXNldCgpO1xyXG4gIH07XHJcbiAgY29uc3QgaGFuZGxlQ2xvc2UgPSAoKSA9PiB7XHJcbiAgICBmb3JtLnJlc2V0KCk7XHJcbiAgICBvbkNsb3NlKCk7XHJcbiAgfTtcclxuICBjb25zdCBnZXRBbGxVc2VyID0gYXN5bmMgKCkgPT4ge1xyXG4gICAgY29uc3QgdXNlciA9IGF3YWl0IGFwaUdldEFsbFVzZXIoKTtcclxuICAgIGlmICh1c2VyLmRhdGEuc3VjY2Vzcykge1xyXG4gICAgICBzZXRVc2VyRGF0YSh1c2VyLmRhdGEucnMpO1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgY29uc29sZS5sb2coXCJGYWlsZWQgdG8gZmV0Y2ggdXNlcnNcIik7XHJcbiAgICB9XHJcbiAgfTtcclxuICB1c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgaWYgKHByb2dyZXNzVHJhY2tpbmcpIHtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcInRvdGFsU2NvcmVcIiwgcHJvZ3Jlc3NUcmFja2luZy50b3RhbFNjb3JlKTtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcInVzZXJJZFwiLCBwcm9ncmVzc1RyYWNraW5nLnVzZXJJZD8uX2lkKTtcclxuICAgICAgZm9ybS5zZXRWYWx1ZShcImNvbXBsZXRlZExlc3NvbnNcIiwgcHJvZ3Jlc3NUcmFja2luZy5jb21wbGV0ZWRMZXNzb25zKTtcclxuICAgIH1cclxuICB9LCBbZm9ybSwgcHJvZ3Jlc3NUcmFja2luZ10pO1xyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBnZXRBbGxVc2VyKCk7XHJcbiAgfSwgW10pO1xyXG4gIHJldHVybiAoXHJcbiAgICA8RGlhbG9nIG9wZW49e2lzTW9kYWxPcGVufSBvbk9wZW5DaGFuZ2U9e2hhbmRsZUNsb3NlfT5cclxuICAgICAgPERpYWxvZ0NvbnRlbnQgY2xhc3NOYW1lPVwiYmctd2hpdGUgdGV4dC1ibGFjayBwLTAgb3ZlcmZsb3ctaGlkZGVuXCI+XHJcbiAgICAgICAgPERpYWxvZ0hlYWRlciBjbGFzc05hbWU9XCJwdC04IHB4LTZcIj5cclxuICAgICAgICAgIDxEaWFsb2dUaXRsZSBjbGFzc05hbWU9XCJ0ZXh0LTJ4bCB0ZXh0LWNlbnRlciBmb250LWJvbGRcIj5cclxuICAgICAgICAgICAgRWRpdCBQcm9ncmVzcyBUcmFja2luZ1xyXG4gICAgICAgICAgPC9EaWFsb2dUaXRsZT5cclxuICAgICAgICA8L0RpYWxvZ0hlYWRlcj5cclxuICAgICAgICA8Rm9ybSB7Li4uZm9ybX0+XHJcbiAgICAgICAgICA8Zm9ybSBjbGFzc05hbWU9XCJzcGFjZS15LThcIiBvblN1Ym1pdD17Zm9ybS5oYW5kbGVTdWJtaXQob25TdWJtaXQpfT5cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTggcHgtNlwiPlxyXG4gICAgICAgICAgICAgIDxGb3JtRmllbGRcclxuICAgICAgICAgICAgICAgIGNvbnRyb2w9e2Zvcm0uY29udHJvbH1cclxuICAgICAgICAgICAgICAgIG5hbWU9XCJ1c2VySWRcIlxyXG4gICAgICAgICAgICAgICAgcmVuZGVyPXsoeyBmaWVsZCB9KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxGb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUxhYmVsIGNsYXNzTmFtZT1cInVwcGVyY2FzZSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LXppbmMtNTAwIGRhcms6dGV4dC1zZWNvbmRhcnkvNzBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIFVzZXIgSWRcclxuICAgICAgICAgICAgICAgICAgICA8L0Zvcm1MYWJlbD5cclxuICAgICAgICAgICAgICAgICAgICA8U2VsZWN0XHJcbiAgICAgICAgICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxyXG4gICAgICAgICAgICAgICAgICAgICAgb25WYWx1ZUNoYW5nZT17ZmllbGQub25DaGFuZ2V9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxGb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiYmctemluYy0zMDAvNTAgYm9yZGVyLTAgZm9jdXM6cmluZy0wIHRleHQtYmxhY2sgcmluZy1vZmZzZXQtMCBmb2N1czpyaW5nLW9mZnNldC0wIGNhcGl0YWxpemUgb3V0bGluZS1ub25lXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IGEgdXNlciBpZFwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0VHJpZ2dlcj5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0Q29udGVudCBjbGFzc05hbWU9XCJiZy13aGl0ZSBzaGFkb3ctbGcgYm9yZGVyIGJvcmRlci1ncmF5LTMwMFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7T2JqZWN0Py52YWx1ZXModXNlckRhdGEpPy5tYXAoKHR5cGUpID0+IChcclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0SXRlbVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAga2V5PXt0eXBlPy5faWR9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZT17dHlwZT8uX2lkfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiY2FwaXRhbGl6ZSBjdXJzb3ItcG9pbnRlclwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAge3R5cGU/LmVtYWlsPy50b0xvY2FsZUxvd2VyQ2FzZSgpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0SXRlbT5cclxuICAgICAgICAgICAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3Q+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1NZXNzYWdlIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cImNvbXBsZXRlZExlc3NvbnNcIlxyXG4gICAgICAgICAgICAgICAgcmVuZGVyPXsoeyBmaWVsZCB9KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxGb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUxhYmVsIGNsYXNzTmFtZT1cInVwcGVyY2FzZSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LXppbmMtNTAwIGRhcms6dGV4dC1zZWNvbmRhcnkvNzBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIENvbXBsZXRlZCBMZXNzb25zXHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtTGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFxyXG4gICAgICAgICAgICAgICAgICAgICAgZGlzYWJsZWQ9e2lzTG9hZGluZ31cclxuICAgICAgICAgICAgICAgICAgICAgIG9uVmFsdWVDaGFuZ2U9eyh2YWx1ZSkgPT4gZmllbGQub25DaGFuZ2UoTnVtYmVyKHZhbHVlKSl9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlLnRvU3RyaW5nKCl9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VHJpZ2dlciBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1czpyaW5nLTAgdGV4dC1ibGFjayByaW5nLW9mZnNldC0wIGZvY3VzOnJpbmctb2Zmc2V0LTAgY2FwaXRhbGl6ZSBvdXRsaW5lLW5vbmVcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VmFsdWUgcGxhY2Vob2xkZXI9XCJTZWxlY3QgYSBjb21wbGV0ZWQgbGVzc29uXCIgLz5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3RUcmlnZ2VyPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9Gb3JtQ29udHJvbD5cclxuICAgICAgICAgICAgICAgICAgICAgIDxTZWxlY3RDb250ZW50IGNsYXNzTmFtZT1cImJnLXdoaXRlIHNoYWRvdy1sZyBib3JkZXIgYm9yZGVyLWdyYXktMzAwXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHtPYmplY3QudmFsdWVzKENvbXBsZXRlZExlc3NvbnNUeXBlKVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIC5maWx0ZXIoKHZhbHVlKSA9PiB0eXBlb2YgdmFsdWUgPT09IFwibnVtYmVyXCIpXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgLm1hcCgodmFsdWUpID0+IChcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxTZWxlY3RJdGVtXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGtleT17dmFsdWUudG9TdHJpbmcoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e3ZhbHVlLnRvU3RyaW5nKCl9IC8vIFBhc3MgdmFsdWUgYXMgYSBzdHJpbmdcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiY2FwaXRhbGl6ZVwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHt2YWx1ZS50b1N0cmluZygpICsgXCIlXCJ9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdEl0ZW0+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdENvbnRlbnQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9TZWxlY3Q+XHJcbiAgICAgICAgICAgICAgICAgICAgPEZvcm1NZXNzYWdlIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRm9ybUl0ZW0+XHJcbiAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPEZvcm1GaWVsZFxyXG4gICAgICAgICAgICAgICAgY29udHJvbD17Zm9ybS5jb250cm9sfVxyXG4gICAgICAgICAgICAgICAgbmFtZT1cInRvdGFsU2NvcmVcIlxyXG4gICAgICAgICAgICAgICAgcmVuZGVyPXsoeyBmaWVsZCB9KSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgIDxGb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybUxhYmVsIGNsYXNzTmFtZT1cInVwcGVyY2FzZSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LXppbmMtNTAwIGRhcms6dGV4dC1zZWNvbmRhcnkvNzBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIFRvdGFsIFNjb3JlXHJcbiAgICAgICAgICAgICAgICAgICAgPC9Gb3JtTGFiZWw+XHJcbiAgICAgICAgICAgICAgICAgICAgPFNlbGVjdFxyXG4gICAgICAgICAgICAgICAgICAgICAgZGlzYWJsZWQ9e2lzTG9hZGluZ31cclxuICAgICAgICAgICAgICAgICAgICAgIG9uVmFsdWVDaGFuZ2U9eyh2YWx1ZSkgPT4gZmllbGQub25DaGFuZ2UoTnVtYmVyKHZhbHVlKSl9XHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWZhdWx0VmFsdWU9e2ZpZWxkLnZhbHVlLnRvU3RyaW5nKCl9XHJcbiAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPEZvcm1Db250cm9sPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VHJpZ2dlciBjbGFzc05hbWU9XCJiZy16aW5jLTMwMC81MCBib3JkZXItMCBmb2N1czpyaW5nLTAgdGV4dC1ibGFjayByaW5nLW9mZnNldC0wIGZvY3VzOnJpbmctb2Zmc2V0LTAgY2FwaXRhbGl6ZSBvdXRsaW5lLW5vbmVcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0VmFsdWUgcGxhY2Vob2xkZXI9XCJTZWxlY3QgYSB0b3RhbCBzY29yZVwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0VHJpZ2dlcj5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvRm9ybUNvbnRyb2w+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0Q29udGVudCBjbGFzc05hbWU9XCJiZy13aGl0ZSBzaGFkb3ctbGcgYm9yZGVyIGJvcmRlci1ncmF5LTMwMFwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICB7T2JqZWN0LnZhbHVlcyhUb3RhbFNjb3JlVHlwZSlcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAuZmlsdGVyKCh2YWx1ZSkgPT4gdHlwZW9mIHZhbHVlID09PSBcIm51bWJlclwiKVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIC5tYXAoKHZhbHVlKSA9PiAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8U2VsZWN0SXRlbVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICBrZXk9e3ZhbHVlLnRvU3RyaW5nKCl9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlPXt2YWx1ZS50b1N0cmluZygpfSAvLyBQYXNzIHZhbHVlIGFzIGEgc3RyaW5nXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImNhcGl0YWxpemVcIlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7dmFsdWUudG9TdHJpbmcoKX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0SXRlbT5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICApKX1cclxuICAgICAgICAgICAgICAgICAgICAgIDwvU2VsZWN0Q29udGVudD5cclxuICAgICAgICAgICAgICAgICAgICA8L1NlbGVjdD5cclxuICAgICAgICAgICAgICAgICAgICA8Rm9ybU1lc3NhZ2UgLz5cclxuICAgICAgICAgICAgICAgICAgPC9Gb3JtSXRlbT5cclxuICAgICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDxEaWFsb2dGb290ZXIgY2xhc3NOYW1lPVwiYmctZ3JheS0xMDAgcHgtNiBweS00XCI+XHJcbiAgICAgICAgICAgICAgPEJ1dHRvblxyXG4gICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25DbG9zZSgpfVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidGV4dC1ibGFjayByb3VuZGVkLVs0cHhdXCJcclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICBObywgY2FuY2VsXHJcbiAgICAgICAgICAgICAgPC9CdXR0b24+XHJcbiAgICAgICAgICAgICAgPEJ1dHRvbiBkaXNhYmxlZD17aXNMb2FkaW5nfSB2YXJpYW50PVwiZ2hvc3RcIj5cclxuICAgICAgICAgICAgICAgIEVkaXRcclxuICAgICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgICAgPC9EaWFsb2dGb290ZXI+XHJcbiAgICAgICAgICA8L2Zvcm0+XHJcbiAgICAgICAgPC9Gb3JtPlxyXG4gICAgICA8L0RpYWxvZ0NvbnRlbnQ+XHJcbiAgICA8L0RpYWxvZz5cclxuICApO1xyXG59O1xyXG4iXSwibmFtZXMiOlsieiIsInpvZFJlc29sdmVyIiwidXNlRm9ybSIsIkRpYWxvZyIsIkRpYWxvZ0NvbnRlbnQiLCJEaWFsb2dGb290ZXIiLCJEaWFsb2dIZWFkZXIiLCJEaWFsb2dUaXRsZSIsIkZvcm0iLCJGb3JtQ29udHJvbCIsIkZvcm1GaWVsZCIsIkZvcm1JdGVtIiwiRm9ybUxhYmVsIiwiRm9ybU1lc3NhZ2UiLCJCdXR0b24iLCJ1c2VNb2RhbCIsIlNlbGVjdCIsIlNlbGVjdENvbnRlbnQiLCJTZWxlY3RJdGVtIiwiU2VsZWN0VHJpZ2dlciIsIlNlbGVjdFZhbHVlIiwidXNlRWZmZWN0IiwidXNlU3RhdGUiLCJhcGlHZXRBbGxVc2VyIiwiQ29tcGxldGVkTGVzc29uc1R5cGUiLCJUb3RhbFNjb3JlVHlwZSIsImFwaVVwZGF0ZVByb2dyZXNzVHJhY2tpbmciLCJmb3JtU2NoZW1hIiwib2JqZWN0IiwidXNlcklkIiwic3RyaW5nIiwibWluIiwibWVzc2FnZSIsImNvbXBsZXRlZExlc3NvbnMiLCJudW1iZXIiLCJ0b3RhbFNjb3JlIiwiRWRpdFByb2dyZXNzVHJhY2tpbmdNb2RhbCIsInVzZXJEYXRhIiwic2V0VXNlckRhdGEiLCJpc09wZW4iLCJvbkNsb3NlIiwidHlwZSIsImRhdGEiLCJwcm9ncmVzc1RyYWNraW5nIiwiaXNNb2RhbE9wZW4iLCJmb3JtIiwicmVzb2x2ZXIiLCJkZWZhdWx0VmFsdWVzIiwiaXNMb2FkaW5nIiwiZm9ybVN0YXRlIiwiaXNTdWJtaXR0aW5nIiwib25TdWJtaXQiLCJ2YWx1ZXMiLCJyZXMiLCJfaWQiLCJyZXNldCIsImhhbmRsZUNsb3NlIiwiZ2V0QWxsVXNlciIsInVzZXIiLCJzdWNjZXNzIiwicnMiLCJjb25zb2xlIiwibG9nIiwic2V0VmFsdWUiLCJvcGVuIiwib25PcGVuQ2hhbmdlIiwiY2xhc3NOYW1lIiwiaGFuZGxlU3VibWl0IiwiZGl2IiwiY29udHJvbCIsIm5hbWUiLCJyZW5kZXIiLCJmaWVsZCIsImRpc2FibGVkIiwib25WYWx1ZUNoYW5nZSIsIm9uQ2hhbmdlIiwiZGVmYXVsdFZhbHVlIiwidmFsdWUiLCJwbGFjZWhvbGRlciIsIk9iamVjdCIsIm1hcCIsImVtYWlsIiwidG9Mb2NhbGVMb3dlckNhc2UiLCJOdW1iZXIiLCJ0b1N0cmluZyIsImZpbHRlciIsIm9uQ2xpY2siLCJ2YXJpYW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O0FBQUE7QUFDQSxZQUFZQSxPQUFPLE1BQU07QUFDekIsU0FBU0MsV0FBVyxRQUFRLDBCQUEwQjtBQUN0RCxTQUFTQyxPQUFPLFFBQVEsa0JBQWtCO0FBQzFDLFNBQ0VDLE1BQU0sRUFDTkMsYUFBYSxFQUNiQyxZQUFZLEVBQ1pDLFlBQVksRUFDWkMsV0FBVyxRQUNOLHlCQUF5QjtBQUNoQyxTQUNFQyxJQUFJLEVBQ0pDLFdBQVcsRUFDWEMsU0FBUyxFQUNUQyxRQUFRLEVBQ1JDLFNBQVMsRUFDVEMsV0FBVyxRQUNOLHVCQUF1QjtBQUM5QixTQUFTQyxNQUFNLFFBQVEseUJBQXlCO0FBQ2hELFNBQVNDLFFBQVEsUUFBUSwwQkFBMEI7QUFDbkQsU0FDRUMsTUFBTSxFQUNOQyxhQUFhLEVBQ2JDLFVBQVUsRUFDVkMsYUFBYSxFQUNiQyxXQUFXLFFBQ04s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

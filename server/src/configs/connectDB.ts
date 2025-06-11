@@ -3,7 +3,7 @@ export async function connectDB() {
 
     try {
         const connectedBD = await mongoose.connect(process.env.MONGO_URI as string, {
-            dbName: "speak-up",
+            dbName: "speak-up-test",
             serverSelectionTimeoutMS: 5000, // Tự ngắt nếu không kết nối trong 5s
         });
         if (!connectedBD) {

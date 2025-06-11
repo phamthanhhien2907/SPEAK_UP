@@ -1,0 +1,110 @@
+import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import { Edit, Trash } from "/node_modules/.vite/deps/lucide-react.js?v=e8ebe34d";
+import { Button } from "/src/components/ui/button.tsx";
+import { Checkbox } from "/src/components/ui/checkbox.tsx";
+export const getColumns = (onOpen)=>[
+        {
+            id: "select",
+            header: ({ table })=>/*#__PURE__*/ _jsxDEV(Checkbox, {
+                    checked: table.getIsAllPageRowsSelected() ? true : table.getIsSomePageRowsSelected() ? "indeterminate" : false,
+                    onCheckedChange: (value)=>table.toggleAllPageRowsSelected(!!value),
+                    "aria-label": "Select all"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                    lineNumber: 15,
+                    columnNumber: 7
+                }, this),
+            cell: ({ row })=>/*#__PURE__*/ _jsxDEV(Checkbox, {
+                    checked: row.getIsSelected(),
+                    onCheckedChange: (value)=>row.toggleSelected(!!value),
+                    "aria-label": "Select row"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                    lineNumber: 28,
+                    columnNumber: 7
+                }, this),
+            enableSorting: false,
+            enableHiding: false
+        },
+        {
+            accessorKey: "exerciseId.prompt",
+            id: "exerciseId.prompt",
+            header: "Exercise Prompt",
+            cell: ({ row })=>{
+                const exercise = row.original.exerciseId;
+                return /*#__PURE__*/ _jsxDEV("div", {
+                    className: "capitalize",
+                    children: exercise?.prompt || "N/A"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                    lineNumber: 43,
+                    columnNumber: 14
+                }, this);
+            }
+        },
+        {
+            accessorKey: "vocabularyId.word",
+            id: "vocabularyId.word",
+            header: "Vocabulary Word",
+            cell: ({ row })=>{
+                const vocabulary = row.original.vocabularyId;
+                return /*#__PURE__*/ _jsxDEV("div", {
+                    className: "capitalize",
+                    children: vocabulary?.word || "N/A"
+                }, void 0, false, {
+                    fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                    lineNumber: 52,
+                    columnNumber: 14
+                }, this);
+            }
+        },
+        {
+            id: "actions",
+            header: "Actions",
+            enableHiding: false,
+            cell: ({ row })=>{
+                const exerciseVocabulary = row.original;
+                return /*#__PURE__*/ _jsxDEV("div", {
+                    className: "flex items-center gap-2",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV(Button, {
+                            onClick: ()=>onOpen("editExerciseVocabulary", {
+                                    exerciseVocabulary
+                                }),
+                            className: "bg-blue-600 hover:bg-blue-700 text-white rounded-[4px]",
+                            children: /*#__PURE__*/ _jsxDEV(Edit, {}, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                                lineNumber: 71,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                            lineNumber: 65,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV(Button, {
+                            onClick: ()=>onOpen("deleteExerciseVocabulary", {
+                                    exerciseVocabulary
+                                }),
+                            className: "bg-red-500 hover:bg-red-700 text-white rounded-[4px]",
+                            children: /*#__PURE__*/ _jsxDEV(Trash, {}, void 0, false, {
+                                fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                                lineNumber: 79,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                            lineNumber: 73,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "D:/DATN/client/src/components/tables/exercise-vocabulary/columns.tsx",
+                    lineNumber: 64,
+                    columnNumber: 9
+                }, this);
+            }
+        }
+    ];
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbHVtbnMudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbHVtbkRlZiB9IGZyb20gXCJAdGFuc3RhY2svcmVhY3QtdGFibGVcIjtcclxuaW1wb3J0IHsgRWRpdCwgVHJhc2ggfSBmcm9tIFwibHVjaWRlLXJlYWN0XCI7XHJcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvYnV0dG9uXCI7XHJcbmltcG9ydCB7IENoZWNrYm94IH0gZnJvbSBcIkAvY29tcG9uZW50cy91aS9jaGVja2JveFwiO1xyXG5pbXBvcnQgeyBNb2RhbERhdGEsIE1vZGFsVHlwZSB9IGZyb20gXCJAL2hvb2tzL3VzZS1tb2RlbC1zdG9yZVwiO1xyXG5pbXBvcnQgeyBFeGVyY2lzZVZvY2FidWxhcnkgfSBmcm9tIFwiQC90eXBlcy9leGNlcmNpc2Utdm9jYWJ1bGFyeVwiO1xyXG5pbXBvcnQgeyBFeGNlcmNpc2UgfSBmcm9tIFwiQC90eXBlcy9leGNlcmNpc2VcIjtcclxuaW1wb3J0IHsgVm9jYWJ1bGFyeSB9IGZyb20gXCJAL3R5cGVzL3ZvY2FidWxhcnlcIjtcclxuZXhwb3J0IGNvbnN0IGdldENvbHVtbnMgPSAoXHJcbiAgb25PcGVuOiAodHlwZTogTW9kYWxUeXBlLCBkYXRhPzogTW9kYWxEYXRhKSA9PiB2b2lkXHJcbik6IENvbHVtbkRlZjxFeGVyY2lzZVZvY2FidWxhcnk+W10gPT4gW1xyXG4gIHtcclxuICAgIGlkOiBcInNlbGVjdFwiLFxyXG4gICAgaGVhZGVyOiAoeyB0YWJsZSB9KSA9PiAoXHJcbiAgICAgIDxDaGVja2JveFxyXG4gICAgICAgIGNoZWNrZWQ9e1xyXG4gICAgICAgICAgdGFibGUuZ2V0SXNBbGxQYWdlUm93c1NlbGVjdGVkKClcclxuICAgICAgICAgICAgPyB0cnVlXHJcbiAgICAgICAgICAgIDogdGFibGUuZ2V0SXNTb21lUGFnZVJvd3NTZWxlY3RlZCgpXHJcbiAgICAgICAgICAgID8gXCJpbmRldGVybWluYXRlXCJcclxuICAgICAgICAgICAgOiBmYWxzZVxyXG4gICAgICAgIH1cclxuICAgICAgICBvbkNoZWNrZWRDaGFuZ2U9eyh2YWx1ZSkgPT4gdGFibGUudG9nZ2xlQWxsUGFnZVJvd3NTZWxlY3RlZCghIXZhbHVlKX1cclxuICAgICAgICBhcmlhLWxhYmVsPVwiU2VsZWN0IGFsbFwiXHJcbiAgICAgIC8+XHJcbiAgICApLFxyXG4gICAgY2VsbDogKHsgcm93IH0pID0+IChcclxuICAgICAgPENoZWNrYm94XHJcbiAgICAgICAgY2hlY2tlZD17cm93LmdldElzU2VsZWN0ZWQoKX1cclxuICAgICAgICBvbkNoZWNrZWRDaGFuZ2U9eyh2YWx1ZSkgPT4gcm93LnRvZ2dsZVNlbGVjdGVkKCEhdmFsdWUpfVxyXG4gICAgICAgIGFyaWEtbGFiZWw9XCJTZWxlY3Qgcm93XCJcclxuICAgICAgLz5cclxuICAgICksXHJcbiAgICBlbmFibGVTb3J0aW5nOiBmYWxzZSxcclxuICAgIGVuYWJsZUhpZGluZzogZmFsc2UsXHJcbiAgfSxcclxuICB7XHJcbiAgICBhY2Nlc3NvcktleTogXCJleGVyY2lzZUlkLnByb21wdFwiLFxyXG4gICAgaWQ6IFwiZXhlcmNpc2VJZC5wcm9tcHRcIixcclxuICAgIGhlYWRlcjogXCJFeGVyY2lzZSBQcm9tcHRcIixcclxuICAgIGNlbGw6ICh7IHJvdyB9KSA9PiB7XHJcbiAgICAgIGNvbnN0IGV4ZXJjaXNlID0gcm93Lm9yaWdpbmFsLmV4ZXJjaXNlSWQgYXMgRXhjZXJjaXNlO1xyXG4gICAgICByZXR1cm4gPGRpdiBjbGFzc05hbWU9XCJjYXBpdGFsaXplXCI+e2V4ZXJjaXNlPy5wcm9tcHQgfHwgXCJOL0FcIn08L2Rpdj47XHJcbiAgICB9LFxyXG4gIH0sXHJcbiAge1xyXG4gICAgYWNjZXNzb3JLZXk6IFwidm9jYWJ1bGFyeUlkLndvcmRcIixcclxuICAgIGlkOiBcInZvY2FidWxhcnlJZC53b3JkXCIsXHJcbiAgICBoZWFkZXI6IFwiVm9jYWJ1bGFyeSBXb3JkXCIsXHJcbiAgICBjZWxsOiAoeyByb3cgfSkgPT4ge1xyXG4gICAgICBjb25zdCB2b2NhYnVsYXJ5ID0gcm93Lm9yaWdpbmFsLnZvY2FidWxhcnlJZCBhcyBWb2NhYnVsYXJ5O1xyXG4gICAgICByZXR1cm4gPGRpdiBjbGFzc05hbWU9XCJjYXBpdGFsaXplXCI+e3ZvY2FidWxhcnk/LndvcmQgfHwgXCJOL0FcIn08L2Rpdj47XHJcbiAgICB9LFxyXG4gIH0sXHJcblxyXG4gIHtcclxuICAgIGlkOiBcImFjdGlvbnNcIixcclxuICAgIGhlYWRlcjogXCJBY3Rpb25zXCIsXHJcbiAgICBlbmFibGVIaWRpbmc6IGZhbHNlLFxyXG4gICAgY2VsbDogKHsgcm93IH0pID0+IHtcclxuICAgICAgY29uc3QgZXhlcmNpc2VWb2NhYnVsYXJ5ID0gcm93Lm9yaWdpbmFsO1xyXG5cclxuICAgICAgcmV0dXJuIChcclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0yXCI+XHJcbiAgICAgICAgICA8QnV0dG9uXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+XHJcbiAgICAgICAgICAgICAgb25PcGVuKFwiZWRpdEV4ZXJjaXNlVm9jYWJ1bGFyeVwiLCB7IGV4ZXJjaXNlVm9jYWJ1bGFyeSB9KVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLWJsdWUtNjAwIGhvdmVyOmJnLWJsdWUtNzAwIHRleHQtd2hpdGUgcm91bmRlZC1bNHB4XVwiXHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIDxFZGl0IC8+XHJcbiAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgIDxCdXR0b25cclxuICAgICAgICAgICAgb25DbGljaz17KCkgPT5cclxuICAgICAgICAgICAgICBvbk9wZW4oXCJkZWxldGVFeGVyY2lzZVZvY2FidWxhcnlcIiwgeyBleGVyY2lzZVZvY2FidWxhcnkgfSlcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICBjbGFzc05hbWU9XCJiZy1yZWQtNTAwIGhvdmVyOmJnLXJlZC03MDAgdGV4dC13aGl0ZSByb3VuZGVkLVs0cHhdXCJcclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgPFRyYXNoIC8+XHJcbiAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICA8L2Rpdj5cclxuICAgICAgKTtcclxuICAgIH0sXHJcbiAgfSxcclxuXTtcclxuIl0sIm5hbWVzIjpbIkVkaXQiLCJUcmFzaCIsIkJ1dHRvbiIsIkNoZWNrYm94IiwiZ2V0Q29sdW1ucyIsIm9uT3BlbiIsImlkIiwiaGVhZGVyIiwidGFibGUiLCJjaGVja2VkIiwiZ2V0SXNBbGxQYWdlUm93c1NlbGVjdGVkIiwiZ2V0SXNTb21lUGFnZVJvd3NTZWxlY3RlZCIsIm9uQ2hlY2tlZENoYW5nZSIsInZhbHVlIiwidG9nZ2xlQWxsUGFnZVJvd3NTZWxlY3RlZCIsImFyaWEtbGFiZWwiLCJjZWxsIiwicm93IiwiZ2V0SXNTZWxlY3RlZCIsInRvZ2dsZVNlbGVjdGVkIiwiZW5hYmxlU29ydGluZyIsImVuYWJsZUhpZGluZyIsImFjY2Vzc29yS2V5IiwiZXhlcmNpc2UiLCJvcmlnaW5hbCIsImV4ZXJjaXNlSWQiLCJkaXYiLCJjbGFzc05hbWUiLCJwcm9tcHQiLCJ2b2NhYnVsYXJ5Iiwidm9jYWJ1bGFyeUlkIiwid29yZCIsImV4ZXJjaXNlVm9jYWJ1bGFyeSIsIm9uQ2xpY2siXSwibWFwcGluZ3MiOiI7QUFDQSxTQUFTQSxJQUFJLEVBQUVDLEtBQUssUUFBUSxlQUFlO0FBQzNDLFNBQVNDLE1BQU0sUUFBUSx5QkFBeUI7QUFDaEQsU0FBU0MsUUFBUSxRQUFRLDJCQUEyQjtBQUtwRCxPQUFPLE1BQU1DLGFBQWEsQ0FDeEJDLFNBQ29DO1FBQ3BDO1lBQ0VDLElBQUk7WUFDSkMsUUFBUSxDQUFDLEVBQUVDLEtBQUssRUFBRSxpQkFDaEIsUUFBQ0w7b0JBQ0NNLFNBQ0VELE1BQU1FLHdCQUF3QixLQUMxQixPQUNBRixNQUFNRyx5QkFBeUIsS0FDL0Isa0JBQ0E7b0JBRU5DLGlCQUFpQixDQUFDQyxRQUFVTCxNQUFNTSx5QkFBeUIsQ0FBQyxDQUFDLENBQUNEO29CQUM5REUsY0FBVzs7Ozs7O1lBR2ZDLE1BQU0sQ0FBQyxFQUFFQyxHQUFHLEVBQUUsaUJBQ1osUUFBQ2Q7b0JBQ0NNLFNBQVNRLElBQUlDLGFBQWE7b0JBQzFCTixpQkFBaUIsQ0FBQ0MsUUFBVUksSUFBSUUsY0FBYyxDQUFDLENBQUMsQ0FBQ047b0JBQ2pERSxjQUFXOzs7Ozs7WUFHZkssZUFBZTtZQUNmQyxjQUFjO1FBQ2hCO1FBQ0E7WUFDRUMsYUFBYTtZQUNiaEIsSUFBSTtZQUNKQyxRQUFRO1lBQ1JTLE1BQU0sQ0FBQyxFQUFFQyxHQUFHLEVBQUU7Z0JBQ1osTUFBTU0sV0FBV04sSUFBSU8sUUFBUSxDQUFDQyxVQUFVO2dCQUN4QyxxQkFBTyxRQUFDQztvQkFBSUMsV0FBVTs4QkFBY0osVUFBVUssVUFBVTs7Ozs7O1lBQzFEO1FBQ0Y7UUFDQTtZQUNFTixhQUFhO1lBQ2JoQixJQUFJO1lBQ0pDLFFBQVE7WUFDUlMsTUFBTSxDQUFDLEVBQUVDLEdBQUcsRUFBRTtnQkFDWixNQUFNWSxhQUFhWixJQUFJTyxRQUFRLENBQUNNLFlBQVk7Z0JBQzVDLHFCQUFPLFFBQUNKO29CQUFJQyxXQUFVOzhCQUFjRSxZQUFZRSxRQUFROzs7Ozs7WUFDMUQ7UUFDRjtRQUVBO1lBQ0V6QixJQUFJO1lBQ0pDLFFBQVE7WUFDUmMsY0FBYztZQUNkTCxNQUFNLENBQUMsRUFBRUMsR0FBRyxFQUFFO2dCQUNaLE1BQU1lLHFCQUFxQmYsSUFBSU8sUUFBUTtnQkFFdkMscUJBQ0UsUUFBQ0U7b0JBQUlDLFdBQVU7O3NDQUNiLFFBQUN6Qjs0QkFDQytCLFNBQVMsSUFDUDVCLE9BQU8sMEJBQTBCO29DQUFFMkI7Z0NBQW1COzRCQUV4REwsV0FBVTtzQ0FFVixjQUFBLFFBQUMzQjs7Ozs7Ozs7OztzQ0FFSCxRQUFDRTs0QkFDQytCLFNBQVMsSUFDUDVCLE9BQU8sNEJBQTRCO29DQUFFMkI7Z0NBQW1COzRCQUUxREwsV0FBVTtzQ0FFVixjQUFBLFFBQUMxQjs7Ozs7Ozs7Ozs7Ozs7OztZQUlUO1FBQ0Y7S0FDRCxDQUFDIn0=

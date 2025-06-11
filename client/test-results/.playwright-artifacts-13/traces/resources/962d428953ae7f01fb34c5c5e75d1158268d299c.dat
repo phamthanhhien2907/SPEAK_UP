@@ -1,0 +1,15 @@
+export var ExcerciseType = /*#__PURE__*/ function(ExcerciseType) {
+    ExcerciseType["REPEAT_SENTENCE"] = "repeat_sentence";
+    ExcerciseType["FILL_IN_BLANK"] = "fill_in_blank";
+    ExcerciseType["PRONUNCIATION"] = "pronunciation";
+    ExcerciseType["LISTENING"] = "listening";
+    return ExcerciseType;
+}({});
+export var DifficultyLevelType = /*#__PURE__*/ function(DifficultyLevelType) {
+    DifficultyLevelType["EASY"] = "easy";
+    DifficultyLevelType["MEDIUM"] = "medium";
+    DifficultyLevelType["HARD"] = "hard";
+    return DifficultyLevelType;
+}({});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV4Y2VyY2lzZS50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBMZXNzb24gfSBmcm9tIFwiLi9sZXNzb25cIjtcclxuXHJcbmV4cG9ydCB0eXBlIEV4Y2VyY2lzZSA9IHtcclxuICAgIF9pZD86IHN0cmluZztcclxuICAgIGxlc3NvbklkPzogTGVzc29uO1xyXG4gICAgdHlwZT86IFwicmVwZWF0X3NlbnRlbmNlXCIgfCBcImZpbGxfaW5fYmxhbmtcIiB8IFwicHJvbnVuY2lhdGlvblwiIHwgXCJsaXN0ZW5pbmdcIlxyXG4gICAgcHJvbXB0Pzogc3RyaW5nO1xyXG4gICAgY29ycmVjdFByb251bmNpYXRpb24/OiBzdHJpbmc7XHJcbiAgICBkaWZmaWN1bHR5TGV2ZWw/OiBzdHJpbmdcclxufTtcclxuZXhwb3J0IGVudW0gRXhjZXJjaXNlVHlwZSB7XHJcbiAgICBSRVBFQVRfU0VOVEVOQ0UgPSBcInJlcGVhdF9zZW50ZW5jZVwiLFxyXG4gICAgRklMTF9JTl9CTEFOSyA9IFwiZmlsbF9pbl9ibGFua1wiLFxyXG4gICAgUFJPTlVOQ0lBVElPTiA9IFwicHJvbnVuY2lhdGlvblwiLFxyXG4gICAgTElTVEVOSU5HID0gXCJsaXN0ZW5pbmdcIixcclxufVxyXG5leHBvcnQgZW51bSBEaWZmaWN1bHR5TGV2ZWxUeXBlIHtcclxuICAgIEVBU1kgPSBcImVhc3lcIixcclxuICAgIE1FRElVTSA9IFwibWVkaXVtXCIsXHJcbiAgICBIQVJEID0gXCJoYXJkXCIsXHJcbn1cclxuXHJcbiJdLCJuYW1lcyI6WyJFeGNlcmNpc2VUeXBlIiwiRGlmZmljdWx0eUxldmVsVHlwZSJdLCJtYXBwaW5ncyI6IkFBVUEsT0FBTyxJQUFBLEFBQUtBLHVDQUFBQTs7Ozs7V0FBQUE7TUFLWDtBQUNELE9BQU8sSUFBQSxBQUFLQyw2Q0FBQUE7Ozs7V0FBQUE7TUFJWCJ9

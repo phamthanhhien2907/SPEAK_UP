@@ -1,0 +1,45 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/(404)/route.tsx");if (!window.$RefreshReg$) throw new Error("React refresh preamble was not loaded. Something is wrong.");
+const prevRefreshReg = window.$RefreshReg$;
+const prevRefreshSig = window.$RefreshSig$;
+window.$RefreshReg$ = RefreshRuntime.getRefreshReg("D:/DATN/client/src/pages/(404)/route.tsx");
+window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+
+import * as RefreshRuntime from "/@react-refresh";
+
+import __vite__cjsImport1_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=66a6335f"; const _jsxDEV = __vite__cjsImport1_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport2_react from "/node_modules/.vite/deps/react.js?v=f560a6f9"; const lazy = __vite__cjsImport2_react["lazy"];
+const NotFoundPage = /*#__PURE__*/ lazy(()=>import("/src/pages/(404)/index.tsx"));
+_c = NotFoundPage;
+const notFoundRoutes = [
+    {
+        path: "*",
+        element: /*#__PURE__*/ _jsxDEV(NotFoundPage, {}, void 0, false, {
+            fileName: "D:/DATN/client/src/pages/(404)/route.tsx",
+            lineNumber: 7,
+            columnNumber: 14
+        }, this),
+        role: [
+            "student",
+            "teacher",
+            "admin"
+        ]
+    }
+];
+export default notFoundRoutes;
+var _c;
+$RefreshReg$(_c, "NotFoundPage");
+
+
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+  RefreshRuntime.registerExportsForReactRefresh("D:/DATN/client/src/pages/(404)/route.tsx", currentExports);
+  import.meta.hot.accept((nextExports) => {
+    if (!nextExports) return;
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("D:/DATN/client/src/pages/(404)/route.tsx", currentExports, nextExports);
+    if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+  });
+});
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJvdXRlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBsYXp5IH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IFJvdXRlT2JqZWN0IH0gZnJvbSBcInJlYWN0LXJvdXRlci1kb21cIjtcclxuY29uc3QgTm90Rm91bmRQYWdlID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL2luZGV4XCIpKTtcclxuY29uc3Qgbm90Rm91bmRSb3V0ZXM6IChSb3V0ZU9iamVjdCAmIHsgcm9sZT86IHN0cmluZ1tdIH0pW10gPSBbXHJcbiAge1xyXG4gICAgcGF0aDogXCIqXCIsXHJcbiAgICBlbGVtZW50OiA8Tm90Rm91bmRQYWdlIC8+LFxyXG4gICAgcm9sZTogW1wic3R1ZGVudFwiLCBcInRlYWNoZXJcIiwgXCJhZG1pblwiXSxcclxuICB9LFxyXG5dO1xyXG5leHBvcnQgZGVmYXVsdCBub3RGb3VuZFJvdXRlcztcclxuIl0sIm5hbWVzIjpbImxhenkiLCJOb3RGb3VuZFBhZ2UiLCJub3RGb3VuZFJvdXRlcyIsInBhdGgiLCJlbGVtZW50Iiwicm9sZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUEsU0FBU0EsSUFBSSxRQUFRLFFBQVE7QUFFN0IsTUFBTUMsNkJBQWVELEtBQUssSUFBTSxNQUFNLENBQUM7S0FBakNDO0FBQ04sTUFBTUMsaUJBQXdEO0lBQzVEO1FBQ0VDLE1BQU07UUFDTkMsdUJBQVMsUUFBQ0g7Ozs7O1FBQ1ZJLE1BQU07WUFBQztZQUFXO1lBQVc7U0FBUTtJQUN2QztDQUNEO0FBQ0QsZUFBZUgsZUFBZSJ9
